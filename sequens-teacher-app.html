@@ -1,0 +1,818 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS - teacher</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;--line-soft:#F0E7D7;
+--accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
+--support:#7FBDB9;--core:#1F8E8A;--secure:#C9A24B;--stretch:#C45F2E;--wt:#C9A24B;--wt-soft:#F3E7C7;--sec:#5C8A4A;--gd:#1F8E8A;
+--display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;--shadow:0 2px 14px rgba(58,46,38,.07)}
+*{box-sizing:border-box}html,body{margin:0}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.df{font-family:var(--display)}
+button{font-family:var(--display);cursor:pointer;border:none;background:none;color:inherit}
+.muted{color:var(--ink-soft)}.hide{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:0 26px}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:12px;padding:4px 11px;border-radius:22px;background:var(--teal-soft);color:#15706c}
+.btn{font-weight:600;border-radius:11px;padding:10px 17px;font-size:14.5px;transition:.15s;display:inline-block}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-deep)}
+.btn-ghost{border:1.5px solid var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-teal{background:var(--teal);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}.card.flat{background:var(--card2)}
+.ai-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-size:11.5px;font-weight:600;color:#7a6320;background:var(--wt-soft);border:1px solid #e3cf95;border-radius:20px;padding:4px 11px}
+.top{position:sticky;top:0;z-index:40;background:rgba(244,236,222,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.brand{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:.5px;display:flex;align-items:center;gap:9px}
+.brand .dot{width:13px;height:13px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.brand small{font-weight:500;font-size:11px;letter-spacing:2px;color:var(--ink-soft);text-transform:uppercase}
+.top .sp{flex:1}
+.hero{padding:54px 0 26px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.hero h1{font-size:46px;line-height:1.07;font-weight:700;margin:14px 0 0;max-width:16ch}.hero h1 .u{color:var(--accent)}
+.hero .lede{font-size:18px;max-width:46ch;margin:18px 0 24px;color:var(--ink-soft)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}.reassure{margin-top:16px;font-size:13px;color:var(--ink-soft)}
+.heromock{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
+.heromock .r{background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.heromock .r .ic{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;font-size:17px}
+.heromock .r b{font-family:var(--display);font-size:14.5px}.heromock .r p{margin:1px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.section{padding:42px 0;border-top:1px solid var(--line)}.section h2{font-size:31px;font-weight:700;margin:8px 0 6px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--teal-soft);display:grid;place-items:center;margin-bottom:12px;color:#15706c;font-size:18px}
+.feat h3{font-size:17px;margin:0 0 5px}.feat p{margin:0;font-size:14px;color:var(--ink-soft)}
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr}.hero h1{font-size:34px}.feat-grid{grid-template-columns:1fr}}
+.foot{border-top:1px solid var(--line);padding:22px 0;color:var(--ink-soft);font-size:13px}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.side{background:var(--card);border-right:1px solid var(--line);padding:16px 14px;overflow:auto}
+.side .slabel{font-family:var(--display);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);padding:0 10px 7px}
+.side .sgroup{margin-bottom:14px}
+.side button.nav{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:9px 11px;border-radius:10px;font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:2px}
+.side button.nav:hover{background:var(--line-soft);color:var(--ink)}
+.side button.nav.on{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
+.side .ico{width:18px;text-align:center;flex:0 0 auto}
+.claz{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff,var(--card2));border:1px solid var(--line);border-radius:14px;padding:11px;margin-top:6px}
+.claz .av{width:34px;height:34px;border-radius:9px;background:var(--teal-soft);color:#15706c;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
+.claz b{font-family:var(--display);font-size:13.5px}.claz p{margin:0;font-size:11.5px;color:var(--ink-soft)}
+.main{padding:28px 32px;overflow:auto;max-height:100vh}
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.phead h1{font-size:26px;margin:0}.phead p{margin:4px 0 0;color:var(--ink-soft);font-size:14px}
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{display:none}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+.inp,select.inp{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;font-family:var(--body);font-size:15px;color:var(--ink);background:#fff}
+select.inp{appearance:none;-webkit-appearance:none;cursor:pointer}
+label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block;margin-bottom:7px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:700px){.row3{grid-template-columns:1fr}}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.tabs button{padding:11px 16px;font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink-soft);border-bottom:2.5px solid transparent;margin-bottom:-1px}
+.tabs button.on{color:var(--accent);border-color:var(--accent)}
+.tabp{display:none}.tabp.on{display:block}
+.lessonwrap{display:grid;grid-template-columns:1.25fr .75fr;gap:20px}@media(max-width:900px){.lessonwrap{grid-template-columns:1fr}}
+.sstep{border-left:3px solid var(--teal);padding:2px 0 12px 15px;margin-bottom:12px}.sstep.act{border-color:var(--accent)}
+.sstep .se{font-family:var(--display);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--teal)}.sstep.act .se{color:var(--accent)}
+.sstep h4{margin:2px 0 3px;font-size:15.5px}.sstep p{margin:0;font-size:14px}
+.aside{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:13px}
+.aside h4{margin:0 0 9px;font-size:13.5px;display:flex;align-items:center;gap:7px}
+.scaff{background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:11px;margin-bottom:9px}
+.scaff .h{font-family:var(--display);font-weight:600;font-size:12.5px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.scaff .sw{width:12px;height:12px;border-radius:4px;flex:0 0 auto}
+.scaff p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+.scaff .print{margin-top:7px;font-size:11px;color:#15706c;background:var(--teal-soft);border-radius:7px;padding:4px 8px;display:inline-block}
+.diffkey div{display:flex;align-items:center;gap:9px;font-size:13px;padding:3px 0}.diffkey .sw{width:13px;height:13px;border-radius:4px}
+.seqbar{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:14px;flex-wrap:wrap}
+.seqbar b{font-family:var(--display);color:var(--ink)}
+.sldgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:820px){.sldgrid{grid-template-columns:1fr 1fr}}
+.sld{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.sld .h{height:74px;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:13px;color:#fff;text-align:center;padding:0 8px}
+.sld .c{padding:9px 12px}.sld .c .n{font-family:var(--display);font-size:11px;color:var(--ink-soft)}.sld .c h4{margin:2px 0 0;font-size:14px}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid var(--line-soft)}
+.set-row .l b{font-family:var(--display);font-size:14px}.set-row .l p{margin:2px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.seg{display:inline-flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1.5px solid var(--line);border-radius:20px;padding:6px 11px;font-size:12.5px;font-weight:600;color:var(--ink-soft);background:#fff}
+.seg button.on{border-color:var(--accent);background:var(--accent);color:#fff}
+.weekstrip{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap;align-items:center}
+.wk{border:1.5px solid var(--line);background:var(--card2);border-radius:11px;padding:8px 13px;font-family:var(--display);font-weight:600;font-size:13px;color:var(--ink-soft);text-align:center;min-width:66px;line-height:1.15}
+.wk small{display:block;font-weight:500;font-size:10px;opacity:.8}.wk.on{border-color:var(--accent);background:var(--accent);color:#fff}
+.wrtag{font-family:var(--display);font-size:11px;font-weight:600;color:#7a6320;background:var(--wt-soft);border:1px solid #e3cf95;border-radius:20px;padding:3px 10px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}
+.kid{background:var(--card2);border:1px solid var(--line);border-left:4px solid var(--sec);border-radius:11px;padding:11px 12px}
+.kid.lWT{border-left-color:var(--wt)}.kid.lGD{border-left-color:var(--gd)}
+.kid .nm{font-family:var(--display);font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.kid .av{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:#a94e22;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:11px;flex:0 0 auto}
+.kseg{display:flex;gap:5px;margin-top:8px}
+.kseg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:5px 3px;font-size:10.5px;font-weight:600;color:var(--ink-soft)}
+.kseg button.on.wt{border-color:var(--wt);background:var(--wt);color:#fff}
+.kseg button.on.sec{border-color:var(--sec);background:var(--sec);color:#fff}
+.kseg button.on.gd{border-color:var(--gd);background:var(--gd);color:#fff}
+.kfb{margin-top:8px;font-size:11.5px;background:var(--line-soft);border-radius:8px;padding:7px 9px;display:none}.kfb.show{display:block}
+.kfb .say{font-family:var(--display);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+.kfb .lg{font-size:10px;color:var(--sec);font-family:var(--display);font-weight:600;margin-top:4px}
+.note{font-size:12.5px;color:#15706c;background:var(--teal-soft);border-radius:10px;padding:9px 12px}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--ink-soft);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:13px;height:13px;border-radius:4px}
+.cov-row{display:grid;grid-template-columns:240px 1fr 78px;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line-soft);font-size:13.5px}
+.cov-row .obj b{font-family:var(--display);font-weight:600}.cov-row .obj small{color:var(--ink-soft)}
+.bar{height:11px;background:var(--line-soft);border-radius:6px;overflow:hidden;display:flex}
+.bar .se{background:var(--sec)}.bar .wtb{background:var(--wt)}.bar .gdb{background:var(--gd)}
+.cov-row .v{font-family:var(--display);font-size:12px;color:var(--ink-soft);text-align:right}
+.paper{background:#fff;max-width:740px;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:40px 46px;color:#2a221c}
+.paper .wm{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--accent);display:flex;align-items:center;gap:7px}
+.paper .wm .d{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.paper h1.dt{font-family:var(--display);font-size:24px;margin:13px 0 4px}
+.paper .meta{display:grid;grid-template-columns:1fr 1fr;gap:5px 22px;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:12px 0;margin:13px 0 18px;font-size:13px}
+.paper .meta b{font-family:var(--display)}
+.paper h3.sec{font-family:var(--display);font-size:15px;margin:20px 0 7px}
+.paper p.bd{font-size:13.5px;line-height:1.6;margin:0 0 9px}
+.paper .disc{margin-top:22px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:#6F6155;line-height:1.55}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:28px;text-align:center;background:var(--card2)}.drop .ic{font-size:30px}
+.exrow{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line-soft);font-size:13.5px}
+.exrow .wkn{font-family:var(--display);font-weight:600}.exrow .ok{color:var(--good);font-family:var(--display);font-weight:600;font-size:12.5px}
+.tog{display:inline-flex;align-items:center;gap:9px;cursor:pointer}
+.tog .t{width:42px;height:24px;border-radius:14px;background:var(--line);position:relative;transition:.18s}
+.tog .t::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.tog.on .t{background:var(--teal)}.tog.on .t::after{left:20px}
+.summary{position:sticky;bottom:0;margin-top:16px;background:var(--ink);color:#F4ECDE;border-radius:13px;padding:13px 18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.summary b{font-size:19px;font-family:var(--display)}.summary span{font-size:12px;opacity:.85}
+.summary .sp{flex:1}.summary .nt{font-size:12px;opacity:.9;max-width:32ch}
+.summary button{font-family:var(--display);font-weight:600;font-size:12.5px;border-radius:9px;padding:8px 13px}
+.summary .b1{background:#F4ECDE;color:var(--ink)}.summary .b2{border:1px solid rgba(244,236,222,.35);color:#F4ECDE}
+.conf{position:fixed;left:12px;bottom:12px;z-index:30;background:rgba(58,46,38,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px}
+#present{position:fixed;inset:0;z-index:80;background:#2a221c;display:none;flex-direction:column}#present.on{display:flex}
+#present .pbar{height:50px;display:flex;align-items:center;gap:12px;padding:0 18px;color:#F4ECDE;font-family:var(--display)}
+#present .pbar button{color:#F4ECDE;border:1px solid rgba(244,236,222,.3);background:rgba(244,236,222,.06);border-radius:9px;padding:7px 13px;font-weight:600;font-size:13px}
+#present iframe{flex:1;width:100%;border:0;background:var(--bg)}
+</style></head><body>
+<!-- MARKETING -->
+<div id="site">
+  <div class="top"><div class="wrap">
+    <div class="brand"><span class="dot"></span>SEQUENS <small>teacher</small></div>
+    <div class="sp"></div>
+    <button class="btn btn-ghost" onclick="goApp()">Sign in</button>
+    <button class="btn btn-primary" onclick="goApp()">Open the app</button>
+  </div></div>
+  <div class="wrap hero"><div class="hero-grid">
+    <div>
+      <span class="pill">For teachers &amp; schools</span>
+      <h1>Plan, present and mark a lesson in <span class="u">minutes</span>.</h1>
+      <p class="lede">A differentiated six-part lesson, the slides to teach it, and the marking - all from one objective. Built by a teacher of twenty years to take back the part that was never teaching: the paperwork.</p>
+      <div class="cta-row"><button class="btn btn-primary" onclick="goApp()">Open the app</button><button class="btn btn-ghost" onclick="goApp()">See a lesson</button></div>
+      <p class="reassure">AI-assisted, teacher-verified · curriculum-honest · no pupil data required · safeguarded media</p>
+    </div>
+    <div class="heromock">
+      <div class="muted df" style="font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">One objective becomes</div>
+      <div class="r"><span class="ic" style="background:var(--teal-soft);color:#15706c">▤</span><div><b>A six-part lesson</b><p>Spine, modelling, hinge check, adaptive scaffold &amp; stretch.</p></div></div>
+      <div class="r"><span class="ic" style="background:var(--teal-soft);color:#15706c">◫</span><div><b>The slides to teach it</b><p>Animated, dual-coded, video optional.</p></div></div>
+      <div class="r"><span class="ic" style="background:var(--accent-soft);color:#a94e22">✓</span><div><b>The marking</b><p>Whole class on one screen - tap the few, feedback writes itself.</p></div></div>
+    </div>
+  </div></div>
+  <section class="section"><div class="wrap">
+    <span class="eyebrow">Why teachers keep it</span>
+    <h2>The good teaching. Without the paperwork tax.</h2>
+    <div class="feat-grid">
+      <div class="feat"><div class="ic">▤</div><h3>The six-part spine</h3><p>Every lesson on an evidence-based sequence - modelling, guided practice, a hinge question, independent work.</p></div>
+      <div class="feat"><div class="ic">◈</div><h3>Adaptive, not tiered</h3><p>One shared task, entered at the right level - with responsive scaffold and stretch toward age-related expectation.</p></div>
+      <div class="feat"><div class="ic">✓</div><h3>Mark by exception</h3><p>The class starts as "met". Tap only those who didn't, or flew. Verbal feedback, tracked as your evidence.</p></div>
+      <div class="feat"><div class="ic">◷</div><h3>Click your week</h3><p>Leadership uploads the medium-term plans once. After that, you click the week and everything is linked.</p></div>
+      <div class="feat"><div class="ic">♥</div><h3>Honest about the curriculum</h3><p>Explicit National Curriculum links, and plain when something is enrichment. Awarding-body specs by upload, never invented.</p></div>
+      <div class="feat"><div class="ic">⛉</div><h3>Safe by design</h3><p>No pupil data needed to plan. Media previewed and confirmed before it embeds. Built for inspection, not around it.</p></div>
+    </div>
+  </div></section>
+  <div class="foot"><div class="wrap">SEQUENS for teachers · confidential prototype · © James / SEQUENS · do not distribute · not affiliated with any awarding body or scheme</div></div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hide"><div class="conf">Confidential · © James / SEQUENS · do not distribute</div><div class="app">
+  <aside class="side">
+    <div class="sgroup"><div class="slabel">Plan</div>
+      <button class="nav on" data-s="today" onclick="show('today',this)"><span class="ico">◧</span> Today</button>
+      <button class="nav" data-s="plan" onclick="show('plan',this)"><span class="ico">✎</span> Plan a lesson</button>
+      <button class="nav" data-s="week" onclick="show('week',this)"><span class="ico">◷</span> This week</button>
+    </div>
+    <div class="sgroup"><div class="slabel">Teach</div>
+      <button class="nav" data-s="lesson" onclick="show('lesson',this)"><span class="ico">▤</span> Lesson view</button>
+      <button class="nav" onclick="openPresent()"><span class="ico">◫</span> Present</button>
+    </div>
+    <div class="sgroup"><div class="slabel">Assess</div>
+      <button class="nav" data-s="mark" onclick="show('mark',this)"><span class="ico">✓</span> Mark this week</button>
+      <button class="nav" data-s="coverage" onclick="show('coverage',this)"><span class="ico">◫</span> Class coverage</button>
+      <button class="nav" data-s="reports" onclick="show('reports',this)"><span class="ico">▦</span> Reports</button>
+    </div>
+    <div class="sgroup"><div class="slabel">School</div>
+      <button class="nav" data-s="setup" onclick="show('setup',this)"><span class="ico">⬆</span> Curriculum setup</button>
+      <button class="nav" data-s="pupils" onclick="show('pupils',this)"><span class="ico">♥</span> Classes &amp; pupils</button>
+      <button class="nav" data-s="settings" onclick="show('settings',this)"><span class="ico">⚙</span> Settings</button>
+      <button class="nav" onclick="goSite()"><span class="ico">⤺</span> Back to site</button>
+    </div>
+    <div class="claz"><div class="av">4</div><div><b>Year 4 · Mr Adel</b><p>28 pupils · Maths</p></div></div>
+  </aside>
+  <main class="main">
+<!-- TODAY -->
+<section class="apage" data-ap="today">
+  <div class="phead"><div><h1>Good morning, Mr Adel</h1><p>Everything's linked to your medium-term plan. Here's the week.</p></div></div>
+  <div class="grid3" style="margin-bottom:18px">
+    <div class="card flat"><div class="muted df" style="font-size:11px;text-transform:uppercase;letter-spacing:1px">This week</div><div class="df" style="font-weight:700;font-size:24px;margin-top:5px">Wk 3 · Fractions</div><p class="muted" style="font-size:13px;margin:2px 0 0">equivalent fractions</p></div>
+    <div class="card flat"><div class="muted df" style="font-size:11px;text-transform:uppercase;letter-spacing:1px">Class secure</div><div class="df" style="font-weight:700;font-size:24px;margin-top:5px">71%</div><p class="muted" style="font-size:13px;margin:2px 0 0">across the year so far</p></div>
+    <div class="card flat"><div class="muted df" style="font-size:11px;text-transform:uppercase;letter-spacing:1px">To revisit</div><div class="df" style="font-weight:700;font-size:24px;margin-top:5px">3</div><p class="muted" style="font-size:13px;margin:2px 0 0">topics due retrieval</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="cursor:pointer" onclick="show('lesson',document.querySelector('[data-s=lesson]'))"><div class="df" style="font-weight:700;font-size:17px">▤ Open this week's lesson</div><p class="muted" style="font-size:13.5px;margin:6px 0 0">Equivalent fractions - plan, slides and rubric, ready and reviewed.</p></div>
+    <div class="card" style="cursor:pointer" onclick="show('mark',document.querySelector('[data-s=mark]'))"><div class="df" style="font-weight:700;font-size:17px">✓ Mark this week</div><p class="muted" style="font-size:13.5px;margin:6px 0 0">Your 28 on one screen. Tap the few who need a word.</p></div>
+  </div>
+  <div class="note" style="margin-top:16px">The flow: click your week → teach from the deck → record with a tap. Verbal feedback in the room, tracked here as evidence. No written marking.</div>
+</section>
+
+<!-- PLAN A LESSON -->
+<section class="apage hide" data-ap="plan">
+  <div class="phead"><div><h1>Plan a lesson</h1><p>Pick the objective - or let your plan suggest the next one. The lesson builds in seconds.</p></div></div>
+  <div class="card" style="max-width:860px;margin-bottom:16px">
+    <div class="row3">
+      <div><label class="fl" style="font-size:12px">Curriculum</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>England NC</option><option>Awarding-body spec (upload)</option><option>Our own scheme</option></select></div>
+      <div><label class="fl" style="font-size:12px">Year</label><select class="inp" style="padding:11px 12px;font-size:14px"><option selected>Year 4</option><option>Year 3</option><option>Year 5</option></select></div>
+      <div><label class="fl" style="font-size:12px">Subject</label><select class="inp" style="padding:11px 12px;font-size:14px"><option selected>Mathematics</option><option>Science</option><option>English</option></select></div>
+    </div>
+    <label class="fl" style="margin-top:13px">Objective <span class="muted" style="font-weight:500;font-size:12px">- suggested next from your medium-term plan</span></label>
+    <select class="inp"><option>Suggested: recognise &amp; show equivalent fractions · White Rose Y4 Spring B3 S4</option><option>Add fractions with the same denominator</option><option>Tenths as decimals</option></select>
+    <div style="margin-top:13px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Build the lesson</button><button class="btn btn-ghost">Build a unit (long → medium → sessions)</button></div>
+  </div>
+  <div class="note">SEQUENS aligns to your White Rose order and generates its own original teaching for each step - it never reproduces scheme materials. Not affiliated with White Rose.</div>
+</section>
+
+<!-- THIS WEEK -->
+<section class="apage hide" data-ap="week">
+  <div class="phead"><div><h1>This week</h1><p>Click your week - every subject's objective is already linked.</p></div></div>
+  <div class="weekstrip"><span class="df" style="font-size:12px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:1px;margin-right:6px">Spring · HT1</span>
+    <button class="wk" onclick="setWk(this)">Wk 1<small>place value</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 2<small>add &amp; sub</small></button>
+    <button class="wk on" onclick="setWk(this)">Wk 3<small>fractions</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 4<small>fractions</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 5<small>decimals</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 6<small>consolidate</small></button>
+  </div>
+  <div class="grid2">
+    <div class="card"><span class="wrtag">Maths · White Rose B3 S4</span><div class="df" style="font-weight:700;font-size:16px;margin-top:8px">Recognise &amp; show equivalent fractions</div><div style="margin-top:10px;display:flex;gap:8px"><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Open lesson</button><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('mark',document.querySelector('[data-s=mark]'))">Mark</button></div></div>
+    <div class="card"><span class="wrtag" style="color:#15706c;background:var(--teal-soft);border-color:#9fd0cc">Science · NC Y4</span><div class="df" style="font-weight:700;font-size:16px;margin-top:8px">Group living things; use classification keys</div><div style="margin-top:10px;display:flex;gap:8px"><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Open lesson</button><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="openPresent()">Present</button></div></div>
+  </div>
+</section>
+<!-- LESSON VIEW -->
+<section class="apage hide" data-ap="lesson">
+  <div class="phead"><div><span class="muted df" style="font-size:12px;letter-spacing:1px;text-transform:uppercase">Year 4 · Science</span><h1>Classifying living things</h1><p>~50 min · I can use a classification key to sort living things into groups.</p></div>
+    <div style="display:flex;gap:8px"><span class="ai-badge">✦ AI-assisted · you review before use</span></div></div>
+  <div class="seqbar"><b>Sequence:</b> ← Grouping by observable features &nbsp;·&nbsp; <b style="color:var(--accent)">Now: classification keys</b> &nbsp;·&nbsp; → Environments &amp; change → &nbsp;&nbsp; <span class="muted">part of a coherent unit, not a one-off</span></div>
+  <div class="tabs"><button class="on" onclick="lt(this,0)">Lesson plan</button><button onclick="lt(this,1)">Slides</button><button onclick="lt(this,2)">Rubric</button></div>
+
+  <div class="tabp on" data-lt="0">
+    <div class="lessonwrap">
+      <div>
+        <div class="sstep"><div class="se">First thing</div><h4>Sort &amp; justify</h4><p>Show six animals. "Sort these into two groups - how did you decide?" Listen for the thinking before naming the rule.</p></div>
+        <div class="sstep"><div class="se">Show me how</div><h4>Model the key</h4><p>Build a key aloud: "Has a backbone?" → vertebrate / invertebrate. Structure, not appearance.</p></div>
+        <div class="sstep"><div class="se">Do it together</div><h4>Classify the frog</h4><p>Walk the key as a class, voting at each yes/no question before revealing.</p></div>
+        <div class="sstep act"><div class="se">Quick check · hinge</div><h4>Catch the misconception</h4><p>"A snake is long and bendy with no legs - vertebrate or invertebrate?" If many say invertebrate → re-model: looks ≠ structure.</p></div>
+        <div class="sstep act"><div class="se">Their turn</div><h4>Sort independently</h4><p>One shared task, entered at the right level - see the adaptive support to the right.</p></div>
+        <div class="sstep"><div class="se">Last thing</div><h4>Recall</h4><p>Hands show backbone / no backbone. Exit: name one vertebrate and one invertebrate.</p></div>
+      </div>
+      <div>
+        <div class="aside"><h4>◈ Adaptive support &amp; stretch <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">generated for your groups</span></h4>
+          <div class="scaff"><div class="h"><span class="sw" style="background:var(--support)"></span>For your 4 working towards</div>
+            <p><b>Vocab pre-teach:</b> backbone, group, sort - with picture cards.<br><b>Sentence stem:</b> "This animal is a ___ because it ___ a backbone."<br><b>Scaffold:</b> a picture key with 4 animals.</p>
+            <span class="print">🖨 Printable support sheet ready - ink-light, for books</span></div>
+          <div class="scaff"><div class="h"><span class="sw" style="background:var(--stretch)"></span>Responsive stretch - toward ARE</div>
+            <p>For any child secure within the lesson: <b>"Build your own key"</b> with two yes/no questions. Depth, not more of the same - without overloading working memory.</p>
+            <span class="print">🖨 Stretch card ready</span></div>
+          <p class="muted" style="font-size:11.5px;margin:4px 0 0">Support is value-added for all, not a bolt-on for fast finishers. Suggested at each threshold: working towards → secure → greater depth.</p></div>
+        <div class="aside"><h4>◈ Differentiation key <span class="muted" style="font-weight:400;font-size:11px;margin-left:4px">teacher-only</span></h4>
+          <div class="diffkey">
+            <div><span class="sw" style="background:var(--support)"></span> Support - picture key + stems</div>
+            <div><span class="sw" style="background:var(--core)"></span> Core - sort &amp; explain one</div>
+            <div><span class="sw" style="background:var(--secure)"></span> Secure - less scaffold</div>
+            <div><span class="sw" style="background:var(--stretch)"></span> Stretch - build a key</div>
+          </div></div>
+        <div class="aside"><h4>◫ Covers</h4><span class="note" style="display:inline-block">NC · KS2 Science (Y4) - group living things; use classification keys</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabp" data-lt="1">
+    <div class="sldgrid">
+      <div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>Sort these animals</h4></div></div>
+      <div class="sld"><div class="h" style="background:#2f9b96">Vocabulary</div><div class="c"><div class="n">Slide 2</div><h4>Four words, dual-coded</h4></div></div>
+      <div class="sld"><div class="h" style="background:#3aa7a1">Show me how</div><div class="c"><div class="n">Slide 3</div><h4>The classification key</h4></div></div>
+      <div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Vertebrate or not?</h4></div></div>
+      <div class="sld"><div class="h" style="background:#cf6d3d">Your turn</div><div class="c"><div class="n">Slide 5</div><h4>Sort - your way in</h4></div></div>
+      <div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Recall &amp; exit</h4></div></div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" onclick="openPresent()">▶ Present full screen</button><span class="muted" style="font-size:13px">Animated, dual-coded, video optional. Present mode: arrow keys, teacher prompts.</span></div>
+  </div>
+
+  <div class="tabp" data-lt="2">
+    <div class="card" style="max-width:720px">
+      <h3 style="margin:0 0 4px">Rubric - classification</h3>
+      <p class="muted" style="font-size:13.5px;margin:0 0 14px">Tap a level per criterion; feedback writes itself and logs to coverage.</p>
+      <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Sorts by structure, not appearance</b></div><div class="seg"><button>Working towards</button><button class="on" style="border-color:var(--good);background:var(--good)">Secure</button><button>Greater depth</button></div></div>
+      <div class="set-row"><div class="l"><b>Uses a key to name a group</b></div><div class="seg"><button class="on">Working towards</button><button>Secure</button><button>Greater depth</button></div></div>
+      <div class="set-row"><div class="l"><b>Explains a choice with "backbone"</b></div><div class="seg"><button>Working towards</button><button class="on">Secure</button><button>Greater depth</button></div></div>
+      <div class="note" style="margin-top:14px">Logs against the objective on the class coverage map. Verbal feedback in the moment; this is the record.</div>
+    </div>
+  </div>
+</section>
+<!-- MARK THIS WEEK -->
+<section class="apage hide" data-ap="mark">
+  <div class="phead"><div><h1>Mark this week</h1><p>Your whole class on one screen. The objective's already linked - you only record what happened.</p></div></div>
+  <div class="weekstrip"><span class="df" style="font-size:12px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:1px;margin-right:6px">Spring · HT1</span>
+    <button class="wk" onclick="setWk(this)">Wk 1<small>place value</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 2<small>add &amp; sub</small></button>
+    <button class="wk on" onclick="setWk(this)">Wk 3<small>fractions</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 4<small>fractions</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 5<small>decimals</small></button>
+    <button class="wk" onclick="setWk(this)">Wk 6<small>consolidate</small></button>
+  </div>
+  <div class="card" style="margin-bottom:14px"><div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap"><div><div class="df" style="font-weight:600;font-size:16px">Recognise and show equivalent fractions</div><div style="font-size:13px;color:var(--ink-soft);margin-top:3px">From your medium-term plan · <span class="wrtag">White Rose · Y4 Spring · B3 S4</span></div></div><button class="btn btn-ghost" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Open the lesson ↗</button></div></div>
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px">
+    <button class="btn btn-ghost" onclick="allSecure()">Reset - whole class met it</button>
+    <div class="legend"><span><i style="background:var(--wt)"></i> Working towards</span><span><i style="background:var(--sec)"></i> Secure</span><span><i style="background:var(--gd)"></i> Greater depth</span></div>
+    <span class="muted" style="font-size:12.5px;margin-left:auto">Class starts as "met" - tap the few who didn't, or who went beyond.</span>
+  </div>
+  <div class="card" style="margin-bottom:14px;background:var(--card2)">
+    <button class="df" style="width:100%;text-align:left;font-weight:600;font-size:14.5px;color:var(--accent);display:flex;align-items:center;gap:9px;padding:0;margin-bottom:11px" onclick="toggleDesc(this)">
+      ▼ What does each level mean for this objective?
+    </button>
+    <div id="descbox" style="display:none">
+      <div style="border-top:1px solid var(--line);padding-top:11px">
+        <div style="margin-bottom:13px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><span style="width:13px;height:13px;border-radius:4px;background:var(--wt)"></span><b style="font-family:var(--display);font-size:14px">Working towards</b></div>
+          <p style="margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.55">Recognises some equivalent fractions using concrete materials or visual representations. May need support to explain the relationship between the numerator and denominator. Can identify equivalent pairs in familiar contexts (e.g. 1/2 and 2/4 with a bar model shown).</p>
+        </div>
+        <div style="margin-bottom:13px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><span style="width:13px;height:13px;border-radius:4px;background:var(--sec)"></span><b style="font-family:var(--display);font-size:14px">Secure</b></div>
+          <p style="margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.55">Recognises and can show equivalent fractions using visual representations. Understands that multiplying (or dividing) the numerator and denominator by the same number creates an equivalent fraction. Can generate equivalent fractions and name them (e.g. 2/4, 3/6, 4/8 are all equal to 1/2).</p>
+        </div>
+        <div style="margin-bottom:6px">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px"><span style="width:13px;height:13px;border-radius:4px;background:var(--gd)"></span><b style="font-family:var(--display);font-size:14px">Greater depth</b></div>
+          <p style="margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.55">Applies understanding of equivalent fractions to reason about and compare fractions. Explains the relationship between fractions with different denominators (e.g. "3/4 is more than 2/3 because..."). Can work backwards: given a fraction, name all equivalent fractions to a certain limit, or reason about which is the simplest form.</p>
+        </div>
+        <p style="margin:11px 0 0;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-soft)"><i>Descriptors derived from England NC (2014) and typical Year 4 progression. If a child doesn't fit one level cleanly, mark the best fit - the record captures the conversation, not the label.</i></p>
+      </div>
+    </div>
+  </div>
+  <div class="kgrid" id="kgrid"></div>
+  <div class="note" style="margin-top:14px">Verbal feedback in the moment, tracked by tap. The record is your evidence - no written marking. Your school sets the policy; SEQUENS provides the proof feedback happened and what came next.</div>
+  <div class="summary"><div><b id="s-sec">-</b> <span>secure</span></div><div><b id="s-wt">-</b> <span>working towards</span></div><div><b id="s-gd">-</b> <span>greater depth</span></div><div class="sp"></div><div class="nt">Logged to coverage. Verbal feedback ready for the <b id="s-non">-</b> who need a word.</div><button class="b2" onclick="alert('Demo: compact ink-light strips, only for those who need one.')">Print strips</button><button class="b1" onclick="alert('Demo: saved to class coverage.')">Save</button></div>
+</section>
+
+<!-- CLASS COVERAGE -->
+<section class="apage hide" data-ap="coverage">
+  <div class="phead"><div><h1>Class coverage</h1><p>Every objective this term, and where the class is - drawn straight from your marking.</p></div>
+    <button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">Make a report ▦</button></div>
+  <div class="legend" style="margin-bottom:10px"><span><i style="background:var(--sec)"></i> Secure</span><span><i style="background:var(--wt)"></i> Working towards</span><span><i style="background:var(--gd)"></i> Greater depth</span><span><i style="background:var(--line-soft)"></i> Not yet taught</span></div>
+  <div class="card">
+    <div class="cov-row" style="border-top:none"><div class="obj"><b>Equivalent fractions</b><br><small>White Rose B3 S4 · this week</small></div><div class="bar"><i class="se" style="width:64%"></i><i class="gdb" style="width:7%"></i><i class="wtb" style="width:14%"></i></div><div class="v">22/28 met</div></div>
+    <div class="cov-row"><div class="obj"><b>Add &amp; subtract fractions</b><br><small>B3 S3</small></div><div class="bar"><i class="se" style="width:79%"></i><i class="gdb" style="width:11%"></i></div><div class="v">25/28</div></div>
+    <div class="cov-row"><div class="obj"><b>Place value to 10,000</b><br><small>B1</small></div><div class="bar"><i class="se" style="width:89%"></i><i class="gdb" style="width:11%"></i></div><div class="v">secure</div></div>
+    <div class="cov-row"><div class="obj"><b>Tenths as decimals</b><br><small>B4 · next week</small></div><div class="bar"></div><div class="v">to teach</div></div>
+    <div class="cov-row"><div class="obj"><b>Multiply 2-digit numbers</b><br><small>B2</small></div><div class="bar"><i class="se" style="width:54%"></i><i class="wtb" style="width:32%"></i></div><div class="v">15/28 · gap</div></div>
+  </div>
+  <div class="note" style="margin-top:14px">Gaps are visible at a glance. "Multiply 2-digit" is the one to revisit - SEQUENS will surface it for retrieval.</div>
+</section>
+
+<!-- REPORTS -->
+<section class="apage hide" data-ap="reports">
+  <div class="phead"><div><h1>Reports</h1><p>Turn coverage into a record - for leadership, parents, or a pupil's file.</p></div>
+    <button class="btn btn-primary" onclick="alert('Demo: print / save as PDF.')">Print / Save PDF</button></div>
+  <div class="paper">
+    <div class="wm"><span class="d"></span>SEQUENS TEACHER</div>
+    <h1 class="dt">Class progress summary - Year 4 (Mr Adel)</h1>
+    <div class="meta"><div><b>Subject:</b> Mathematics</div><div><b>Period:</b> Spring · half-term 1</div><div><b>Pupils:</b> 28</div><div><b>Prepared:</b> 16 June 2026</div></div>
+    <h3 class="sec">Where the class is</h3>
+    <p class="bd">The class is secure or beyond on place value, addition and subtraction of fractions, and is mostly secure on equivalent fractions (22 of 28). The clear gap is multiplying two-digit numbers (15 of 28 secure), now scheduled for retrieval.</p>
+    <h3 class="sec">How we assess and feed back</h3>
+    <p class="bd">Feedback is given verbally in lessons and recorded against each objective. The record shows what was assessed, the level reached, and the next step set, per pupil, over time. This is the school's evidence of responsive feedback; written book-marking is not used.</p>
+    <h3 class="sec">Next steps</h3>
+    <p class="bd">Whole-class retrieval on two-digit multiplication; targeted support for four pupils on equivalent fractions; stretch toward greater depth for the six already secure.</p>
+    <p class="disc">Prepared with SEQUENS. Levels reflect teacher assessment recorded against the school's chosen framework and are a professional judgement, not a formal test outcome. The school sets its own marking and feedback policy.</p>
+  </div>
+</section>
+<!-- CURRICULUM SETUP (SLT) -->
+<section class="apage hide" data-ap="setup">
+  <div class="phead"><div><h1>Curriculum setup</h1><p>Leadership uploads the medium-term plans once. After that, every teacher just clicks their week.</p></div></div>
+  <div class="grid2">
+    <div>
+      <div class="drop"><div class="ic">⬆</div><div class="df" style="font-weight:600;margin-top:8px">Drop your medium-term plans here</div><p class="muted" style="font-size:13px;margin:5px 0 0">Word, PDF or spreadsheet · one per subject / year group</p><button class="btn btn-ghost" style="margin-top:12px">Choose files</button></div>
+      <div class="note" style="margin-top:14px">About 40 minutes, once a year, if your plans already exist. SEQUENS reads each into a week-by-week sequence - you review and confirm. This keeps the curriculum <b>yours</b>, owned by leadership, not generated by a machine.</div>
+    </div>
+    <div class="card">
+      <div class="df" style="font-weight:600;font-size:15px;margin-bottom:4px">Extracted - Year 4 Maths <span class="wrtag" style="margin-left:6px">White Rose order</span></div>
+      <p class="muted" style="font-size:12.5px;margin:0 0 6px">Review and confirm. Edit anything that didn't read cleanly.</p>
+      <div class="exrow" style="border-top:none"><span class="wkn">Wk 1</span><span>Place value within 10,000</span><span class="ok">✓ read</span></div>
+      <div class="exrow"><span class="wkn">Wk 2</span><span>Add &amp; subtract · mental and written</span><span class="ok">✓ read</span></div>
+      <div class="exrow"><span class="wkn">Wk 3</span><span>Equivalent fractions</span><span class="ok">✓ read</span></div>
+      <div class="exrow"><span class="wkn">Wk 4</span><span>Add fractions (same denominator)</span><span class="ok">✓ read</span></div>
+      <div class="exrow"><span class="wkn">Wk 5</span><span>Tenths as decimals</span><span class="ok">✓ read</span></div>
+      <div class="exrow"><span class="wkn">Wk 6</span><span>Consolidate &amp; assess</span><span class="ok">✓ read</span></div>
+      <div style="margin-top:14px;display:flex;gap:8px"><button class="btn btn-primary">Confirm year</button><button class="btn btn-ghost">Edit</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- PUPILS -->
+<section class="apage hide" data-ap="pupils">
+  <div class="phead"><div><h1>Classes &amp; pupils</h1><p>The little SEQUENS knows about a pupil sharpens the support - and nothing identifying is needed to plan.</p></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin:0 0 8px">Year 4 · Mr Adel · 28 pupils</h3>
+      <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Yusuf · working towards in fractions</b><p>Reading level: developing · EAL</p></div><button class="btn btn-ghost" style="font-size:12px;padding:6px 11px">Open</button></div>
+      <div class="set-row"><div class="l"><b>Maya · greater depth</b><p>Ready for stretch tasks across maths</p></div><button class="btn btn-ghost" style="font-size:12px;padding:6px 11px">Open</button></div>
+      <div class="set-row"><div class="l"><b>Lina · SEND - processing</b><p>Benefits from sentence stems &amp; pre-teach</p></div><button class="btn btn-ghost" style="font-size:12px;padding:6px 11px">Open</button></div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 6px">How support is generated</h3>
+      <p class="muted" style="font-size:13.5px;margin:0 0 10px">When a lesson warrants it, SEQUENS produces the scaffolds for the named groups - sentence stems, vocab pre-teach, picture keys - as on-screen prompts and ink-light printables for books.</p>
+      <div class="note">No pupil names or work leave the school to plan a lesson. Pupil profiles stay in your school's space, under leadership's account.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="apage hide" data-ap="settings">
+  <div class="phead"><div><h1>Settings</h1><p>School context, and the safeguards that travel with every lesson.</p></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin:0 0 4px">School context</h3>
+      <div class="set-row" style="border-top:none;padding-top:6px"><div class="l"><b>Curriculum set</b><p>England NC + your medium-term plans</p></div><button class="btn btn-ghost" style="font-size:12px;padding:6px 11px">Change</button></div>
+      <div class="set-row"><div class="l"><b>Cultural context</b><p>British school overseas · Egypt - content reviewed for local appropriateness</p></div><button class="btn btn-ghost" style="font-size:12px;padding:6px 11px">Set</button></div>
+      <div class="set-row"><div class="l"><b>Marking policy</b><p>Verbal feedback, digitally tracked - no written book-marking</p></div><span class="tog on"><span class="t"></span></span></div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 8px">Safeguards</h3>
+      <div class="set-row" style="border-top:none;padding-top:6px"><div class="l"><b>Pupil data minimisation</b><p>No pupil personal data required to plan; leadership holds the account</p></div><span class="note" style="font-size:11px">on</span></div>
+      <div class="set-row"><div class="l"><b>Media - preview &amp; confirm</b><p>Video off by default; previewed in privacy mode before it embeds</p></div><span class="note" style="font-size:11px">on</span></div>
+      <div class="set-row"><div class="l"><b>Teacher review</b><p>Every generated lesson is marked AI-assisted; you are the final check</p></div><span class="note" style="font-size:11px">on</span></div>
+    </div>
+  </div>
+</section>
+  </main>
+</div></div>
+
+<!-- PRESENT OVERLAY (deck) -->
+<div id="present">
+  <div class="pbar"><button onclick="closePresent()">✕ Close</button><span style="opacity:.85;font-size:13px">Presenting · Year 4 Science · Classifying living things</span></div>
+  <iframe id="deckframe" title="Lesson deck" srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>SEQUENS - lesson deck</title>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Andika:wght@400;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+:root{
+  --bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;
+  --accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
+  --support:#7FBDB9;--core:#1F8E8A;--stretch:#C45F2E;
+  --display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:var(--body);background:#2a221c;color:var(--ink);overflow:hidden}
+.stage-wrap{height:100vh;display:flex;flex-direction:column}
+/* deck surface */
+.deck{flex:1;position:relative;margin:18px;border-radius:18px;background:var(--bg);overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.4)}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:54px 64px;animation:slidein .5s ease both}
+.slide.active{display:flex}
+@keyframes slidein{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.stage-tag{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px}
+.stage-tag.act{color:var(--accent)}.stage-tag.end{color:var(--ink)}
+.stage-tag .pip{width:11px;height:11px;border-radius:50%;background:currentColor}
+h1.slh{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.08;margin:14px 0 0;max-width:20ch}
+.lo{margin-top:16px;font-size:20px;color:var(--ink-soft);max-width:36ch}
+.ncchip{margin-top:auto;align-self:flex-start;font-family:var(--display);font-size:13px;font-weight:600;color:#15706c;background:var(--teal-soft);border-radius:20px;padding:7px 14px}
+.brandmark{position:absolute;top:24px;right:30px;font-family:var(--display);font-weight:700;letter-spacing:1px;font-size:14px;color:var(--accent);display:flex;align-items:center;gap:8px;opacity:.9}
+.brandmark .d{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+/* reveal animations (restart each time slide becomes active) */
+.reveal{opacity:0;animation:rise .55s ease forwards}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.pop{opacity:0;animation:pop .5s cubic-bezier(.2,1.3,.4,1) forwards}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.d1{animation-delay:.12s}.d2{animation-delay:.26s}.d3{animation-delay:.4s}.d4{animation-delay:.54s}.d5{animation-delay:.68s}.d6{animation-delay:.82s}
+.draw{stroke-dasharray:240;stroke-dashoffset:240;animation:draw .9s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.slide.active .draw{animation:draw .9s ease forwards}
+/* animal hook row */
+.iconrow{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px}
+.animal{display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink-soft)}
+.animal .chip{width:96px;height:96px;border-radius:18px;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 3px 12px rgba(58,46,38,.06)}
+.prompt-q{font-size:22px;margin-top:22px;max-width:30ch}
+/* vocab dual-coding cards */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px;max-width:920px}
+.vcard{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;box-shadow:0 3px 12px rgba(58,46,38,.05)}
+.vcard .ic{width:74px;height:74px;border-radius:14px;background:var(--teal-soft);display:grid;place-items:center;flex:0 0 auto}
+.vcard h4{font-family:var(--display);font-size:20px;margin:0 0 3px}
+.vcard p{margin:0;font-size:15px;color:var(--ink-soft)}
+/* key diagram */
+.keywrap{margin-top:24px;display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
+.keynote{max-width:300px;font-size:16px;color:var(--ink-soft)}
+.knode{font-family:var(--display);font-weight:600;font-size:15px}
+/* hinge */
+.hopt{display:flex;flex-direction:column;gap:14px;margin-top:26px;max-width:760px}
+.hbtn{text-align:left;border:2px solid var(--line);background:var(--card2);border-radius:14px;padding:16px 18px;font-family:var(--body);font-size:17px;cursor:pointer;transition:.18s;display:flex;gap:12px;align-items:flex-start}
+.hbtn .lab{font-family:var(--display);font-weight:700;color:var(--ink-soft)}
+.hbtn:hover{border-color:var(--accent)}
+.hbtn.right{border-color:var(--good);background:#f0f6ec}.hbtn.right .lab{color:var(--good)}
+.hbtn.wrong{border-color:var(--accent-soft);opacity:.6}
+.hexpl{margin-top:18px;font-size:17px;color:var(--good);max-width:60ch;opacity:0;transition:.3s}
+.hexpl.show{opacity:1}
+/* differentiation columns */
+.diffcols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px;max-width:1000px}
+.dcol{border-radius:16px;padding:20px;border:1px solid var(--line);background:var(--card2)}
+.dcol .band{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.dcol .sw{width:14px;height:14px;border-radius:4px}
+.dcol p{margin:0;font-size:17px}
+.teacheronly{margin-top:16px;font-size:13px;color:var(--ink-soft)}
+/* video */
+.vidcard{margin-top:26px;max-width:760px}
+.vidcard .frame{background:#000;border-radius:14px;overflow:hidden;aspect-ratio:16/9;display:grid;place-items:center;color:#fff}
+.optnote{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:22px;max-width:620px;margin-top:24px}
+.optnote h3{font-family:var(--display);margin:0 0 6px}
+.optnote p{margin:0;color:var(--ink-soft)}
+/* recap */
+.recap{display:flex;gap:30px;margin-top:30px}
+.recap .animal .chip{width:86px;height:86px}
+.exitq{margin-top:auto;font-size:21px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:18px 22px;align-self:flex-start}
+/* teacher prompt strip */
+.tprompt{position:absolute;left:0;right:0;bottom:0;background:rgba(58,46,38,.94);color:#F4ECDE;padding:14px 64px;font-size:15px;display:none;align-items:center;gap:12px}
+.tprompt.show{display:flex}
+.tprompt b{font-family:var(--display);color:var(--gold);font-size:12px;letter-spacing:1px;text-transform:uppercase}
+/* control bar */
+.bar{height:58px;display:flex;align-items:center;gap:14px;padding:0 24px;color:#F4ECDE;font-family:var(--display)}
+.bar .nav{display:flex;align-items:center;gap:10px}
+.bar button{font-family:var(--display);font-weight:600;font-size:14px;color:#F4ECDE;border:1px solid rgba(244,236,222,.3);background:rgba(244,236,222,.06);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
+.bar button:hover{background:rgba(244,236,222,.16)}
+.bar .count{font-size:14px;opacity:.8;min-width:54px;text-align:center}
+.bar .sp{flex:1}
+.tg{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none}
+.tg .t{width:38px;height:22px;border-radius:12px;background:rgba(244,236,222,.2);position:relative;transition:.18s}
+.tg .t::after{content:&quot;&quot;;position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#F4ECDE;transition:.18s}
+.tg.on .t{background:var(--teal)}.tg.on .t::after{left:18px}
+.dots{display:flex;gap:6px}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(244,236,222,.25)}
+.dots i.on{background:var(--accent);width:18px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class=&quot;stage-wrap&quot;>
+  <div class=&quot;deck&quot; id=&quot;deck&quot;>
+
+    <!-- 1 TITLE -->
+    <section class=&quot;slide active&quot; data-tp=&quot;Open by activating what they already know about animals.&quot;>
+      <div class=&quot;brandmark&quot;><span class=&quot;d&quot;></span>SEQUENS</div>
+      <div class=&quot;stage-tag reveal&quot;><span class=&quot;pip&quot;></span>Year 4 · Science · Living things &amp;amp; their habitats</div>
+      <h1 class=&quot;slh reveal d1&quot;>How do we classify living things?</h1>
+      <p class=&quot;lo reveal d2&quot;>Learning objective: I can use a classification key to sort living things into groups.</p>
+      <div class=&quot;ncchip reveal d3&quot;>NC · KS2 Science (Y4) - group living things; explore and use classification keys</div>
+    </section>
+
+    <!-- 2 FIRST THING -->
+    <section class=&quot;slide&quot; data-tp=&quot;Don't give the rule yet - listen for the thinking. Backbone? legs? where it lives?&quot;>
+      <div class=&quot;stage-tag reveal&quot;><span class=&quot;pip&quot;></span>First thing</div>
+      <p class=&quot;prompt-q reveal d1&quot;><b>Sort these six animals into two groups.</b> How did you decide?</p>
+      <div class=&quot;iconrow&quot;>
+        <div class=&quot;animal pop d1&quot;><span class=&quot;chip&quot; id=&quot;a-fish&quot;></span>fish</div>
+        <div class=&quot;animal pop d2&quot;><span class=&quot;chip&quot; id=&quot;a-bird&quot;></span>bird</div>
+        <div class=&quot;animal pop d3&quot;><span class=&quot;chip&quot; id=&quot;a-beetle&quot;></span>beetle</div>
+        <div class=&quot;animal pop d4&quot;><span class=&quot;chip&quot; id=&quot;a-snail&quot;></span>snail</div>
+        <div class=&quot;animal pop d5&quot;><span class=&quot;chip&quot; id=&quot;a-frog&quot;></span>frog</div>
+        <div class=&quot;animal pop d6&quot;><span class=&quot;chip&quot; id=&quot;a-snake&quot;></span>snake</div>
+      </div>
+    </section>
+
+    <!-- 3 VOCABULARY (dual coding) -->
+    <section class=&quot;slide&quot; data-tp=&quot;Say each word, show the image, have them repeat it. Picture + word together - that is the point.&quot;>
+      <div class=&quot;stage-tag reveal&quot;><span class=&quot;pip&quot;></span>Key vocabulary</div>
+      <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:30px&quot;>Four words to carry through the lesson</h1>
+      <div class=&quot;vocab&quot;>
+        <div class=&quot;vcard reveal d1&quot;><span class=&quot;ic&quot; id=&quot;v-classify&quot;></span><div><h4>classify</h4><p>to sort things into groups</p></div></div>
+        <div class=&quot;vcard reveal d2&quot;><span class=&quot;ic&quot; id=&quot;v-vert&quot;></span><div><h4>vertebrate</h4><p>an animal <b>with</b> a backbone</p></div></div>
+        <div class=&quot;vcard reveal d3&quot;><span class=&quot;ic&quot; id=&quot;v-invert&quot;></span><div><h4>invertebrate</h4><p>an animal with <b>no</b> backbone</p></div></div>
+        <div class=&quot;vcard reveal d4&quot;><span class=&quot;ic&quot; id=&quot;v-key&quot;></span><div><h4>classification key</h4><p>yes / no questions that sort things into groups</p></div></div>
+      </div>
+    </section>
+
+    <!-- 4 SHOW ME HOW -->
+    <section class=&quot;slide&quot; data-tp=&quot;Model the key out loud. Think like a scientist: one yes/no question at a time.&quot;>
+      <div class=&quot;stage-tag reveal&quot;><span class=&quot;pip&quot;></span>Show me how</div>
+      <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:30px&quot;>A key is just yes / no questions</h1>
+      <div class=&quot;keywrap&quot;>
+        <svg viewBox=&quot;0 0 460 300&quot; width=&quot;560&quot; style=&quot;max-width:62vw&quot;>
+          <!-- root -->
+          <rect class=&quot;reveal d1&quot; x=&quot;150&quot; y=&quot;10&quot; width=&quot;160&quot; height=&quot;44&quot; rx=&quot;10&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;reveal d1&quot; x=&quot;230&quot; y=&quot;37&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;600&quot; fill=&quot;#3A2E26&quot;>Has a backbone?</text>
+          <!-- branches -->
+          <line class=&quot;draw&quot; x1=&quot;200&quot; y1=&quot;54&quot; x2=&quot;90&quot; y2=&quot;120&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.5&quot;/>
+          <line class=&quot;draw&quot; x1=&quot;260&quot; y1=&quot;54&quot; x2=&quot;370&quot; y2=&quot;120&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.5&quot;/>
+          <text class=&quot;reveal d3&quot; x=&quot;120&quot; y=&quot;92&quot; font-family=&quot;Quicksand&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#5C8A4A&quot;>YES</text>
+          <text class=&quot;reveal d3&quot; x=&quot;320&quot; y=&quot;92&quot; font-family=&quot;Quicksand&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#C45F2E&quot;>NO</text>
+          <!-- leaf left -->
+          <rect class=&quot;reveal d4&quot; x=&quot;20&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;42&quot; rx=&quot;10&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;reveal d4&quot; x=&quot;90&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#15706c&quot;>VERTEBRATE</text>
+          <!-- leaf right -->
+          <rect class=&quot;reveal d4&quot; x=&quot;300&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;42&quot; rx=&quot;10&quot; fill=&quot;#F3E2D6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;reveal d4&quot; x=&quot;370&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#A94E22&quot;>INVERTEBRATE</text>
+          <!-- second level under vertebrate -->
+          <line class=&quot;draw&quot; x1=&quot;70&quot; y1=&quot;162&quot; x2=&quot;40&quot; y2=&quot;216&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/>
+          <line class=&quot;draw&quot; x1=&quot;110&quot; y1=&quot;162&quot; x2=&quot;150&quot; y2=&quot;216&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/>
+          <rect class=&quot;reveal d6&quot; x=&quot;0&quot; y=&quot;216&quot; width=&quot;86&quot; height=&quot;38&quot; rx=&quot;9&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#cdbfa8&quot; stroke-width=&quot;1.6&quot;/>
+          <text class=&quot;reveal d6&quot; x=&quot;43&quot; y=&quot;240&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; fill=&quot;#6F6155&quot;>feathers → bird</text>
+          <rect class=&quot;reveal d6&quot; x=&quot;112&quot; y=&quot;216&quot; width=&quot;96&quot; height=&quot;38&quot; rx=&quot;9&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#cdbfa8&quot; stroke-width=&quot;1.6&quot;/>
+          <text class=&quot;reveal d6&quot; x=&quot;160&quot; y=&quot;240&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; fill=&quot;#6F6155&quot;>fins → fish</text>
+        </svg>
+        <p class=&quot;keynote reveal d5&quot;>Each question splits the group in two. Keep asking until every animal has a name. <b>Notice we ask about structure - not what it looks like.</b></p>
+      </div>
+    </section>
+
+    <!-- 5 DO IT TOGETHER -->
+    <section class=&quot;slide&quot; data-tp=&quot;Take a vote at each question before revealing. Hands up: backbone or not?&quot;>
+      <div class=&quot;stage-tag reveal&quot;><span class=&quot;pip&quot;></span>Do it together</div>
+      <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:30px&quot;>Let's classify the frog</h1>
+      <div class=&quot;keywrap&quot; style=&quot;align-items:center&quot;>
+        <span class=&quot;chip pop d1&quot; id=&quot;a-frog2&quot; style=&quot;width:130px;height:130px;border-radius:22px;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center&quot;></span>
+        <div>
+          <div class=&quot;knode reveal d2&quot; style=&quot;margin-bottom:10px&quot;>① Has a backbone? <span style=&quot;color:var(--good)&quot;>YES</span> → <b>vertebrate</b></div>
+          <div class=&quot;knode reveal d3&quot; style=&quot;margin-bottom:10px&quot;>② Feathers, fur, scales, or moist skin? <span style=&quot;color:var(--good)&quot;>moist skin</span></div>
+          <div class=&quot;knode reveal d4&quot; style=&quot;margin-bottom:10px&quot;>③ Lives in water <i>and</i> on land? <span style=&quot;color:var(--good)&quot;>YES</span></div>
+          <div class=&quot;knode reveal d5&quot; style=&quot;font-size:19px;color:var(--accent)&quot;>→ a frog is an <b>amphibian</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 QUICK CHECK / HINGE -->
+    <section class=&quot;slide&quot; data-tp=&quot;If many choose A, re-model: looks are not structure. A snake has many small backbones.&quot;>
+      <div class=&quot;stage-tag act reveal&quot;><span class=&quot;pip&quot;></span>Quick check</div>
+      <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:30px&quot;>A snake is long and bendy with no legs.</h1>
+      <p class=&quot;lo reveal d2&quot; style=&quot;margin-top:8px&quot;>Vertebrate or invertebrate?</p>
+      <div class=&quot;hopt&quot;>
+        <button class=&quot;hbtn reveal d3&quot; onclick=&quot;hinge(this,false)&quot;><span class=&quot;lab&quot;>A</span><span>Invertebrate - it is bendy and has no legs.</span></button>
+        <button class=&quot;hbtn reveal d4&quot; onclick=&quot;hinge(this,true)&quot;><span class=&quot;lab&quot;>B</span><span>Vertebrate - it has a backbone.</span></button>
+      </div>
+      <p class=&quot;hexpl&quot; id=&quot;hexpl&quot;><b>B is correct.</b> Appearance can fool us. A snake bends <i>because</i> it has many small backbones - its structure, not its shape, decides the group.</p>
+    </section>
+
+    <!-- 7 YOUR TURN (differentiation) -->
+    <section class=&quot;slide&quot; data-tp=&quot;Everyone works toward the same idea. The support and stretch are value-added, not busywork.&quot;>
+      <div class=&quot;stage-tag act reveal&quot;><span class=&quot;pip&quot;></span>Your turn</div>
+      <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:30px&quot;>Sort the animals - your way in</h1>
+      <div class=&quot;diffcols&quot;>
+        <div class=&quot;dcol reveal d1&quot;><span class=&quot;band&quot; style=&quot;color:#5a9b96&quot;><span class=&quot;sw&quot; style=&quot;background:var(--support)&quot;></span>Support</span><p>Use the <b>picture key</b> to sort 4 animals into vertebrate or invertebrate.</p></div>
+        <div class=&quot;dcol reveal d2&quot;><span class=&quot;band&quot; style=&quot;color:#15706c&quot;><span class=&quot;sw&quot; style=&quot;background:var(--core)&quot;></span>Core</span><p>Sort 6 animals and <b>explain one choice</b> using the word <i>backbone</i>.</p></div>
+        <div class=&quot;dcol reveal d3&quot;><span class=&quot;band&quot; style=&quot;color:var(--accent)&quot;><span class=&quot;sw&quot; style=&quot;background:var(--stretch)&quot;></span>Stretch</span><p><b>Build your own key</b> with two yes/no questions for 4 animals of your choice.</p></div>
+      </div>
+      <p class=&quot;teacheronly reveal d4&quot;>Differentiation is a teacher-only key - pupils see one shared task, entered at the right level.</p>
+    </section>
+
+    <!-- 8 VIDEO (optional) -->
+    <section class=&quot;slide&quot; data-tp=&quot;Optional. This lesson stands on its own; a clip is a choice, not a requirement.&quot;>
+      <div class=&quot;stage-tag reveal&quot;><span class=&quot;pip&quot;></span>Watch · optional</div>
+      <div id=&quot;vid-off&quot;>
+        <div class=&quot;optnote reveal d1&quot;>
+          <h3>A video is optional here.</h3>
+          <p>This lesson teaches fully without one, and many teachers prefer to keep the modelling live. Turn a clip on only if it adds something the room needs.</p>
+        </div>
+        <label class=&quot;tg reveal d2&quot; style=&quot;margin-top:18px;color:var(--ink)&quot; onclick=&quot;loadVideo()&quot;><span class=&quot;t&quot;></span> Load the video for this objective</label>
+      </div>
+      <div id=&quot;vid-on&quot; style=&quot;display:none&quot;>
+        <h1 class=&quot;slh&quot; style=&quot;font-size:26px&quot;>Living things &amp;amp; their habitats - Year 4</h1>
+        <div class=&quot;vidcard&quot;><div class=&quot;frame&quot; id=&quot;vframe&quot;>…</div></div>
+        <p class=&quot;teacheronly&quot;>Closest match for this objective, in privacy mode. In the product, you preview and confirm before it embeds.</p>
+      </div>
+    </section>
+
+    <!-- 9 LAST THING -->
+    <section class=&quot;slide&quot; data-tp=&quot;Quick recall - hands show backbone or no backbone. Then one word each on the way out.&quot;>
+      <div class=&quot;stage-tag end reveal&quot;><span class=&quot;pip&quot;></span>Last thing</div>
+      <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:32px&quot;>Show me with your hands</h1>
+      <p class=&quot;lo reveal d2&quot;>Backbone, or no backbone?</p>
+      <div class=&quot;recap&quot;>
+        <div class=&quot;animal pop d2&quot;><span class=&quot;chip&quot; id=&quot;r-vert&quot;></span>vertebrate</div>
+        <div class=&quot;animal pop d3&quot;><span class=&quot;chip&quot; id=&quot;r-invert&quot;></span>invertebrate</div>
+        <div class=&quot;animal pop d4&quot;><span class=&quot;chip&quot; id=&quot;r-key&quot;></span>key</div>
+      </div>
+      <p class=&quot;exitq reveal d5&quot;>Exit ticket: name one <b>vertebrate</b> and one <b>invertebrate</b> from today.</p>
+    </section>
+
+    <div class=&quot;tprompt&quot; id=&quot;tprompt&quot;><b>Teacher</b><span id=&quot;tprompt-text&quot;></span></div>
+  </div>
+
+  <div class=&quot;bar&quot;>
+    <div class=&quot;nav&quot;>
+      <button onclick=&quot;go(-1)&quot;>‹ Back</button>
+      <span class=&quot;count&quot; id=&quot;count&quot;>1 / 9</span>
+      <button onclick=&quot;go(1)&quot;>Next ›</button>
+    </div>
+    <div class=&quot;dots&quot; id=&quot;dots&quot;></div>
+    <div class=&quot;sp&quot;></div>
+    <label class=&quot;tg&quot; onclick=&quot;toggleTP(this)&quot;><span class=&quot;t&quot;></span> Teacher prompts</label>
+    <label class=&quot;tg&quot; id=&quot;vidtg&quot; onclick=&quot;toggleVid(this)&quot;><span class=&quot;t&quot;></span> Video slot</label>
+  </div>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let i=0, videoEnabled=false;
+function render(){
+  slides.forEach((s,n)=>s.classList.toggle('active',n===i));
+  document.getElementById('count').textContent=(i+1)+' / '+slides.length;
+  document.querySelectorAll('#dots i').forEach((d,n)=>d.classList.toggle('on',n===i));
+  const tp=document.getElementById('tprompt');
+  document.getElementById('tprompt-text').textContent=slides[i].dataset.tp||'';
+  // keep teacher-prompt visibility state
+  tp.classList.toggle('show', tpOn &amp;&amp; !!slides[i].dataset.tp);
+}
+function go(d){ i=Math.min(slides.length-1,Math.max(0,i+d)); render(); }
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){go(1);e.preventDefault();}
+  if(e.key==='ArrowLeft'){go(-1);}
+});
+// dots
+const dotsEl=document.getElementById('dots');
+slides.forEach((_,n)=>{const d=document.createElement('i');d.onclick=()=>{i=n;render();};dotsEl.appendChild(d);});
+// hinge
+function hinge(btn,correct){
+  document.querySelectorAll('.hbtn').forEach(b=>b.classList.add(b===btn?(correct?'right':'wrong'):''));
+  if(!correct){document.querySelectorAll('.hbtn').forEach(b=>{if(b.querySelector('.lab').textContent==='B')b.classList.add('right')});}
+  document.getElementById('hexpl').classList.add('show');
+}
+// teacher prompts
+let tpOn=false;
+function toggleTP(el){tpOn=!tpOn;el.classList.toggle('on',tpOn);render();}
+// video
+function toggleVid(el){videoEnabled=!videoEnabled;el.classList.toggle('on',videoEnabled);
+  if(!videoEnabled){document.getElementById('vid-on').style.display='none';document.getElementById('vid-off').style.display='';document.getElementById('vframe').innerHTML='…';}
+}
+function loadVideo(){
+  if(!videoEnabled){document.getElementById('vidtg').classList.add('on');videoEnabled=true;}
+  document.getElementById('vid-off').style.display='none';
+  document.getElementById('vid-on').style.display='';
+  document.getElementById('vframe').innerHTML='<iframe width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;border:0&quot; src=&quot;https://www.youtube-nocookie.com/embed/03LsXN3wmRo&quot; title=&quot;Living things and their habitats&quot; allow=&quot;accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen></iframe>';
+}
+// ---- inline SVG icons (dual coding) ----
+const I={
+ fish:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M8 32c8-12 28-14 38-6 4 3 8 6 12 6-4 0-8 3-12 6-10 8-30 6-38-6z&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;22&quot; cy=&quot;29&quot; r=&quot;2.4&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M46 24v16&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot;/></svg>',
+ bird:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M20 40c0-12 9-20 20-20l8-4-3 8c2 4 1 12-6 16-6 4-19 4-19 0z&quot; fill=&quot;#F3E2D6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;40&quot; cy=&quot;26&quot; r=&quot;2.2&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M20 40l-8 6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2.2&quot;/></svg>',
+ beetle:'<svg width=&quot;54&quot; height=&quot;54&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><ellipse cx=&quot;32&quot; cy=&quot;36&quot; rx=&quot;14&quot; ry=&quot;18&quot; fill=&quot;#C9A24B&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/><line x1=&quot;32&quot; y1=&quot;20&quot; x2=&quot;32&quot; y2=&quot;54&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;32&quot; cy=&quot;16&quot; r=&quot;6&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M18 30l-8-4M46 30l8-4M18 42l-8 2M46 42l8 2&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/></svg>',
+ snail:'<svg width=&quot;56&quot; height=&quot;56&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M8 46h24&quot; stroke=&quot;#7FBDB9&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/><circle cx=&quot;36&quot; cy=&quot;34&quot; r=&quot;16&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;36&quot; cy=&quot;34&quot; r=&quot;8&quot; fill=&quot;none&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot;/><path d=&quot;M20 46c-4 0-6-4-2-8&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot; fill=&quot;none&quot;/><path d=&quot;M14 40v-6M18 40v-8&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/></svg>',
+ frog:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><circle cx=&quot;22&quot; cy=&quot;18&quot; r=&quot;7&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;42&quot; cy=&quot;18&quot; r=&quot;7&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;22&quot; cy=&quot;18&quot; r=&quot;2.4&quot; fill=&quot;#3A2E26&quot;/><circle cx=&quot;42&quot; cy=&quot;18&quot; r=&quot;2.4&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M14 40c0-12 36-12 36 0 0 8-6 12-18 12s-18-4-18-12z&quot; fill=&quot;#7FBDB9&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2.2&quot;/><path d=&quot;M14 50l-6 6M50 50l6 6&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;/></svg>',
+ snake:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M50 14c-10 0-10 10-20 10S12 14 12 24s18 10 18 18 12 10 20 4&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/><circle cx=&quot;51&quot; cy=&quot;14&quot; r=&quot;3&quot; fill=&quot;#3A2E26&quot;/></svg>',
+ classify:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><rect x=&quot;8&quot; y=&quot;12&quot; width=&quot;20&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#1F8E8A&quot;/><rect x=&quot;36&quot; y=&quot;32&quot; width=&quot;20&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#C45F2E&quot;/><path d=&quot;M30 22h14M22 38h6&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;/><path d=&quot;M44 22l4 4-4 4M28 38l-4 4 4 4&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot;/></svg>',
+ vert:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><line x1=&quot;32&quot; y1=&quot;8&quot; x2=&quot;32&quot; y2=&quot;56&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;3&quot;/><g fill=&quot;#1F8E8A&quot;><rect x=&quot;24&quot; y=&quot;12&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;22&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;32&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;42&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/></g></svg>',
+ invert:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M10 40c6-10 14 0 20-8s12 2 20-6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/><path d=&quot;M14 30c0 4 4 4 4 0M30 22c0 4 4 4 4 0&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;/></svg>',
+ key:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><rect x=&quot;24&quot; y=&quot;8&quot; width=&quot;16&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#C9A24B&quot;/><line x1=&quot;32&quot; y1=&quot;18&quot; x2=&quot;18&quot; y2=&quot;34&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.2&quot;/><line x1=&quot;32&quot; y1=&quot;18&quot; x2=&quot;46&quot; y2=&quot;34&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.2&quot;/><rect x=&quot;8&quot; y=&quot;34&quot; width=&quot;20&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;1.6&quot;/><rect x=&quot;36&quot; y=&quot;34&quot; width=&quot;20&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#F3E2D6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;1.6&quot;/></svg>'
+};
+[['a-fish','fish'],['a-bird','bird'],['a-beetle','beetle'],['a-snail','snail'],['a-frog','frog'],['a-snake','snake'],
+ ['a-frog2','frog'],['v-classify','classify'],['v-vert','vert'],['v-invert','invert'],['v-key','key'],
+ ['r-vert','vert'],['r-invert','invert'],['r-key','key']].forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.innerHTML=I[k];});
+render();
+</script>
+</body>
+</html>
+"></iframe>
+</div>
+
+<script>
+function goApp(){document.getElementById('site').classList.add('hide');document.getElementById('app').classList.remove('hide');window.scrollTo(0,0);renderClass();}
+function goSite(){document.getElementById('app').classList.add('hide');document.getElementById('site').classList.remove('hide');window.scrollTo(0,0);}
+function show(s,btn){
+  document.querySelectorAll('.apage').forEach(p=>p.classList.toggle('hide',p.dataset.ap!==s));
+  document.querySelectorAll('.side .nav').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  document.querySelector('.main').scrollTo(0,0);
+}
+function lt(btn,i){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('[data-lt]').forEach(p=>p.classList.toggle('on',+p.dataset.lt===i));}
+function setWk(btn){btn.parentElement.querySelectorAll('.wk').forEach(w=>w.classList.remove('on'));btn.classList.add('on');}
+function openPresent(){document.getElementById('present').classList.add('on');}
+function closePresent(){document.getElementById('present').classList.remove('on');}
+// rubric/seg toggles + lesson rubric
+document.addEventListener('click',e=>{const s=e.target.closest('.seg button');if(s){s.parentElement.querySelectorAll('button').forEach(b=>{b.classList.remove('on');b.style.removeProperty('border-color');b.style.removeProperty('background')});s.classList.add('on');}});
+// marking grid
+const FB={WT:"You found equivalent fractions using the bar model. Next: try without the bar — what do you multiply the top and bottom by?",GD:"You explained why the fractions are equivalent. Next: prove it another way — find three equivalents and spot the pattern."};
+const CLASS=[["Adam","S"],["Yusuf","WT"],["Layla","S"],["Hana","S"],["Omar","S"],["Maya","GD"],["Zeina","S"],["Ali","S"],["Nour","WT"],["Tarek","WT"],["Farida","S"],["Sara","S"],["Karim","GD"],["Lina","WT"],["Ziad","S"],["Mariam","S"],["Hassan","S"],["Jana","S"],["Adel","S"],["Salma","S"],["Khaled","S"],["Dina","S"],["Seif","S"],["Malak","S"],["Amir","S"],["Yara","S"],["Mostafa","S"],["Habiba","S"]];
+function renderClass(){
+  const g=document.getElementById('kgrid');if(!g)return;g.innerHTML='';
+  CLASS.forEach((k,idx)=>{const[name,lvl]=k;const d=document.createElement('div');
+    d.className='kid'+(lvl==='WT'?' lWT':lvl==='GD'?' lGD':'');
+    const fb=lvl==='WT'?FB.WT:lvl==='GD'?FB.GD:'';
+    d.innerHTML='<div class="nm"><span class="av">'+name[0]+'</span>'+name+'</div>'+
+      '<div class="kseg"><button class="'+(lvl==='WT'?'on wt':'')+'" onclick="setLvl('+idx+',\'WT\')">Working towards</button><button class="'+(lvl==='S'?'on sec':'')+'" onclick="setLvl('+idx+',\'S\')">Secure</button><button class="'+(lvl==='GD'?'on gd':'')+'" onclick="setLvl('+idx+',\'GD\')">Greater depth</button></div>'+
+      '<div class="kfb '+(lvl!=='S'?'show':'')+'"><span class="say">Say to '+name+'</span><div>'+fb+'</div><div class="lg">✓ logged against the objective</div></div>';
+    g.appendChild(d);});
+  tally();
+}
+function setLvl(i,l){CLASS[i][1]=l;renderClass();}
+function toggleDesc(btn){
+  var box=document.getElementById('descbox');
+  box.style.display=box.style.display==='none'?'block':'none';
+  btn.textContent=box.style.display==='none'?'▼ What does each level mean for this objective?':'▲ What does each level mean for this objective?';
+}
+function allSecure(){CLASS.forEach(k=>k[1]='S');renderClass();}
+function tally(){const c={S:0,WT:0,GD:0};CLASS.forEach(k=>c[k[1]]++);
+  var e;e=document.getElementById('s-sec');if(e)e.textContent=c.S;
+  e=document.getElementById('s-wt');if(e)e.textContent=c.WT;
+  e=document.getElementById('s-gd');if(e)e.textContent=c.GD;
+  e=document.getElementById('s-non');if(e)e.textContent=c.WT+c.GD;}
+</script>
+</body></html>

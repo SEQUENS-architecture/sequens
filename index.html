@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS - The Coherence Architecture</title>
+<meta name="description" content="SEQUENS: implementation coherence architecture for schools and families. Coaching, the lesson builder, and the homeschool planner, on one evidence-based engine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#F2F6FA; --grey:#9AACBC; --dim:#647A8C;
+    --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16);
+    --panel:rgba(255,255,255,.03);
+    --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --accent-deep:#0C8F79; --navy:#0A3D62;
+    --font:'Lexend','Segoe UI',system-ui,sans-serif;
+    --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);color:var(--grey);font-family:var(--font);font-weight:400;font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.7rem;}
+  a{color:var(--white);text-decoration:none;}
+  h1,h2,h3{color:var(--white);font-family:var(--head);font-weight:700;letter-spacing:-.02em;margin:0;}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:8px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:.7rem 1rem;z-index:99;font-weight:700;}
+  .skip:focus{left:1rem;top:1rem;}
+
+  header{padding:1rem 0;border-bottom:1px solid var(--hair);}
+  .wrap-h{max-width:1120px;margin:0 auto;padding:0 1.7rem;display:flex;align-items:center;}
+  .rs-toggle{margin-left:auto;font-family:var(--font);font-size:.74rem;font-weight:600;border:1px solid var(--hair2);background:transparent;color:var(--white);border-radius:9px;padding:.45rem .8rem;cursor:pointer;}
+  .rs-toggle[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  html.rs{font-size:114%;}
+  html.rs body{line-height:1.85;letter-spacing:.012em;}
+  .brand{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);font-weight:800;letter-spacing:.04em;color:var(--white);font-size:1.05rem;}
+  .brand svg{height:20px;width:auto;}
+
+  .hero{padding:5.6rem 0 2.6rem;}
+  .hero h1{font-size:clamp(2.3rem,5.6vw,4rem);line-height:1.06;letter-spacing:-.025em;max-width:18ch;}
+  .hero h1 .l2{background:linear-gradient(92deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero .dek{font-size:clamp(1.05rem,1.9vw,1.22rem);max-width:56ch;margin:1.1rem 0 0;}
+  .hero .dek b{color:var(--white);font-weight:600;}
+
+  .doors{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;padding:2.4rem 0 3.8rem;}
+  @media (max-width:900px){.doors{grid-template-columns:1fr;}}
+  .door{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--hair2);border-radius:16px;padding:1.8rem 1.6rem 1.5rem;transition:border-color .15s, transform .12s;}
+  .door:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .door .who{font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+  .door h2{font-size:1.55rem;margin:.55rem 0 .35rem;letter-spacing:-.015em;}
+  .door p{margin:0 0 1.2rem;font-size:.98rem;color:var(--grey);flex:1;}
+  .door .go{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;color:var(--white);font-size:.95rem;}
+  .door:hover .go{color:var(--accent);}
+  .door svg.ic{height:34px;width:auto;margin-bottom:1rem;}
+
+  .line{padding:0 0 3.8rem;}
+  .line p{max-width:64ch;margin:0;font-size:1rem;color:var(--grey);}
+  .line b{color:var(--grey);font-weight:600;}
+
+  footer{border-top:1px solid var(--hair);padding:1.8rem 0 2.2rem;font-size:.85rem;color:var(--dim);}
+  .foot-in{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;}
+  .foot-in a{color:var(--grey);font-size:.85rem;}
+  .foot-in a:hover{color:var(--accent);}
+  .foot-in .sp{margin-left:auto;}
+</style>
+</head>
+<body>
+<a class="skip" href="#doors">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mark">
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+  </g>
+</defs></svg>
+
+<header><div class="wrap-h">
+  <span class="brand"><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#mark"/></svg>SEQUENS</span>
+  <button class="rs-toggle" id="rsT" aria-pressed="false" title="Larger, more spaced text">Aa&ensp;Reading support</button>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <h1>Elegant on the surface.<br><span class="l2">Massive underneath.</span></h1>
+  <p class="dek"><b>SEQUENS is implementation coherence architecture for teaching.</b> One evidence-based engine underneath: the six-part lesson spine, adaptive support toward age-related expectation, and honesty about the curriculum at every step.</p>
+  <p class="dek" style="margin-top:.6rem;">Choose your door.</p>
+</div></section>
+
+<section id="doors"><div class="wrap"><div class="doors">
+
+  <a class="door" href="sequens-linear.html">
+    <svg class="ic" viewBox="0 0 60 44" aria-hidden="true">
+      <circle cx="20" cy="12" r="7" fill="none" stroke="#9AACBC" stroke-width="2.6"/>
+      <path d="M6 40 a14 12 0 0 1 28 0" fill="none" stroke="#9AACBC" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="42" cy="12" r="7" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
+      <path d="M28 40 a14 12 0 0 1 28 0" fill="none" stroke="#2DE1C2" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>
+    <span class="who">For schools</span>
+    <h2>Coaching</h2>
+    <p>Instructional coaching on a protected fortnightly rhythm: eight domains, 367 moves, one at a time. Great teaching, made reliable.</p>
+    <span class="go">Enter the coaching architecture &rarr;</span>
+  </a>
+
+  <a class="door" href="sequens-builder.html">
+    <svg class="ic" viewBox="0 0 60 44" aria-hidden="true">
+      <rect x="4" y="6" width="38" height="26" rx="3" fill="none" stroke="#9AACBC" stroke-width="2.6"/>
+      <line x1="11" y1="15" x2="27" y2="15" stroke="#2DE1C2" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="11" y1="23" x2="33" y2="23" stroke="#9AACBC" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="23" y1="32" x2="23" y2="41" stroke="#9AACBC" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="50" cy="33" r="7" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
+      <path d="M47 33 l2.4 2.4 l4.2 -5" fill="none" stroke="#2DE1C2" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <span class="who">For teachers &amp; schools</span>
+    <h2>Lesson Builder</h2>
+    <p>A curriculum objective in; an evidence-based, projector-ready lesson out. Plan, deck and rubric on the six-part spine, in your school&#39;s own curriculum.</p>
+    <span class="go">Enter the lesson builder &rarr;</span>
+  </a>
+
+  <a class="door" href="sequens-home.html">
+    <svg class="ic" viewBox="0 0 60 44" aria-hidden="true">
+      <path d="M8 22 L30 6 L52 22" fill="none" stroke="#9AACBC" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M14 20 V40 H46 V20" fill="none" stroke="#9AACBC" stroke-width="2.6" stroke-linejoin="round"/>
+      <circle cx="30" cy="29" r="5.5" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
+    </svg>
+    <span class="who">For families</span>
+    <h2>Homeschool</h2>
+    <p>You don&#39;t need to be a teacher. Turn a moment, an interest, or an objective into a real session for your child, with coverage you can show anyone who asks.</p>
+    <span class="go">Enter the homeschool planner &rarr;</span>
+  </a>
+
+</div></div></section>
+
+<section class="line"><div class="wrap">
+  <p class="eyebrow" style="font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;">One architecture</p>
+  <p><b>One engine underneath all three.</b> Every generated artefact is marked AI-assisted, you review before use. Generation needs no pupil personal data. Nothing here claims accreditation it has not earned.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap foot-in">
+  <span class="brand" style="font-size:.95rem;"><svg viewBox="0 0 44 44" aria-hidden="true" style="height:17px;"><use href="#mark"/></svg>SEQUENS</span>
+  <span>The Coherence Architecture</span>
+  <a href="privacy.html">GDPR &amp; privacy</a>
+  <span class="sp">Elegant on the surface. Massive underneath.</span>
+</div></footer>
+<script>
+"use strict";
+var rsT=document.getElementById("rsT");
+if(rsT){rsT.addEventListener("click",function(){var on=document.documentElement.classList.toggle("rs");rsT.setAttribute("aria-pressed",on?"true":"false");});}
+</script>
+</body>
+</html>

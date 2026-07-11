@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS Home - homeschool mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;--line-soft:#F0E7D7;
+  --accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
+  --diff-support:#7FBDB9;--diff-core:#1F8E8A;--diff-secure:#C9A24B;--diff-stretch:#C45F2E;
+  /* objective states */
+  --st-none:#EFE6D6;--st-intro:#CDE6E4;--st-practised:#5FB0AB;--st-secure:#1F8E8A;--st-retrieval:#C9A24B;
+  --display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;
+  --r:16px;--r-sm:11px;--r-pill:22px;--shadow:0 2px 14px rgba(58,46,38,.07);
+}
+*{box-sizing:border-box}html,body{margin:0}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.dfont{font-family:var(--display)}
+button{font-family:var(--display);cursor:pointer;border:none;background:none;color:inherit}
+.muted{color:var(--ink-soft)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 26px}
+.hide{display:none!important}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:12px;padding:4px 11px;border-radius:var(--r-pill);background:var(--teal-soft);color:#15706c}
+.btn{font-weight:600;border-radius:var(--r-sm);padding:10px 17px;font-size:14.5px;transition:.15s}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-deep)}
+.btn-ghost{border:1.5px solid var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-teal{background:var(--teal);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card.flat{background:var(--card2)}
+.chipk{font-family:var(--display);font-size:10.5px;font-weight:600;color:var(--ink-soft);background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+.tag{font-family:var(--display);font-size:11px;font-weight:600;color:var(--accent);background:#fff;border:1px solid var(--accent-soft);border-radius:20px;padding:2px 9px}
+
+/* top */
+.top{position:sticky;top:0;z-index:40;background:rgba(244,236,222,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.brand{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:.5px;display:flex;align-items:center;gap:9px}
+.brand .dot{width:13px;height:13px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.brand small{font-weight:500;font-size:11px;letter-spacing:2px;color:var(--ink-soft);text-transform:uppercase}
+.top .spacer{flex:1}
+
+/* hero */
+.hero{padding:60px 0 30px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.hero h1{font-size:48px;line-height:1.06;font-weight:700;margin:14px 0 0;max-width:15ch}
+.hero h1 .u{color:var(--accent)}
+.hero .lede{font-size:18px;max-width:46ch;margin:18px 0 24px;color:var(--ink-soft)}
+.hero .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.reassure{margin-top:18px;font-size:13px;color:var(--ink-soft)}
+.doormock{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
+.doormock .dd{background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.doormock .dd .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;font-size:18px}
+.doormock .dd .ic.a{background:var(--accent-soft);color:#a94e22}.doormock .dd .ic.b{background:var(--teal-soft);color:#15706c}
+.doormock .dd b{font-family:var(--display);font-size:15px}
+.doormock .dd p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
+
+.section{padding:44px 0;border-top:1px solid var(--line)}
+.section h2{font-size:32px;font-weight:700;margin:8px 0 6px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--teal-soft);display:grid;place-items:center;margin-bottom:12px;color:#15706c;font-size:18px}
+.feat h3{font-size:17px;margin:0 0 5px}.feat p{margin:0;font-size:14px;color:var(--ink-soft)}
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr}.hero h1{font-size:36px}.feat-grid{grid-template-columns:1fr}}
+
+/* app */
+.app{display:grid;grid-template-columns:236px 1fr;min-height:calc(100vh - 64px)}
+.side{background:var(--card);border-right:1px solid var(--line);padding:18px 14px}
+.side .slabel{font-family:var(--display);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);padding:0 10px 8px}
+.side .sgroup{margin-bottom:16px}
+.side button.nav{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:10px 11px;border-radius:10px;font-size:14.5px;font-weight:600;color:var(--ink-soft);margin-bottom:2px}
+.side button.nav:hover{background:var(--line-soft);color:var(--ink)}
+.side button.nav.on{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
+.side .ico{width:18px;text-align:center;flex:0 0 auto}
+.kid{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff,var(--card2));border:1px solid var(--line);border-radius:14px;padding:11px;margin-top:6px}
+.kid .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:#a94e22;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
+.kid b{font-family:var(--display);font-size:14px}.kid p{margin:0;font-size:11.5px;color:var(--ink-soft)}
+.main{padding:30px 34px;overflow:auto}
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.phead h1{font-size:27px;margin:0}.phead p{margin:4px 0 0;color:var(--ink-soft);font-size:14.5px}
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{display:none}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* doorways big */
+.doorways{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:760px){.doorways{grid-template-columns:1fr}}
+.door{border:1.5px solid var(--line);border-radius:var(--r);padding:22px;background:var(--card);cursor:pointer;transition:.15s}
+.door:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+.door .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:12px}
+.door.a .ic{background:var(--accent-soft);color:#a94e22}.door.b .ic{background:var(--teal-soft);color:#15706c}
+.door h3{margin:0 0 5px;font-size:19px}.door p{margin:0;font-size:14px;color:var(--ink-soft)}
+
+/* inputs */
+.inp,select.inp{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:13px 15px;font-family:var(--body);font-size:16px;color:var(--ink);background:#fff}
+.inp:focus{outline:none;border-color:var(--teal)}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:32px;cursor:pointer;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" fill="none" stroke="%236F6155" stroke-width="1.6"/></svg>');background-repeat:no-repeat;background-position:right 13px center}
+label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block;margin-bottom:8px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:700px){.row3{grid-template-columns:1fr}}
+.seg{display:inline-flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1.5px solid var(--line);border-radius:var(--r-pill);padding:7px 13px;font-size:13px;font-weight:600;color:var(--ink-soft);background:#fff}
+.seg button.on{border-color:var(--accent);background:var(--accent);color:#fff}
+.seg.teal button.on{border-color:var(--teal);background:var(--teal)}
+.tog{display:inline-flex;align-items:center;gap:9px;cursor:pointer}
+.tog .track{width:42px;height:24px;border-radius:14px;background:var(--line);position:relative;transition:.18s}
+.tog .track::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.tog.on .track{background:var(--teal)}.tog.on .track::after{left:20px}
+.note{font-size:12.5px;color:#15706c;background:var(--teal-soft);border-radius:10px;padding:9px 12px}
+
+/* opportunity cards */
+.opps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+@media(max-width:820px){.opps{grid-template-columns:1fr 1fr}}@media(max-width:560px){.opps{grid-template-columns:1fr}}
+.opp{background:var(--card2);border:1px solid var(--line);border-radius:13px;padding:14px;position:relative}
+.opp .subj{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--teal)}
+.opp h4{margin:4px 0 4px;font-size:15px}.opp p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+.opp .obj{margin-top:8px;font-size:11px;color:#15706c;background:var(--teal-soft);border-radius:8px;padding:4px 8px;display:inline-block}
+.opp .chk{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--teal);background:var(--teal);color:#fff;display:grid;place-items:center;font-size:12px}
+
+/* coverage map */
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:6px 0 18px;font-size:12.5px;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.cov-subj{margin-bottom:16px}
+.cov-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.cov-head b{font-family:var(--display);font-size:15px}
+.cov-head .pct{font-family:var(--display);font-size:12.5px;color:var(--ink-soft)}
+.cov-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px}
+.cell{aspect-ratio:1;border-radius:7px;position:relative;cursor:pointer;border:1px solid rgba(58,46,38,.06)}
+.cell.s0{background:var(--st-none)}.cell.s1{background:var(--st-intro)}.cell.s2{background:var(--st-practised)}.cell.s3{background:var(--st-secure)}
+.cell.due::after{content:"";position:absolute;inset:0;border-radius:7px;box-shadow:inset 0 0 0 2.5px var(--st-retrieval)}
+.barwrap{height:9px;background:var(--line-soft);border-radius:6px;overflow:hidden}
+.barwrap i{display:block;height:100%;background:var(--teal)}
+
+/* retrieval list */
+.retr{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line-soft)}
+.retr .ring{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 3px var(--st-retrieval);flex:0 0 auto}
+.retr b{font-family:var(--display);font-size:14px}.retr p{margin:1px 0 0;font-size:12.5px;color:var(--ink-soft)}
+
+/* report */
+.report{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;max-width:640px;box-shadow:var(--shadow)}
+.report h3{margin:0 0 2px}.report .rsub{color:var(--ink-soft);font-size:13px;margin-bottom:16px}
+.rrow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line-soft);font-size:14px}
+.rrow b{font-family:var(--display);font-weight:600}
+
+/* unit library */
+.ucard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:.15s;cursor:pointer}
+.ucard:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.ucard .th{height:84px;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:26px}
+.ucard .m{padding:13px 15px}.ucard .m h4{margin:0 0 5px;font-size:15px}
+.ucard .m .row{display:flex;gap:6px;flex-wrap:wrap}
+
+/* child profile */
+.pupilchip{font-size:12.5px;background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:6px 12px;color:var(--ink-soft)}
+.pupilchip b{font-family:var(--display);color:var(--teal);font-weight:600}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line-soft)}
+.set-row .l b{font-family:var(--display);font-size:14.5px}.set-row .l p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
+.foot{border-top:1px solid var(--line);padding:24px 0;color:var(--ink-soft);font-size:13px}
+
+/* onboarding */
+.onb{position:fixed;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;padding:24px;overflow:auto}
+.onb-card{max-width:560px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:32px}
+.onb-dots{display:flex;gap:7px;margin-bottom:22px}
+.onb-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:.2s}
+.onb-dots i.on{background:var(--accent);width:22px;border-radius:4px}
+.onb-card h2{font-size:25px;margin:0 0 6px}
+.onb-card .sub{color:var(--ink-soft);font-size:15px;margin:0 0 22px}
+.onb-step{display:none}.onb-step.on{display:block}
+.choice{display:flex;flex-direction:column;gap:10px}
+.choice button{text-align:left;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;background:#fff;display:flex;gap:13px;align-items:flex-start;cursor:pointer}
+.choice button:hover{border-color:var(--accent)}
+.choice button.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.choice .ic{font-size:20px;line-height:1.1}
+.choice b{font-family:var(--display);font-size:15px;display:block}
+.choice p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
+.multi{display:flex;flex-wrap:wrap;gap:9px}
+.multi button{border:1.5px solid var(--line);border-radius:22px;padding:9px 14px;font-size:13.5px;font-weight:600;color:var(--ink-soft);background:#fff;cursor:pointer}
+.multi button.on{border-color:var(--teal);background:var(--teal);color:#fff}
+.onb-actions{display:flex;justify-content:space-between;align-items:center;margin-top:26px}
+.onb-actions .skip{font-size:13px;color:var(--ink-soft);background:none}
+/* session */
+.lessonwrap{display:grid;grid-template-columns:1.3fr .7fr;gap:20px}@media(max-width:900px){.lessonwrap{grid-template-columns:1fr}}
+.sstep{border-left:3px solid var(--teal);padding:2px 0 12px 15px;margin-bottom:12px}
+.sstep.act{border-color:var(--accent)}
+.sstep .se{font-family:var(--display);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--teal)}
+.sstep.act .se{color:var(--accent)}
+.sstep h4{margin:2px 0 3px;font-size:15.5px}.sstep p{margin:0;font-size:14px}
+.aside{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.aside h4{margin:0 0 9px;font-size:14px;display:flex;align-items:center;gap:7px}
+.readtext{background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:13px;font-size:13.5px;line-height:1.65}
+.cap-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:13.5px}
+.cap-row .e{font-size:17px;line-height:1.2}
+
+.obj.enr{background:var(--line-soft);color:var(--ink-soft)}
+.nc-banner{background:var(--teal-soft);border-radius:10px;padding:9px 12px;font-size:12.5px;color:#15706c;margin-bottom:14px}
+.conf{position:fixed;left:12px;bottom:12px;z-index:55;background:rgba(58,46,38,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px;letter-spacing:.3px}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.tabs button{padding:11px 16px;font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink-soft);border-bottom:2.5px solid transparent;margin-bottom:-1px;background:none}
+.tabs button.on{color:var(--accent);border-color:var(--accent)}
+.ltabp.hide{display:none}
+.sldgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:820px){.sldgrid{grid-template-columns:1fr 1fr}}
+.sld{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.sld .h{height:78px;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:13px;color:#fff;text-align:center;padding:0 10px;line-height:1.2}
+.sld .c{padding:10px 13px}.sld .c .n{font-family:var(--display);font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px}.sld .c h4{margin:2px 0 0;font-size:14px}
+.rubfb{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.rubfb .r{display:flex;gap:10px;padding:6px 0;font-size:14px}.rubfb .r .k{font-family:var(--display);font-weight:600;font-size:13px;white-space:nowrap}
+
+.paper{background:#fff;max-width:820px;margin:0 auto;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:46px 52px;color:#2a221c}
+.paper .wm{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--accent);display:flex;align-items:center;gap:7px}
+.paper .wm .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.paper h1.dt{font-family:var(--display);font-size:27px;margin:14px 0 4px}
+.paper .meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:14px 0;margin:14px 0 22px;font-size:13.5px}
+.paper .meta b{font-family:var(--display)}
+.paper h3.sec{font-family:var(--display);font-size:16px;margin:24px 0 8px;color:var(--ink)}
+.paper p.bd{font-size:14px;line-height:1.65;margin:0 0 10px}
+.cvbar{display:grid;grid-template-columns:170px 1fr 92px;gap:12px;align-items:center;margin:7px 0;font-size:13.5px}
+.cvbar .track{height:10px;background:var(--line-soft);border-radius:6px;overflow:hidden}
+.cvbar .track i{display:block;height:100%;background:var(--teal);border-radius:6px}
+.cvbar .v{font-family:var(--display);font-size:12.5px;color:var(--ink-soft);text-align:right}
+.paper ul.fl{margin:6px 0 0;padding-left:18px;font-size:14px;line-height:1.7}
+.paper .disc{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-size:11.5px;color:#6F6155;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 8px}
+.stat{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.stat b{font-family:var(--display);font-weight:700;font-size:24px;display:block;color:var(--accent);line-height:1.1}
+.stat span{font-size:12px;color:var(--ink-soft)}
+.hilites{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.hil{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card2)}
+.hil .ph{height:80px;display:grid;place-items:center;font-size:26px}
+.hil .cap{padding:9px 11px;font-size:12.5px;color:var(--ink-soft)}.hil .cap b{font-family:var(--display);display:block;font-size:13px;color:var(--ink)}
+.growrow{display:grid;grid-template-columns:120px 1fr;gap:12px;font-size:13.5px;padding:6px 0;border-top:1px solid var(--line-soft)}
+.growrow b{font-family:var(--display)}
+@media print{
+  body *{visibility:hidden}
+  .paper,.paper *{visibility:visible}
+  .paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border:none;border-radius:0;margin:0;padding:0 8px}
+  .conf,.side,.top,.phead{display:none!important}
+}
+</style>
+</head>
+<body>
+
+
+<div id="onb" class="onb hide"><div class="onb-card">
+  <div class="onb-dots"><i class="on"></i><i></i><i></i><i></i></div>
+
+  <div class="onb-step on" data-step="0">
+    <h2>First - who are we learning with?</h2>
+    <p class="sub">Just a name and age to start. You can add more children any time.</p>
+    <div class="row3" style="grid-template-columns:2fr 1fr"><div><label class="fl" style="font-size:12px">Child's name</label><input class="inp" value="Leo"></div><div><label class="fl" style="font-size:12px">Age</label><input class="inp" value="8"></div></div>
+    <div class="onb-actions"><span></span><button class="btn btn-primary" onclick="onbGo(1)">Continue</button></div>
+  </div>
+
+  <div class="onb-step" data-step="1">
+    <h2>How do you like to learn together?</h2>
+    <p class="sub">There's no wrong answer here - and you can change it any day.</p>
+    <div class="choice">
+      <button onclick="onbPick(this)"><span class="ic">✺</span><span><b>We follow the children's interests</b><p>Led by curiosity and real life. We'll find the learning as you go.</p></span></button>
+      <button class="on" onclick="onbPick(this)"><span class="ic">⚖</span><span><b>A bit of both</b><p>Some structure, lots of freedom. Most families land here.</p></span></button>
+      <button onclick="onbPick(this)"><span class="ic">▤</span><span><b>We follow the curriculum closely</b><p>Working steadily toward statutory goals. We'll keep you on track.</p></span></button>
+    </div>
+    <div class="onb-actions"><button class="skip" onclick="onbGo(0)">Back</button><button class="btn btn-primary" onclick="onbGo(2)">Continue</button></div>
+  </div>
+
+  <div class="onb-step" data-step="2">
+    <h2>What would help most right now?</h2>
+    <p class="sub">Pick any - we'll put these front and centre. (And you're already doing great by being here.)</p>
+    <div class="multi">
+      <button class="on" onclick="onbToggle(this)">Keeping track for the local authority</button>
+      <button onclick="onbToggle(this)">Ideas for what to do</button>
+      <button class="on" onclick="onbToggle(this)">Not missing anything important</button>
+      <button onclick="onbToggle(this)">Help recording what they learn</button>
+      <button onclick="onbToggle(this)">Working toward tests</button>
+    </div>
+    <div class="onb-actions"><button class="skip" onclick="onbGo(1)">Back</button><button class="btn btn-primary" onclick="onbGo(3)">Continue</button></div>
+  </div>
+
+  <div class="onb-step" data-step="3">
+    <h2>You're all set.</h2>
+    <p class="sub">We'll keep things flexible and quietly track coverage in the background - so you always know what's covered, and you're ready if anyone asks. Let's begin with Leo.</p>
+    <div class="card flat" style="display:flex;gap:13px;align-items:center"><div class="kid" style="margin:0;border:none;background:none;padding:0"><div class="av">L</div></div><div><b class="dfont">Leo · age 8</b><p class="muted" style="font-size:13px;margin:2px 0 0">A bit of both · tracking on</p></div></div>
+    <div class="onb-actions"><button class="skip" onclick="onbGo(2)">Back</button><button class="btn btn-primary" onclick="finishOnboarding()">Go to my dashboard →</button></div>
+  </div>
+</div></div>
+
+<div class="top"><div class="wrap">
+  <div class="brand"><span class="dot"></span>SEQUENS <small>home</small></div>
+  <div class="spacer"></div>
+  <button class="btn btn-ghost" onclick="goApp()">Sign in</button>
+  <button class="btn btn-primary" onclick="startOnboarding()">Start free</button>
+</div></div>
+
+<!-- ============ MARKETING ============ -->
+<div id="site">
+  <div class="wrap hero"><div class="hero-grid">
+    <div>
+      <span class="pill">Home education · built around your child</span>
+      <h1>You don't need to be a <span class="u">teacher</span>.</h1>
+      <p class="lede">Tell SEQUENS about your child and your week - a trip, a rainy afternoon, a sudden obsession - and it builds real learning around them, then quietly keeps track so you always know what's covered and what's next.</p>
+      <div class="cta-row"><button class="btn btn-primary" onclick="startOnboarding()">Start free</button><button class="btn btn-ghost" onclick="goApp()">See how it works</button></div>
+      <p class="reassure">No jargon · works at your pace · free to start · ready to show the local authority whenever you need<br><span style="opacity:.85">The AI never talks to your child - you see everything first · your data is yours to export or delete, any time</span></p>
+    </div>
+    <div class="doormock">
+      <div class="muted" style="font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Two ways to plan</div>
+      <div class="dd"><div class="ic a">✺</div><div><b>Plan from a moment</b><p>"We're going to the beach Thursday" → a whole learning package.</p></div></div>
+      <div class="dd"><div class="ic b">▤</div><div><b>Follow the curriculum</b><p>Structured lessons toward statutory tests, tracked as you go.</p></div></div>
+      <div class="note" style="margin-top:4px">Both feed one coverage map - so a beach day counts toward what's required.</div>
+    </div>
+  </div></div>
+
+  <section class="section"><div class="wrap">
+    <span class="eyebrow">However you teach</span>
+    <h2>Two doorways. One picture of your child's learning.</h2>
+    <p class="muted" style="max-width:56ch">Child-led one day, structured the next - SEQUENS holds both, and shows the whole of it in one place.</p>
+    <div class="feat-grid">
+      <div class="feat"><div class="ic">✺</div><h3>Find the learning in life</h3><p>Type what you're doing and we surface the maths, science, reading and more hiding inside it.</p></div>
+      <div class="feat"><div class="ic">♥</div><h3>Built around your child</h3><p>Their interests lead. A child who loves a fast blue hero gets reading and tasks themed to it, at their reading level.</p></div>
+      <div class="feat"><div class="ic">◫</div><h3>Coverage at a glance</h3><p>See what's been learned and what's left - the view you hand to the local authority.</p></div>
+      <div class="feat"><div class="ic">↻</div><h3>Remembered, not just taught</h3><p>We bring topics back at the right time for low-stakes practice, so learning sticks.</p></div>
+      <div class="feat"><div class="ic">▤</div><h3>Ready for the tests that matter</h3><p>Full curriculum lessons and sequences when your child needs to sit statutory exams.</p></div>
+      <div class="feat"><div class="ic">✎</div><h3>Worksheets &amp; capture help</h3><p>Not sure how to record what they've learned? We make the worksheet and show you how. No printer? Every printable has a plain-paper or talk-it-through alternative.</p></div>
+    </div>
+  </div></section>
+  <div class="foot"><div class="wrap">SEQUENS Home · mockup for review - features shown are illustrative · not legal advice on home-education requirements</div></div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hide"><div class="conf">Confidential · © James / SEQUENS · do not distribute</div><div class="app">
+  <aside class="side">
+    <div class="sgroup">
+      <div class="slabel">Plan</div>
+      <button class="nav on" data-s="today" onclick="show('today',this)"><span class="ico">◧</span> Today</button>
+      <button class="nav" data-s="moment" onclick="show('moment',this)"><span class="ico">✺</span> Plan from a moment</button>
+      <button class="nav" data-s="curriculum" onclick="show('curriculum',this)"><span class="ico">▤</span> Follow the curriculum</button>
+      <button class="nav" data-s="units" onclick="show('units',this)"><span class="ico">❑</span> Ready-made units</button>
+      <button class="nav" data-s="session" onclick="show('session',this)"><span class="ico">▤</span> Leo's session · KS2</button>
+      <button class="nav" data-s="y9" onclick="show('y9',this)"><span class="ico">▤</span> Year 9 lesson · KS3</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Track</div>
+      <button class="nav" data-s="coverage" onclick="show('coverage',this)"><span class="ico">◫</span> Coverage map</button>
+      <button class="nav" data-s="retrieval" onclick="show('retrieval',this)"><span class="ico">↻</span> Revisit &amp; practise</button>
+      <button class="nav" data-s="reports" onclick="show('reports',this)"><span class="ico">▦</span> Reports</button>
+    </div>
+    <div class="sgroup">
+      <div class="slabel">Your family</div>
+      <button class="nav" data-s="child" onclick="show('child',this)"><span class="ico">♥</span> Children</button>
+      <button class="nav" onclick="goSite()"><span class="ico">⤺</span> Back to site</button>
+    </div>
+    <div class="kid"><div class="av">L</div><div><b>Leo · age 8</b><p>switch child ▾</p></div></div>
+  </aside>
+
+  <main class="main">
+
+    <!-- TODAY -->
+    <section class="apage" data-ap="today">
+      <div class="phead"><div><h1>Morning! Here's Leo's week</h1><p>Pick a way to plan, or carry on where you left off.</p></div></div>
+      <div class="doorways" style="margin-bottom:20px">
+        <div class="door a" onclick="show('moment',document.querySelector('[data-s=moment]'))"><div class="ic">✺</div><h3>Plan from a moment</h3><p>Tell us what's happening - a trip, a mood, an obsession - and we'll find the learning in it and build a package.</p></div>
+        <div class="door b" onclick="show('curriculum',document.querySelector('[data-s=curriculum]'))"><div class="ic">▤</div><h3>Follow the curriculum</h3><p>Build structured lessons and sequences toward the objectives Leo needs - tracked automatically.</p></div>
+      </div>
+      <div class="grid3">
+        <div class="card"><div class="muted" style="font-size:12px;font-family:var(--display);text-transform:uppercase;letter-spacing:1px">This week</div><div style="font-family:var(--display);font-weight:700;font-size:26px;margin-top:6px">9 hrs</div><p class="muted" style="font-size:13px;margin:2px 0 0">planned across 4 days</p></div>
+        <div class="card"><div class="muted" style="font-size:12px;font-family:var(--display);text-transform:uppercase;letter-spacing:1px">Covered</div><div style="font-family:var(--display);font-weight:700;font-size:26px;margin-top:6px">62%</div><p class="muted" style="font-size:13px;margin:2px 0 0">of this year's objectives</p></div>
+        <div class="card"><div class="muted" style="font-size:12px;font-family:var(--display);text-transform:uppercase;letter-spacing:1px">Due to revisit</div><div style="font-family:var(--display);font-weight:700;font-size:26px;margin-top:6px">5</div><p class="muted" style="font-size:13px;margin:2px 0 0">topics ready for retrieval</p></div>
+      </div>
+      <div class="card flat" style="margin-top:18px"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><b class="dfont">Thursday · Beach trip</b><p class="muted" style="font-size:13.5px;margin:3px 0 0">A learning package is ready - 6 activities, covering 4 curriculum objectives.</p></div><button class="btn btn-primary" onclick="show('session',document.querySelector('[data-s=session]'))">Open package</button></div></div>
+    </section>
+
+    <!-- PLAN FROM A MOMENT -->
+    <section class="apage hide" data-ap="moment">
+      <div class="phead"><div><h1>Plan from a moment</h1><p>What's happening this week? We'll find the learning in it.</p></div></div>
+      <div class="seg" style="margin-bottom:16px"><button class="on" onclick="momentChild('leo',this)">Leo · Year 3</button><button onclick="momentChild('sam',this)">Sam · Year 9</button></div>
+      <div class="nc-banner">Every activity shows its National Curriculum link - and says so plainly when something is enrichment beyond a set statement. No ambiguity.</div>
+      <div id="m-leo">
+      <div class="card" style="max-width:840px;margin-bottom:18px">
+        <label class="fl">Tell us what you're doing - in your own words</label>
+        <input class="inp" value="We're going to the beach on Thursday">
+        <div class="row3" style="margin-top:14px">
+          <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Leo · age 8</option><option>Maya · age 6</option></select></div>
+          <div><label class="fl" style="font-size:12px">Roughly how long?</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Half a day</option><option selected>A full day</option><option>A few hours</option></select></div>
+          <div><label class="fl" style="font-size:12px">Depth</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Light &amp; playful</option><option selected>Balanced</option><option>Stretch him</option></select></div>
+        </div>
+        <div style="margin-top:14px"><button class="btn btn-primary">Find the learning ✺</button></div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+        <div><span class="eyebrow">Learning we found at the beach</span><div class="muted" style="font-size:13px;margin-top:3px">Tap any to keep it. Each is a proper SEQUENS session - and themed to Leo.</div></div>
+        <span class="tag">4 link to the National Curriculum</span>
+      </div>
+      <div class="opps">
+        <div class="opp"><div class="chk">✓</div><div class="subj">Maths</div><h4>Tides &amp; measurement</h4><p>Read the tide times; measure how far the sea moves each hour.</p><span class="obj">NC · KS2 Maths (Y3) - measure &amp; compare lengths (m/cm/mm)</span></div>
+        <div class="opp"><div class="chk">✓</div><div class="subj">Science</div><h4>Rock-pool classification</h4><p>Sort what you find - living, dead, never alive - and group the creatures.</p><span class="obj">NC · KS2 Science (Y4) - group living things; use classification keys</span></div>
+        <div class="opp"><div class="chk">✓</div><div class="subj">English</div><h4>Beach diary</h4><p>Write the day as a recount - with a Sonic-speed "fastest find" challenge.</p><span class="obj">NC · KS2 English (LKS2) - compose &amp; organise a recount</span></div>
+        <div class="opp"><div class="subj">Geography</div><h4>Coast &amp; erosion</h4><p>Why is the cliff that shape? Watch the waves do their slow work.</p><span class="obj enr">NC · KS2 Geography - physical processes (topic-linked enrichment)</span></div>
+        <div class="opp"><div class="subj">D&amp;T / Science</div><h4>Sandcastle engineering</h4><p>Which shape stands up to a wave? Test, fail, rebuild.</p><span class="obj">NC · KS2 D&amp;T - strengthen &amp; reinforce structures</span></div>
+        <div class="opp"><div class="subj">PSHE</div><h4>Water safety</h4><p>Flags, currents, and the one rule that matters most.</p><span class="obj enr">Wider learning - water safety (PSHE, non-statutory)</span></div>
+      </div>
+      <div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div class="note" style="margin:0">These 4 ticked activities will be logged to Leo's coverage map automatically - emergent learning that still counts.</div>
+        <button class="btn btn-primary" onclick="show('session',document.querySelector('[data-s=session]'))">Build the package</button>
+      </div>
+    </div>
+      <div id="m-sam" class="hide">
+        <div class="card" style="max-width:840px;margin-bottom:18px">
+          <label class="fl">Tell us what you're doing - in your own words</label>
+          <input class="inp" value="Sam's cooking the family dinner tonight on a £15 budget">
+          <div class="row3" style="margin-top:14px">
+            <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Sam · age 14 (Year 9)</option></select></div>
+            <div><label class="fl" style="font-size:12px">Roughly how long?</label><select class="inp" style="padding:11px 12px;font-size:14px"><option selected>An evening</option><option>An hour</option></select></div>
+            <div><label class="fl" style="font-size:12px">Depth</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Light</option><option selected>Balanced</option><option>GCSE-stretch</option></select></div>
+          </div>
+          <div style="margin-top:14px"><button class="btn btn-primary">Find the learning ✺</button></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+          <div><span class="eyebrow">Learning we found in tonight's dinner</span><div class="muted" style="font-size:13px;margin-top:3px">Year 9 level · each links explicitly to the KS3 National Curriculum.</div></div>
+          <span class="tag">4 link to the National Curriculum</span>
+        </div>
+        <div class="opps">
+          <div class="opp"><div class="chk">✓</div><div class="subj">Maths</div><h4>Scale the recipe &amp; the budget</h4><p>Adjust quantities for 5 people; keep it under £15; work out cost per portion.</p><span class="obj">NC · KS3 Maths - ratio, proportion &amp; percentage change</span></div>
+          <div class="opp"><div class="chk">✓</div><div class="subj">D&amp;T · Food</div><h4>A balanced plate</h4><p>Build the meal around the principles of nutrition; cook a savoury dish from scratch.</p><span class="obj">NC · KS3 D&amp;T - principles of nutrition; cook savoury dishes</span></div>
+          <div class="opp"><div class="chk">✓</div><div class="subj">Citizenship</div><h4>Budgeting &amp; money</h4><p>Plan the shop, track the spend, handle the trade-offs of a tight budget.</p><span class="obj">NC · KS3 Citizenship - money, budgeting &amp; managing risk</span></div>
+          <div class="opp"><div class="chk">✓</div><div class="subj">Science</div><h4>The chemistry of cooking</h4><p>What's a physical change and what's chemical? Watch it happen in the pan.</p><span class="obj">NC · KS3 Science - chemical vs physical changes</span></div>
+          <div class="opp"><div class="subj">English</div><h4>Write the method</h4><p>Turn the cook into clear instructions someone else could follow.</p><span class="obj enr">NC · KS3 English - writing for a clear purpose</span></div>
+          <div class="opp"><div class="subj">Independence</div><h4>Cooking safely</h4><p>Knives, heat, hygiene - the life-skill running underneath it all.</p><span class="obj enr">Wider learning - kitchen safety &amp; independence</span></div>
+        </div>
+        <div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="note" style="margin:0">The 4 ticked activities log to Sam's coverage map against their KS3 National Curriculum statements.</div>
+          <button class="btn btn-primary" onclick="show('y9',document.querySelector('[data-s=y9]'))">Build the package</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOLLOW THE CURRICULUM -->
+    <section class="apage hide" data-ap="curriculum">
+      <div class="phead"><div><h1>Follow the curriculum</h1><p>Structured lessons and sequences - for the objectives Leo needs to secure.</p></div></div>
+      <div class="card" style="max-width:840px;margin-bottom:18px">
+        <div class="row3">
+          <div><label class="fl" style="font-size:12px">Curriculum</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>England NC</option><option>Scotland CfE</option><option>Wales</option><option>US - state standards</option><option>IB / International</option><option>Our own mix</option></select></div>
+          <div><label class="fl" style="font-size:12px">Year / stage</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Year 2</option><option selected>Year 3</option><option>Year 4</option></select></div>
+          <div><label class="fl" style="font-size:12px">Subject</label><select class="inp" style="padding:11px 12px;font-size:14px"><option selected>Mathematics</option><option>English</option><option>Science</option><option>History</option></select></div>
+        </div>
+        <label class="fl" style="margin-top:14px">Objective <span class="muted" style="font-weight:500;font-size:12px">- pick one we haven't covered, or let us suggest the next gap</span></label>
+        <select class="inp"><option>Suggested next: recognise equivalent fractions ⚑ (a gap)</option><option>Add fractions with the same denominator</option><option>Measure &amp; compare lengths ✓ (covered Thu)</option></select>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" onclick="show('session',document.querySelector('[data-s=session]'))">Build the lesson</button><button class="btn btn-ghost">Build a full unit (long → medium → sessions)</button></div>
+      </div>
+      <span class="eyebrow">The planning cascade</span>
+      <div class="grid3" style="margin-top:12px">
+        <div class="card flat"><b class="dfont">Long-term</b><p class="muted" style="font-size:13px;margin:6px 0 0">A year overview from your hours-per-week - terms and topics mapped out.</p></div>
+        <div class="card flat"><b class="dfont">Medium-term</b><p class="muted" style="font-size:13px;margin:6px 0 0">Each topic broken into a unit of linked objectives.</p></div>
+        <div class="card flat"><b class="dfont">Sessions</b><p class="muted" style="font-size:13px;margin:6px 0 0">Each one a full SEQUENS lesson, themed to Leo, worksheet optional.</p></div>
+      </div>
+    </section>
+
+    <!-- READY-MADE UNITS -->
+    <section class="apage hide" data-ap="units">
+      <div class="phead"><div><h1>Ready-made units</h1><p>Pre-built learning for the things home educators do - pull one and go, or use it as a starting point.</p></div></div>
+      <div class="grid3">
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#cfe3df,#e7d3bf);color:#15706c">🏖</div><div class="m"><h4>A day at the beach</h4><div class="row"><span class="chipk">6 activities</span><span class="chipk">4 subjects</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#d8e7cf,#eee2c8);color:#4f7340">🌲</div><div class="m"><h4>Nature walk</h4><div class="row"><span class="chipk">5 activities</span><span class="chipk">science</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#f4d59b,#f1b59a);color:#a94e22">🧁</div><div class="m"><h4>Baking together</h4><div class="row"><span class="chipk">maths</span><span class="chipk">reading</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#cfe0f0,#d6e8d6);color:#3a6ea5">🏛</div><div class="m"><h4>Museum visit</h4><div class="row"><span class="chipk">history</span><span class="chipk">writing</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#e7d3bf,#d8c4e0);color:#7a5a8a">🧱</div><div class="m"><h4>Lego &amp; structures</h4><div class="row"><span class="chipk">D&amp;T</span><span class="chipk">maths</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#d8e7cf,#cfe3df);color:#4f7340">🌱</div><div class="m"><h4>Growing things</h4><div class="row"><span class="chipk">science</span><span class="chipk">over weeks</span></div></div></div>
+      </div>
+      <div class="note" style="margin-top:18px">Units are themed to your child and logged to the coverage map just like everything else. New units are added all the time.</div>
+    </section>
+
+    <!-- COVERAGE MAP -->
+    <section class="apage hide" data-ap="coverage">
+      <div class="phead"><div><h1>Leo's coverage map</h1><p>Everything covered, and everything left - against the National Curriculum <i>or your own goals</i>, pulled from both structured lessons and real life. Gaps are normal - every family has them. This is a map for choosing what’s next, not a judgement.</p></div>
+        <button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">Make a report ▦</button></div>
+      <div class="legend">
+        <span><i style="background:var(--st-none)"></i> Not started</span>
+        <span><i style="background:var(--st-intro)"></i> Introduced</span>
+        <span><i style="background:var(--st-practised)"></i> Practised</span>
+        <span><i style="background:var(--st-secure)"></i> Secure</span>
+        <span><i style="box-shadow:inset 0 0 0 2.5px var(--st-retrieval)"></i> Retrieval due</span>
+      </div>
+      <div class="card">
+        <div class="cov-subj">
+          <div class="cov-head"><b>Mathematics</b><span class="pct">71% · 5 gaps</span></div>
+          <div class="cov-cells" id="cov-maths"></div>
+        </div>
+        <div class="cov-subj">
+          <div class="cov-head"><b>English</b><span class="pct">66% · 6 gaps</span></div>
+          <div class="cov-cells" id="cov-eng"></div>
+        </div>
+        <div class="cov-subj">
+          <div class="cov-head"><b>Science</b><span class="pct">58% · 5 gaps</span></div>
+          <div class="cov-cells" id="cov-sci"></div>
+        </div>
+        <div class="cov-subj" style="margin-bottom:0">
+          <div class="cov-head"><b>Foundation (History · Geography · Art · PSHE)</b><span class="pct">49% · lots of room</span></div>
+          <div class="cov-cells" id="cov-found"></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:16px">Each square is one objective. Hover to see it. The gold ring means it's secure but due a quick retrieval. The faded squares are your map of what's still to explore - no pressure, just the picture.</div>
+    </section>
+
+    <!-- RETRIEVAL -->
+    <section class="apage hide" data-ap="retrieval">
+      <div class="phead"><div><h1>Ready to revisit</h1><p>Taught once, remembered for good. These are due a quick, low-stakes look - not re-teaching.</p></div></div>
+      <div class="card" style="max-width:720px">
+        <div class="retr"><div class="ring"></div><div style="flex:1"><b>Telling the time to 5 minutes</b><p>Secure 3 weeks ago · a 5-minute recall keeps it sharp</p></div><button class="btn btn-teal" style="font-size:13px;padding:8px 14px">Quick practice</button></div>
+        <div class="retr"><div class="ring"></div><div style="flex:1"><b>Plant life cycles</b><p>Secure last month · fold it into the "growing things" unit</p></div><button class="btn btn-teal" style="font-size:13px;padding:8px 14px">Quick practice</button></div>
+        <div class="retr"><div class="ring"></div><div style="flex:1"><b>Adding with regrouping</b><p>Practised · ready to move toward secure</p></div><button class="btn btn-teal" style="font-size:13px;padding:8px 14px">Quick practice</button></div>
+        <div class="retr"><div class="ring"></div><div style="flex:1"><b>Capital letters &amp; full stops</b><p>Secure · weave into the beach diary</p></div><button class="btn btn-teal" style="font-size:13px;padding:8px 14px">Quick practice</button></div>
+      </div>
+      <div class="note" style="margin-top:16px;max-width:720px">SEQUENS spaces these out for you - an objective is taught once, then resurfaced at widening intervals so it actually sticks. You never re-teach the same thing cold.</div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="apage hide" data-ap="reports">
+      <div class="phead"><div><h1>Reports</h1><p>Turn the learning into a clean record - for your own files, an end-of-year keepsake, or the local authority if they ask, or a school if your child is returning. You choose what it’s measured against.</p></div></div>
+      <div class="note" style="margin-bottom:16px"><b>New law, plain English:</b> the Children’s Wellbeing and Schools Act 2026 means local-authority registers for children not in school are coming to England and Wales. Nothing is required of you yet - the start dates haven’t been set - but when they are, the record SEQUENS keeps (what’s taught, examples of work, who’s involved) is exactly what you’d draw on. No extra work, no panic. This isn’t legal advice; check your own LA’s position.</div>
+      <div class="grid2">
+        <div class="card flat">
+          <label class="fl">What's it for?</label>
+          <div class="seg" style="margin-bottom:14px"><button class="on" onclick="setReport('la')">Local authority</button><button onclick="setReport('own')">My own records</button><button onclick="setReport('eoy')">End-of-year</button></div>
+          <label class="fl">Measured against</label>
+          <select class="inp" style="margin-bottom:14px"><option>England National Curriculum</option><option>Our own learning goals</option><option>A blend - what we actually did</option></select>
+          <label class="fl">Period</label>
+          <select class="inp"><option>This term</option><option selected>This year</option><option>Custom…</option></select>
+          <div style="margin-top:16px"><button class="btn btn-primary" onclick="openReport()">Generate report</button></div>
+          <p class="muted" style="font-size:12px;margin:12px 0 0">SEQUENS helps you evidence learning your way. It doesn't define what your local authority requires - that varies, and home education has no single rulebook.</p>
+        </div>
+        <div class="report">
+          <h3>Leo · Learning record</h3>
+          <div class="rsub">September 2025 – June 2026 · prepared 16 June 2026</div>
+          <div class="rrow"><span>Approach</span><b>Mixed - structured &amp; experiential</b></div>
+          <div class="rrow"><span>Mathematics</span><b>71% secure · on track</b></div>
+          <div class="rrow"><span>English</span><b>66% secure</b></div>
+          <div class="rrow"><span>Science</span><b>58% secure</b></div>
+          <div class="rrow"><span>Foundation subjects</span><b>broad, experiential</b></div>
+          <div class="rrow"><span>Highlights</span><b>12 real-world projects</b></div>
+          <p class="muted" style="font-size:12.5px;margin:14px 0 0">Includes a narrative summary, photo space, and the full objective list - exportable as PDF.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHILD PROFILE -->
+    <section class="apage hide" data-ap="child">
+      <div class="phead"><div><h1>Leo</h1><p>The more SEQUENS knows about Leo, the more it builds around him.</p></div></div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="margin:0 0 6px">About Leo</h3>
+          <div class="set-row" style="border-top:none;padding-top:6px"><div class="l"><b>Age</b><p>8 · working around Year 3</p></div><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px">Edit</button></div>
+          <div class="set-row"><div class="l"><b>Reading level</b><p>Early fluent · we match every text to this</p></div><div class="seg teal"><button style="font-size:12px;padding:6px 10px">Phonics</button><button class="on" style="font-size:12px;padding:6px 10px">Early fluent</button><button style="font-size:12px;padding:6px 10px">Fluent</button></div></div>
+          <div class="set-row"><div class="l"><b>Needs</b><p>Autistic · prefers predictable structure, one step at a time</p></div><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px">Edit</button></div>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">What Leo loves</h3>
+          <p class="muted" style="font-size:13.5px;margin:0 0 12px">Interests become the doorway - reading material and scaffolds are themed to them.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pupilchip">Sonic the Hedgehog <b>→ themed texts &amp; tasks</b></span><span class="pupilchip">dinosaurs</span><span class="pupilchip">building</span><button class="btn btn-ghost" style="font-size:12px;padding:6px 12px;border-style:dashed">+ Add</button></div>
+          <div class="note" style="margin-top:14px">Themed material is generated for Leo's private use. Anything you share or export uses motifs - a fast blue hero, collecting rings - not the character itself.</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;border-color:var(--accent-soft)">
+        <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Worksheets &amp; capture help</b><p>On - SEQUENS makes a worksheet where it helps, and shows you simple ways to record what Leo has learned.</p></div><span class="tog on"><span class="track"></span></span></div>
+      </div>
+    </section>
+
+    <!-- SESSION -->
+    <section class="apage hide" data-ap="session">
+      <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Beach package · for Leo</span><h1>Beach diary</h1><p>Writing a recount · ~40 minutes · themed for Leo · logs to his coverage map</p></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-ghost">Print</button><button class="btn btn-primary">Mark as done ✓</button></div></div>
+      <div class="tabs"><button class="on" onclick="sesTab(this,0)">Lesson plan</button><button onclick="sesTab(this,1)">Slides</button><button onclick="sesTab(this,2)">Rubric</button></div>
+      <div class="ltabp" data-lt="0">
+      <div class="lessonwrap">
+        <div>
+          <div class="sstep"><div class="se">First thing</div><h4>Talk it over</h4><p>Ask Leo about the best bit of the beach. What happened first? Just chat - you're warming up his memory.</p></div>
+          <div class="sstep"><div class="se">Show him how</div><h4>Model a recount</h4><p>Show how we tell things in order - "first… then… after that…". Do one sentence about your day as an example.</p></div>
+          <div class="sstep"><div class="se">Do it together</div><h4>Tell the day aloud</h4><p>Say the beach trip together, in order, before any writing. Count it on your fingers - three or four big moments.</p></div>
+          <div class="sstep act"><div class="se">Quick check</div><h4>Right order?</h4><p>Mix up three moments and see if Leo can put them back in order. If yes, he's ready to write.</p></div>
+          <div class="sstep act"><div class="se">His turn</div><h4>Write the diary</h4><p>Leo writes his beach diary using the sheet. The "fastest find" challenge keeps his fast-blue-hero energy in it.</p></div>
+          <div class="sstep"><div class="se">Last thing</div><h4>Read it back</h4><p>Read it together and celebrate one brilliant sentence. That's the bit he'll remember.</p></div>
+        </div>
+        <div>
+          <div class="aside"><h4>📖 Leo's reading <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">early fluent</span></h4>
+            <div class="readtext">The waves were fast - but Leo was faster. He dashed across the sand and grabbed a shiny shell before the sea could reach it. "Got it!" he cheered, holding it up like a gold ring.</div>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Written to match Leo's reading level and his interests. Themed material is for Leo's private use; anything you share or export uses motifs (speed, rings), not the character.</p></div>
+          <div class="aside"><h4>✎ Beach diary sheet <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">worksheet · on</span></h4>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12.5px;color:var(--ink-soft)">
+              <div style="font-family:var(--display);font-weight:600;color:var(--ink);margin-bottom:6px">My day at the beach</div>
+              First… ____________________<br>Then… ____________________<br>The best bit… ____________________<br>My fastest find… 🐚 ____________
+            </div>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">A gentle frame so Leo knows where to start. Turn off any time in his profile.</p></div>
+          <div class="aside" style="border-color:var(--accent-soft)"><h4>📌 Capture today's learning</h4>
+            <div class="cap-row"><span class="e">📷</span><span>Snap a photo of his finished diary.</span></div>
+            <div class="cap-row"><span class="e">✏️</span><span>Jot one sentence: what surprised you about how he did?</span></div>
+            <div class="cap-row"><span class="e">🎤</span><span>Record 20 seconds of him reading it aloud.</span></div>
+            <p class="muted" style="font-size:11.5px;margin:8px 0 0">Any one is plenty. We add it to Leo's record - that's your evidence, sorted.</p></div>
+          <div class="aside"><h4>◫ Covers</h4>
+            <span class="obj" style="font-size:12px;color:#15706c;background:var(--teal-soft);border-radius:8px;padding:5px 10px;display:inline-block">NC · KS2 English (LKS2) - compose a recount</span>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Marking this done moves it forward on the coverage map.</p></div>
+        </div>
+      </div>
+</div>
+      <div class="ltabp hide" data-lt="1">
+        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>What happened at the beach?</h4></div></div><div class="sld"><div class="h" style="background:#2f9b96">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>How a recount works: first, then, after</h4></div></div><div class="sld"><div class="h" style="background:#3aa7a1">Build together</div><div class="c"><div class="n">Slide 3</div><h4>Tell the day in order</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Put these moments in order</h4></div></div><div class="sld"><div class="h" style="background:#cf6d3d">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Write your beach diary</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Read it back together</h4></div></div></div>
+        <p class="muted" style="margin-top:16px;font-size:13.5px">Present mode runs full-screen with arrow keys. The images and the reading slide are themed to Leo and matched to his reading level. Choose a calm or bright deck style in his profile.</p>
+      </div>
+      <div class="ltabp hide" data-lt="2">
+        <div class="card" style="max-width:720px">
+          <h3 style="margin:0 0 4px">How did Leo do?</h3>
+          <p class="muted" style="font-size:13.5px;margin:0 0 16px">Tap a level for each - the words write themselves, and it sets Leo's level on the coverage map. No typing.</p>
+          <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Events in the right order</b></div><div class="seg"><button>Just starting</button><button>Getting there</button><button class="on" style="border-color:var(--good);background:var(--good)">Secure</button><button>Going beyond</button></div></div>
+          <div class="set-row"><div class="l"><b>Uses time words (first, then, after)</b></div><div class="seg"><button>Just starting</button><button class="on">Getting there</button><button>Secure</button><button>Going beyond</button></div></div>
+          <div class="set-row"><div class="l"><b>Writes sentences a reader can follow</b></div><div class="seg"><button>Just starting</button><button class="on">Getting there</button><button>Secure</button><button>Going beyond</button></div></div>
+          <div class="rubfb">
+            <div class="r"><span class="k" style="color:var(--good)">✓ Strength</span><span>Leo put his beach day in the right order and used "first" and "then" to guide the reader.</span></div>
+            <div class="r"><span class="k" style="color:var(--accent)">→ Next time</span><span>Add a closing sentence about the best bit · stretch a couple of sentences with "because".</span></div>
+          </div>
+          <div class="note" style="margin-top:14px">This becomes part of Leo's record and nudges "write a recount" forward on his coverage map.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- YEAR 9 CURRICULUM LESSON -->
+    <section class="apage hide" data-ap="y9">
+      <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Year 9 · History · for Sam</span><h1>Why did war break out in 1914?</h1><p>Causes of the First World War · ~60 min · a full curriculum lesson, themed for Sam</p></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-ghost">Print</button><button class="btn btn-primary">Mark as done ✓</button></div></div>
+      <div class="nc-banner" style="max-width:none"><b style="font-family:var(--display)">National Curriculum link:</b> KS3 History - <i>"the First World War and the Second World War"</i> (challenges for Britain, Europe and the wider world, 1901–present). Historical concept: <b>cause &amp; consequence</b>. <span class="muted">(2014 programmes of study - the current statutory curriculum.)</span></div>
+      <div class="tabs"><button class="on" onclick="sesTab(this,0)">Lesson plan</button><button onclick="sesTab(this,1)">Slides</button><button onclick="sesTab(this,2)">Rubric</button></div>
+      <div class="ltabp" data-lt="0">
+      <div class="lessonwrap">
+        <div>
+          <div class="sstep"><div class="se">First thing</div><h4>The spark</h4><p>June 1914: one assassination in Sarajevo. Recall who Franz Ferdinand was - and why a single death could matter this much.</p></div>
+          <div class="sstep"><div class="se">Show him how</div><h4>Model the long-term causes - MAIN</h4><p>Militarism, Alliances, Imperialism, Nationalism. Build them on the Spokes Frame as the pressures that were already building before 1914.</p></div>
+          <div class="sstep"><div class="se">Do it together</div><h4>Connect the spark to the system</h4><p>Use "so that…" chains: the alliance system meant a local crisis pulled in the great powers, so that within weeks six empires were at war.</p></div>
+          <div class="sstep act"><div class="se">Quick check · hinge</div><h4>Catch the misconception</h4><p>"Which BEST explains why one assassination became a world war?" - A) it was simply a tragic murder · <b>B) the alliance system dragged the great powers in</b> · C) Germany alone wanted war · D) it was inevitable. Many choosing A or C → re-model the alliance web.</p></div>
+          <div class="sstep act"><div class="se">His turn</div><h4>Build an argument</h4><p>Sam writes a paragraph prioritising the most significant cause and justifying it - colour-coded support, from sentence stems to a counter-argument challenge.</p></div>
+          <div class="sstep"><div class="se">Last thing</div><h4>Rank &amp; justify</h4><p>Exit task: rank MAIN + the trigger, and finish - "The most significant cause was… because…". A GCSE-style judgement in miniature.</p></div>
+        </div>
+        <div>
+          <div class="aside"><h4>◷ Frame · Spokes <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">blank - model it</span></h4>
+            <div style="background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:12px;text-align:center">
+              <svg viewBox="0 0 220 130" width="100%" style="max-width:240px">
+                <ellipse cx="110" cy="65" rx="38" ry="25" fill="#fff" stroke="#3A2E26" stroke-width="2"/>
+                <text x="110" y="69" text-anchor="middle" font-family="Quicksand" font-size="10" fill="#6F6155">Causes of WW1</text>
+                <g stroke="#cdbfa8" stroke-width="1.5"><line x1="78" y1="50" x2="42" y2="28"/><line x1="142" y1="50" x2="178" y2="28"/><line x1="78" y1="80" x2="42" y2="102"/><line x1="142" y1="80" x2="178" y2="102"/></g>
+                <g fill="#fff" stroke="#cdbfa8" stroke-width="1.5"><ellipse cx="40" cy="24" rx="30" ry="15"/><ellipse cx="180" cy="24" rx="30" ry="15"/><ellipse cx="40" cy="106" rx="30" ry="15"/><ellipse cx="180" cy="106" rx="30" ry="15"/></g>
+                <g font-family="Quicksand" font-size="9" fill="#6F6155" text-anchor="middle"><text x="40" y="27">Militarism</text><text x="180" y="27">Alliances</text><text x="40" y="109">Imperialism</text><text x="180" y="109">Nationalism</text></g>
+              </svg>
+              <div class="muted" style="font-size:12px;margin-top:4px">Sam fills the branches with you</div>
+            </div></div>
+          <div class="aside"><h4>📖 Sam's reading <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">Y9 · interest-themed</span></h4>
+            <div class="readtext">Picture 1914 Europe as a strategy board where every power has locked into a web of treaties. Pull one thread - a shot in Sarajevo - and the whole board reacts: Austria moves, Russia counters, Germany commits, and within weeks the alliances drag six empires into a war almost no one chose.</div>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Pitched to Sam's reading level and interest (strategy games). Private use; shared exports use neutral framing.</p></div>
+          <div class="aside"><h4>◈ Differentiation key <span class="muted" style="font-weight:400;font-size:11px;margin-left:4px">teacher-only</span></h4>
+            <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-support)"></span> Support - sentence stems</div>
+            <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-core)"></span> Core - the paragraph</div>
+            <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-secure)"></span> Secure - less scaffold</div>
+            <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-stretch)"></span> Stretch - counter-argument</div></div>
+          <div class="aside"><h4>◫ Covers</h4>
+            <span class="obj" style="font-size:12px;color:#15706c;background:var(--teal-soft);border-radius:8px;padding:5px 10px;display:inline-block">NC · KS3 History - the First World War</span>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Marking this done logs it to Sam's coverage map.</p></div>
+        </div>
+      </div>
+</div>
+      <div class="ltabp hide" data-lt="1">
+        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>June 1914 - the spark</h4></div></div><div class="sld"><div class="h" style="background:#2f9b96">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>MAIN: the long-term causes</h4></div></div><div class="sld"><div class="h" style="background:#3aa7a1">Build together</div><div class="c"><div class="n">Slide 3</div><h4>From spark to system</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Why did it become a world war?</h4></div></div><div class="sld"><div class="h" style="background:#cf6d3d">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Which cause mattered most?</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Rank & justify</h4></div></div></div>
+        <p class="muted" style="margin-top:16px;font-size:13.5px">A projector-ready deck on the same six-part spine. The Spokes Frame slide builds live; the source/quote slides can carry a confirmed video. Present mode: full-screen, arrow keys, teacher-prompts toggle.</p>
+      </div>
+      <div class="ltabp hide" data-lt="2">
+        <div class="card" style="max-width:720px">
+          <h3 style="margin:0 0 4px">Rubric - cause &amp; consequence</h3>
+          <p class="muted" style="font-size:13.5px;margin:0 0 16px">Tap a level for each criterion; the feedback writes itself and logs to Sam's coverage map.</p>
+          <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Identifies the causes (MAIN + trigger)</b></div><div class="seg"><button>Emerging</button><button>Developing</button><button class="on" style="border-color:var(--good);background:var(--good)">Secure</button><button>Greater depth</button></div></div>
+          <div class="set-row"><div class="l"><b>Explains how the causes led to war</b></div><div class="seg"><button>Emerging</button><button class="on">Developing</button><button>Secure</button><button>Greater depth</button></div></div>
+          <div class="set-row"><div class="l"><b>Prioritises &amp; justifies the key cause</b></div><div class="seg"><button>Emerging</button><button class="on">Developing</button><button>Secure</button><button>Greater depth</button></div></div>
+          <div class="rubfb">
+            <div class="r"><span class="k" style="color:var(--good)">✓ Strength</span><span>Sam identified all four MAIN causes and linked the alliance system to how the war broke out.</span></div>
+            <div class="r"><span class="k" style="color:var(--accent)">→ Next step</span><span>Push the judgement - weigh one cause directly against another and reach a supported conclusion (a GCSE "how far" skill).</span></div>
+          </div>
+          <div class="note" style="margin-top:14px">Logs against KS3 History · the First World War on Sam's coverage map.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORT DOCUMENT (LA / records) -->
+    <section class="apage hide" data-ap="report-doc">
+      <div class="phead"><div><h1>Leo’s learning record</h1><p>Ready to print, save as PDF, or email to your local authority.</p></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">← Options</button><button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button></div></div>
+      <div class="paper">
+        <div class="wm"><span class="dot"></span>SEQUENS HOME</div>
+        <h1 class="dt">Home Education Learning Record</h1>
+        <div class="meta">
+          <div><b>Child:</b> Leo Okonkwo</div><div><b>Age / stage:</b> 8 · working around Year 3 (England)</div>
+          <div><b>Period:</b> September 2025 – June 2026</div><div><b>Prepared:</b> 16 June 2026, by Jordan Okonkwo</div>
+          <div><b>Framework used:</b> England National Curriculum (2014)</div><div><b>Approach:</b> Structured &amp; experiential</div>
+        </div>
+        <h3 class="sec">Our approach to Leo’s education</h3>
+        <p class="bd">Leo is educated at home through a blend of planned, structured lessons and interest-led, real-world learning. We use the England National Curriculum as a guide for coverage and progression, while allowing Leo’s curiosity to shape how and when topics are explored. Learning takes place through focused sessions, family trips and projects, daily reading, and everyday life - chosen to suit his age, ability and the way he learns best.</p>
+        <h3 class="sec">Coverage this year</h3>
+        <p class="bd" style="margin-bottom:12px">Progress against the National Curriculum for Leo’s stage, drawn from both structured lessons and recorded real-world learning.</p>
+        <div class="cvbar"><span>English</span><span class="track"><i style="width:66%"></i></span><span class="v">66% secure</span></div>
+        <div class="cvbar"><span>Mathematics</span><span class="track"><i style="width:71%"></i></span><span class="v">71% secure</span></div>
+        <div class="cvbar"><span>Science</span><span class="track"><i style="width:58%"></i></span><span class="v">58% secure</span></div>
+        <div class="cvbar"><span>Foundation subjects</span><span class="track"><i style="width:49%;background:var(--gold)"></i></span><span class="v">broad</span></div>
+        <h3 class="sec">What Leo has been learning</h3>
+        <p class="bd"><b>English.</b> Leo writes for different purposes - most recently a beach recount using time-order language - and reads fluently at an early-fluent level. He is building stamina in extended writing.</p>
+        <p class="bd"><b>Mathematics.</b> Number and place value, measurement (length, mass, time), and an introduction to equivalent fractions, much of it applied practically through measuring, cooking and telling the time.</p>
+        <p class="bd"><b>Science.</b> Living things and their habitats (grouping and classification, explored at rock pools), the parts and life cycle of plants, and how we see light - hands-on and enquiry-led.</p>
+        <p class="bd"><b>Foundation subjects.</b> History, geography, art and PSHE covered broadly through projects and trips - local history, coasts and the water cycle, and personal safety.</p>
+        <h3 class="sec">Learning beyond the curriculum</h3>
+        <p class="bd">This year Leo completed 12 cross-curricular real-world projects, including a full day’s study at the beach, a nature classification walk, baking (following a method and measuring accurately), and a local museum visit. These develop curiosity, independence and the ability to apply learning in context - strengths of a home education.</p>
+        <h3 class="sec">How we record Leo’s learning</h3>
+        <p class="bd">We keep an ongoing portfolio: photographs of finished work, written pieces, and short voice recordings of Leo reading aloud and explaining his thinking. A representative sample is available on request.</p>
+        <h3 class="sec">Focus for the year ahead</h3>
+        <ul class="fl"><li>Extend written pieces with more detail and a wider range of connectives.</li><li>Secure equivalent fractions and progress to comparing and ordering fractions.</li><li>Continue building scientific vocabulary through hands-on enquiry.</li></ul>
+        <p class="disc">This record was prepared by Leo’s parent to evidence his education. SEQUENS Home helps families organise and present their child’s learning; it does not determine what any local authority requires, which varies by area and circumstance, and it is not legal advice. Coverage percentages reflect learning logged by the family against their chosen framework (England National Curriculum, 2014) and are an aid to reflection, not a formal assessment.</p>
+      </div>
+    </section>
+
+    <!-- END OF YEAR REPORT -->
+    <section class="apage hide" data-ap="report-eoy">
+      <div class="phead"><div><h1>Leo’s year in review</h1><p>A warm summary of the whole year - to keep, to print, or to share.</p></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">← Options</button><button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button></div></div>
+      <div class="paper">
+        <div class="wm"><span class="dot"></span>SEQUENS HOME</div>
+        <h1 class="dt">Leo’s Year in Review</h1>
+        <p class="bd" style="font-size:15px;color:var(--ink-soft);margin-top:2px">2025–2026 · a year of learning at home</p>
+        <p class="bd" style="margin-top:18px">What a year, Leo. You went from writing single sentences to filling a beach diary; from counting to sharing fractions; from naming animals to grouping them like a scientist. Here’s the whole of it in one place.</p>
+        <div class="stats"><div class="stat"><b>128</b><span>lessons &amp; sessions</span></div><div class="stat"><b>12</b><span>real-world projects</span></div><div class="stat"><b>24</b><span>books finished</span></div><div class="stat"><b>9</b><span>subjects explored</span></div></div>
+        <h3 class="sec">How Leo grew this year</h3>
+        <div class="growrow"><b>English</b><span>From single sentences → a full recount with time-order language and growing stamina.</span></div>
+        <div class="growrow"><b>Maths</b><span>From secure counting and measurement → understanding equivalent fractions.</span></div>
+        <div class="growrow"><b>Science</b><span>From naming living things → grouping and classifying them with keys.</span></div>
+        <div class="growrow"><b>Wider world</b><span>History, geography and art explored through trips, projects and a lot of curiosity.</span></div>
+        <h3 class="sec">Proudest moments</h3>
+        <div class="hilites">
+          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#cfe3df,#e7d3bf)">🏖</div><div class="cap"><b>A day at the beach</b>Six subjects in one brilliant day out.</div></div>
+          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#f4d59b,#f1b59a)">📖</div><div class="cap"><b>First chapter book</b>Read cover to cover, by himself.</div></div>
+          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#d8e7cf,#cfe3df)">🧁</div><div class="cap"><b>Baking week</b>Measured, mixed, nailed the maths.</div></div>
+        </div>
+        <p class="bd" style="font-size:12px;color:var(--ink-soft);margin-top:8px">Add your own photos before printing - the spaces above are ready for them.</p>
+        <h3 class="sec">Coverage this year</h3>
+        <div class="cvbar"><span>English</span><span class="track"><i style="width:66%"></i></span><span class="v">66% secure</span></div>
+        <div class="cvbar"><span>Mathematics</span><span class="track"><i style="width:71%"></i></span><span class="v">71% secure</span></div>
+        <div class="cvbar"><span>Science</span><span class="track"><i style="width:58%"></i></span><span class="v">58% secure</span></div>
+        <div class="cvbar"><span>Foundation</span><span class="track"><i style="width:49%;background:var(--gold)"></i></span><span class="v">broad</span></div>
+        <h3 class="sec">The year ahead</h3>
+        <p class="bd">Next year we’ll build longer pieces of writing, secure fractions and start comparing them, and keep following Leo’s questions wherever they lead. Onward.</p>
+        <p class="disc">A keepsake summary prepared by Leo’s family with SEQUENS Home. Coverage figures reflect learning logged against the family’s chosen framework (England National Curriculum, 2014) and are an aid to reflection, not a formal assessment. SEQUENS Home does not determine local-authority requirements, which vary; this is not legal advice.</p>
+      </div>
+    </section>
+
+  </main>
+</div></div>
+
+<script>
+
+var reportKind="la";function setReport(k){reportKind=k;}function openReport(){show(reportKind==="eoy"?"report-eoy":"report-doc",null);}
+function sesTab(btn,idx){var ap=btn.closest(".apage");ap.querySelectorAll(".tabs button").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");ap.querySelectorAll(".ltabp").forEach(function(p){p.classList.toggle("hide",+p.dataset.lt!==idx)});}
+function momentChild(c,btn){document.getElementById("m-leo").classList.toggle("hide",c!=="leo");document.getElementById("m-sam").classList.toggle("hide",c!=="sam");btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));btn.classList.add("on");}
+function startOnboarding(){document.getElementById('site').classList.add('hide');document.querySelector('.top').classList.add('hide');document.getElementById('onb').classList.remove('hide');onbGo(0);window.scrollTo(0,0);}
+function onbGo(n){document.querySelectorAll('.onb-step').forEach(st=>st.classList.toggle('on',+st.dataset.step===n));document.querySelectorAll('.onb-dots i').forEach((d,i)=>d.classList.toggle('on',i<=n));}
+function onbPick(b){b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+function onbToggle(b){b.classList.toggle('on');}
+function finishOnboarding(){document.getElementById('onb').classList.add('hide');goApp();}
+function goApp(){document.getElementById('site').classList.add('hide');document.querySelector('.top').classList.add('hide');document.getElementById('app').classList.remove('hide');window.scrollTo(0,0);buildCoverage();}
+function goSite(){document.getElementById('app').classList.add('hide');document.querySelector('.top').classList.remove('hide');document.getElementById('site').classList.remove('hide');window.scrollTo(0,0);}
+function show(s,btn){
+  document.querySelectorAll('.apage').forEach(p=>p.classList.toggle('hide',p.dataset.ap!==s));
+  document.querySelectorAll('.side .nav').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  document.querySelector('.main').scrollTo(0,0);
+}
+// coverage cells generator
+function cells(el,states){
+  const c=document.getElementById(el); if(!c||c.dataset.done)return; c.dataset.done=1;
+  states.forEach(s=>{const d=document.createElement('div');d.className='cell s'+(s.s);if(s.due)d.className+=' due';c.appendChild(d);});
+}
+let coverageBuilt=false;
+function buildCoverage(){
+  if(coverageBuilt)return; coverageBuilt=true;
+  const mk=(n,secure,prac,intro,due)=>{const a=[];for(let i=0;i<n;i++){let s=0;if(i<secure)s=3;else if(i<secure+prac)s=2;else if(i<secure+prac+intro)s=1;a.push({s,due:s===3&&due.includes(i)});}return a;};
+  cells('cov-maths',mk(24,11,3,3,[1,4,7]));
+  cells('cov-eng',mk(24,9,4,2,[0,5]));
+  cells('cov-sci',mk(20,7,3,2,[2]));
+  cells('cov-found',mk(28,9,4,4,[3,9]));
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.tog'); if(t)t.classList.toggle('on');
+  const seg=e.target.closest('.seg button'); if(seg){seg.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));seg.classList.add('on');}
+  const opp=e.target.closest('.opp'); if(opp&&!opp.querySelector('.chk')){const c=document.createElement('div');c.className='chk';c.textContent='✓';opp.appendChild(c);} else if(opp&&e.target.closest('.chk')){e.target.closest('.chk').remove();}
+});
+</script>
+</body>
+</html>

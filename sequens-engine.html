@@ -1,0 +1,733 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SEQUENS · Lesson Engine</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>:root{--paper:#FBF4E6;--card:#FFFDF7;--card2:#F3EAD7;--ink:#3A2E26;--ink-soft:#7A6A5C;--ink-faint:#A89A88;--line:#E6D9BE;--primary:#2E2620;--primary-d:#1C1712;--primary-l:#EFE2D5;--accent:#C45F2E;--accent-d:#9A4422;--accent-l:#F3E0D2;--teal:#1F8E8A;--teal-d:#15706C;--teal-l:#D7ECEA;--good:#4E8C5A;--good-l:#DCEFE4;--clay:#B4541F;--serif:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);background-image:radial-gradient(rgba(120,90,50,.045) .6px,transparent .6px);background-size:8px 8px;color:var(--ink);font-family:var(--body);line-height:1.55}
+.serif{font-family:var(--serif)}
+.wrap{max-width:760px;margin:0 auto;padding:34px 20px 70px}
+.kicker{font-family:var(--serif);font-size:15px;color:var(--accent-d);margin-bottom:2px}
+.app-h1{font-family:var(--serif);font-weight:600;font-size:33px;line-height:1.08;margin-bottom:6px}
+.app-h1 em{font-style:italic;color:var(--primary)}
+.app-sub{font-family:var(--serif);font-size:17px;color:var(--ink-soft);margin-bottom:20px}
+.locked{background:var(--primary);color:#fff;border-radius:13px;padding:15px 18px;margin-bottom:16px}
+.locked .lh{font-family:var(--serif);font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.locked .row{display:flex;flex-wrap:wrap;gap:7px}
+.locked .s{font-family:var(--serif);font-size:13px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:4px 11px}
+.locked .note{font-size:12.5px;color:#E6D9BE;margin-top:9px}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:15px;padding:18px 20px;margin-bottom:14px}
+.flab{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--primary-d);margin-bottom:3px}
+.fhint{font-size:13px;color:var(--ink-soft);margin-bottom:11px}
+label.mini{font-family:var(--serif);font-size:13px;color:var(--ink-soft);display:block;margin-bottom:3px}
+input,select,textarea{width:100%;font-family:var(--body);font-size:15px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:9px 11px}
+textarea{min-height:64px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+.bandsin{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bandsin label{font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--serif);font-size:13.5px;color:var(--primary-d);background:var(--card2);border:1.5px solid var(--line);border-radius:18px;padding:6px 13px;cursor:pointer;user-select:none}
+.chip[aria-pressed="true"]{background:var(--primary);color:#fff;border-color:var(--primary)}
+.findlink{margin-top:10px;font-family:var(--serif);font-size:14px;color:var(--teal-d);background:none;border:none;cursor:pointer;padding:0;text-decoration:underline}
+#findpanel{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.filebtn{display:inline-block;font-family:var(--serif);font-size:13px;color:var(--primary-d);background:var(--card2);border:1.5px solid var(--line);border-radius:9px;padding:7px 12px;cursor:pointer;margin-top:8px}
+.fname{font-size:12.5px;color:var(--ink-soft);margin-left:8px}
+.fstatus{font-size:13px;color:var(--ink-soft);margin-top:8px;font-style:italic;min-height:18px}
+.objlist{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.objhint{font-family:var(--serif);font-size:13px;color:var(--ink-soft)}
+.objchip{text-align:left;font-family:var(--body);font-size:14px;color:var(--ink);background:var(--card2);border:1.5px solid var(--line);border-radius:9px;padding:9px 12px;cursor:pointer}
+.objchip:hover{border-color:var(--primary);background:var(--primary-l)}
+.go{width:100%;font-family:var(--serif);font-weight:600;font-size:19px;color:#fff;background:var(--accent);border:none;border-radius:13px;padding:15px;cursor:pointer;box-shadow:0 3px 0 var(--accent-d)}
+.go:active{transform:translateY(2px);box-shadow:0 1px 0 var(--primary-d)}
+.sample{width:100%;margin-top:9px;font-family:var(--serif);font-size:15px;color:var(--primary-d);background:var(--card2);border:1.5px solid var(--line);border-radius:11px;padding:11px;cursor:pointer}
+.foot{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:11px;font-family:var(--serif);font-style:italic}
+.err{display:none;background:#FBE9E2;border:1.5px solid var(--clay);color:#7a3413;border-radius:11px;padding:12px 15px;margin-bottom:14px;font-size:14px}
+.err b{font-family:var(--serif)}
+#loading{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:30px}
+#loading .p{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--primary)}
+#loading .s{font-size:15px;color:var(--ink-soft);margin-top:12px;min-height:22px}
+.spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--primary);border-radius:50%;animation:sp 0.9s linear infinite;margin-bottom:18px}
+@keyframes sp{to{transform:rotate(360deg)}}
+#output{display:none}
+.obar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:#20211C;color:#E6D9BE;flex-wrap:wrap}
+.obar .b{font-family:var(--serif);font-size:14px;color:#20211C;background:#E6D9BE;border:none;border-radius:9px;padding:7px 14px;cursor:pointer}
+.obar .tab{font-family:var(--serif);font-size:14px;color:#C9B79A;background:#2B2926;border:1px solid #503525;border-radius:18px;padding:6px 15px;cursor:pointer}
+.obar .tab.on{background:var(--accent);color:#243A30;border-color:var(--accent)}
+.obar .note{margin-left:auto;font-size:12.5px;color:#C9B79A;font-style:italic}
+/* deck panel */
+.r-deck{display:flex;flex-direction:column;height:82vh;background:#20211C}
+.r-deck .dbar{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:8px 16px;color:#E6D9BE;font-size:13px;flex-wrap:wrap}
+.r-deck .dbtitle{font-family:var(--serif);color:#fff}
+.r-deck .dbar button{font-size:12.5px;color:#E6D9BE;background:#2B2926;border:1px solid #503525;border-radius:16px;padding:5px 11px;cursor:pointer}
+.r-deck .dbar button.on{background:var(--accent);color:#243A30;border-color:var(--accent)}
+.r-deck .dnotesbtn{margin-left:auto}
+.r-deck .dstage{flex:1 1 auto;display:flex;align-items:center;justify-content:center;padding:14px;min-height:0}
+.r-deck .ddeck{width:100%;max-width:1000px;aspect-ratio:16/9;max-height:100%;background:var(--paper);border-radius:16px;position:relative;overflow:hidden;box-shadow:0 18px 50px -18px rgba(0,0,0,.6)}
+.r-deck .ddeck[data-bg="grad"]{background:linear-gradient(135deg,#FBF4E6,#F3E7D2 70%,#EFE2D5)}
+.r-deck .ddeck[data-bg="grid"]{background:var(--paper);background-image:radial-gradient(var(--line) 1.2px,transparent 1.2px);background-size:24px 24px}
+.r-deck .dslide{position:absolute;inset:0;padding:32px 44px;display:none;flex-direction:column}
+.r-deck .dslide.active{display:flex}
+.r-deck .deyebrow{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--accent-d);margin-bottom:6px}
+.r-deck .dh1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.05;color:var(--ink)}
+.r-deck .dh2{font-family:var(--serif);font-weight:600;font-size:26px;margin-bottom:8px;color:var(--ink)}
+.r-deck .dlo{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--primary-d);margin-top:6px}
+.r-deck .dp{font-size:18px;line-height:1.45;max-width:48ch}
+.r-deck .dul{list-style:none;margin-top:8px}
+.r-deck .dul li{font-size:18px;margin:8px 0;padding-left:30px;position:relative}
+.r-deck .dul .dn{position:absolute;left:0;top:1px;width:21px;height:21px;border-radius:50%;background:var(--primary);color:#fff;font-family:var(--serif);font-size:12px;display:flex;align-items:center;justify-content:center}
+.r-deck .dfig{margin:6px auto 0;max-width:340px}
+.r-deck .dvocab{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.r-deck .dvcard{display:flex;gap:12px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:9px 14px}
+.r-deck .dvcard svg{width:54px;height:54px;flex:0 0 auto}
+.r-deck .dvt{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--primary-d)}
+.r-deck .dvd{font-size:13.5px;color:var(--ink);line-height:1.3}
+.r-deck .dopt{display:flex;gap:10px;background:var(--card);border:1.5px solid var(--line);border-radius:11px;padding:9px 14px;margin:6px 0;font-size:17px}
+.r-deck .dopt.ok{background:var(--good-l);border-color:var(--good)}
+.r-deck .dopt .dlt{font-family:var(--serif);font-weight:600;color:var(--ink-soft);flex:0 0 auto}
+.r-deck .dbands{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.r-deck .dband{border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.r-deck .dband .h{font-family:var(--serif);font-weight:600;font-size:12px;color:#fff;padding:4px 9px}
+.r-deck .dband .c{padding:7px 9px;font-size:12px}
+.r-deck .b1 .h{background:var(--clay)} .r-deck .b2 .h{background:var(--accent-d)} .r-deck .b3 .h{background:var(--primary)} .r-deck .b4 .h{background:var(--good)}
+.r-deck .dvideoslot{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card2);border:2px dashed var(--primary);border-radius:14px;text-align:center;padding:16px;gap:7px}
+.r-deck .vsug{font-family:var(--serif);font-size:19px;color:var(--primary-d)}
+.r-deck .vwhy{font-size:14px;color:var(--ink-soft);max-width:52ch}
+.r-deck .vrow{display:flex;gap:8px;width:100%;max-width:520px;margin-top:4px}
+.r-deck .vrow input{flex:1;font-size:14px;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px}
+.r-deck .vrow button{font-family:var(--serif);background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer}
+.r-deck .viderr{color:var(--clay);font-size:13px;min-height:16px}
+.r-deck .vidframe{width:100%;max-width:520px;aspect-ratio:16/9;border:none;border-radius:10px;display:none}
+.r-deck .dnotes{flex:0 0 auto;margin-top:auto;background:var(--primary);color:#fff;border-radius:11px;padding:10px 16px;font-size:14.5px;line-height:1.4;display:none}
+.r-deck.shownotes .dnotes{display:block}
+.r-deck .dnotes b{color:var(--accent-l);font-family:var(--serif)}
+.r-deck .dtiming{position:absolute;top:14px;right:20px;font-family:var(--serif);font-size:14px;color:var(--ink-soft)}
+.r-deck .dnav{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:16px;padding:9px;color:#E6D9BE}
+.r-deck .dnav button{font-family:var(--serif);font-size:15px;color:#20211C;background:#E6D9BE;border:none;border-radius:9px;padding:7px 16px;cursor:pointer}
+.r-deck .dpos{font-variant-numeric:tabular-nums}
+
+.r-plan *{box-sizing:border-box;margin:0;padding:0}.r-plan{background:var(--paper);background-image:radial-gradient(rgba(120,90,50,.045) .6px,transparent .6px);background-size:8px 8px;color:var(--ink);font-family:var(--body);line-height:1.55;padding:36px 20px 80px}.r-plan .doc{max-width:880px;margin:0 auto}.r-plan .serif{font-family:var(--serif)}.r-plan .kicker{font-family:var(--serif);font-size:15px;color:var(--accent-d);margin-bottom:3px}.r-plan h1{font-family:var(--serif);font-weight:600;font-size:38px;line-height:1.08;letter-spacing:-.01em;margin-bottom:8px}.r-plan h1 em{font-style:italic;color:var(--primary)}.r-plan .meta{font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin-bottom:16px}.r-plan .meta b{color:var(--ink);font-weight:500}.r-plan .inquiry{background:var(--primary);color:#fff;border-radius:12px;padding:12px 18px;margin-bottom:14px;font-family:var(--serif);font-size:16px}.r-plan .inquiry b{color:var(--accent-l)}.r-plan .nc{background:var(--card);border:1.5px solid var(--line);border-left:5px solid var(--good);border-radius:12px;padding:13px 18px;margin-bottom:16px}.r-plan .nc .from{font-family:var(--serif);font-weight:600;font-size:14px;color:var(--good);margin-bottom:3px}.r-plan .nc .q{font-family:var(--serif);font-style:italic;font-size:16px}.r-plan .nc .ref{font-size:12.5px;color:var(--ink-soft);margin-top:5px}.r-plan .dest{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:26px}.r-plan .dest .eyebrow{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--primary-d);margin-bottom:3px}.r-plan .lo{font-family:var(--serif);font-style:italic;font-size:21px;margin:4px 0 6px;line-height:1.4}.r-plan .stepslab{font-family:var(--serif);font-size:14px;color:var(--ink-soft);margin:10px 0 4px}.r-plan .sc{margin:9px 0;font-size:16px}.r-plan .sc .n{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--serif);font-weight:600;font-size:13px;align-items:center;justify-content:center;vertical-align:-4px;margin-right:9px}.r-plan .sc b{font-weight:700}.r-plan .section{margin:0 0 30px}.r-plan .sec-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1.5px solid var(--line);padding-bottom:9px;margin-bottom:16px}.r-plan .num{font-family:var(--serif);font-weight:600;font-size:14px;color:#fff;background:var(--teal);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}.r-plan .sec-name{font-family:var(--serif);font-weight:600;font-size:24px}.r-plan .sec-name em{font-style:italic;color:var(--primary)}.r-plan .time{margin-left:auto;font-family:var(--serif);font-size:16px;color:var(--accent-d)}.r-plan .pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}.r-plan .pill{font-family:var(--serif);font-size:12.5px;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3px 11px}.r-plan .grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}@media(min-width:700px){.r-plan .grid.split{grid-template-columns:1.12fr .88fr}}.r-plan .say,.r-plan .do{margin:12px 0}.r-plan .lab{font-family:var(--serif);font-weight:600;font-size:14px;display:block;margin-bottom:3px}.r-plan .say .lab{color:var(--accent-d)}.r-plan .do .lab{color:var(--primary-d)}.r-plan .say p{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.5;border-left:3px solid var(--accent-l);padding-left:14px;color:var(--ink)}.r-plan .do .line{display:flex;gap:9px;align-items:flex-start;font-size:16px;margin:5px 0}.r-plan .do .line svg{flex:0 0 auto;margin-top:2px}.r-plan .why{font-size:14px;color:var(--ink-soft);background:var(--card2);border-radius:9px;padding:10px 14px;margin-top:10px}.r-plan .why b{color:var(--ink);font-family:var(--serif)}.r-plan .eal{background:var(--accent-l);border-radius:10px;padding:11px 15px;margin:12px 0;font-size:14.5px}.r-plan .eal .lab{color:var(--accent-d)}.r-plan .eal dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin-top:5px}.r-plan .eal dt{font-family:var(--serif);font-style:italic;font-weight:500}.r-plan figcaption{font-family:var(--serif);font-size:14px;color:var(--ink-soft);text-align:center;margin-top:6px}.r-plan figure svg{display:block;width:100%;height:auto}.r-plan .hinge{background:var(--card);border:1.5px solid var(--primary);border-radius:14px;padding:20px 24px}.r-plan .hinge .q{font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:12px}.r-plan .opt{display:flex;gap:11px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;background:var(--card2);font-size:16px}.r-plan .opt .lt{font-family:var(--serif);font-weight:600;width:22px;flex:0 0 auto}.r-plan .opt.correct{background:var(--good-l);border-color:var(--good)}.r-plan .opt.correct .lt{color:var(--good)}.r-plan .miscon{margin-top:10px;padding:10px 15px;border-left:4px solid var(--accent-l);background:var(--card2);border-radius:0 10px 10px 0;font-size:15px}.r-plan .miscon .who{font-family:var(--serif);font-weight:600;color:var(--primary-d)}.r-plan .miscon .fix .lab{display:inline;color:var(--accent-d);font-family:var(--serif)}.r-plan .bands{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}@media(min-width:760px){.r-plan .bands{grid-template-columns:repeat(4,1fr)}}.r-plan .band{border:1.5px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}.r-plan .band .h{font-family:var(--serif);font-weight:600;font-size:13.5px;color:#fff;padding:7px 12px}.r-plan .band .c{padding:10px 13px;font-size:14px;color:var(--ink)}.r-plan .band.b1 .h{background:var(--clay)}.r-plan .band.b2 .h{background:var(--accent-d)}.r-plan .band.b3 .h{background:var(--primary)}.r-plan .band.b4 .h{background:var(--good)}.r-plan .band .n{font-weight:400;opacity:.85}.r-plan .ticket{border:2.5px dashed var(--primary);border-radius:14px;padding:18px 22px;background:var(--card)}.r-plan .ticket .tt{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--primary-d);margin-bottom:6px}.r-plan .ticket .prompt{font-family:var(--serif);font-style:italic;font-size:18px;margin-bottom:10px}.r-plan .ticket .ln{border-bottom:1.5px solid var(--line);height:22px;margin:8px 0}.r-plan .key{margin-top:14px}.r-plan .krow{display:grid;grid-template-columns:1fr;gap:2px;border:1.5px solid var(--line);border-radius:10px;padding:10px 15px;margin:8px 0;background:var(--card2)}@media(min-width:620px){.r-plan .krow{grid-template-columns:1.2fr 1fr;gap:4px 18px;align-items:center}}.r-plan .krow .sees{font-family:var(--serif);font-size:15.5px}.r-plan .krow .means{font-size:14px;color:var(--ink-soft)}.r-plan .krow .means b{color:var(--primary-d)}.r-plan .krow.secure{border-left:4px solid var(--good)}.r-plan footer{margin-top:46px;text-align:center;font-family:var(--serif);font-size:16px;color:var(--ink-faint)}@media print{.r-plan{background:#fff}.r-plan .section,.r-plan .hinge,.r-plan .dest{break-inside:avoid}}
+.r-rubric *{box-sizing:border-box;margin:0;padding:0}.r-rubric{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.45;padding:30px 18px 60px}.r-rubric .doc{max-width:980px;margin:0 auto}.r-rubric .serif{font-family:var(--serif)}.r-rubric .kicker{font-family:var(--serif);font-size:14px;color:var(--accent-d)}.r-rubric h1{font-family:var(--serif);font-weight:600;font-size:27px;margin:2px 0 4px}.r-rubric .lo{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--primary-d);background:var(--primary-l);border-radius:10px;padding:10px 15px;margin:10px 0 4px}.r-rubric .meta{font-size:13px;color:var(--ink-soft);margin-bottom:16px}.r-rubric table{width:100%;border-collapse:separate;border-spacing:0;margin-bottom:8px;font-size:13.5px}.r-rubric th,.r-rubric td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--line)}.r-rubric thead th{font-family:var(--serif);font-size:13px;color:#fff;border-bottom:none}.r-rubric th.crit{background:var(--card2);color:var(--ink);width:23%;border-top-left-radius:9px}.r-rubric th.l1{background:var(--clay)}.r-rubric th.l2{background:var(--accent-d)}.r-rubric th.l3{background:var(--primary)}.r-rubric th.l4{background:var(--good);border-top-right-radius:9px}.r-rubric th .band{display:block;font-weight:400;font-size:11px;opacity:.85;margin-top:1px}.r-rubric tbody th{font-family:var(--serif);font-weight:600;font-size:13.5px;color:var(--primary-d);background:var(--card)}.r-rubric tbody td{background:var(--card)}.r-rubric td.sec{background:var(--good-l)}.r-rubric .stepnum{display:inline-flex;width:19px;height:19px;border-radius:50%;background:var(--primary);color:#fff;font-size:11px;align-items:center;justify-content:center;margin-right:6px;vertical-align:1px}.r-rubric .hint{font-size:12px;color:var(--ink-soft);margin:6px 2px 22px}.r-rubric .hint b{color:var(--good)}.r-rubric .fb{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px 20px}.r-rubric .fb h2{font-family:var(--serif);font-size:18px;color:var(--primary-d);margin-bottom:4px}.r-rubric .fb .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:12px}.r-rubric .fb .name{display:flex;gap:10px;align-items:center;margin-bottom:12px;font-size:14px}.r-rubric .fb .name .ln{flex:1;border-bottom:1.5px solid var(--line);height:20px}.r-rubric .fbrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}.r-rubric .fbrow .s{font-size:13px}.r-rubric .ticks{display:flex;gap:6px}.r-rubric .tick{font-family:var(--serif);font-size:11px;color:var(--ink-soft);border:1.5px solid var(--line);border-radius:14px;padding:3px 9px;white-space:nowrap}.r-rubric .tick.sec{border-color:var(--good);color:var(--good)}.r-rubric .lines{margin-top:12px;display:grid;gap:9px}.r-rubric .lines .l{display:flex;gap:10px;align-items:center;font-size:13.5px}.r-rubric .lines .tag{font-family:var(--serif);font-weight:600}.r-rubric .lines .tag.win{color:var(--good)}.r-rubric .lines .tag.nxt{color:var(--accent-d)}.r-rubric .lines .w{flex:1;border-bottom:1.5px solid var(--line);height:22px}.r-rubric .snap{font-size:12.5px;color:var(--ink-soft);margin-top:14px;font-family:var(--serif);font-style:italic}@media print{.r-rubric{background:#fff;padding:10px}.r-rubric .fb,.r-rubric table{break-inside:avoid}}</style></head><body><div id="builder"><div class="wrap">
+  <div class="kicker">SEQUENS · Lesson Engine</div>
+  <div class="app-h1">Type an objective. <em>Get the lesson.</em></div>
+  <div class="app-sub">A fresh, fully-SEQUENSed plan, slide deck and rubric - engineered, not templated.</div>
+  <div class="locked"><div class="lh">🔒 The SEQUENS spine - non-negotiable</div>
+    <div class="row"><span class="s">First thing</span><span class="s">Show them how</span><span class="s">Build it together</span><span class="s">Quick check</span><span class="s">Their turn</span><span class="s">Last thing</span></div>
+    <div class="note">Every lesson keeps this skeleton. Everything below tailors what fills it.</div></div>
+  <div class="err" id="err"><b>That didn't generate.</b> <span id="errmsg"></span><br><span style="font-size:12.5px">If you're previewing outside the Claude app the live model isn't reachable - use <b>Try a sample</b> to see the output.</span></div>
+  <div class="panel"><div class="flab">the objective</div><div class="fhint">Plain words - "I can…" or just the topic.</div>
+    <textarea id="objective" placeholder="e.g. I can explain why the seasons change"></textarea>
+    <button type="button" class="findlink" onclick="toggleFind()">＋ Find one from a curriculum (or a scheme you upload)</button>
+    <div id="findpanel" style="display:none">
+      <div class="fhint">Pick your curriculum and key stage below, then tap <b>Find objectives</b> to choose from the National Curriculum - or paste / attach your own scheme and it'll pull the objectives out.</div>
+      <textarea id="schemetext" placeholder="Optional: paste your scheme / curriculum text here"></textarea>
+      <label class="filebtn">📎 Attach a PDF<input type="file" accept="application/pdf,image/*" onchange="onSchemeFile(this)" hidden></label><span id="filename" class="fname"></span>
+      <button type="button" class="sample" style="margin-top:8px" onclick="findObjectives()">Find objectives →</button>
+      <div id="findstatus" class="fstatus"></div><div id="objlist" class="objlist"></div>
+    </div>
+  </div>
+  <div class="panel"><div class="flab">the basics</div>
+    <div class="row2">
+      <div><label class="mini">Year group</label><select id="year"><option>EYFS</option><option>Year 1</option><option>Year 2</option><option>Year 3</option><option>Year 4</option><option>Year 5</option><option selected>Year 6</option><option>Year 7</option><option>Year 8</option><option>Year 9</option><option>Year 10</option><option>Year 11</option></select></div>
+      <div><label class="mini">Subject</label><select id="subject" onchange="onSubjectChange()"></select><input id="subjectOther" placeholder="type the subject" style="display:none;margin-top:6px"></div>
+    </div>
+    <div class="row2" style="margin-top:10px">
+      <div><label class="mini">Curriculum</label><select id="curriculum"><option>England National Curriculum / EYFS</option><option>My own scheme (upload or paste)</option><option>General / not sure</option></select></div>
+      <div><label class="mini">Length (minutes)</label><select id="length"><option>20</option><option>30</option><option>40</option><option>45</option><option>50</option><option>55</option><option selected>60</option><option>70</option><option>80</option></select></div>
+    </div>
+        <div style="margin-top:10px"><label class="mini">Context to weave in (optional)</label><input id="context" placeholder="e.g. Cairo setting; novel Wonder"></div>
+    <div style="margin-top:12px"><label class="mini">Teacher voice <span style="font-weight:400;text-transform:none;letter-spacing:0">- tap any that fit, blend freely</span></label>
+      <div class="chips" id="voiceChips" style="margin-top:6px"><button class="chip" aria-pressed="true">Warm and encouraging</button><button class="chip" aria-pressed="false">Calm and measured</button><button class="chip" aria-pressed="false">Energetic and brisk</button><button class="chip" aria-pressed="false">Authoritative and precise</button><button class="chip" aria-pressed="false">Playful and curious</button><button class="chip" aria-pressed="false">Storytelling</button><button class="chip" aria-pressed="false">Socratic / questioning</button><button class="chip" aria-pressed="false">Direct and concise</button><button class="chip" aria-pressed="false">Reassuring</button><button class="chip" aria-pressed="false">High-challenge / aspirational</button></div>
+    </div>
+    <div class="fhint" style="margin:10px 0 0">England National Curriculum &amp; EYFS (EYFS–KS4) are aligned accurately. EYFS lessons also generate a continuous-provision section. Other / board-specific schemes: use “My own” and upload. Always verify wording before teaching.</div>
+  </div>
+  <div class="panel"><div class="flab">teaching approaches <span style="font-weight:400;font-size:13px;color:var(--ink-soft)">- tap to toggle</span></div>
+    <div class="chips" id="approachChips"><button class="chip" aria-pressed="true">Explicit instruction</button><button class="chip" aria-pressed="true">Retrieval practice</button><button class="chip" aria-pressed="true">Modelling & worked examples</button><button class="chip" aria-pressed="true">Scaffolding</button><button class="chip" aria-pressed="false">Dialogic / oracy</button><button class="chip" aria-pressed="false">Enquiry-based</button><button class="chip" aria-pressed="false">Mastery</button><button class="chip" aria-pressed="false">Cooperative learning</button><button class="chip" aria-pressed="false">Project-based</button><button class="chip" aria-pressed="false">Metacognition</button></div></div>
+  <div class="panel"><div class="flab">activities you already have <span style="font-weight:400;font-size:13px;color:var(--ink-soft)">- optional</span></div>
+    <div class="fhint">List anything you want kept - the engine slots each into the right part of the spine.</div>
+    <textarea id="activities" placeholder="e.g. SDG card sort; a diamond-9 ranking task"></textarea></div>
+  <div class="panel"><div class="flab">the class <span style="font-weight:400;font-size:13px;color:var(--ink-soft)">- how many in each band</span></div>
+    <div class="bandsin">
+      <div><label class="mini">Below</label><input id="nBelow" type="number" value="6" min="0"></div>
+      <div><label class="mini">Working tow.</label><input id="nWorking" type="number" value="6" min="0"></div>
+      <div><label class="mini">At expect.</label><input id="nAt" type="number" value="8" min="0"></div>
+      <div><label class="mini">Above</label><input id="nAbove" type="number" value="4" min="0"></div>
+    </div></div>
+  <button class="go" onclick="doGenerate()">Make me the lesson →</button>
+  <div class="fhint" style="margin-top:9px;margin-bottom:0">Or see it work now - no generation:</div><div style="display:flex;gap:8px;margin-top:7px"><button class="sample" style="margin-top:0;flex:1;width:auto" onclick="trySample('eyfs')">EYFS sample</button><button class="sample" style="margin-top:0;flex:1;width:auto" onclick="trySample('y6')">Year 6 sample</button><button class="sample" style="margin-top:0;flex:1;width:auto" onclick="trySample('y9')">Year 9 sample</button></div>
+  <div class="foot">One objective in. A SEQUENS plan, slide deck and rubric out. Review before teaching.</div>
+</div></div>
+<div id="loading"><div class="spin"></div><div class="p serif">✎ building your lesson</div><div class="s" id="loadstage"></div></div>
+<div id="output">
+  <div class="obar">
+    <button class="b" onclick="backToBuilder()">← New lesson</button>
+    <button class="tab on" id="tab-plan" onclick="switchTab('plan')">Lesson plan</button>
+    <button class="tab" id="tab-deck" onclick="switchTab('deck')">Slides</button>
+    <button class="tab" id="tab-rubric" onclick="switchTab('rubric')">Rubric</button>
+    <span class="note">generated by the engine · review &amp; tailor before teaching</span>
+  </div>
+  <div id="r-plan" class="r-plan"></div>
+  <div id="r-deck" class="r-deck" style="display:none"></div>
+  <div id="r-rubric" class="r-rubric" style="display:none"></div>
+</div>
+<script>
+/* ============ SEQUENS ENGINE ============ */
+
+const SYSTEM_PROMPT = `You are the SEQUENS lesson engine — an expert instructional designer who turns ONE learning objective into ONE rigorously engineered lesson. Follow the SEQUENS method exactly.
+
+NON-NEGOTIABLE SPINE (every lesson, in this order):
+1 First thing (settling in) — retrieval or activation of prior knowledge.
+2 Show them how (showing how) — explicit teaching, a worked example, I-do.
+3 Build it together (asking well) — guided practice, we-do, probing questions.
+4 Quick check (checking in) — a misconception-led HINGE question.
+5 Their turn (on their own) — independent practice at a high success rate.
+6 Last thing (closing well) — an exit ticket that works as a DIAGNOSTIC.
+
+PEDAGOGY (apply rigorously):
+- Exactly one LO and three ascending, assessable steps to success.
+- Retrieve/activate BEFORE new content. Introduce ONE new idea at a time; protect working memory (Willingham/Sweller). Dual-code (pair words with a visual) where it reduces load. Fade scaffolds across the lesson.
+- The Quick check is a HINGE: 4 options, one correct; EACH wrong option names a specific misconception and gives a concrete reteach; include a decision rule for the teacher.
+- The exit ticket is a DIAGNOSTIC: its rows tell the teacher what each response means and what to do next.
+- Section times must sum to the lesson length. Respect the length: for short lessons (20-35 min) keep every section brief and trim optional elements (a video, a long map) rather than overloading \u2014 the six-part spine still applies, just compressed; for long lessons (70-80 min) deepen practice, add a second worked example or genuine extension rather than padding.
+
+DIFFERENTIATION — cater for all four bands by the given counts:
+- below: heaviest scaffolds (vocabulary support, sentence stems, often teacher-led, talk before writing).
+- working: starters + partial scaffolds + word bank.
+- at: the full core task in their own words.
+- above: genuine stretch/depth (a second example, a justified position) — never just "more".
+Keep every pupil engaged at every step (oracy routines; every-pupil-response at the hinge).
+
+VOICE & APPROACHES: write the scripted "say" lines in the requested teacher voice and apply the requested teaching approaches throughout. Age-appropriate for the year group. Be factually accurate.
+CURRICULUM: align the objective, key vocabulary and the three steps to success to the named framework and key stage. If it is the England National Curriculum or EYFS (public frameworks), align accurately to the relevant programme of study or Early Learning Goals — reference their structure faithfully but write in your own words, and tell the teacher to verify exact attainment-target wording. For any other or uploaded scheme, work from the objective exactly as given. Never reproduce proprietary scheme text.
+AGE-APPROPRIATENESS: match reading level, abstraction and task type to the key stage — EYFS/KS1 concrete, oral and playful with minimal text and very short scripted lines; KS2 building written independence; KS3 subject terminology and structured analysis; KS4 exam-style rigour. A five-year-old and a sixteen-year-old must never receive the same register.
+EYFS PROVISION: ONLY if the key stage is EYFS, return a single "provision" object that weaves the objective into the setting’s EXISTING areas. Practitioners already run continuous provision, so do NOT invent new stations, full setups, or a list of areas — give ONE light touch that lets today’s objective surface in an area they already have, and make it observation-led. Shape: {"area":"an existing area: water, sand, malleable/dough, construction, role-play, small world, mark-making, book corner, or outdoors","invitation":"one small thing to add or tweak in that area so the objective shows up in play — not a station to build","lookFor":"what to notice that shows a child working towards the objective","extend":"one in-the-moment question to stretch it"}. For every non-EYFS key stage set "provision": null.
+VIDEO: decide whether a short clip (under 5 minutes) would genuinely help this lesson. If yes, set "video":{"needed":true,"suggestion":"what the teacher should search for","why":"why it helps"} — NEVER a URL; the teacher previews and confirms. If not, set "video":{"needed":false}.
+Give each vocabulary item an "icon" keyword from the list for dual-coding.
+PRE-PLANNED ACTIVITIES: if the teacher supplies their own activities, place each into the most fitting spine section and build the lesson around it (name it in that section's "do") rather than inventing a replacement.
+CONTEXT: weave in any context provided.
+
+DUAL-CODING MAPS: attach a map to a section only where a visual genuinely helps. Use ONLY these types and label them concisely:
+- rings: nested levels (labels broadest→narrowest, up to 4)
+- iceberg: visible vs hidden / fact vs inference (labels:[above, below])
+- keystone: two ideas joined / cause→effect (labels:[leftBox, rightBox, connector])
+- mindmap: central idea + branches (labels:[centre, branch, branch, branch, branch])
+- cycle: a process loop (labels: 3–5 stages in order)
+- compare: two things side by side (labels:[A, B])
+- timeline: a sequence (labels: 3–5 events in order)
+
+EVERY map label MUST be 1–2 words and 14 characters or fewer — never a phrase or sentence. Stay within the counts above.
+
+SAFETY: never include video URLs (a vetted slot is added by the app). Keep everything age-appropriate and accurate. If the objective is unsafe or not a teachable curriculum objective, return {"error":"..."} only.
+
+OUTPUT: return ONLY valid JSON (no markdown, no commentary) in this exact shape:
+{
+ "meta":{"subject":"","year":"","topic":"short lesson title","lengthMin":60},
+ "inquiry":"optional big question or empty string",
+ "lo":"I can ...",
+ "steps":["I can ...","I can ...","I can ..."],
+ "vocab":[{"term":"","def":"short pupil-friendly definition","icon":"one keyword from: person-community, shield-tick, hands-heart, links, globe, book, lightbulb, leaf, magnifier, arrows"}],
+ "sections":{
+   "first":{"mins":8,"pills":["retrieval"],"say":"scripted teacher line","do":"what the teacher does","why":"brief Willingham/Rosenshine rationale","map":{"type":"rings","title":"","labels":[]}},
+   "show":{"mins":12,"pills":[],"say":"","do":"","why":"","map":null},
+   "build":{"mins":12,"pills":[],"say":"","do":"","map":null},
+   "check":{"mins":6},
+   "turn":{"mins":14,"say":"","do":""},
+   "last":{"mins":8}
+ },
+ "hinge":{"question":"","options":[{"letter":"A","text":"","correct":false,"misconception":"name of the misconception","reteach":"how to reteach"},{"letter":"B","text":"","correct":false,"misconception":"","reteach":""},{"letter":"C","text":"","correct":true},{"letter":"D","text":"","correct":false,"misconception":"","reteach":""}],"rule":"teacher decision rule"},
+ "differentiation":{"below":"","working":"","at":"","above":""},
+ "exit":{"prompt":"","vocabCheck":"optional one-word vocab check or empty","diagnostic":[{"sees":"what you might see","means":"what it means / next step","secure":true},{"sees":"","means":""},{"sees":"","means":""}]},
+ "rubric":[{"emerging":"","developing":"","secure":"","greater":""},{"emerging":"","developing":"","secure":"","greater":""},{"emerging":"","developing":"","secure":"","greater":""}],
+ "provision":null,
+ "video":{"needed":false}
+}
+Map "map" to null when no visual is needed. Provide exactly 3 steps, 3 rubric rows (one per step), and 4 hinge options (exactly one correct).`;
+
+function userPrompt(inp){
+  return `Build a SEQUENS lesson.
+Objective: ${inp.objective}
+Year group: ${inp.year}  (key stage: ${inp.keyStage})
+Subject: ${inp.subject}
+Lesson length: ${inp.length} minutes
+Class: ${inp.total} pupils — ${inp.below} below, ${inp.working} working towards, ${inp.at} at expectation, ${inp.above} above.
+Teacher voice (blend these tones): ${inp.voice}
+Teaching approaches: ${inp.approaches}
+Align to curriculum: ${inp.curriculum}
+Activities the teacher already has (slot these in): ${inp.activities || "none"}
+Context to weave in: ${inp.context || "none specified"}
+Return ONLY the JSON.`;
+}
+
+async function callClaude(inp, onStage){
+  const stages=["locking the SEQUENS spine…","deriving the objective & steps…","writing the misconception hinge…","scripting the six sections…","differentiating for all four bands…","laying out the dual coding…"];
+  let si=0; onStage(stages[0]);
+  const tick=setInterval(()=>{ si=Math.min(si+1,stages.length-1); onStage(stages[si]); },1500);
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:8000,
+        system:SYSTEM_PROMPT, messages:[{role:"user",content:userPrompt(inp)}] })
+    });
+    const data=await res.json();
+    const text=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+    const clean=text.replace(/```json/gi,"").replace(/```/g,"").trim();
+    const spec=JSON.parse(clean);
+    clearInterval(tick);
+    if(spec.error) throw new Error(spec.error);
+    return spec;
+  }catch(e){ clearInterval(tick); throw e; }
+}
+
+/* ---------- dual-coding map library (robust to any labels) ---------- */
+function wrapWords(text,maxChars,maxLines){
+  maxChars=Math.max(5,maxChars); maxLines=maxLines||2;
+  const words=String(text||"").trim().split(/\s+/); let lines=[]; let cur="";
+  for(const w of words){
+    if(!cur){cur=w;}
+    else if((cur+" "+w).length<=maxChars){cur+=" "+w;}
+    else {lines.push(cur); cur=w; if(lines.length>=maxLines-1) break;}
+  }
+  if(cur) lines.push(cur);
+  const full=String(text||"").trim().split(/\s+/).join(" ");
+  if(lines.join(" ").length<full.length){ let last=(lines[lines.length-1]||"").slice(0,Math.max(1,maxChars-1)).replace(/\s+\S*$/,"")+"\u2026"; lines[lines.length-1]=last; }
+  return lines.slice(0,maxLines).map(l=> l.length>maxChars? l.slice(0,maxChars-1)+"\u2026": l);
+}
+function fitText(text,cx,y,maxW,base,color,opts){
+  opts=opts||{}; const anchor=opts.anchor||"middle", maxLines=opts.maxLines||2;
+  const italic=opts.italic?' font-style="italic"':"";
+  const perLine=Math.max(5,Math.floor(maxW/(base*0.56)));
+  const lines=wrapWords(text,perLine,maxLines);
+  const longest=Math.max(1,...lines.map(l=>l.length));
+  let size=Math.min(base, maxW/(longest*0.56)); size=Math.max(8.5,size);
+  const lh=size*1.05, startY=y-(lines.length-1)*lh/2+size*0.34;
+  let t=`<text x="${cx}" y="${startY.toFixed(1)}" text-anchor="${anchor}" class="serif" font-size="${size.toFixed(1)}" fill="${color}"${italic}>`;
+  lines.forEach((ln,i)=>{ t+=`<tspan x="${cx}" dy="${i?lh.toFixed(1):0}">${esc(ln)}</tspan>`; });
+  return t+"</text>";
+}
+function mapSVG(map){
+  if(!map||!map.type) return "";
+  let L=(map.labels||[]).map(x=>String(x||"").trim()).filter(Boolean);
+  const title=map.title?`<figcaption>${esc(map.title)}</figcaption>`:"";
+  const P='var(--primary)',PD='var(--primary-d)',PL='var(--primary-l)',A='var(--accent)',AD='var(--accent-d)',INK='var(--ink)';
+  let svg="";
+  if(map.type==="rings"){
+    L=L.slice(0,4); const r=[112,84,58,32];
+    let c=`<svg viewBox="0 0 300 252" role="img">`;
+    L.forEach((_,i)=>{ c+=`<circle cx="150" cy="130" r="${r[i]}" fill="${i===L.length-1?PL:'none'}" stroke="${i===0?A:P}" stroke-width="2"/>`; });
+    const ys=[24,52,80,108];
+    L.forEach((lab,i)=>{ c+=fitText(lab,150,ys[i],170,13,i===0?AD:INK,{maxLines:1}); });
+    svg=c+`</svg>`;
+  } else if(map.type==="iceberg"){
+    svg=`<svg viewBox="0 0 300 210" role="img"><rect x="0" y="92" width="300" height="118" rx="10" fill="${PL}"/><path d="M122 18 L178 92 L78 92 Z" fill="var(--card)" stroke="${INK}" stroke-width="2"/><path d="M178 92 L122 18 L78 92 L50 188 L228 188 Z" fill="${PL}" stroke="${P}" stroke-width="2"/><line x1="0" y1="92" x2="300" y2="92" stroke="${P}" stroke-width="2" stroke-dasharray="5 5"/>`
+      +fitText(L[0]||"",150,50,150,13,INK,{maxLines:2})+fitText(L[1]||"",150,150,150,12.5,PD,{maxLines:2,italic:true})+`</svg>`;
+  } else if(map.type==="keystone"){
+    svg=`<svg viewBox="0 0 320 176" role="img"><rect x="16" y="64" width="118" height="84" rx="8" fill="${PL}" stroke="${P}" stroke-width="2"/><rect x="186" y="64" width="118" height="84" rx="8" fill="${PL}" stroke="${P}" stroke-width="2"/>`
+      +fitText(L[0]||"",75,106,106,14,PD,{maxLines:3})+fitText(L[1]||"",245,106,106,14,PD,{maxLines:3})
+      +`<path d="M120 74 Q160 30 200 74" fill="none" stroke="${A}" stroke-width="2.6"/><circle cx="160" cy="46" r="13" fill="var(--card)" stroke="${A}" stroke-width="2.2"/>`
+      +fitText(L[2]||"",160,20,170,12,AD,{maxLines:1,italic:true})+`</svg>`;
+  } else if(map.type==="mindmap"){
+    const ctr=L[0]||"", br=L.slice(1,5); const pos=[[66,36],[66,150],[324,36],[324,150]];
+    let c=`<svg viewBox="0 0 390 186" role="img"><circle cx="195" cy="93" r="42" fill="${PL}" stroke="${P}" stroke-width="2"/>`+fitText(ctr,195,93,72,12.5,PD,{maxLines:3});
+    br.forEach((b,i)=>{ const x=pos[i][0],y=pos[i][1]; c+=`<line x1="195" y1="93" x2="${x}" y2="${y}" stroke="var(--ink-soft)" stroke-width="1.5"/>`+fitText(b,x,y<93?y-12:y+16,120,12.5,INK,{maxLines:2}); });
+    svg=c+`</svg>`;
+  } else if(map.type==="cycle"){
+    L=L.slice(0,5); const n=Math.max(2,L.length), cx=150,cy=116,R=82;
+    let c=`<svg viewBox="0 0 300 234" role="img">`;
+    for(let i=0;i<n;i++){ const a=-Math.PI/2+i*2*Math.PI/n, x=cx+R*Math.cos(a), y=cy+R*Math.sin(a);
+      c+=`<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="32" fill="${PL}" stroke="${P}" stroke-width="2"/>`+fitText(L[i]||"",x,y,56,11.5,PD,{maxLines:3});
+      const a2=-Math.PI/2+(i+0.5)*2*Math.PI/n, ax=cx+R*Math.cos(a2), ay=cy+R*Math.sin(a2);
+      c+=`<circle cx="${ax.toFixed(0)}" cy="${ay.toFixed(0)}" r="3.5" fill="${A}"/>`; }
+    svg=c+`</svg>`;
+  } else if(map.type==="compare"){
+    svg=`<svg viewBox="0 0 320 176" role="img"><rect x="14" y="20" width="138" height="140" rx="10" fill="var(--card)" stroke="${P}" stroke-width="2"/><rect x="168" y="20" width="138" height="140" rx="10" fill="var(--card)" stroke="${AD}" stroke-width="2"/><rect x="14" y="20" width="138" height="40" rx="10" fill="${P}"/><rect x="168" y="20" width="138" height="40" rx="10" fill="${AD}"/>`
+      +fitText(L[0]||"",83,41,126,13,"#fff",{maxLines:2})+fitText(L[1]||"",237,41,126,13,"#fff",{maxLines:2})+`</svg>`;
+  } else if(map.type==="timeline"){
+    L=L.slice(0,5); const n=Math.max(2,L.length); let c=`<svg viewBox="0 0 320 144" role="img"><line x1="26" y1="72" x2="294" y2="72" stroke="var(--ink-soft)" stroke-width="2"/>`;
+    for(let i=0;i<n;i++){ const x=26+268*i/(n-1); c+=`<circle cx="${x.toFixed(0)}" cy="72" r="7" fill="${P}"/>`+fitText(L[i]||"",x,i%2?108:34,80,11,INK,{maxLines:2}); }
+    svg=c+`</svg>`;
+  } else return "";
+  return `<figure>${svg}${title}</figure>`;
+}
+
+/* ---------- renderers ---------- */
+function esc(s){ return (s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const TICK='<svg width="18" height="18" viewBox="0 0 20 20"><path d="M3 11 q3 5 6 5 q3 -9 8 -13" fill="none" stroke="var(--accent-d)" stroke-width="2.4" stroke-linecap="round"/></svg>';
+const SNAMES={first:["First thing","settling in"],show:["Show them how","showing how"],build:["Build it together","asking well"],check:["Quick check","checking in"],turn:["Their turn","on their own"],last:["Last thing","closing well"]};
+
+function pills(arr){ return (arr&&arr.length)?`<div class="pills">${arr.map(p=>`<span class="pill">${esc(p)}</span>`).join("")}</div>`:""; }
+function sayDo(s){ let h=""; if(s.say)h+=`<div class="say"><span class="lab">say it like this</span><p>${esc(s.say)}</p></div>`;
+  if(s.do)h+=`<div class="do"><span class="lab">do this</span><div class="line">${TICK}<span>${esc(s.do)}</span></div></div>`;
+  if(s.why)h+=`<div class="why"><b>Why:</b> ${esc(s.why)}</div>`; return h; }
+
+function renderPlan(spec){
+  const m=spec.meta||{}, S=spec.sections||{};
+  let h=`<div class="kicker">SEQUENS · ${esc(m.subject||"")}</div>
+  <h1>${esc(m.topic||"Lesson")}</h1>
+  <div class="meta serif"><b>${esc(m.year||"")} · ${esc(m.subject||"")}</b> · ${esc(m.lengthMin||"")} minutes · ${esc(spec._classline||"")}</div>`;
+  if(spec.inquiry) h+=`<div class="inquiry serif">Unit inquiry: <b>${esc(spec.inquiry)}</b></div>`;
+  h+=`<div class="nc"><div class="from">the objective</div><span class="q">${esc(spec._objective||spec.lo)}</span><div class="ref">generated by the SEQUENS engine · review before teaching</div></div>`;
+  // destination
+  h+=`<div class="dest"><div class="eyebrow">the destination</div><div class="lo">${esc(spec.lo)}</div><div class="stepslab">Steps to success</div>`;
+  (spec.steps||[]).forEach((s,i)=>{ h+=`<div class="sc"><span class="n">${i+1}</span><span>${esc(s)}</span></div>`; });
+  h+=`</div>`;
+  // sections in fixed order
+  let num=0;
+  ["first","show","build","check","turn","last"].forEach(key=>{
+    num++; const s=S[key]||{}; const nm=SNAMES[key];
+    h+=`<section class="section"><div class="sec-head"><span class="num">${num}</span><span class="sec-name">${nm[0]} <em>· ${nm[1]}</em></span><span class="time">${esc(s.mins||"")} min</span></div>`;
+    h+=pills(s.pills);
+    if(key==="show"){
+      h+=sayDo(s);
+      if(spec.vocab&&spec.vocab.length){ h+=`<div class="eal"><span class="lab">key vocabulary</span><dl>${spec.vocab.map(v=>`<dt>${esc(v.term)}</dt><dd>${esc(v.def)}</dd>`).join("")}</dl></div>`; }
+      if(s.map)h+=`<div class="grid">${mapSVG(s.map)}</div>`;
+    } else if(key==="check"){
+      const H=spec.hinge||{};
+      h+=`<div class="hinge"><div class="q">${esc(H.question)}</div>`;
+      (H.options||[]).forEach(o=>{ h+=`<div class="opt${o.correct?' correct':''}"><span class="lt">${esc(o.letter)}${o.correct?' ✓':''}</span><span>${esc(o.text)}</span></div>`; });
+      (H.options||[]).filter(o=>!o.correct&&o.misconception).forEach(o=>{ h+=`<div class="miscon"><div class="who">${esc(o.letter)} · ${esc(o.misconception)}</div><div class="fix"><span class="lab">reteach:</span> ${esc(o.reteach||"")}</div></div>`; });
+      if(H.rule)h+=`<p style="font-family:var(--serif);font-style:italic;color:var(--ink-soft);margin-top:12px;font-size:15px">${esc(H.rule)}</p>`;
+      h+=`</div>`;
+    } else if(key==="turn"){
+      h+=sayDo(s);
+      const d=spec.differentiation||{}, c=spec._bands||{};
+      h+=`<div class="bands">
+        <div class="band b1"><div class="h">Below · ${esc(c.below||"")}</div><div class="c">${esc(d.below)}</div></div>
+        <div class="band b2"><div class="h">Working towards · ${esc(c.working||"")}</div><div class="c">${esc(d.working)}</div></div>
+        <div class="band b3"><div class="h">At expectation · ${esc(c.at||"")}</div><div class="c">${esc(d.at)}</div></div>
+        <div class="band b4"><div class="h">Above · ${esc(c.above||"")}</div><div class="c">${esc(d.above)}</div></div></div>`;
+    } else if(key==="last"){
+      const e=spec.exit||{};
+      h+=`<div class="grid split"><div class="ticket"><div class="tt">exit ticket</div><div class="prompt">${esc(e.prompt)}</div><div class="ln"></div>${e.vocabCheck?`<div style="font-size:14px;color:var(--ink-soft);margin-top:6px">${esc(e.vocabCheck)}</div>`:""}</div>
+      <div><div style="font-family:var(--serif);font-weight:600;color:var(--primary-d);margin-bottom:4px">what their ticket tells you</div><div class="key">`;
+      (e.diagnostic||[]).forEach(d=>{ h+=`<div class="krow${d.secure?' secure':''}"><div class="sees"><em>${esc(d.sees)}</em></div><div class="means">${esc(d.means)}</div></div>`; });
+      h+=`</div></div></div>`;
+    } else {
+      h+=sayDo(s);
+      if(s.map)h+=`<div class="grid">${mapSVG(s.map)}</div>`;
+    }
+    h+=`</section>`;
+  });
+  if(spec.provision && spec.provision.invitation){
+    const c=spec.provision;
+    h+=`<section class="section"><div class="sec-head"><span class="num">✿</span><span class="sec-name">Provision <em>· EYFS</em></span></div>`;
+    h+=`<p style="font-size:15px;color:var(--ink-soft);margin-bottom:10px">One light way today’s objective shows up in the areas you already run — woven in, not a new station to set up.</p>`;
+    h+=`<div style="border:1.5px solid var(--line);border-left:5px solid var(--accent-d);border-radius:11px;padding:13px 16px;background:var(--card)">
+      <div style="font-family:var(--serif);font-weight:600;color:var(--accent-d);font-size:16px">In the ${esc(c.area)} area</div>
+      <div style="font-size:15px;margin-top:5px"><b>Invitation:</b> ${esc(c.invitation)}</div>
+      <div style="font-size:14.5px;margin-top:3px"><b>Look for:</b> ${esc(c.lookFor)}</div>
+      ${c.extend?`<div style="font-size:14px;color:var(--ink-soft);margin-top:3px"><b>Extend:</b> ${esc(c.extend)}</div>`:''}</div>`;
+    h+=`</section>`;
+  }
+  h+=`<footer>SEQUENS · generated lesson · review &amp; tailor before teaching</footer>`;
+  return h;
+}
+
+function renderRubric(spec){
+  const m=spec.meta||{}, R=spec.rubric||[]; const steps=spec.steps||[];
+  const miscon=((spec.hinge||{}).options||[]).find(o=>!o.correct&&o.misconception);
+  let rows="";
+  R.forEach((r,i)=>{ rows+=`<tr><th><span class="stepnum">${i+1}</span>${esc(steps[i]||"")}</th>
+    <td>${esc(r.emerging)}</td><td>${esc(r.developing)}</td><td class="sec">${esc(r.secure)}</td><td>${esc(r.greater)}</td></tr>`; });
+  const fbrows=[1,2,3].map(n=>`<div class="fbrow"><div class="s"><b>${n}</b> · step ${n}</div><div class="ticks"><span class="tick">Emerging</span><span class="tick">Developing</span><span class="tick sec">Secure</span><span class="tick">Greater Depth</span></div></div>`).join("");
+  const c=spec._bands||{};
+  return `<div class="kicker">SEQUENS · quick feedback rubric</div>
+  <h1>${esc(m.subject||"")} — ${esc(m.topic||"")}</h1>
+  <div class="lo">${esc(spec.lo)}</div>
+  <div class="meta">${esc(m.year||"")} · against the three steps to success · <b>Secure</b> = meeting the objective</div>
+  <table><thead><tr><th class="crit">Step to success</th><th class="l1">Emerging<span class="band">below</span></th><th class="l2">Developing<span class="band">working towards</span></th><th class="l3">Secure<span class="band">at expectation</span></th><th class="l4">Greater Depth<span class="band">above</span></th></tr></thead><tbody>${rows}</tbody></table>
+  ${miscon?`<div class="hint">Watch for the key misconception: <b>${esc(miscon.misconception)}</b>. Anything resting on it sits left of <b>Secure</b>.</div>`:""}
+  <div class="fb"><h2>Quick feedback</h2><div class="sub">Tick a level for each step, then one strength and one next step. Thirty seconds per pupil.</div>
+  <div class="name"><span class="serif" style="font-weight:600">Pupil:</span><span class="ln"></span></div>${fbrows}
+  <div class="lines"><div class="l"><span class="tag win">✓ Strength</span><span class="w"></span></div><div class="l"><span class="tag nxt">→ Next step</span><span class="w"></span></div></div>
+  <div class="snap">Class — plan for: ${esc(c.below||0)} emerging · ${esc(c.working||0)} developing · ${esc(c.at||0)} secure · ${esc(c.above||0)} greater depth.</div></div>`;
+}
+
+/* ---------- sample lessons for "Try a sample" (EYFS / Y6 / Y9) ---------- */
+const MOCK_EYFS={
+  meta:{subject:"Mathematics",year:"EYFS",topic:"Counting to 5",lengthMin:50},
+  inquiry:"How do we count carefully?",
+  lo:"I can count out the right number of objects up to 5.",
+  steps:["I can touch each object once as I say one number.","I can say the last number to tell how many altogether.","I can match a group of objects to the right numeral (1\u20135)."],
+  vocab:[{term:"count",def:"say numbers in order, one for each thing",icon:"arrows"},{term:"how many",def:"the total number of things",icon:"globe"},{term:"altogether",def:"all of them counted up",icon:"links"},{term:"numeral",def:"the written sign for a number, like 3",icon:"book"}],
+  sections:{
+    first:{mins:8,pills:["counting rhyme","retrieval"],say:"Let's count our fingers together \u2014 one, two, three, four, five! Now whisper-count the buttons on my coat.",do:"Sing a counting rhyme and count claps and fingers so every child joins in.",why:"A familiar rhyme warms up the number sequence so attention is free for careful counting.",map:null},
+    show:{mins:10,pills:["modelling"],say:"Watch me. I touch each teddy once and say one number: one\u2026 two\u2026 three. The last number is how many \u2014 three teddies!",do:"Count 3\u20135 objects slowly, touching each once; deliberately model NOT skipping or double-counting.",why:"One idea at a time \u2014 just touch-counting \u2014 shown clearly before they try.",map:{type:"timeline",title:"touch each one, in order",labels:["1","2","3","4","5"]}},
+    build:{mins:10,pills:["we do","oracy"],say:"Let's count the apples together. Touch\u2026 and say. How many altogether?",do:"Count sets of 3\u20135 as a group; pass objects to children to touch-count; praise careful one-to-one touching.",map:null},
+    check:{mins:5},
+    turn:{mins:12,say:"Your turn: count the right number of bears onto each numbered plate.",do:"Children count objects onto numbered plates; the adult watches for one-to-one touching."},
+    last:{mins:5}
+  },
+  hinge:{question:"Who counted the 4 ducks correctly?",options:[
+    {letter:"A",text:"Sam pointed fast and said \u2018six!\u2019",correct:false,misconception:"counting faster than touching",reteach:"Slow down \u2014 one touch, one number. Count again together, slower."},
+    {letter:"B",text:"Mia touched each duck once and said \u2018four\u2019.",correct:true},
+    {letter:"C",text:"Tom touched one duck twice and said \u2018five\u2019.",correct:false,misconception:"counting the same one twice",reteach:"Move each duck as you count it so you don't count it again."},
+    {letter:"D",text:"Ada just said \u2018four\u2019 without touching.",correct:false,misconception:"guessing the total",reteach:"Touch each one to be sure \u2014 counting is in your fingers too."}],
+    rule:"Thumbs up for who counted carefully. Lots choosing A or C \u2192 re-model slow touch-counting."},
+  differentiation:{below:"1:1 adult; count to 3 with big objects to move, hand-over-hand touching.",working:"Count to 5 with objects to move onto a numbered mat; adult prompts \u2018touch and say\u2019.",at:"Count out 1\u20135 objects to match a numeral card, independently.",above:"Count to 8\u201310 and find one more / one less."},
+  exit:{prompt:"Count out 5 cubes for me \u2014 how many altogether?",vocabCheck:"Point to the numeral that says 4.",diagnostic:[{sees:"touches each once and says the last number as the total",means:"secure \u2014 extend to 6\u201310.",secure:true},{sees:"skips or double-counts",means:"re-do slow touch-counting next session."},{sees:"guesses without touching",means:"practise one-to-one with objects to move."}]},
+  rubric:[
+    {emerging:"Counts to 3 with adult help.",developing:"Touches and counts to 5 with some slips.",secure:"Touches each object once and counts to 5 accurately.",greater:"Counts beyond 5 and finds one more / one less."},
+    {emerging:"Says numbers but not the total.",developing:"Sometimes gives the last number as the total.",secure:"Gives the last number as \u2018how many altogether\u2019.",greater:"Explains that the last number tells the total."},
+    {emerging:"Matches with help.",developing:"Matches some numerals to amounts.",secure:"Matches amounts 1\u20135 to the right numeral.",greater:"Matches and orders numerals to 10."}],
+  provision:{area:"malleable / dough",invitation:"add birthday-cake candles and a 1–5 numeral die — children make a dough cake and count on the right number of candles.",lookFor:"touches each candle once and says the last number as how many altogether.",extend:"‘can you put one more candle on? how many now?’"},
+  video:{needed:false},
+  _bands:{below:5,working:8,at:9,above:3}
+};
+const MOCK_Y6={
+  meta:{subject:"Science",year:"Year 6",topic:"How We See",lengthMin:60},
+  inquiry:"How does light let us see?",
+  lo:"I can explain how we see objects \u2014 light travels to an object and reflects into our eyes.",
+  steps:["I can state that we see because light enters the eye.","I can describe the path of light: source \u2192 object \u2192 reflects \u2192 eye.","I can use this to explain why we cannot see in complete darkness."],
+  vocab:[{term:"light source",def:"something that makes its own light, like the sun or a lamp",icon:"lightbulb"},{term:"reflect",def:"when light bounces off a surface",icon:"arrows"},{term:"ray",def:"a straight line showing the path light takes",icon:"arrows"},{term:"transparent",def:"lets light pass through, like glass",icon:"globe"}],
+  sections:{
+    first:{mins:8,pills:["retrieval","oracy"],say:"On your whiteboard: name two light sources and two things that are NOT light sources. Why isn't the Moon a light source?",do:"Think\u2013pair\u2013share; surface that the Moon reflects sunlight rather than making its own.",why:"Retrieving \u2018source vs reflector\u2019 primes the key idea before the new model of seeing.",map:null},
+    show:{mins:14,pills:["explicit instruction","dual coding"],say:"Here's what surprises people: your eyes don't send anything out. Light leaves a source, hits the object, reflects, and travels INTO your eye. Watch the arrows.",do:"Model the light path with arrows from lamp \u2192 book \u2192 eye; stress the direction is INTO the eye.",why:"One idea at a time, dual-coded with a directional diagram to fight the \u2018eye-beam\u2019 intuition.",map:{type:"timeline",title:"the path of light",labels:["light source","hits object","reflects","into the eye"]}},
+    build:{mins:12,pills:["guided practice","cold-call"],say:"Trace the light for me: I can see this chair because\u2026? Where does the light start? Which way do the arrows point?",do:"Co-draw light paths for several objects; cold-call across bands; insist arrows point into the eye.",map:null},
+    check:{mins:6},
+    turn:{mins:14,say:"Draw and label how you see a red apple on the table. Use arrows and the words source, reflect, eye.",do:"Independent diagram + sentence; live-mark for arrow direction (the misconception)."},
+    last:{mins:6}
+  },
+  hinge:{question:"Why can we see a (non-glowing) object like a book?",options:[
+    {letter:"A",text:"Our eyes send out rays that light up the book.",correct:false,misconception:"the eye emits light (eye-beam)",reteach:"Eyes only receive. Re-trace: source \u2192 book \u2192 eye. Then ask: \u2018so why can't you see in a dark room?\u2019"},
+    {letter:"B",text:"Light from a source reflects off the book into our eyes.",correct:true},
+    {letter:"C",text:"The book makes its own light.",correct:false,misconception:"objects are light sources",reteach:"A book isn't a light source \u2014 it only reflects. Contrast it with a lamp."},
+    {letter:"D",text:"We can see it even in total darkness.",correct:false,misconception:"sight without light",reteach:"In total darkness there's no light to reflect, so we see nothing."}],
+    rule:"Whiteboards up, all show A\u2013D. Lots of A \u2192 re-trace arrows into the eye and use the dark-room question."},
+  differentiation:{below:"Arrow cards to arrange (source\u2192object\u2192eye) + a cloze sentence; adult support.",working:"Diagram partly drawn; sentence starters and the key words supplied.",at:"Draw and label the full light path and write the explanation independently.",above:"Explain why we see colour (which light is reflected vs absorbed) and how a mirror image works."},
+  exit:{prompt:"In one sentence, explain why you can see this page.",vocabCheck:"One word: ________ means light bouncing off a surface.",diagnostic:[{sees:"light from a source reflects off the page into the eye",means:"secure \u2014 ready for how we see colour.",secure:true},{sees:"\u2018eyes send out light\u2019 / \u2018I just see it\u2019",means:"eye-beam misconception \u2014 re-teach the arrow direction."},{sees:"says the page makes its own light",means:"revisit source vs reflector."}]},
+  rubric:[
+    {emerging:"States we need light to see, with support.",developing:"States that light enters the eye.",secure:"Explains clearly that we see because light enters the eye.",greater:"Explains and links it to needing a source and a reflector."},
+    {emerging:"Orders some of the path with help.",developing:"Describes part of the light path.",secure:"Describes source \u2192 object \u2192 reflects \u2192 eye accurately.",greater:"Describes the path with arrows correctly into the eye."},
+    {emerging:"Knows darkness affects seeing.",developing:"Says we can't see well in the dark.",secure:"Explains we can't see in darkness as there is no light to reflect.",greater:"Uses the model to explain a new case (mirror, colour)."}],
+  provision:null,
+  video:{needed:true,suggestion:"a short (under 5 min) primary clip on how the eye sees light reflecting off objects",why:"a clear animation of light reflecting into the eye reinforces arrow direction and tackles the eye-beam misconception",mins:4},
+  _bands:{below:6,working:6,at:8,above:4}
+};
+const MOCK_Y9={
+  meta:{subject:"History",year:"Year 9",topic:"The Causes of World War One",lengthMin:60},
+  inquiry:"Why did the world go to war in 1914?",
+  lo:"I can explain the main long-term causes of World War One and distinguish them from the trigger.",
+  steps:["I can identify the four long-term causes using MAIN (militarism, alliances, imperialism, nationalism).","I can explain how one long-term cause increased tension between the powers.","I can argue why the assassination was the trigger, not the underlying cause."],
+  vocab:[{term:"militarism",def:"the build-up of armed forces and belief in military strength",icon:"shield-tick"},{term:"alliances",def:"agreements between countries to support one another",icon:"links"},{term:"imperialism",def:"competing to build and control empires",icon:"globe"},{term:"nationalism",def:"intense pride in and loyalty to one's nation",icon:"person-community"}],
+  sections:{
+    first:{mins:8,pills:["retrieval"],say:"Quick recall: what was Europe like by 1900? List two empires and two pairs of rival countries.",do:"Retrieve prior knowledge of the great powers; cold-call to surface the rivalries between them.",why:"Activating the map of rival powers gives the four causes something concrete to attach to.",map:null},
+    show:{mins:14,pills:["explicit instruction","dual coding"],say:"Historians use MAIN to organise the long-term causes \u2014 militarism, alliances, imperialism, nationalism. Watch how each one cranked up the tension.",do:"Build the MAIN model on the board with one concrete example per cause (e.g. the naval race = militarism).",why:"Four linked ideas held in one structure (MAIN) lowers load versus a list of loose facts.",map:{type:"mindmap",title:"causes of WW1 (MAIN)",labels:["WW1 causes","militarism","alliances","imperialism","nationalism"]}},
+    build:{mins:12,pills:["guided practice"],say:"Take the alliance system. How did two countries having a pact make a small crisis spread? Talk me through the chain.",do:"Model cause\u2192effect chains for a couple of MAIN factors; pupils add links; insist on \u2018so that\u2026\u2019.",map:null},
+    check:{mins:6},
+    turn:{mins:14,say:"Write a paragraph: \u2018The most important long-term cause of WW1 was\u2026\u2019 Use PEE and at least two MAIN factors.",do:"Independent PEE paragraph; circulate; live-mark for cause-vs-trigger confusion."},
+    last:{mins:6}
+  },
+  hinge:{question:"What best explains the cause of World War One?",options:[
+    {letter:"A",text:"It was caused only by the assassination of Archduke Franz Ferdinand.",correct:false,misconception:"the trigger mistaken for the whole cause",reteach:"The assassination was the spark. Without the MAIN tensions it wouldn't have led to world war \u2014 re-link the long-term causes."},
+    {letter:"B",text:"Long-term tensions (MAIN) built up, and the assassination triggered war.",correct:true},
+    {letter:"C",text:"One country alone planned and started it.",correct:false,misconception:"single-cause / single-blame",reteach:"Several powers and factors were involved \u2014 revisit the alliance chains."},
+    {letter:"D",text:"It happened by pure accident with no real causes.",correct:false,misconception:"events have no underlying causes",reteach:"Historians identify long-term causes \u2014 name two from MAIN."}],
+    rule:"Every pupil shows A\u2013D. Lots of A \u2192 this is the key misconception: separate trigger from long-term causes explicitly."},
+  differentiation:{below:"MAIN knowledge organiser + sentence stems; match each cause to its example.",working:"A writing frame for the PEE paragraph with the MAIN factors listed.",at:"Write the PEE paragraph independently, using two MAIN factors.",above:"Argue which cause was most significant and counter an opposing view."},
+  exit:{prompt:"In one sentence: why was the assassination the trigger and not the main cause?",vocabCheck:"Name the cause that means \u2018building up armed forces\u2019.",diagnostic:[{sees:"separates the long-term causes (MAIN) from the trigger",means:"secure \u2014 ready to weigh significance.",secure:true},{sees:"says the assassination was the only cause",means:"trigger/cause misconception \u2014 re-teach in the starter."},{sees:"blank or single-blame",means:"revisit MAIN with the organiser."}]},
+  rubric:[
+    {emerging:"Names one cause with support.",developing:"Names the four MAIN causes.",secure:"Identifies the four MAIN causes and what each means.",greater:"Identifies them and ranks their significance."},
+    {emerging:"States that a cause raised tension.",developing:"Describes how one cause raised tension.",secure:"Explains how a cause increased tension, with an example.",greater:"Explains the links between two causes."},
+    {emerging:"Knows the assassination matters.",developing:"States it was the trigger.",secure:"Argues why it was the trigger, not the underlying cause.",greater:"Sustains an argument weighing the trigger against long-term causes."}],
+  provision:null,
+  video:{needed:true,suggestion:"a short (under 5 min) KS3 overview of the long-term causes of WW1 (MAIN)",why:"a concise overview consolidates the four causes before pupils write their paragraph",mins:5},
+  _bands:{below:6,working:6,at:8,above:4}
+};
+
+/* ---------- UI ---------- */
+function readInputs(){
+  const g=id=>document.getElementById(id);
+  const below=+g('nBelow').value||0, working=+g('nWorking').value||0, at=+g('nAt').value||0, above=+g('nAbove').value||0;
+  const ks=(y=>{ if(/EYFS/i.test(y))return"EYFS"; const n=+((y.match(/\d+/)||[0])[0]); if(n<=2)return"KS1"; if(n<=6)return"KS2"; if(n<=9)return"KS3"; return"KS4"; })(g('year').value);
+  const approaches=[...document.querySelectorAll('#approachChips .chip[aria-pressed="true"]')].map(c=>c.textContent.trim()).join(", ")||"explicit instruction";
+  const voice=[...document.querySelectorAll('#voiceChips .chip[aria-pressed="true"]')].map(c=>c.textContent.trim()).join(", ")||"warm and encouraging";
+  let subject=g('subject')?g('subject').value:''; if(subject==='__other__'){ subject=((g('subjectOther')&&g('subjectOther').value)||'').trim(); }
+  return { objective:g('objective').value.trim(), year:g('year').value, subject:subject,
+    length:g('length').value, voice:voice, context:g('context').value.trim(),
+    curriculum:g('curriculum').value, keyStage:ks, approaches, activities:g('activities').value.trim(),
+    below,working,at,above, total:below+working+at+above };
+}
+function decorate(spec,inp){
+  spec._objective=inp?inp.objective:spec.lo;
+  spec._bands=inp?{below:inp.below,working:inp.working,at:inp.at,above:inp.above}:(spec._bands||{below:6,working:6,at:8,above:4});
+  spec._classline=`${(spec._bands.below+ +spec._bands.working+ +spec._bands.at+ +spec._bands.above)} pupils · ${spec._bands.below}/${spec._bands.working}/${spec._bands.at}/${spec._bands.above}`;
+  if(inp){ spec.meta=spec.meta||{}; if(inp.year)spec.meta.year=inp.year; if(inp.subject)spec.meta.subject=inp.subject; }
+  return spec;
+}
+function showOutputs(spec){
+  document.getElementById('r-plan').innerHTML='<div class="doc">'+renderPlan(spec)+'</div>';
+  document.getElementById('r-rubric').innerHTML='<div class="doc">'+renderRubric(spec)+'</div>';
+  const dk=document.getElementById('r-deck'); dk.innerHTML=renderDeck(spec); dk.classList.add('shownotes'); window.__di=0;
+  document.getElementById('builder').style.display='none';
+  document.getElementById('output').style.display='block';
+  switchTab('plan'); deckShow(0);
+  window.scrollTo(0,0);
+}
+function switchTab(t){
+  ['plan','deck','rubric'].forEach(x=>{ const el=document.getElementById('r-'+x); if(!el)return;
+    el.style.display = x===t ? (x==='deck'?'flex':'block') : 'none';
+    const tb=document.getElementById('tab-'+x); if(tb) tb.classList.toggle('on',x===t); });
+  if(t==='deck') deckShow(window.__di||0);
+}
+function backToBuilder(){ document.getElementById('output').style.display='none'; document.getElementById('builder').style.display='block'; }
+
+async function doGenerate(){
+  const inp=readInputs();
+  if(!inp.objective){ alert("Type an objective first."); return; }
+  const ld=document.getElementById('loading'), bd=document.getElementById('builder');
+  bd.style.display='none'; ld.style.display='flex';
+  const stage=document.getElementById('loadstage');
+  try{
+    const spec=await callClaude(inp,(s)=>stage.textContent=s);
+    decorate(spec,inp);
+    ld.style.display='none'; showOutputs(spec);
+  }catch(e){
+    ld.style.display='none'; bd.style.display='block';
+    document.getElementById('err').style.display='block';
+    document.getElementById('errmsg').textContent=String(e.message||e);
+  }
+}
+function trySample(which){ const M={eyfs:MOCK_EYFS,y6:MOCK_Y6,y9:MOCK_Y9}; showOutputs(decorate(JSON.parse(JSON.stringify(M[which]||MOCK_Y6)),null)); }
+
+
+/* ---------- find an objective (suggest from framework, or extract from a scheme) ---------- */
+let _schemeFile=null;
+function toggleFind(){ const p=document.getElementById('findpanel'); p.style.display=(p.style.display==='block')?'none':'block'; }
+function onSchemeFile(input){ const f=input.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ _schemeFile={mime:f.type||'application/pdf',data:String(r.result).split(',')[1],name:f.name}; document.getElementById('filename').textContent=f.name; }; r.readAsDataURL(f); }
+async function listClaude(system,user,file){
+  const content=file?[{type:"document",source:{type:"base64",media_type:file.mime,data:file.data}},{type:"text",text:user}]:user;
+  const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1500,system,messages:[{role:"user",content}]})});
+  const data=await res.json();
+  const text=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").replace(/```json/gi,"").replace(/```/g,"").trim();
+  return JSON.parse(text);
+}
+async function findObjectives(){
+  const inp=readInputs(); const txt=document.getElementById('schemetext').value.trim();
+  const own=/my own/i.test(inp.curriculum)||txt.length>0||_schemeFile;
+  const status=document.getElementById('findstatus'), list=document.getElementById('objlist');
+  list.innerHTML=''; status.textContent='finding objectives\u2026';
+  let system,user;
+  if(own){
+    system="You extract a clean list of teachable lesson objectives from a curriculum or scheme of work. Return ONLY a JSON array of short objective strings (max 16), no commentary.";
+    user="Subject: "+inp.subject+"; "+inp.year+" ("+inp.keyStage+").\nExtract the lesson/learning objectives from this scheme. Turn any unit or weekly 'To\u2026' statement into one concise objective.\n\nSCHEME:\n"+(txt||"(see attached file)");
+  } else {
+    system="You list statutory curriculum objectives accurately. Return ONLY a JSON array of 8\u201312 short objective strings, pupil-facing where possible, each under 14 words. No commentary.";
+    user="List the main "+inp.curriculum+" objectives for "+inp.subject+" at "+inp.keyStage+" ("+inp.year+").";
+  }
+  try{
+    const arr=await listClaude(system,user,own?_schemeFile:null);
+    status.textContent='';
+    if(!Array.isArray(arr)||!arr.length){ status.textContent='Nothing found \u2014 paste more, or just type your own above.'; return; }
+    const hint=document.createElement('div'); hint.className='objhint'; hint.textContent='Tap one to use it as your objective:'; list.appendChild(hint);
+    arr.slice(0,16).forEach(o=>{ const b=document.createElement('button'); b.type='button'; b.className='objchip'; b.textContent=o;
+      b.onclick=()=>{ document.getElementById('objective').value=o; document.getElementById('findpanel').style.display='none'; window.scrollTo({top:0,behavior:'smooth'}); }; list.appendChild(b); });
+  }catch(e){ status.textContent='Could not fetch objectives ('+(e.message||e)+'). In preview the live model isn\u2019t reachable \u2014 type your own.'; }
+}
+
+window.doGenerate=doGenerate; window.toggleFind=toggleFind; window.onSchemeFile=onSchemeFile; window.findObjectives=findObjectives;
+// window.trySample=trySample; window.switchTab=switchTab; window.backToBuilder=backToBuilder;
+
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')==='true'?'false':'true')));
+
+/* ---------- curriculum-aware subject lists ---------- */
+const SUBJECTS_BY_KS={
+  EYFS:["Communication & Language","Personal, Social & Emotional Development","Physical Development","Literacy","Mathematics","Understanding the World","Expressive Arts & Design"],
+  KS1:["English","Mathematics","Science","Art & Design","Computing","Design & Technology","Geography","History","Music","Physical Education","Religious Education","PSHE"],
+  KS2:["English","Mathematics","Science","Art & Design","Computing","Design & Technology","Geography","History","Music","Physical Education","Languages (MFL)","Religious Education","PSHE"],
+  KS3:["English","Mathematics","Science","Art & Design","Citizenship","Computing","Design & Technology","Geography","History","Languages (MFL)","Music","Physical Education","Religious Education","PSHE"],
+  KS4:["English Language","English Literature","Mathematics","Combined Science","Biology","Chemistry","Physics","Citizenship","Computer Science","Design & Technology","Geography","History","Art & Design","Music","Drama","Physical Education","Religious Studies","Business","Economics","Languages (MFL)","PSHE"]
+};
+const SUBJECTS_GENERAL=["English","Mathematics","Science","Biology","Chemistry","Physics","History","Geography","Religious Education","Humanities","Global Citizenship","Computing","Design & Technology","Art & Design","Music","Drama","Physical Education","PSHE","Citizenship","Languages (MFL)","Business","Economics","Psychology","Sociology"];
+function _deriveKS(y){ if(/EYFS/i.test(y))return"EYFS"; const n=+((y.match(/\d+/)||[0])[0]); if(n<=2)return"KS1"; if(n<=6)return"KS2"; if(n<=9)return"KS3"; return"KS4"; }
+function refreshSubjects(){
+  const sel=document.getElementById('subject'); if(!sel)return;
+  const prev=sel.value;
+  const cur=(document.getElementById('curriculum')||{}).value||'';
+  const ks=_deriveKS((document.getElementById('year')||{}).value||'Year 6');
+  const list=/England National Curriculum/i.test(cur)?(SUBJECTS_BY_KS[ks]||SUBJECTS_GENERAL):SUBJECTS_GENERAL;
+  sel.innerHTML=list.map(s=>`<option>${s}</option>`).join('')+'<option value="__other__">Other / type my own…</option>';
+  if(prev && [...sel.options].some(o=>o.value===prev||o.textContent===prev)){ sel.value=prev; }
+  onSubjectChange();
+}
+function onSubjectChange(){
+  const sel=document.getElementById('subject'), other=document.getElementById('subjectOther');
+  if(!sel||!other)return;
+  other.style.display = (sel.value==='__other__') ? 'block' : 'none';
+}
+['year','curriculum'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change',refreshSubjects); });
+refreshSubjects();
+
+/* ---------- vocab icon library ---------- */
+function drawIcon(type){
+  const P='var(--primary)',PL='var(--primary-l)',A='var(--accent)',AD='var(--accent-d)',G='var(--good)';
+  const w='<svg viewBox="0 0 72 72" role="img">';
+  switch((type||'').toLowerCase()){
+   case 'person-community': return w+`<circle cx="34" cy="38" r="29" fill="${PL}" stroke="${P}" stroke-width="2.4"/><circle cx="34" cy="33" r="8" fill="#fff" stroke="${P}" stroke-width="2.4"/><path d="M21 55 q13 -15 26 0" fill="#fff" stroke="${P}" stroke-width="2.4"/></svg>`;
+   case 'shield-tick': return w+`<path d="M36 7 L60 17 V38 Q60 56 36 66 Q12 56 12 38 V17 Z" fill="${PL}" stroke="${P}" stroke-width="2.4"/><path d="M25 37 q5 8 10 10 q5 -15 14 -21" fill="none" stroke="${G}" stroke-width="3.4" stroke-linecap="round"/></svg>`;
+   case 'hands-heart': return w+`<path d="M36 22 q-7 -9 -15 -3 q-7 6 0 15 q6 8 15 13 q9 -5 15 -13 q7 -9 0 -15 q-8 -6 -15 3 Z" fill="${PL}" stroke="${AD}" stroke-width="2.4"/></svg>`;
+   case 'links': return w+`<circle cx="28" cy="38" r="16" fill="none" stroke="${P}" stroke-width="3.2"/><circle cx="46" cy="38" r="16" fill="none" stroke="${AD}" stroke-width="3.2"/></svg>`;
+   case 'globe': return w+`<circle cx="36" cy="38" r="26" fill="${PL}" stroke="${P}" stroke-width="2.4"/><path d="M10 38 h52 M36 12 v52 M19 23 q17 15 34 0 M19 53 q17 -15 34 0" fill="none" stroke="${P}" stroke-width="1.5"/></svg>`;
+   case 'book': return w+`<path d="M36 18 q-12 -6 -22 0 v38 q10 -6 22 0 Z" fill="${PL}" stroke="${P}" stroke-width="2.2"/><path d="M36 18 q12 -6 22 0 v38 q-10 -6 -22 0 Z" fill="#fff" stroke="${P}" stroke-width="2.2"/></svg>`;
+   case 'lightbulb': return w+`<circle cx="36" cy="30" r="17" fill="${PL}" stroke="${AD}" stroke-width="2.4"/><rect x="29" y="46" width="14" height="9" rx="2" fill="${PL}" stroke="${AD}" stroke-width="2"/><path d="M31 55 h10" stroke="${AD}" stroke-width="2"/></svg>`;
+   case 'leaf': return w+`<path d="M20 52 Q20 18 52 16 Q54 48 20 52 Z" fill="${PL}" stroke="${G}" stroke-width="2.4"/><path d="M24 48 Q38 34 50 22" fill="none" stroke="${G}" stroke-width="1.8"/></svg>`;
+   case 'magnifier': return w+`<circle cx="32" cy="32" r="16" fill="#fff" stroke="${P}" stroke-width="2.6"/><line x1="44" y1="44" x2="58" y2="58" stroke="${AD}" stroke-width="3.4" stroke-linecap="round"/></svg>`;
+   case 'arrows': return w+`<path d="M14 36 h36 M42 28 l10 8 -10 8" fill="none" stroke="${P}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+   default: return w+`<circle cx="36" cy="36" r="26" fill="${PL}" stroke="${P}" stroke-width="2.4"/><text x="36" y="45" text-anchor="middle" class="serif" font-size="26" fill="${AD}">${esc((type||'?').slice(0,1).toUpperCase())}</text></svg>`;
+  }
+}
+
+/* ---------- deck renderer ---------- */
+function deckSlide(eyebrow, mins, inner, notes){
+  return `<section class="dslide">`+(mins?`<div class="dtiming">\u2248${mins} min</div>`:'')+
+    (eyebrow?`<div class="deyebrow">${esc(eyebrow)}</div>`:'')+inner+
+    (notes?`<div class="dnotes">${notes}</div>`:'')+`</section>`;
+}
+function renderDeck(spec){
+  const S=spec.sections||{}, m=spec.meta||{};
+  let sl='';
+  sl+=deckSlide('today\u2019s destination', null,
+    `<h1 class="dh1">${esc(m.topic||'Today')}</h1><div class="dlo">${esc(spec.lo)}</div>`+
+    `<ul class="dul">${(spec.steps||[]).map((x,i)=>`<li><span class="dn">${i+1}</span>${esc(x)}</li>`).join('')}</ul>`,
+    `<b>Say:</b> share the destination and read the three steps aloud.`);
+  if(S.first) sl+=deckSlide('first thing · settling in', S.first.mins,
+    `<h2 class="dh2">First thing</h2><p class="dp">${esc(S.first.say||'')}</p>`+(S.first.map?`<div class="dfig">${mapSVG(S.first.map)}</div>`:''),
+    (S.first.do?`<b>Do:</b> ${esc(S.first.do)}`:'')+(S.first.why?`  <b>Why:</b> ${esc(S.first.why)}`:''));
+  if(spec.vocab&&spec.vocab.length) sl+=deckSlide('words we\u2019ll need', null,
+    `<h2 class="dh2">Key words</h2><div class="dvocab">`+spec.vocab.slice(0,4).map(v=>`<div class="dvcard">${drawIcon(v.icon||v.term)}<div><div class="dvt">${esc(v.term)}</div><div class="dvd">${esc(v.def)}</div></div></div>`).join('')+`</div>`,
+    `<b>Do:</b> say each word and point to its picture. EAL: the image carries the meaning while the word is still new.`);
+  if(S.show) sl+=deckSlide('show them how', S.show.mins,
+    `<h2 class="dh2">Show them how</h2><p class="dp">${esc(S.show.say||'')}</p>`+(S.show.map?`<div class="dfig">${mapSVG(S.show.map)}</div>`:''),
+    (S.show.do?`<b>Do:</b> ${esc(S.show.do)}`:''));
+  if(S.build) sl+=deckSlide('build it together', S.build.mins,
+    `<h2 class="dh2">Build it together</h2><p class="dp">${esc(S.build.say||'')}</p>`+(S.build.map?`<div class="dfig">${mapSVG(S.build.map)}</div>`:''),
+    (S.build.do?`<b>Do:</b> ${esc(S.build.do)}`:''));
+  if(spec.video&&spec.video.needed) sl+=deckSlide('watch · teacher confirms first', spec.video.mins||4,
+    `<h2 class="dh2">Watch</h2><div class="dvideoslot"><div class="vsug">Suggested: <b>${esc(spec.video.suggestion||'')}</b></div><div class="vwhy">${esc(spec.video.why||'')}</div>`+
+    `<div class="vrow"><input id="vidurl" placeholder="Preview a clip yourself, then paste its YouTube link"><button onclick="deckEmbed()">Embed</button></div><div id="viderr" class="viderr"></div>`+
+    `<iframe id="vidframe" class="vidframe" allowfullscreen></iframe></div>`,
+    `<b>Safeguarding:</b> preview the clip yourself first. It embeds in privacy mode (no recommendations or comments). You confirm it \u2014 not the engine.`);
+  if(spec.hinge){ const H=spec.hinge;
+    sl+=deckSlide('quick check · the hinge', (S.check&&S.check.mins)||6,
+      `<h2 class="dh2">${esc(H.question||'Quick check')}</h2>`+(H.options||[]).map(o=>`<div class="dopt${o.correct?' ok':''}"><span class="dlt">${esc(o.letter)}${o.correct?' \u2713':''}</span><span>${esc(o.text)}</span></div>`).join(''),
+      `<b>Every pupil shows A\u2013D.</b> ${esc(H.rule||'')}`); }
+  if(S.turn){ const d=spec.differentiation||{};
+    sl+=deckSlide('their turn', S.turn.mins,
+      `<h2 class="dh2">Your task</h2><p class="dp">${esc(S.turn.say||'')}</p>`+
+      `<div class="dbands"><div class="dband b1"><div class="h">Below</div><div class="c">${esc(d.below)}</div></div><div class="dband b2"><div class="h">Working towards</div><div class="c">${esc(d.working)}</div></div><div class="dband b3"><div class="h">At expectation</div><div class="c">${esc(d.at)}</div></div><div class="dband b4"><div class="h">Above</div><div class="c">${esc(d.above)}</div></div></div>`,
+      (S.turn.do?`<b>Do:</b> ${esc(S.turn.do)}`:'')); }
+  if(spec.exit) sl+=deckSlide('last thing · exit ticket', (S.last&&S.last.mins)||6,
+    `<h2 class="dh2">Exit ticket</h2><p class="dp" style="font-style:italic">${esc(spec.exit.prompt||'')}</p>`+(spec.exit.vocabCheck?`<p class="dp">${esc(spec.exit.vocabCheck)}</p>`:''),
+    `<b>Diagnostic:</b> this tells you who is secure and who to re-teach next lesson.`);
+  const count=(sl.match(/class="dslide"/g)||[]).length;
+  return `<div class="dbar"><span class="dbtitle">SEQUENS deck</span>
+    <span>Background: <button class="on" onclick="deckBg('plain',this)">Plain</button><button onclick="deckBg('grad',this)">Gradient</button><button onclick="deckBg('grid',this)">Grid</button></span>
+    <button class="dnotesbtn" onclick="deckNotes(this)">Teacher prompts: ON</button></div>
+    <div class="dstage"><div class="ddeck" id="genDeck" data-bg="plain">${sl}</div></div>
+    <div class="dnav"><button onclick="deckGo(-1)">\u2039 Back</button><span class="dpos"><span id="dcur">1</span> / ${count}</span><button onclick="deckGo(1)">Next \u203a</button></div>`;
+}
+function deckShow(n){ const sl=[...document.querySelectorAll('#r-deck .dslide')]; if(!sl.length)return; window.__di=Math.max(0,Math.min(sl.length-1,n)); sl.forEach((s,k)=>s.classList.toggle('active',k===window.__di)); const c=document.getElementById('dcur'); if(c)c.textContent=window.__di+1; }
+function deckGo(d){ deckShow((window.__di||0)+d); }
+function deckBg(b,btn){ const dk=document.getElementById('genDeck'); if(dk)dk.setAttribute('data-bg',b); btn.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on')); btn.classList.add('on'); }
+function deckNotes(btn){ const d=document.getElementById('r-deck'); d.classList.toggle('shownotes'); btn.textContent='Teacher prompts: '+(d.classList.contains('shownotes')?'ON':'OFF'); }
+function deckEmbed(){ const v=(document.getElementById('vidurl').value||'').trim(); const id=(v.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/)||[])[1]; const er=document.getElementById('viderr'), f=document.getElementById('vidframe');
+  if(!id){ er.textContent='Paste a valid YouTube link.'; return; } er.textContent=''; f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0&modestbranding=1'; f.style.display='block'; }
+document.addEventListener('keydown',e=>{ const out=document.getElementById('output'), dk=document.getElementById('r-deck'); if(out&&out.style.display!=='none'&&dk&&dk.style.display!=='none'){ if(e.key==='ArrowRight')deckGo(1); if(e.key==='ArrowLeft')deckGo(-1); } });
+
+</script></body></html>
