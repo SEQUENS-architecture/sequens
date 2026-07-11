@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS Lesson Builder - one objective in, a full lesson out</title>
+<meta name="description" content="Turn a curriculum objective into an evidence-based, projector-ready lesson: plan, deck, and rubric on the six-part spine, in your school's own curriculum.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08101B; --white:#F2F6FA; --grey:#9AACBC; --dim:#647A8C;
+    --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16); --panel:rgba(255,255,255,.03);
+    --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --accent-deep:#0C8F79; --navy:#0A3D62;
+    --support:#7FC8BC; --core:#0C8F79; --secure:#B8912F; --stretch:#0A3D62;
+    --font:'Lexend','Segoe UI',system-ui,sans-serif;
+    --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html.rs{font-size:114%;}
+  html.rs body{line-height:1.85;letter-spacing:.012em;}
+  body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);color:var(--grey);font-family:var(--font);font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.7rem;}
+  a{color:var(--white);text-decoration:none;}
+  a:hover{color:var(--accent);}
+  h1,h2,h3{color:var(--white);font-family:var(--head);font-weight:700;letter-spacing:-.02em;margin:0;}
+  .btn{display:inline-block;font-family:var(--font);font-weight:700;font-size:.95rem;background:var(--accent);color:var(--accent-ink);border:none;border-radius:10px;padding:.85rem 1.5rem;cursor:pointer;text-decoration:none;transition:filter .12s;}
+  .btn:hover{filter:brightness(1.08);color:var(--accent-ink);}
+  .btn.ghost{background:transparent;color:var(--white);border:1px solid var(--hair2);}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);filter:none;}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:6px;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;}}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:.7rem 1rem;z-index:99;font-weight:700;}
+  .skip:focus{left:1rem;top:1rem;}
+
+  header.top{position:sticky;top:0;z-index:40;background:rgba(247,250,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(10,61,98,.14);}
+  .top-in{max-width:1120px;margin:0 auto;padding:.7rem 1.7rem;display:flex;align-items:center;gap:1.2rem;}
+  .brand{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);font-weight:800;letter-spacing:.04em;color:var(--navy);font-size:1.02rem;}
+  .brand svg{height:20px;width:auto;}
+  .top .arm{font-size:.8rem;font-weight:600;color:#5B7A90;border-left:1px solid rgba(10,61,98,.2);padding-left:1rem;}
+  .top nav{margin-left:auto;display:flex;gap:1.3rem;align-items:center;}
+  .top nav a{font-size:.86rem;font-weight:600;color:#3D5A6E;}
+  .top nav a:hover{color:var(--accent-deep);}
+  .rs-toggle{font-family:var(--font);font-size:.74rem;font-weight:600;border:1px solid rgba(10,61,98,.3);background:transparent;color:var(--navy);border-radius:9px;padding:.45rem .8rem;cursor:pointer;}
+  .rs-toggle[aria-pressed="true"]{background:var(--navy);color:#fff;}
+  @media (max-width:860px){.top nav a{display:none;}}
+
+  section{padding:3.4rem 0;}
+  section.contd{padding-top:2.6rem;}
+  h2.sec{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-bottom:1rem;line-height:1.12;}
+  section.light{background:linear-gradient(180deg,#FFFFFF 0%,#EDF5F7 100%);color:#3D5A6E;}
+  .light h2.sec{color:var(--navy);}
+  .light .lead{max-width:64ch;font-size:1.1rem;margin:0 0 1.6rem;}
+
+  .hero{padding:5.6rem 0 2.6rem;}
+  .kick{font-size:.74rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.05;letter-spacing:-.025em;max-width:15ch;margin:.8rem 0 1rem;}
+  .hero h1 .l2{background:linear-gradient(92deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero .dek{font-size:clamp(1.1rem,2vw,1.28rem);max-width:56ch;margin:0 0 1.4rem;color:var(--grey);}
+
+
+  .spinegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem 2.4rem;margin-top:1.6rem;}
+  @media (max-width:860px){.spinegrid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:540px){.spinegrid{grid-template-columns:1fr;}}
+  .sstep{display:flex;gap:.9rem;align-items:flex-start;}
+  .sico{width:46px;flex-shrink:0;}
+  .sstep h3{font-family:var(--font);font-weight:600;color:var(--navy);font-size:1.02rem;margin:0 0 .2rem;letter-spacing:0;}
+  .sn{color:var(--accent-deep);font-weight:700;margin-right:.5rem;font-size:.85rem;}
+  .sstep p{margin:0;font-size:.95rem;color:#5B7A90;line-height:1.5;}
+  .spinenote{margin-top:1.8rem;font-size:.98rem;color:#4A6B82;max-width:62ch;}
+
+  .adapt{display:grid;grid-template-columns:1.15fr .85fr;gap:2.6rem;align-items:start;}
+  @media (max-width:860px){.adapt{grid-template-columns:1fr;}}
+  .adapt .prose p{margin:0 0 1rem;font-size:1.05rem;}
+  .adapt .prose p:last-child{margin:0;}
+  .adapt b{color:var(--navy);font-weight:600;}
+  .keycard{background:#fff;border:1px solid rgba(10,61,98,.16);border-radius:14px;padding:1.3rem 1.4rem;}
+  .keycard h3{font-family:var(--font);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);margin:0 0 1rem;}
+  .krow{display:flex;align-items:center;gap:.75rem;padding:.42rem 0;font-size:.95rem;color:#3D5A6E;}
+  .krow i{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
+  .krow b{color:var(--navy);font-weight:600;min-width:4.6rem;}
+  .keyfoot{margin-top:.9rem;font-size:.8rem;color:#7A93A6;border-top:1px solid rgba(10,61,98,.12);padding-top:.75rem;}
+
+  .frames{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1rem;margin-top:1.6rem;}
+  .frame{background:#fff;border:1px solid rgba(10,61,98,.14);border-radius:12px;padding:1rem 1.1rem;display:flex;gap:.85rem;align-items:flex-start;}
+  .fico{width:40px;flex-shrink:0;}
+  .frame h3{font-family:var(--font);font-size:.98rem;font-weight:600;color:var(--navy);margin:0 0 .15rem;letter-spacing:0;}
+  .frame p{margin:0;font-size:.85rem;color:#5B7A90;line-height:1.45;}
+
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin:1.6rem 0;}
+  @media (max-width:760px){.tiers{grid-template-columns:1fr;}}
+  .tier{background:#fff;border:1px solid rgba(10,61,98,.14);border-radius:12px;padding:1.2rem 1.2rem 1.1rem;}
+  .tier h3{font-family:var(--font);font-size:1rem;font-weight:600;color:var(--navy);margin:0 0 .3rem;letter-spacing:0;}
+  .tier p{margin:0;font-size:.92rem;color:#5B7A90;line-height:1.5;}
+  .hnote{font-size:.95rem;color:#4A6B82;max-width:66ch;margin:0;}
+  .hnote + .hnote{margin-top:.7rem;}
+
+  .claim{border-top:1px solid rgba(10,61,98,.15);}
+  .claim:last-of-type{border-bottom:1px solid rgba(10,61,98,.15);}
+  .claim summary{display:flex;align-items:center;gap:1.1rem;padding:1.1rem .2rem;cursor:pointer;list-style:none;}
+  .claim summary::-webkit-details-marker{display:none;}
+  .claim summary:hover .ct{color:var(--accent-deep);}
+  .ci{width:52px;flex-shrink:0;display:flex;}
+  .ci svg{width:100%;height:auto;}
+  .ct{color:var(--navy);font-weight:600;font-size:1.04rem;line-height:1.35;flex:1;}
+  .chev{color:#7A93A6;font-weight:600;font-size:1.2rem;width:1.2rem;text-align:center;flex-shrink:0;transition:transform .15s;}
+  .claim[open] .chev{transform:rotate(45deg);color:var(--accent-deep);}
+  .cb{padding:0 .2rem 1.3rem calc(52px + 1.3rem);}
+  @media (max-width:560px){.ci{width:38px;}.cb{padding-left:.2rem;}}
+  .cb p{font-size:.98rem;margin:0 0 .75rem;color:#3D5A6E;}
+  .cb .does{font-size:.98rem;border-left:2.5px solid rgba(12,143,121,.55);padding-left:.95rem;margin:.2rem 0 .7rem;font-weight:500;color:#3D5A6E;}
+  .cb .src{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;color:#7A93A6;text-transform:uppercase;}
+
+  .safe h2.sec{max-width:20ch;}
+  .safe p{max-width:60ch;font-size:1.08rem;margin:0 0 .9rem;}
+  .safe p:last-child{margin:0;}
+  .safe b{color:var(--white);font-weight:600;}
+
+  .join .lead{max-width:54ch;font-size:1.1rem;margin:0 0 1.6rem;}
+  .form{max-width:520px;}
+  .form label{display:block;font-size:.82rem;font-weight:600;color:var(--grey);margin:0 0 .4rem;}
+  .form input[type=email]{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--hair2);border-radius:10px;color:var(--white);font-family:var(--font);font-size:1rem;padding:.8rem .9rem;}
+  .form input[type=email]:focus{outline:none;border-color:var(--accent);}
+  .consent{display:flex;gap:.65rem;align-items:flex-start;margin:1rem 0 1.2rem;font-size:.86rem;color:var(--grey);}
+  .consent input{margin-top:.25rem;accent-color:var(--accent);}
+  .consent a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;}
+  .msg{display:none;margin-top:1rem;font-size:.95rem;color:var(--accent);}
+  .msg.on{display:block;}
+  .joinnote{margin-top:1.6rem;font-size:.9rem;color:var(--grey);max-width:52ch;}
+
+  footer{border-top:1px solid var(--hair);padding:2.4rem 0 2.8rem;font-size:.85rem;color:var(--dim);}
+  .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.2rem;}
+  @media (max-width:700px){.fgrid{grid-template-columns:1fr;}}
+  .fcol .fh{font-weight:600;color:var(--white);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 .8rem;font-family:var(--font);}
+  .fcol a{display:block;color:var(--grey);padding:.28rem 0;}
+  .fcol a:hover{color:var(--accent);}
+  .ftag{margin:.5rem 0 0;color:var(--dim);}
+</style>
+</head>
+<body>
+<a class="skip" href="#spine">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="markDark">
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0C8F79"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/>
+  </g>
+  <g id="mark">
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+  </g>
+</defs></svg>
+
+<header class="top"><div class="top-in">
+  <a class="brand" href="sequens-hub.html"><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#markDark"/></svg>SEQUENS</a>
+  <span class="arm">Lesson Builder</span>
+  <nav>
+    <a href="#spine">The spine</a>
+    <a href="#adaptive">Adaptive</a>
+    <a href="#frames">Frames</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#join">Waiting list</a>
+  </nav>
+  <button class="rs-toggle" id="rsT" aria-pressed="false" title="Larger, more spaced text">Aa&ensp;Reading support</button>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <div class="kick">For teachers &amp; schools</div>
+  <h1>One objective in.<br><span class="l2">A full lesson out.</span></h1>
+  <p class="dek">Turn a curriculum objective into an evidence-based, projector-ready lesson - plan, deck, and rubric - in your school&#39;s own curriculum.</p>
+</div></section>
+
+<section id="spine" class="light"><div class="wrap">
+  <h2 class="sec">The six-part spine.</h2>
+  <p class="lead">Every lesson the builder makes follows the same evidence-based shape. The renderer enforces it: the model cannot skip a step, and neither can a rushed Thursday afternoon.</p>
+  <div class="spinegrid">
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="16" fill="none" stroke="#7FA0B5" stroke-width="3.5"/><path d="M30 20 V30 L38 35" fill="none" stroke="#0C8F79" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3><span class="sn">1</span>First thing</h3><p>Retrieval from last time. Memory is strengthened by being used.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="11" y="14" width="32" height="23" rx="2.5" fill="none" stroke="#7FA0B5" stroke-width="3.5"/><line x1="17" y1="24" x2="31" y2="24" stroke="#0C8F79" stroke-width="3.5" stroke-linecap="round"/><line x1="27" y1="37" x2="27" y2="47" stroke="#7FA0B5" stroke-width="3.5" stroke-linecap="round"/></svg><div><h3><span class="sn">2</span>Show them how</h3><p>Worked example, thinking aloud, step by step.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><path d="M8 40 L20 40 L26 30" fill="none" stroke="#7FA0B5" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M52 40 L40 40 L34 30" fill="none" stroke="#0C8F79" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="30" cy="24" r="5" fill="#0C8F79"/></svg><div><h3><span class="sn">3</span>Build it together</h3><p>Guided practice before independence.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="17" y="17" width="26" height="26" rx="5" fill="none" stroke="#7FA0B5" stroke-width="3.5" transform="rotate(45 30 30)"/><text x="30" y="36" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="17" fill="#0C8F79">?</text></svg><div><h3><span class="sn">4</span>Quick check</h3><p>The hinge question targets a named misconception before it embeds.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="14" y="30" width="26" height="18" rx="2" fill="none" stroke="#7FA0B5" stroke-width="3.5"/><line x1="20" y1="38" x2="32" y2="38" stroke="#7FA0B5" stroke-width="3" stroke-linecap="round"/><path d="M40 20 L48 28 L34 42 L28 44 L30 38 Z" fill="none" stroke="#0C8F79" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3><span class="sn">5</span>Their turn</h3><p>One shared task, entered at the right level.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="16" fill="none" stroke="#7FA0B5" stroke-width="3.5" stroke-dasharray="76 26" transform="rotate(-55 30 30)"/><path d="M24 30.5 L29 35.5 L37 24" fill="none" stroke="#0C8F79" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3><span class="sn">6</span>Last thing</h3><p>Recap and exit ticket. The learning leaves the room named.</p></div></div>
+  </div>
+  <p class="spinenote">Every plan opens with its place in the sequence: the prior objective, this one, the next. A lesson is part of a coherent unit, not a one-off.</p>
+  <p class="spinenote" style="margin-top:.8rem;">Because every lesson follows the same shape, a whole staff builds from one consistent structure - which is also what a school&#39;s <a href="sequens-linear.html" style="color:var(--accent-deep);font-weight:600;">SEQUENS coaching</a> works from. The lesson builder sits inside the school arm, not beside it.</p>
+</div></section>
+
+<section id="adaptive" class="light contd"><div class="wrap">
+  <h2 class="sec">Adaptive teaching, not tiered worksheets.</h2>
+  <div class="adapt">
+    <div class="prose">
+      <p><b>Their turn is one shared task entered at the right level.</b> The builder generates responsive scaffold and stretch around it: vocabulary pre-taught, sentence stems, a picture key for the children who need a way in; depth, not more of the same, for the children who are ready.</p>
+      <p>Stretch moves a child toward age-related expectation without overloading working memory. Scaffolds print ink-light, for books. And because generation is live, a scaffold can be shaped to the actual child: an interest that motivates them, a symbol per step for early English, one instruction at a time for a child who needs it.</p>
+      <p>On a pupil&#39;s slide there is only a colour. The words live on the teacher key.</p>
+    </div>
+    <div class="keycard" aria-label="Differentiation key, teacher only">
+      <h3>The teacher key</h3>
+      <div class="krow"><i style="background:var(--support);"></i><b>Support</b><span>scaffolded entry</span></div>
+      <div class="krow"><i style="background:var(--core);"></i><b>Core</b><span>the main task</span></div>
+      <div class="krow"><i style="background:var(--secure);"></i><b>Secure</b><span>confident, less support</span></div>
+      <div class="krow"><i style="background:var(--stretch);"></i><b>Stretch</b><span>greater depth</span></div>
+      <div class="keyfoot">Teacher-only. Never visible to pupils.</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="frames" class="light contd"><div class="wrap">
+  <h2 class="sec">Frames.</h2>
+  <p class="lead">SEQUENS Frames: visual organisers that make thinking visible. Seven of them, dual-coded into decks and plans wherever a picture will carry more than words alone.</p>
+  <div class="frames">
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="4" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><rect x="10" y="10" width="20" height="20" rx="3" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><rect x="16" y="16" width="8" height="8" rx="2" fill="none" stroke="#0C8F79" stroke-width="2.4"/></svg><div><h3>Nest</h3><p>Big set down to small.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="16" x2="36" y2="16" stroke="#7FA0B5" stroke-width="2.4"/><path d="M14 16 L20 7 L26 16" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 16 L20 33 L28 16" fill="none" stroke="#0C8F79" stroke-width="2.4" stroke-linejoin="round"/></svg><div><h3>Iceberg</h3><p>What shows, and what sits beneath.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="6" fill="#0C8F79"/><circle cx="7" cy="9" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="33" cy="9" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="7" cy="31" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="33" cy="31" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><g stroke="#7FA0B5" stroke-width="2"><line x1="10" y1="11.5" x2="15.5" y2="16"/><line x1="30" y1="11.5" x2="24.5" y2="16"/><line x1="10" y1="28.5" x2="15.5" y2="24"/><line x1="30" y1="28.5" x2="24.5" y2="24"/></g></svg><div><h3>Keystone</h3><p>One central idea everything connects to.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="5" fill="#0C8F79"/><g stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"><line x1="20" y1="13" x2="20" y2="4"/><line x1="20" y1="27" x2="20" y2="36"/><line x1="13" y1="20" x2="4" y2="20"/><line x1="27" y1="20" x2="36" y2="20"/><line x1="15" y1="15" x2="8" y2="8"/><line x1="25" y1="25" x2="32" y2="32"/></g></svg><div><h3>Spokes</h3><p>A centre with ideas radiating out.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><path d="M31 12 A13 13 0 1 0 33 24" fill="none" stroke="#7FA0B5" stroke-width="2.6"/><path d="M27 6 L33 12 L26 16" fill="none" stroke="#0C8F79" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3>Loop</h3><p>A repeating cycle or process.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="6" x2="20" y2="30" stroke="#7FA0B5" stroke-width="2.6"/><line x1="8" y1="12" x2="32" y2="12" stroke="#7FA0B5" stroke-width="2.6"/><path d="M4 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#0C8F79" stroke-width="2.4"/><path d="M27 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><line x1="13" y1="34" x2="27" y2="34" stroke="#7FA0B5" stroke-width="2.6" stroke-linecap="round"/></svg><div><h3>Scales</h3><p>Weighing two things side by side.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="20" x2="30" y2="20" stroke="#7FA0B5" stroke-width="2.6"/><path d="M29 14 L36 20 L29 26" fill="none" stroke="#0C8F79" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><g fill="#7FA0B5"><circle cx="9" cy="20" r="3"/><circle cx="18" cy="20" r="3"/><circle cx="27" cy="20" r="3"/></g></svg><div><h3>Track</h3><p>An ordered sequence over time.</p></div></div>
+  </div>
+</div></section>
+
+<section id="honesty" class="light contd"><div class="wrap">
+  <h2 class="sec">Curriculum honesty.</h2>
+  <p class="lead">Three tiers, never faked. Every plan shows its source line, enrichment is plainly tagged, and a near-miss is admitted rather than fudged.</p>
+  <div class="tiers">
+    <div class="tier"><h3>England NC &amp; EYFS</h3><p>Aligned to the statutory wording, with explicit objective links on every plan.</p></div>
+    <div class="tier"><h3>Your school&#39;s scheme</h3><p>Upload your own scheme and the builder plans inside it. The curriculum stays owned by leadership.</p></div>
+    <div class="tier"><h3>General</h3><p>No framework claimed. Labelled as exactly that.</p></div>
+  </div>
+  <p class="hnote">Where a scheme such as White Rose is named, SEQUENS aligns to the order of its blocks and steps and generates original teaching. It never reproduces materials or wording, and it is not affiliated with or endorsed by White Rose.</p>
+  <p class="hnote">Awarding-body and examination specifications are upload-only. The builder will not generate them from memory.</p>
+</div></section>
+
+<section id="marking" class="light contd"><div class="wrap">
+  <h2 class="sec">Marking that proves itself.</h2>
+  <p class="lead" style="margin-bottom:.9rem;">The class defaults to secure; the teacher taps the exceptions. Every markable level shows what it means for this objective, in context, with an honest caveat when the National Curriculum is vague.</p>
+  <p class="hnote">Your school sets the marking policy; SEQUENS provides the proof that feedback happened and what came next.</p>
+</div></section>
+
+<section id="evidence" class="light contd"><div class="wrap">
+  <h2 class="sec">What the research is clear about.</h2>
+  <p class="lead">The builder is engineered on this research. Each finding below is built into the engine.</p>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><circle cx="45" cy="55" r="22" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M45 40 V55 L57 63" fill="none" stroke="#0C8F79" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M85 55 h40 M112 42 l14 13 -14 13" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ct">Memory is strengthened by retrieval, not re-reading.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Recalling knowledge changes it: retrieval practice produces more durable learning than reviewing the same material again, and spacing those retrievals multiplies the effect.</p><div class="does">SEQUENS builds in retrieval: every lesson opens with First thing, retrieval from last time, and closes with Last thing. Coverage feeds revisit, so what was secured comes back before it fades.</div><span class="src">Roediger &amp; Karpicke · EEF cognitive science review</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="20" y="22" width="62" height="46" rx="5" fill="none" stroke="#7FA0B5" stroke-width="4"/><line x1="30" y1="38" x2="60" y2="38" stroke="#0C8F79" stroke-width="4" stroke-linecap="round"/><line x1="30" y1="52" x2="70" y2="52" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="112" cy="45" r="10" fill="#0C8F79"/><path d="M104 78 a12 10 0 0 1 16 0" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Novices learn from worked examples and clear modelling.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>New learning lands when it is shown, step by step, before it is attempted; guided practice bridges the gap to independence. Asking novices to discover unaided overloads them.</p><div class="does">SEQUENS models before independence: Show them how and Build it together are enforced stages of the spine, with the thinking made visible before Their turn begins.</div><span class="src">Sweller, worked-example effect · Rosenshine, principles of instruction</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="52" y="32" width="46" height="46" rx="8" fill="none" stroke="#7FA0B5" stroke-width="4" transform="rotate(45 75 55)"/><text x="75" y="63" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="24" fill="#0C8F79">?</text></svg></span><span class="ct">Checking understanding beats assuming it.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Formative checks change teaching in the moment. A well-built hinge question exposes the specific misconception a class is most likely to hold, while there is still time to act on it.</p><div class="does">SEQUENS checks understanding: the Quick check is a hinge targeting a named misconception, generated with the lesson. Coverage is never mistaken for learning.</div><span class="src">Wiliam &amp; Black, inside the black box · EEF feedback guidance</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="20" y1="78" x2="130" y2="78" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="52" r="10" fill="#0C8F79"/><line x1="75" y1="62" x2="75" y2="78" stroke="#0C8F79" stroke-width="4" stroke-linecap="round"/><path d="M38 78 q8 -18 22 -22 M112 78 q-8 -18 -22 -22" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">One shared task, entered at the right level, beats three worksheets.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Working memory is small; overload it and nothing sticks. Adaptive scaffolds give every child a way into the same learning, and stretch adds depth toward age-related expectation rather than a separate, capped track.</p><div class="does">SEQUENS keeps it one task: Their turn is one shared task with responsive scaffold and stretch generated around it. Labels stay on the teacher key, never on a child&#39;s screen.</div><span class="src">Cognitive-load theory · EEF SEND guidance, scaffolding</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"><line x1="18" y1="40" x2="66" y2="40"/><line x1="18" y1="56" x2="54" y2="56"/><line x1="18" y1="72" x2="60" y2="72"/></g><path d="M92 80 L110 48 L128 80 Z" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linejoin="round"/><circle cx="126" cy="32" r="7" fill="#0C8F79"/></svg></span><span class="ct">We think in words and pictures, so teaching uses both.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Pairing a clear explanation with a simple, matched visual lets more be held and more be kept than either channel alone.</p><div class="does">SEQUENS is dual coded: the seven Frames put a picture beside the thinking, on slides and plans, wherever it earns its place.</div><span class="src">Paivio, dual coding · Mayer, multimedia learning · Caviglioli</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="14" y="40" width="122" height="30" rx="15" fill="none" stroke="#0C8F79" stroke-width="3.5"/><g fill="#7FA0B5"><circle cx="32" cy="55" r="6"/><circle cx="53.5" cy="55" r="6"/><circle cx="75" cy="55" r="6"/><circle cx="96.5" cy="55" r="6"/><circle cx="118" cy="55" r="6"/></g></svg></span><span class="ct">Inclusion is a foundation, not a feature.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Reaching every learner, including children with SEND and children learning English, is the condition on the whole design, not an option beside it.</p><div class="does">SEQUENS is inclusive by design: scaffolds carry symbol support and chunked instructions where a child needs them, dual coding runs through every deck, and personalisation shapes the same learning to the actual child.</div><span class="src">EEF SEND guidance · dual-coding research · the SEQUENS engine, adaptive by default</span></div>
+  </details>
+</div></section>
+
+<section id="safe" class="safe"><div class="wrap">
+  <h2 class="sec">Safe by design.</h2>
+  <p><b>Generation needs no pupil personal data.</b> The teacher holds the account, plans are built from objectives, and nothing about a child has to leave the school to make a lesson.</p>
+  <p>Every generated artefact carries the review marker, because the teacher is the author and the final check. Video is off by default and embeds only after an adult previews and confirms, in privacy mode. There is no pupil-facing AI.</p>
+  <p>Because a lesson is designed to be taught from the board and printed for books, the classroom never depends on live connectivity mid-lesson.</p>
+  <p>And because the teacher reviews every lesson before it is taught, content stays appropriate to your school&#39;s setting and cultural context - the teacher is the final check on what fits the class in front of them.</p>
+</div></section>
+
+<section id="join" class="join"><div class="wrap">
+  <h2 class="sec">Join the school waiting list.</h2>
+  <p class="lead">The El Alsson pilot begins in August 2026. School site licences follow it. Leave an address and we will write when doors open.</p>
+  <form class="form" id="wl">
+    <label for="em">School email</label>
+    <input id="em" type="email" autocomplete="email" placeholder="you@school.org" required>
+    <div class="consent">
+      <input type="checkbox" id="cc" required>
+      <label for="cc" style="margin:0;font-weight:400;">I agree to SEQUENS storing this address to contact me about the launch. We keep it for launch updates only; unsubscribe or ask us to delete it at any time. <a href="privacy.html" target="_blank" rel="noopener">Privacy</a></label>
+    </div>
+    <button class="btn" type="submit">Join the waiting list</button>
+    <div class="msg" id="wlmsg">You are on the list. We will write when the pilot opens.</div>
+  </form>
+  <p class="joinnote">Want to see it first? <a href="sequens-teacher-app.html" target="_blank" rel="noopener" style="color:var(--accent);">Open the app demonstration</a>, no sign-up needed.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap"><div class="fgrid">
+  <div class="fcol">
+    <span class="brand" style="color:var(--white);"><svg viewBox="0 0 44 44" aria-hidden="true" style="height:18px;"><use href="#mark"/></svg>SEQUENS</span>
+    <p class="ftag">The Coherence Architecture · Lesson Builder</p>
+    <p class="ftag">Elegant on the surface. Massive underneath.</p>
+  </div>
+  <div class="fcol">
+    <h3 class="fh">Navigate</h3>
+    <a href="#spine">The spine</a>
+    <a href="#frames">Frames</a>
+    <a href="#honesty">Curriculum honesty</a>
+    <a href="#evidence">Evidence</a>
+    <a href="sequens-hub.html">All of SEQUENS</a>
+  </div>
+  <div class="fcol">
+    <h3 class="fh">Legal &amp; contact</h3>
+    <a href="privacy.html" target="_blank" rel="noopener">GDPR &amp; privacy</a>
+    <a href="#join">Contact</a>
+  </div>
+</div></div></footer>
+
+<script>
+"use strict";
+document.getElementById("wl").addEventListener("submit",function(e){
+  e.preventDefault();
+  var form=document.getElementById("wl");
+  var msg=document.getElementById("wlmsg");
+  var emailEl=document.getElementById("em");
+  var btn=form.querySelector('button[type="submit"]');
+  var email=emailEl?emailEl.value.trim():"";
+  if(!email) return;
+  var original=btn?btn.textContent:"";
+  if(btn){ btn.disabled=true; btn.textContent="Adding you..."; }
+  fetch("/api/subscribe",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email:email,group:"teacher"})
+  })
+  .then(function(r){ return r.json().then(function(d){ return {ok:r.ok,data:d}; }); })
+  .then(function(res){
+    if(res.ok){
+      form.style.display="none";
+      msg.classList.add("on");
+    } else {
+      if(btn){ btn.disabled=false; btn.textContent=original; }
+      msg.textContent=(res.data && res.data.error) ? res.data.error : "Could not add you just now. Please try again.";
+      msg.classList.add("on");
+    }
+  })
+  .catch(function(){
+    if(btn){ btn.disabled=false; btn.textContent=original; }
+    msg.textContent="Could not add you just now. Please try again.";
+    msg.classList.add("on");
+  });
+});
+var rsT=document.getElementById("rsT");
+rsT.addEventListener("click",function(){
+  var on=document.documentElement.classList.toggle("rs");
+  rsT.setAttribute("aria-pressed",on?"true":"false");
+});
+</script>
+</body>
+</html>
