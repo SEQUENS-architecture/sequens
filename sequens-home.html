@@ -382,6 +382,9 @@ document.getElementById("wl").addEventListener("submit",function(e){
   .then(function(r){ return r.json().then(function(d){ return {ok:r.ok,data:d}; }); })
   .then(function(res){
     if(res.ok){
+      // move the message OUT of the form before hiding the form,
+      // otherwise it gets hidden along with it
+      form.parentNode.insertBefore(msg, form);
       form.style.display="none";
       msg.classList.add("on");
     } else {
