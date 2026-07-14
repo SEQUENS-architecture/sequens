@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEQUENS - elegant on the surface, massive underneath</title>
-<meta name="description" content="SEQUENS is teacher development built on eight domains and 367 precise behaviours, worked one small move at a time on a protected fortnightly rhythm.">
+<title>Instructional Coaching That Actually Sticks | SEQUENS</title>
+<meta name="description" content="CPD evaporates. Coaching changes teaching. SEQUENS makes it consistent across a whole staff, one move at a time, with a hard wall against appraisal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  html,body{overflow-x:clip;max-width:100%;}
   :root{
     --bg:#08101B; --bg2:#0B1826;
     --white:#F2F6FA; --grey:#9AACBC; --dim:#647A8C;
@@ -22,7 +23,7 @@
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   html.rs{font-size:114%;}
-  html.rs body{line-height:1.85;letter-spacing:.012em;}
+  html.rs   body{line-height:1.85;letter-spacing:.012em;}
   html.rs a{text-decoration:underline;}
   body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);color:var(--grey);font-family:var(--font);font-weight:400;font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 var(--pad);}
@@ -58,10 +59,10 @@
   /* ---------- drawers ---------- */
   .scrim{position:fixed;inset:0;background:rgba(2,6,12,.55);z-index:48;opacity:0;pointer-events:none;transition:opacity .2s;}
   .scrim.on{opacity:1;pointer-events:auto;}
-  .drawer{position:fixed;top:0;bottom:0;width:min(340px,88vw);background:var(--bg2);border-right:1px solid var(--hair);z-index:50;padding:1.4rem 1.4rem 2rem;overflow-y:auto;transition:transform .24s ease;}
+  .drawer{position:fixed;top:0;bottom:0;width:min(340px,88vw);visibility:hidden;background:var(--bg2);border-right:1px solid var(--hair);z-index:50;padding:1.4rem 1.4rem 2rem;overflow-y:auto;transition:transform .24s ease;}
   .drawer.left{left:0;transform:translateX(-102%);}
   .drawer.right{right:0;left:auto;border-right:none;border-left:1px solid var(--hair);transform:translateX(102%);}
-  .drawer.open{transform:translateX(0);}
+  .drawer.open{transform:translateX(0);visibility:visible;}
   .d-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem;}
   .d-head .x{margin-left:auto;}
   .d-sec{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin:1.6rem 0 .6rem;}
@@ -207,7 +208,69 @@
   .foot-in{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
   .foot-in .brand{font-size:.85rem;color:var(--grey);}
   .foot-in .sp{margin-left:auto;letter-spacing:.04em;}
+
+  /* waiting list - matched to the page's own form language */
+  .wl{max-width:460px;margin:1.8rem 0 0;text-align:left;}
+  .wl label.lb{display:block;font-size:.85rem;font-weight:600;color:#9FB6C6;margin:0 0 .45rem;}
+  .wl input[type=email]{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.22);
+    border-radius:10px;padding:.85rem 1rem;color:#fff;font-family:inherit;font-size:1rem;}
+  .wl input[type=email]:focus{outline:none;border-color:var(--accent);}
+  .wl input[type=email]::placeholder{color:#7E97AB;}
+  .wl .consent{display:flex;gap:.6rem;align-items:flex-start;margin:.85rem 0;}
+  .wl .consent input{margin-top:.35rem;flex-shrink:0;width:16px;height:16px;}
+  .wl .consent label{font-size:.82rem;line-height:1.5;color:#9FB6C6;font-weight:400;}
+  .wl .consent a{color:var(--accent);}
+  .wl button[type=submit]{width:100%;margin-top:.2rem;}
+  .wl .msg2{display:none;margin-top:.9rem;padding:.85rem 1rem;border-radius:10px;
+    background:rgba(45,225,194,.12);border:1px solid rgba(45,225,194,.3);font-size:.95rem;color:var(--accent);}
+  .wl .msg2.on{display:block;}
+  }
+
+  /* Small phones: .top-in is a nowrap flex row and cannot hold the nav plus
+     the reading-support control. It must WRAP, not hide - a dyslexic reader on
+     a small phone needs that control more than anyone, not less. */
+  @media (max-width:430px){
+    .top-in{flex-wrap:wrap !important;row-gap:.55rem;}
+    .top-in .rs-toggle{margin-left:0;}
+    .rs-toggle{font-size:.8rem;padding:.4rem .7rem;}
+  }
+
+  /* Smallest phones (320px): the reading-support control gets its own full-width
+     row rather than being squeezed or hidden. It is the last thing we would ever
+     hide, because the reader who needs it is the reader on the small old phone. */
+  @media (max-width:400px){
+    .top-in{flex-wrap:wrap !important;row-gap:.5rem;padding-left:1rem;padding-right:1rem;}
+    .top-in .rs-toggle{flex:1 0 100%;margin-left:0;justify-content:center;text-align:center;}
+    .top-in .links{flex:1 0 100%;}
+  }
 </style>
+<meta name="keywords" content="instructional coaching, teacher coaching, CPD that works, coaching not appraisal, teacher development">
+<link rel="canonical" href="https://sequens.education/sequens-linear.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="James Banfield, SEQUENS">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SEQUENS">
+<meta property="og:title" content="Instructional Coaching That Actually Sticks | SEQUENS">
+<meta property="og:description" content="CPD evaporates. Coaching changes teaching. SEQUENS makes it consistent across a whole staff, one move at a time, with a hard wall against appraisal.">
+<meta property="og:url" content="https://sequens.education/sequens-linear.html">
+<meta property="og:image" content="https://sequens.education/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Instructional Coaching That Actually Sticks | SEQUENS">
+<meta name="twitter:description" content="CPD evaporates. Coaching changes teaching. SEQUENS makes it consistent across a whole staff, one move at a time, with a hard wall against appraisal.">
+<meta name="twitter:image" content="https://sequens.education/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SEQUENS","alternateName":"SEQUENS - The Coherence Architecture","url":"https://sequens.education","logo":"https://sequens.education/logo.png","description":"SEQUENS is an implementation coherence architecture for education: instructional coaching, a lesson builder, and home education, on one evidence base.","founder":{"@type":"Person","name":"James Banfield","jobTitle":"SEQUENS Architect"},"areaServed":"GB","knowsAbout":["Instructional coaching","Lesson planning","Retrieval practice","Formative assessment","Hinge questions","Adaptive teaching","Home education","Cognitive load theory"]}</script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
 </head>
 <body>
 <a class="skip" href="#what">Skip to content</a>
@@ -269,7 +332,7 @@
     <div class="msg" id="signMsg">Sign-in opens with the pilot. Until then, the demonstration is open below.</div>
   </form>
   <div class="divide"></div>
-  <a class="btn ghost" href="coaching-mockup.html" target="_blank" rel="noopener" style="width:100%;text-align:center;">Open the demonstration</a>
+  <a class="btn ghost" href="/demo/" target="_blank" rel="noopener" style="width:100%;text-align:center;">Open the demonstration</a>
 </aside>
 
 <main>
@@ -394,17 +457,17 @@
 <section id="talk" class="cta"><div class="wrap">
   <h2>Coherent, reliable teaching architecture.</h2>
   <p>Every teacher, an honest start, one small move, and a short fortnightly look-in, inside the time you already have.</p>
-  <form id="wlForm" style="max-width:420px;margin:1.6rem auto 0;text-align:left;">
-    <label for="em2" style="display:block;font-size:.92rem;font-weight:600;margin-bottom:.4rem;">Be first to know when the pilot opens</label>
-    <input id="em2" type="email" autocomplete="email" placeholder="you@school.org" required style="width:100%;padding:.85rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:1rem;">
-    <div style="display:flex;gap:.6rem;align-items:flex-start;margin:.8rem 0;">
-      <input type="checkbox" id="cc2" required style="margin-top:.3rem;flex-shrink:0;">
-      <label for="cc2" style="font-size:.84rem;font-weight:400;line-height:1.5;opacity:.85;">I agree to SEQUENS storing this address to contact me about the pilot. Launch updates only; unsubscribe or ask us to delete it any time. <a href="privacy.html" target="_blank" rel="noopener" style="color:var(--accent);">Privacy</a></label>
+  <form class="wl" id="wlForm">
+    <label class="lb" for="em2">Be first to know when the pilot opens</label>
+    <input id="em2" type="email" autocomplete="email" placeholder="you@school.org" required>
+    <div class="consent">
+      <input type="checkbox" id="cc2" required>
+      <label for="cc2">I agree to SEQUENS storing this address to contact me about the pilot. Launch updates only; unsubscribe or ask us to delete it any time. <a href="privacy.html" target="_blank" rel="noopener">Privacy</a></label>
     </div>
-    <button class="btn" type="submit" style="width:100%;">Join the waiting list</button>
-    <div class="msg" id="wlMsg2" style="display:none;margin-top:.9rem;padding:.85rem 1rem;border-radius:10px;background:rgba(45,225,194,.12);font-size:.92rem;">You are on the list. We will write when the pilot opens.</div>
+    <button class="btn" type="submit">Join the waiting list</button>
+    <div class="msg2" id="wlMsg2">You are on the list. We will write when the pilot opens.</div>
   </form>
-  <p class="ctanote" style="margin-top:1.4rem;">Or <a href="#" id="talkBtn" style="color:var(--accent);">talk to us</a>, or <a class="ctalink" href="coaching-mockup.html" target="_blank" rel="noopener" style="color:var(--accent);">open the demonstration</a>. Direct contact opens with the pilot; until then, the demonstration is open.</p>
+  <p class="ctanote" style="margin-top:1.4rem;">Or <a href="#" id="talkBtn" style="color:var(--accent);">talk to us</a>, or <a class="ctalink" href="/demo/" target="_blank" rel="noopener" style="color:var(--accent);">open the demonstration</a>. Direct contact opens with the pilot; until then, the demonstration is open.</p>
 </div></section>
 
 </main>
@@ -485,20 +548,20 @@ document.getElementById("wlForm").addEventListener("submit",function(e){
   .then(function(res){
     if(res.ok){
       form.querySelector('input[type="email"]').style.display="none";
-      form.querySelector('input[type="checkbox"]').parentElement.style.display="none";
+      form.querySelector('.consent').style.display="none";
       btn.style.display="none";
-      form.querySelector('label[for="em2"]').style.display="none";
-      msg.style.display="block";
+      form.querySelector('label.lb').style.display="none";
+      msg.classList.add("on");
     } else {
       btn.disabled=false; btn.textContent=original;
       msg.textContent=(res.data && res.data.error) ? res.data.error : "Could not add you just now. Please try again.";
-      msg.style.display="block";
+      msg.classList.add("on");
     }
   })
   .catch(function(){
     btn.disabled=false; btn.textContent=original;
     msg.textContent="Could not add you just now. Please try again.";
-    msg.style.display="block";
+    msg.classList.add("on");
   });
 });
 /* reading support */

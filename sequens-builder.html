@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEQUENS Lesson Builder - one objective in, a full lesson out</title>
-<meta name="description" content="Turn a curriculum objective into an evidence-based, projector-ready lesson: plan, deck, and rubric on the six-part spine, in your school's own curriculum.">
+<title>Lesson Builder: One Objective In, One Lesson Out | SEQUENS</title>
+<meta name="description" content="Type a curriculum objective. Get a full evidence-based lesson: plan, slides, worksheet. Six-part spine, a hinge question, adaptive and never tiered.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -137,7 +137,54 @@
   .fcol a{display:block;color:var(--grey);padding:.28rem 0;}
   .fcol a:hover{color:var(--accent);}
   .ftag{margin:.5rem 0 0;color:var(--dim);}
+  }
+
+  /* Small phones: .top-in is a nowrap flex row and cannot hold the nav plus
+     the reading-support control. It must WRAP, not hide - a dyslexic reader on
+     a small phone needs that control more than anyone, not less. */
+  @media (max-width:430px){
+    .top-in{flex-wrap:wrap !important;row-gap:.55rem;}
+    .top-in .rs-toggle{margin-left:0;}
+    .rs-toggle{font-size:.8rem;padding:.4rem .7rem;}
+  }
+
+  /* Smallest phones (320px): the reading-support control gets its own full-width
+     row rather than being squeezed or hidden. It is the last thing we would ever
+     hide, because the reader who needs it is the reader on the small old phone. */
+  @media (max-width:400px){
+    .top-in{flex-wrap:wrap !important;row-gap:.5rem;padding-left:1rem;padding-right:1rem;}
+    .top-in .rs-toggle{flex:1 0 100%;margin-left:0;justify-content:center;text-align:center;}
+    .top-in .links{flex:1 0 100%;}
+  }
 </style>
+<meta name="keywords" content="lesson planning tool, lesson plan generator, hinge questions, adaptive teaching, retrieval practice, teacher workload">
+<link rel="canonical" href="https://sequens.education/sequens-builder.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="James Banfield, SEQUENS">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SEQUENS">
+<meta property="og:title" content="Lesson Builder: One Objective In, One Lesson Out | SEQUENS">
+<meta property="og:description" content="Type a curriculum objective. Get a full evidence-based lesson: plan, slides, worksheet. Six-part spine, a hinge question, adaptive and never tiered.">
+<meta property="og:url" content="https://sequens.education/sequens-builder.html">
+<meta property="og:image" content="https://sequens.education/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lesson Builder: One Objective In, One Lesson Out | SEQUENS">
+<meta name="twitter:description" content="Type a curriculum objective. Get a full evidence-based lesson: plan, slides, worksheet. Six-part spine, a hinge question, adaptive and never tiered.">
+<meta name="twitter:image" content="https://sequens.education/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SEQUENS","alternateName":"SEQUENS - The Coherence Architecture","url":"https://sequens.education","logo":"https://sequens.education/logo.png","description":"SEQUENS is an implementation coherence architecture for education: instructional coaching, a lesson builder, and home education, on one evidence base.","founder":{"@type":"Person","name":"James Banfield","jobTitle":"SEQUENS Architect"},"areaServed":"GB","knowsAbout":["Instructional coaching","Lesson planning","Retrieval practice","Formative assessment","Hinge questions","Adaptive teaching","Home education","Cognitive load theory"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SEQUENS Lesson Builder","applicationCategory":"EducationalApplication","operatingSystem":"Web","url":"https://sequens.education/sequens-builder.html","description":"Turn a curriculum objective into a full evidence-based lesson: plan, slides and worksheet, built on a six-part spine with a hinge question.","featureList":["Six-part lesson spine","Hinge questions that catch misconceptions","Adaptive scaffolding, never tiered","Curriculum honesty","SEND and EAL built in"],"offers":{"@type":"Offer","availability":"https://schema.org/PreOrder","description":"In pilot. Join the waiting list."}}</script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
 </head>
 <body>
 <a class="skip" href="#spine">Skip to content</a>
@@ -213,15 +260,34 @@
 
 <section id="frames" class="light contd"><div class="wrap">
   <h2 class="sec">Frames.</h2>
-  <p class="lead">SEQUENS Frames: visual organisers that make thinking visible. Seven of them, dual-coded into decks and plans wherever a picture will carry more than words alone.</p>
+  <p class="lead">SEQUENS Frames: visual organisers that make thinking visible. Eleven of them, one per thinking procedure, dual-coded into decks and plans wherever a picture will carry more than words alone. A child meets the same shape in Year 2 and in Year 9, and knows it.</p>
   <div class="frames">
     <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="4" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><rect x="10" y="10" width="20" height="20" rx="3" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><rect x="16" y="16" width="8" height="8" rx="2" fill="none" stroke="#0C8F79" stroke-width="2.4"/></svg><div><h3>Nest</h3><p>Big set down to small.</p></div></div>
     <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="16" x2="36" y2="16" stroke="#7FA0B5" stroke-width="2.4"/><path d="M14 16 L20 7 L26 16" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 16 L20 33 L28 16" fill="none" stroke="#0C8F79" stroke-width="2.4" stroke-linejoin="round"/></svg><div><h3>Iceberg</h3><p>What shows, and what sits beneath.</p></div></div>
     <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="6" fill="#0C8F79"/><circle cx="7" cy="9" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="33" cy="9" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="7" cy="31" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="33" cy="31" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><g stroke="#7FA0B5" stroke-width="2"><line x1="10" y1="11.5" x2="15.5" y2="16"/><line x1="30" y1="11.5" x2="24.5" y2="16"/><line x1="10" y1="28.5" x2="15.5" y2="24"/><line x1="30" y1="28.5" x2="24.5" y2="24"/></g></svg><div><h3>Keystone</h3><p>One central idea everything connects to.</p></div></div>
     <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="5" fill="#0C8F79"/><g stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"><line x1="20" y1="13" x2="20" y2="4"/><line x1="20" y1="27" x2="20" y2="36"/><line x1="13" y1="20" x2="4" y2="20"/><line x1="27" y1="20" x2="36" y2="20"/><line x1="15" y1="15" x2="8" y2="8"/><line x1="25" y1="25" x2="32" y2="32"/></g></svg><div><h3>Spokes</h3><p>A centre with ideas radiating out.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><path d="M31 12 A13 13 0 1 0 33 24" fill="none" stroke="#7FA0B5" stroke-width="2.6"/><path d="M27 6 L33 12 L26 16" fill="none" stroke="#0C8F79" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3>Loop</h3><p>A repeating cycle or process.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><path d="M31 12 A13 13 0 1 0 33 24" fill="none" stroke="#7FA0B5" stroke-width="2.6"/><path d="M24.7 10.4 L31 12 L31.1 5.5" fill="none" stroke="#0C8F79" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3>Loop</h3><p>A repeating cycle or process.</p></div></div>
     <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="6" x2="20" y2="30" stroke="#7FA0B5" stroke-width="2.6"/><line x1="8" y1="12" x2="32" y2="12" stroke="#7FA0B5" stroke-width="2.6"/><path d="M4 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#0C8F79" stroke-width="2.4"/><path d="M27 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><line x1="13" y1="34" x2="27" y2="34" stroke="#7FA0B5" stroke-width="2.6" stroke-linecap="round"/></svg><div><h3>Scales</h3><p>Weighing two things side by side.</p></div></div>
     <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="20" x2="30" y2="20" stroke="#7FA0B5" stroke-width="2.6"/><path d="M29 14 L36 20 L29 26" fill="none" stroke="#0C8F79" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><g fill="#7FA0B5"><circle cx="9" cy="20" r="3"/><circle cx="18" cy="20" r="3"/><circle cx="27" cy="20" r="3"/></g></svg><div><h3>Track</h3><p>An ordered sequence over time.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="9" cy="20" r="6" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-dasharray="2.5 2.5"/>
+<line x1="17" y1="20" x2="25" y2="20" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M22 16.5 L25.5 20 L22 23.5" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="32" cy="20" r="6" fill="#0C8F79"/></svg><div><h3>Turn</h3><p>What you thought, and what you think now.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="8" cy="20" r="5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/>
+<line x1="13" y1="20" x2="15" y2="20" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="20" cy="20" r="5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/>
+<line x1="25" y1="20" x2="27" y2="20" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="32" cy="20" r="5" fill="#0C8F79"/></svg><div><h3>Chain</h3><p>This causes this, which causes this.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="4" x2="20" y2="12" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="5" y1="15" x2="35" y2="11" stroke="#7FA0B5" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M5 15 L5 27" stroke="#7FA0B5" stroke-width="2.4"/>
+<path d="M35 11 L35 19" stroke="#7FA0B5" stroke-width="2.4"/>
+<circle cx="5" cy="30" r="5" fill="#0C8F79"/>
+<circle cx="35" cy="22" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/></svg><div><h3>Weigh</h3><p>How strong is the evidence, really?</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="18" cy="20" r="12" fill="none" stroke="#0C8F79" stroke-width="2.4"/>
+<circle cx="14" cy="17" r="3" fill="#0C8F79"/>
+<circle cx="22" cy="24" r="3" fill="#0C8F79"/>
+<circle cx="34" cy="8" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/></svg><div><h3>Bound</h3><p>What counts, and what does not.</p></div></div>
   </div>
 </div></section>
 
@@ -299,7 +365,7 @@
     <button class="btn" type="submit">Join the waiting list</button>
     <div class="msg" id="wlmsg">You are on the list. We will write when the pilot opens.</div>
   </form>
-  <p class="joinnote">Want to see it first? <a href="sequens-teacher-app.html" target="_blank" rel="noopener" style="color:var(--accent);">Open the app demonstration</a>, no sign-up needed.</p>
+  <p class="joinnote">Want to see it first? <a href="/demo/" target="_blank" rel="noopener" style="color:var(--accent);">Open the app demonstration</a>, no sign-up needed.</p>
 </div></section>
 </main>
 

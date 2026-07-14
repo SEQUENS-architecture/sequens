@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEQUENS Homeschool - you don't need to be a teacher</title>
-<meta name="description" content="Turn a moment, an interest, or an objective into a real session for your child, with coverage you can show anyone who asks. The AI never talks to your child; you see everything first.">
+<title>Home Education Planning and LA Records | SEQUENS</title>
+<meta name="description" content="You do not need to be a teacher. Pick a year and a half term, get a full scheme of learning, and a record that is ready the day a local authority asks.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -159,7 +159,53 @@
   .fcol a{display:block;color:var(--grey);padding:.28rem 0;}
   .fcol a:hover{color:var(--accent);}
   .ftag{margin:.5rem 0 0;color:var(--dim);}
+  }
+
+  /* Small phones: .top-in is a nowrap flex row and cannot hold the nav plus
+     the reading-support control. It must WRAP, not hide - a dyslexic reader on
+     a small phone needs that control more than anyone, not less. */
+  @media (max-width:430px){
+    .top-in{flex-wrap:wrap !important;row-gap:.55rem;}
+    .top-in .rs-toggle{margin-left:0;}
+    .rs-toggle{font-size:.8rem;padding:.4rem .7rem;}
+  }
+
+  /* Smallest phones (320px): the reading-support control gets its own full-width
+     row rather than being squeezed or hidden. It is the last thing we would ever
+     hide, because the reader who needs it is the reader on the small old phone. */
+  @media (max-width:400px){
+    .top-in{flex-wrap:wrap !important;row-gap:.5rem;padding-left:1rem;padding-right:1rem;}
+    .top-in .rs-toggle{flex:1 0 100%;margin-left:0;justify-content:center;text-align:center;}
+    .top-in .links{flex:1 0 100%;}
+  }
 </style>
+<meta name="keywords" content="home education UK, home ed planning, local authority home education report, home education record keeping, deregistration">
+<link rel="canonical" href="https://sequens.education/sequens-home.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="James Banfield, SEQUENS">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SEQUENS">
+<meta property="og:title" content="Home Education Planning and LA Records | SEQUENS">
+<meta property="og:description" content="You do not need to be a teacher. Pick a year and a half term, get a full scheme of learning, and a record that is ready the day a local authority asks.">
+<meta property="og:url" content="https://sequens.education/sequens-home.html">
+<meta property="og:image" content="https://sequens.education/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Home Education Planning and LA Records | SEQUENS">
+<meta name="twitter:description" content="You do not need to be a teacher. Pick a year and a half term, get a full scheme of learning, and a record that is ready the day a local authority asks.">
+<meta name="twitter:image" content="https://sequens.education/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SEQUENS","alternateName":"SEQUENS - The Coherence Architecture","url":"https://sequens.education","logo":"https://sequens.education/logo.png","description":"SEQUENS is an implementation coherence architecture for education: instructional coaching, a lesson builder, and home education, on one evidence base.","founder":{"@type":"Person","name":"James Banfield","jobTitle":"SEQUENS Architect"},"areaServed":"GB","knowsAbout":["Instructional coaching","Lesson planning","Retrieval practice","Formative assessment","Hinge questions","Adaptive teaching","Home education","Cognitive load theory"]}</script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
 </head>
 <body>
 <a class="skip" href="#moment">Skip to content</a>
@@ -338,7 +384,7 @@
     <button class="btn" type="submit">Join the waiting list</button>
     <div class="msg" id="wlmsg">You are on the list. We will write when the free trial opens.</div>
   </form>
-  <p class="joinnote">Want to look around first? <a href="sequens-home-mockup.html" target="_blank" rel="noopener" style="color:var(--accent);">Open the app demonstration</a>, no sign-up needed.</p>
+  <p class="joinnote">Want to look around first? <a href="/demo/" target="_blank" rel="noopener" style="color:var(--accent);">Open the app demonstration</a>, no sign-up needed.</p>
 </div></section>
 </main>
 

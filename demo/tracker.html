@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS - Tracker (demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0C8F79; --accent:#2DE1C2;
+    --paper:#F2F7F9; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90; --dim:#647A8C;
+    --gold:#B8912F; --gold-soft:#F3ECD2; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --red:#C0453B; --red-soft:#F7E9E7; --green:#0C8F79; --green-soft:#EAF3EE; --amber-soft:#F9F1DC;
+    --standard:#2C6E9B; --standard-soft:#EAF2F8;   /* CAT4 / PTM family */
+    --formative:#0C8F79;                            /* writing / comp / quiz family */
+    --font:'Lexend','Segoe UI',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55;}
+  .topbar{background:var(--navy);color:#fff;}
+  .topbar-in{max-width:1120px;margin:0 auto;padding:.85rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;}
+  .mark{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);font-weight:800;letter-spacing:.04em;color:#fff;}
+  .mark svg{height:20px;}
+  .crumbs{margin-left:.5rem;display:flex;align-items:center;gap:.4rem;font-size:.84rem;color:#9FB6C6;}
+  .crumbs a{color:#CFE0EC;font-weight:600;cursor:pointer;text-decoration:none;}
+  .crumbs a:hover{color:#fff;}
+  .crumbs .sep{color:#456;}
+  .demo-chip{margin-left:auto;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:var(--accent);border-radius:20px;padding:2px 9px;}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:1.5rem 1.4rem 4rem;}
+  .view{display:none;} .view.on{display:block;}
+  h1.vh{font-family:var(--head);font-weight:800;font-size:1.55rem;color:var(--navy);margin:0 0 .2rem;}
+  .vsub{color:var(--muted);margin:0 0 1.2rem;font-size:.9rem;max-width:75ch;}
+
+  .legend{display:flex;gap:1.2rem;flex-wrap:wrap;background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:.7rem 1rem;margin-bottom:1.2rem;font-size:.82rem;}
+  .legend .grp{display:flex;align-items:center;gap:.4rem;}
+  .legend .sw{width:12px;height:12px;border-radius:3px;}
+  .legend .muted{color:var(--muted);}
+  .legend .divider{width:1px;background:var(--rule);}
+
+  /* generic table */
+  .scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:14px;background:#fff;}
+  table{border-collapse:collapse;width:100%;font-size:.85rem;}
+  th,td{padding:.6rem .7rem;text-align:center;border-bottom:1px solid var(--rule);white-space:nowrap;}
+  thead th{font-family:var(--head);font-weight:700;font-size:.68rem;color:var(--navy);text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0;background:#fff;}
+  .grouphead th{font-size:.62rem;border-bottom:2px solid var(--rule);padding-bottom:.25rem;color:#fff;}
+  .gh-standard{background:var(--standard);} .gh-formative{background:var(--formative);}
+  .gh-blank{background:transparent;}
+  td.name,th.name{text-align:left;font-weight:600;color:var(--ink);position:sticky;left:0;background:#fff;z-index:2;}
+  tbody tr:hover td{background:#F6FAFC;} tbody tr:hover td.name{background:#EEF5F9;}
+  tr.clickable{cursor:pointer;}
+
+  /* score chips */
+  .sc{display:inline-block;min-width:34px;border-radius:6px;padding:.2rem .35rem;font-weight:700;font-variant-numeric:tabular-nums;font-size:.82rem;}
+  .sc.hi{background:var(--green-soft);color:#0A6B5C;}
+  .sc.mid{background:var(--amber-soft);color:#6B531A;}
+  .sc.lo{background:var(--red-soft);color:var(--red);}
+  .sc.na{background:#F0F3F5;color:var(--dim);font-weight:500;}
+  .sub-sc{font-size:.72rem;color:var(--muted);display:block;margin-top:1px;}
+
+  /* triangulation flag - quiet */
+  .flag{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:600;border-radius:20px;padding:.15rem .5rem;}
+  .flag.under{background:#FBEEE6;color:#9A5A24;}      /* high potential, low attainment */
+  .flag.coast{background:#EFF4E9;color:#5B6E2E;}      /* fine but below potential */
+  .flag.support{background:var(--red-soft);color:var(--red);}
+  .flag.watch{background:var(--gold-soft);color:#6B531A;}
+  .flag.none{color:var(--dim);font-weight:500;font-size:.76rem;}
+  .flag svg{width:11px;height:11px;}
+
+  /* cohort cards */
+  .cohort-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1rem;}
+  @media (max-width:760px){.cohort-grid{grid-template-columns:1fr;}}
+  .ccard{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:1.2rem 1.3rem;cursor:pointer;}
+  .ccard:hover{border-color:var(--accent-deep);}
+  .ccard h3{font-family:var(--head);font-weight:700;font-size:1.1rem;color:var(--navy);margin:0 0 .1rem;display:flex;align-items:center;gap:.5rem;}
+  .ccard .teach{font-size:.82rem;color:var(--muted);margin:0 0 .8rem;}
+  .ccard-stats{display:flex;gap:1.3rem;flex-wrap:wrap;}
+  .cstat .n{font-family:var(--head);font-weight:800;font-size:1.3rem;color:var(--navy);}
+  .cstat .n.red{color:var(--red);} .cstat .n.amber{color:var(--gold-deep);}
+  .cstat .l{font-size:.74rem;color:var(--muted);}
+  .ccard-foot{margin-top:.8rem;padding-top:.7rem;border-top:1px solid var(--rule);font-size:.82rem;color:var(--muted);}
+  .ccard-foot b{color:var(--navy);}
+
+  /* subject switch */
+  .subtabs{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .subtab{border:1.5px solid var(--rule);border-radius:9px;padding:.45rem .9rem;font-weight:700;font-size:.85rem;color:var(--muted);background:#fff;cursor:pointer;}
+  .subtab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  /* child profile */
+  .profile-head{display:flex;align-items:center;gap:1rem;background:#fff;border:1px solid var(--rule);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .avatar{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:800;font-size:1.3rem;}
+  .profile-head .pn{font-family:var(--head);font-weight:800;font-size:1.4rem;color:var(--navy);margin:0;}
+  .profile-head .pm{font-size:.85rem;color:var(--muted);margin:.1rem 0 0;}
+  .verdict{margin-left:auto;max-width:340px;border-radius:11px;padding:.75rem .9rem;font-size:.86rem;line-height:1.45;}
+  .verdict.under{background:#FBEEE6;color:#7A461C;border:1px solid #E7C08F;}
+  .verdict.support{background:var(--red-soft);color:#8A2F27;border:1px solid #E0A9A3;}
+  .verdict.secure{background:var(--green-soft);color:#0A6B5C;border:1px solid #BEDFD0;}
+  .verdict b{font-weight:700;}
+
+  .prof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media (max-width:760px){.prof-grid{grid-template-columns:1fr;}}
+  .pcard{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:1.1rem 1.3rem;}
+  .pcard.standard{border-top:3px solid var(--standard);}
+  .pcard.formative{border-top:3px solid var(--formative);}
+  .pcard h3{font-family:var(--head);font-weight:700;font-size:.95rem;color:var(--navy);margin:0 0 .15rem;}
+  .pcard .ph-note{font-size:.76rem;color:var(--muted);margin:0 0 .9rem;}
+  .measure{display:flex;align-items:baseline;justify-content:space-between;padding:.45rem 0;border-top:1px solid var(--rule);}
+  .measure:first-of-type{border-top:none;}
+  .measure .ml{font-size:.86rem;color:var(--ink);}
+  .measure .ml small{color:var(--muted);font-size:.74rem;display:block;}
+  .measure .mv{font-family:var(--head);font-weight:700;font-size:1.05rem;color:var(--navy);}
+  .measure .mv.lo{color:var(--red);} .measure .mv.hi{color:var(--green);} .measure .mv.mid{color:var(--gold-deep);}
+  .trend{font-size:.72rem;color:var(--muted);margin-left:.4rem;font-weight:500;}
+
+  .info{font-size:.78rem;color:var(--dim);background:#F6FAFC;border:1px solid var(--rule);border-radius:9px;padding:.6rem .8rem;margin-top:.9rem;line-height:1.5;}
+  .info b{color:var(--navy);}
+  .foot{margin-top:1.4rem;font-size:.78rem;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-in">
+  <span class="mark"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
+  <div class="crumbs" id="crumbs"></div>
+  <span class="demo-chip">Demo · Tracker</span>
+</div></div>
+
+<div class="wrap">
+
+  <!-- ============ VIEW 1: COHORT BOARD ============ -->
+  <div class="view on" id="cohort">
+    <h1 class="vh">Year 6 - the whole picture</h1>
+    <p class="vsub">Every class, every measure, in one place. The standardised tests (what a child is capable of, and where they stand nationally) sit apart from the day-to-day work - because they answer different questions and shouldn't be read the same way. Tap a class to go in.</p>
+
+    <div class="legend">
+      <div class="grp"><span class="sw" style="background:var(--standard)"></span><b>Standardised</b> <span class="muted">CAT4, PTM - slow-moving, national</span></div>
+      <div class="divider"></div>
+      <div class="grp"><span class="sw" style="background:var(--formative)"></span><b>Ongoing</b> <span class="muted">writing, comprehension, weekly quiz - recent, yours</span></div>
+      <div class="divider"></div>
+      <div class="grp"><span class="flag under" style="padding:.1rem .4rem">underachieving</span> <span class="muted">capable, not yet showing it</span></div>
+    </div>
+
+    <div class="cohort-grid" id="cohortCards"></div>
+
+    <div class="info"><b>How to read the flags.</b> A triangulation flag is a prompt, never a label on a child. "Underachieving" means the standardised potential (CAT4) is ahead of current attainment (PTM) - a child worth a closer look, not a judgement. You confirm what's really going on.</div>
+  </div>
+
+  <!-- ============ VIEW 2: CLASS × SUBJECT ============ -->
+  <div class="view" id="classview">
+    <h1 class="vh" id="cvTitle">Year 6B - every measure</h1>
+    <p class="vsub">One row per child. Standardised scores on the left, ongoing work on the right, the triangulation read on the far right. Sorted so anyone worth a look rises to the top. Tap a child for their full profile.</p>
+
+    <div class="subtabs" id="subtabs"></div>
+
+    <div class="scroll">
+      <table id="classTable"></table>
+    </div>
+    <div class="info" id="cvInfo"></div>
+  </div>
+
+  <!-- ============ VIEW 3: CHILD PROFILE ============ -->
+  <div class="view" id="child">
+    <div class="profile-head">
+      <div class="avatar" id="chAv">K</div>
+      <div>
+        <h2 class="pn" id="chName">Kayla Adeyemi</h2>
+        <p class="pm" id="chMeta">Year 6B · Ms Okafor</p>
+      </div>
+      <div class="verdict" id="chVerdict"></div>
+    </div>
+    <div class="prof-grid">
+      <div class="pcard standard">
+        <h3>What she's capable of, and where she stands</h3>
+        <p class="ph-note">Standardised - taken once or twice a year, comparable nationally.</p>
+        <div id="chStandard"></div>
+        <div class="info" id="chTriangle"></div>
+      </div>
+      <div class="pcard formative">
+        <h3>How the work is going</h3>
+        <p class="ph-note">Ongoing - your assessments, recent, close to the teaching.</p>
+        <div id="chFormative"></div>
+      </div>
+    </div>
+    <div class="info" style="margin-top:1rem;"><b>The point of putting these together:</b> no single number tells the story. A high reasoning score with lower attainment says "capable, push"; the two agreeing low says "genuine support, and here's what to target." SEQUENS lays them side by side - the teacher reads the child.</div>
+  </div>
+
+  <p class="foot">SEQUENS · demo tracker. Scores are illustrative. Standardised and ongoing measures are kept visually separate on purpose; triangulation flags are prompts for a teacher, never labels on a child.</p>
+</div>
+
+<script>
+"use strict";
+// ============ FAKE DATA: Year 6B, 6 pupils, full measure set ============
+// CAT4 mean SAS (standardised age score, ~100 avg). PTM (Progress Test Maths) SAS. PTE-ish reading SAS.
+// Writing: teacher band (WTS/EXS/GDS). Comp: recent PIRA-style SAS + last quiz %.
+var PUPILS=[
+  {id:"kayla", name:"Kayla Adeyemi",
+   cat4:118, cat4v:120, cat4nv:116, cat4q:119, cat4s:117,   // high reasoning
+   ptm:102, pte:99,                                          // attainment only average -> UNDERACHIEVING
+   writing:"EXS", comp:101, quiz:58,
+   ptmTrend:"flat", compTrend:"down"},
+  {id:"marcus", name:"Marcus Bell",
+   cat4:88, cat4v:85, cat4nv:90, cat4q:87, cat4s:89,
+   ptm:84, pte:86, writing:"WTS", comp:83, quiz:42,          // agree low -> SUPPORT
+   ptmTrend:"flat", compTrend:"flat"},
+  {id:"priya", name:"Priya Chandra",
+   cat4:112, cat4v:114, cat4nv:110, cat4q:113, cat4s:111,
+   ptm:115, pte:117, writing:"GDS", comp:116, quiz:83,        // secure / stretch
+   ptmTrend:"up", compTrend:"up"},
+  {id:"leo", name:"Leo Fitzgerald",
+   cat4:104, cat4v:101, cat4nv:107, cat4q:103, cat4s:105,
+   ptm:106, pte:94, writing:"EXS", comp:92, quiz:64,          // maths fine, reading/comp lagging -> WATCH (profile split)
+   ptmTrend:"up", compTrend:"down"},
+  {id:"sana", name:"Sana Iqbal",
+   cat4:109, cat4v:112, cat4nv:106, cat4q:108, cat4s:110,
+   ptm:100, pte:101, writing:"EXS", comp:100, quiz:61,        // mild coast
+   ptmTrend:"flat", compTrend:"flat"},
+  {id:"tom", name:"Tom Osei",
+   cat4:96, cat4v:94, cat4nv:98, cat4q:95, cat4s:97,
+   ptm:97, pte:98, writing:"EXS", comp:99, quiz:67,           // broadly on track
+   ptmTrend:"up", compTrend:"flat"}
+];
+
+// ---- triangulation logic (quiet flags) ----
+function band(sas){ return sas>=110?"hi":(sas>=90?"mid":"lo"); }
+function writingBand(w){ return w==="GDS"?"hi":(w==="EXS"?"mid":"lo"); }
+function quizBand(q){ return q>=70?"hi":(q>=55?"mid":"lo"); }
+function triangulate(p){
+  var potential=p.cat4, attain=(p.ptm+p.pte)/2;
+  var gap=potential-attain;
+  if(gap>=12 && attain<108) return {kind:"under", label:"Underachieving", note:"Reasoning (CAT4 "+p.cat4+") is well ahead of attainment (avg "+Math.round(attain)+"). Capable of more than the work is currently showing."};
+  if(potential<92 && attain<92) return {kind:"support", label:"Needs support", note:"Reasoning and attainment agree low. Genuine need - target the specific gaps, don't wait."};
+  if(p.pte<=94 && p.ptm>=100) return {kind:"watch", label:"Split profile", note:"Maths is fine but reading/comprehension is behind it. A subject profile, not an overall level."};
+  if(gap>=8 && attain>=100 && attain<112) return {kind:"coast", label:"Could push", note:"Doing okay, but a little below what the reasoning score suggests is possible."};
+  return {kind:"none", label:"On track", note:"Standardised and ongoing measures broadly agree. No mismatch to chase."};
+}
+function flagHTML(t){
+  var ic={under:'<svg viewBox="0 0 24 24" fill="none" stroke="#9A5A24" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>',
+          support:'<svg viewBox="0 0 24 24" fill="none" stroke="#C0453B" stroke-width="2.4" stroke-linecap="round"><path d="M12 8v5M12 16v.5"/><circle cx="12" cy="12" r="9"/></svg>',
+          watch:'', coast:'', none:''};
+  if(t.kind==="none") return '<span class="flag none">on track</span>';
+  return '<span class="flag '+t.kind+'">'+(ic[t.kind]||'')+t.label+'</span>';
+}
+
+// ============ NAV ============
+var CLASSES=[
+  {id:"6A",teacher:"Ms Okafor"},{id:"6B",teacher:"Ms Okafor"},
+  {id:"6C",teacher:"Miss Bello"},{id:"6D",teacher:"Mr Chen"}
+];
+function goto(v){ document.querySelectorAll(".view").forEach(function(x){x.classList.remove("on");}); document.getElementById(v).classList.add("on"); window.scrollTo(0,0); renderCrumbs(v); }
+var nav={class:"6B", subject:"All", child:null};
+function renderCrumbs(v){
+  var c=document.getElementById("crumbs"); var h='<a onclick="goCohort()">Year 6</a>';
+  if(v==="classview"||v==="child"){ h+='<span class="sep">\u203a</span><a onclick="goClass(\''+nav.class+'\')">Year '+nav.class+'</a>'; }
+  if(v==="child" && nav.child){ var p=PUPILS.find(function(x){return x.id===nav.child;}); h+='<span class="sep">\u203a</span><span style="color:#fff">'+(p?p.name.split(" ")[0]:'')+'</span>'; }
+  c.innerHTML=h;
+}
+function goCohort(){ goto("cohort"); }
+function goClass(cid){ nav.class=cid; renderClass(); goto("classview"); }
+function goChild(pid){ nav.child=pid; renderChild(pid); goto("child"); }
+
+// ============ VIEW 1: cohort cards ============
+function renderCohort(){
+  var h="";
+  CLASSES.forEach(function(cl){
+    // demo: only 6B has full pupil data; others show summarised counts
+    var isB = cl.id==="6B";
+    var flags = isB ? PUPILS.map(function(p){return triangulate(p).kind;}) : null;
+    var under = isB ? flags.filter(function(k){return k==="under";}).length : {"6A":2,"6C":1,"6D":1}[cl.id]||0;
+    var support = isB ? flags.filter(function(k){return k==="support";}).length : {"6A":1,"6C":2,"6D":1}[cl.id]||0;
+    var avgAttain = isB ? Math.round(PUPILS.reduce(function(a,p){return a+(p.ptm+p.pte)/2;},0)/PUPILS.length) : {"6A":101,"6C":98,"6D":103}[cl.id];
+    h+='<div class="ccard" onclick="goClass(\''+cl.id+'\')">';
+    h+='<h3>Year '+cl.id+(isB?' <span class="flag none" style="font-weight:600">full data</span>':'')+'</h3><p class="teach">'+cl.teacher+'</p>';
+    h+='<div class="ccard-stats">';
+    h+='<div class="cstat"><div class="n">'+avgAttain+'</div><div class="l">avg attainment (SAS)</div></div>';
+    h+='<div class="cstat"><div class="n '+(under>0?'amber':'')+'">'+under+'</div><div class="l">underachieving</div></div>';
+    h+='<div class="cstat"><div class="n '+(support>0?'red':'')+'">'+support+'</div><div class="l">need support</div></div>';
+    h+='</div>';
+    h+='<div class="ccard-foot">'+(under>0?'<b>'+under+'</b> capable of more than they\u2019re showing \u2014 worth a look.':'No mismatches flagged this cycle.')+'</div>';
+    h+='</div>';
+  });
+  document.getElementById("cohortCards").innerHTML=h;
+}
+
+// ============ VIEW 2: class × subject table ============
+var SUBJECTS=["All","Maths","Reading","Writing"];
+function renderSubtabs(){
+  document.getElementById("subtabs").innerHTML=SUBJECTS.map(function(s){return '<button class="subtab'+(s===nav.subject?' on':'')+'" onclick="setSubject(\''+s+'\')">'+s+'</button>';}).join("");
+}
+function setSubject(s){ nav.subject=s; renderClass(); }
+function scChip(sas){ if(sas==null) return '<span class="sc na">\u2013</span>'; return '<span class="sc '+band(sas)+'">'+sas+'</span>'; }
+function renderClass(){
+  document.getElementById("cvTitle").textContent="Year "+nav.class+" - every measure";
+  renderSubtabs();
+  // rank: support first, then under, then watch/coast, then on track
+  var order={support:0,under:1,watch:2,coast:3,none:4};
+  var rows=PUPILS.map(function(p){return {p:p,t:triangulate(p)};}).sort(function(a,b){return order[a.t.kind]-order[b.t.kind];});
+  var sub=nav.subject;
+  var h="<thead>";
+  // group header row
+  if(sub==="All"){
+    h+='<tr class="grouphead"><th class="name gh-blank"></th><th colspan="2" class="gh-standard">Standardised</th><th colspan="4" class="gh-formative">Ongoing</th><th class="gh-blank"></th></tr>';
+    h+='<tr><th class="name">Pupil</th><th>CAT4<br><small style="font-weight:400">reasoning</small></th><th>PTM<br><small style="font-weight:400">maths SAS</small></th><th>Reading<br><small style="font-weight:400">SAS</small></th><th>Writing<br><small style="font-weight:400">band</small></th><th>Comp.<br><small style="font-weight:400">5/10-day</small></th><th>Quiz<br><small style="font-weight:400">weekly %</small></th><th>Read</th></tr>';
+  } else if(sub==="Maths"){
+    h+='<tr class="grouphead"><th class="name gh-blank"></th><th colspan="2" class="gh-standard">Standardised</th><th colspan="1" class="gh-formative">Ongoing</th><th class="gh-blank"></th></tr>';
+    h+='<tr><th class="name">Pupil</th><th>CAT4 (quant.)</th><th>PTM SAS</th><th>Weekly quiz %</th><th>Read</th></tr>';
+  } else if(sub==="Reading"){
+    h+='<tr class="grouphead"><th class="name gh-blank"></th><th colspan="2" class="gh-standard">Standardised</th><th colspan="1" class="gh-formative">Ongoing</th><th class="gh-blank"></th></tr>';
+    h+='<tr><th class="name">Pupil</th><th>CAT4 (verbal)</th><th>Reading SAS</th><th>Comprehension (5/10-day)</th><th>Read</th></tr>';
+  } else {
+    h+='<tr class="grouphead"><th class="name gh-blank"></th><th colspan="1" class="gh-standard">Standardised</th><th colspan="1" class="gh-formative">Ongoing</th><th class="gh-blank"></th></tr>';
+    h+='<tr><th class="name">Pupil</th><th>CAT4 (verbal)</th><th>Writing (fortnightly band)</th><th>Read</th></tr>';
+  }
+  h+="</thead><tbody>";
+  rows.forEach(function(r){
+    var p=r.p, t=r.t;
+    h+='<tr class="clickable" onclick="goChild(\''+p.id+'\')"><td class="name">'+p.name+'</td>';
+    if(sub==="All"){
+      h+='<td>'+scChip(p.cat4)+'</td><td>'+scChip(p.ptm)+'</td><td>'+scChip(p.pte)+'</td>';
+      h+='<td><span class="sc '+writingBand(p.writing)+'">'+p.writing+'</span></td>';
+      h+='<td>'+scChip(p.comp)+'</td><td><span class="sc '+quizBand(p.quiz)+'">'+p.quiz+'%</span></td>';
+    } else if(sub==="Maths"){
+      h+='<td>'+scChip(p.cat4q)+'</td><td>'+scChip(p.ptm)+'</td><td><span class="sc '+quizBand(p.quiz)+'">'+p.quiz+'%</span></td>';
+    } else if(sub==="Reading"){
+      h+='<td>'+scChip(p.cat4v)+'</td><td>'+scChip(p.pte)+'</td><td>'+scChip(p.comp)+'</td>';
+    } else {
+      h+='<td>'+scChip(p.cat4v)+'</td><td><span class="sc '+writingBand(p.writing)+'">'+p.writing+'</span></td>';
+    }
+    h+='<td>'+flagHTML(t)+'</td></tr>';
+  });
+  h+="</tbody>";
+  document.getElementById("classTable").innerHTML=h;
+  var uc=rows.filter(function(r){return r.t.kind==="under";}).length;
+  var scn=rows.filter(function(r){return r.t.kind==="support";}).length;
+  document.getElementById("cvInfo").innerHTML='<b>Reading this class:</b> '+(scn>0?scn+' need targeted support (reasoning and attainment agree). ':'')+(uc>0?uc+' capable of more than they\u2019re showing \u2014 the flag is a prompt to look, not a label. ':'')+'Standardised scores (blue) move slowly; the quiz and comprehension (green) are this fortnight \u2014 when they disagree, the recent one is the news.';
+}
+
+// ============ VIEW 3: child profile ============
+function trendArrow(t){ return t==="up"?'<span class="trend">\u2197 improving</span>':(t==="down"?'<span class="trend" style="color:#C0453B">\u2198 slipping</span>':'<span class="trend">\u2192 steady</span>'); }
+function mv(sas){ return '<span class="mv '+band(sas)+'">'+sas+'</span>'; }
+function renderChild(pid){
+  var p=PUPILS.find(function(x){return x.id===pid;}); if(!p) return;
+  var t=triangulate(p);
+  document.getElementById("chAv").textContent=p.name[0];
+  document.getElementById("chName").textContent=p.name;
+  document.getElementById("chMeta").textContent="Year "+nav.class+" · Ms Okafor";
+  var vd=document.getElementById("chVerdict");
+  var vclass = t.kind==="under"?"under":(t.kind==="support"?"support":"secure");
+  vd.className="verdict "+vclass;
+  vd.innerHTML='<b>'+(t.kind==="none"?"Broadly on track":t.label)+'.</b> '+t.note;
+  // standardised
+  document.getElementById("chStandard").innerHTML=
+    '<div class="measure"><span class="ml">CAT4 mean SAS<small>reasoning / potential</small></span>'+mv(p.cat4)+'</div>'+
+    '<div class="measure"><span class="ml">PTM<small>standardised maths attainment</small></span>'+mv(p.ptm)+trendArrow(p.ptmTrend)+'</div>'+
+    '<div class="measure"><span class="ml">Reading test<small>standardised reading SAS</small></span>'+mv(p.pte)+'</div>';
+  // triangle note
+  var potential=p.cat4, attain=Math.round((p.ptm+p.pte)/2);
+  document.getElementById("chTriangle").innerHTML='<b>Potential vs attainment:</b> CAT4 '+p.cat4+' against an attainment average of '+attain+'. '+(potential-attain>=12?'A gap this wide is the "underachieving" prompt \u2014 capable of more.':(potential<92&&attain<92?'Both point the same way \u2014 the need is real, not a mystery.':'Broadly aligned.'));
+  // formative
+  document.getElementById("chFormative").innerHTML=
+    '<div class="measure"><span class="ml">Writing<small>fortnightly, teacher-assessed</small></span><span class="mv '+writingBand(p.writing)+'">'+p.writing+'</span></div>'+
+    '<div class="measure"><span class="ml">Comprehension<small>5/10-day check (SAS)</small></span>'+mv(p.comp)+trendArrow(p.compTrend)+'</div>'+
+    '<div class="measure"><span class="ml">Weekly quiz<small>most recent</small></span><span class="mv '+quizBand(p.quiz)+'">'+p.quiz+'%</span></div>';
+}
+
+// init
+renderCrumbs("cohort"); renderCohort();
+</script>
+</body>
+</html>

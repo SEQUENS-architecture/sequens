@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS - What flexes, what holds</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent:#2DE1C2; --accent-deep:#0C8F79;
+    --paper:#F2F7F9; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90; --dim:#647A8C;
+    --gold:#B8912F; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --red:#C0453B; --red-soft:#F7E9E7; --success-deep:#0A6B5C; --green-soft:#EAF3EE;
+    --font:'Lexend',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6;padding:2rem 1.4rem 5rem;}
+  .wrap{max-width:1000px;margin:0 auto;}
+  h1{font-family:var(--head);font-weight:800;font-size:1.9rem;color:var(--navy);margin:0 0 .4rem;letter-spacing:-.01em;}
+  .lead{color:var(--muted);max-width:64ch;margin:0 0 1.8rem;}
+
+  /* THE WALL - what never moves */
+  .wall{background:var(--navy);color:#fff;border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1.6rem;}
+  .wall h2{font-family:var(--head);font-weight:800;font-size:1.1rem;margin:0 0 .8rem;color:#fff;}
+  .wall .items{display:flex;gap:.5rem;flex-wrap:wrap;}
+  .wall .item{background:rgba(45,225,194,.14);border:1px solid rgba(45,225,194,.35);border-radius:8px;
+    padding:.45rem .85rem;font-size:.87rem;color:var(--accent);font-weight:600;}
+  .wall p{color:#9FB6C6;font-size:.9rem;margin:.9rem 0 0;}
+
+  /* PICKER */
+  .picker{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1.2rem;}
+  .picker h3{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 .9rem;}
+  .peds{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.7rem;}
+  .ped{border:2px solid var(--rule);background:#fff;border-radius:12px;padding:.9rem 1rem;cursor:pointer;text-align:left;
+    font-family:var(--font);transition:.15s;}
+  .ped:hover{border-color:var(--accent-deep);}
+  .ped.on{border-color:var(--accent-deep);background:#F4FBF9;}
+  .ped b{display:block;font-family:var(--head);font-weight:700;font-size:.98rem;color:var(--navy);margin-bottom:.15rem;}
+  .ped span{font-size:.82rem;color:var(--muted);line-height:1.4;}
+  .ped.caution.on{border-color:var(--gold);background:#FBF6E9;}
+
+  /* THE SPINE, rendered */
+  .spine-out{display:flex;flex-direction:column;gap:.7rem;}
+  .step{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.2rem 1.4rem;
+    display:grid;grid-template-columns:150px 1fr;gap:1.3rem;align-items:start;}
+  @media (max-width:720px){.step{grid-template-columns:1fr;}}
+  .step.locked{border-left:4px solid var(--navy);}
+  .step-name{font-family:var(--head);font-weight:800;font-size:1rem;color:var(--navy);}
+  .step-hold{font-size:.76rem;color:var(--dim);margin-top:.25rem;line-height:1.4;}
+  .step-hold b{color:var(--navy);}
+  .lockchip{display:inline-flex;align-items:center;gap:.3rem;background:var(--navy);color:#fff;border-radius:20px;
+    padding:.15rem .5rem;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:.4rem;}
+  .lockchip svg{width:9px;height:9px;}
+
+  .method{background:#F6FAFC;border-radius:10px;padding:.9rem 1.1rem;transition:.25s;}
+  .method .mlabel{font-family:var(--head);font-weight:700;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent-deep);margin-bottom:.35rem;}
+  .method p{margin:0;font-size:.95rem;color:var(--ink);}
+  .method .swap{font-size:.82rem;color:var(--muted);margin-top:.5rem;font-style:italic;}
+
+  /* the honest challenge, when a weak pedagogy is picked */
+  .challenge{display:none;background:#FBF6E9;border:1.5px solid #E0C97F;border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+  .challenge.on{display:block;}
+  .challenge .ctitle{display:flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:700;
+    font-size:.95rem;color:var(--gold-deep);margin-bottom:.6rem;}
+  .challenge .ctitle svg{width:18px;height:18px;}
+  .challenge p{font-size:.92rem;color:#6B531A;margin:0 0 .6rem;}
+  .challenge p:last-child{margin:0;}
+  .challenge .src{font-size:.82rem;color:#8A6A18;background:#fff;border-radius:8px;padding:.5rem .8rem;}
+  .challenge .choice{display:flex;gap:.5rem;margin-top:.8rem;}
+  .challenge .choice button{border:1.5px solid #E0C97F;background:#fff;border-radius:9px;padding:.5rem .9rem;
+    font-family:var(--font);font-weight:600;font-size:.87rem;color:#6B531A;cursor:pointer;}
+  .challenge .choice button:hover{background:#FBF6E9;}
+
+  .foot{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
+    border-radius:12px;padding:1.2rem 1.4rem;margin-top:1.6rem;font-size:.92rem;color:var(--muted);}
+  .foot b{color:var(--navy);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>What flexes, and what holds</h1>
+  <p class="lead">A teacher chooses their approach. SEQUENS builds it their way. But some things are not preferences - they are the reason the lesson works. Pick an approach below and watch what changes, and what does not.</p>
+
+  <div class="wall">
+    <h2>These never move, whatever you choose</h2>
+    <div class="items">
+      <span class="item">The six-part spine</span>
+      <span class="item">A hinge that names a misconception</span>
+      <span class="item">Modelling before independence</span>
+      <span class="item">Adaptive, not tiered</span>
+      <span class="item">No ability labels a child can see</span>
+      <span class="item">Honest curriculum sourcing</span>
+    </div>
+    <p>These are not house style. They are what the evidence is clear about, and they are the product. Your approach shapes the flavour. It does not move the foundations.</p>
+  </div>
+
+  <div class="picker">
+    <h3>Choose your approach</h3>
+    <div class="peds">
+      <button class="ped on" data-ped="direct" onclick="pick('direct',this)">
+        <b>Direct instruction</b><span>Explicit, worked examples, high success rate</span></button>
+      <button class="ped" data-ped="dialogic" onclick="pick('dialogic',this)">
+        <b>Dialogic</b><span>Talk-heavy, reasoning built through discussion</span></button>
+      <button class="ped" data-ped="enquiry" onclick="pick('enquiry',this)">
+        <b>Enquiry-led</b><span>Question-driven, pupils investigate</span></button>
+      <button class="ped" data-ped="mastery" onclick="pick('mastery',this)">
+        <b>Mastery</b><span>Small steps, no one moves on until all are secure</span></button>
+      <button class="ped caution" data-ped="discovery" onclick="pick('discovery',this)">
+        <b>Pure discovery</b><span>Minimal guidance, pupils find it themselves</span></button>
+    </div>
+  </div>
+
+  <!-- the honest pushback, only for pure discovery -->
+  <div class="challenge" id="challenge">
+    <div class="ctitle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8A6A18" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
+      One thing, and then it is your call
+    </div>
+    <p>You have chosen <b>minimal guidance</b> for the modelling step. SEQUENS will build it. But you should know what the evidence says, once, and then we will not raise it again.</p>
+    <p>For pupils who are <b>new to an idea</b>, minimal-guidance approaches consistently underperform explicit instruction - and the children they disadvantage most are the ones with the least prior knowledge and the weakest working memory. The finding is unusually consistent.</p>
+    <p>Discovery works well <b>after</b> a schema exists. It works poorly as the route to building one.</p>
+    <div class="src"><b>Grounded in:</b> Kirschner, Sweller &amp; Clark (2006), <i>Why minimal guidance during instruction does not work</i> &middot; Sweller's work on cognitive load &middot; the EEF's guidance on explicit instruction.</div>
+    <div class="choice">
+      <button onclick="pick('direct',document.querySelector('[data-ped=direct]'))">Show me the explicit version</button>
+      <button onclick="dismissChallenge()">Build it my way</button>
+    </div>
+    <p style="margin-top:.7rem;font-size:.85rem;"><b>Either is fine.</b> You know your class. We will not ask again.</p>
+  </div>
+
+  <div class="spine-out" id="spine"></div>
+
+  <div class="foot">
+    <b>Why the wall is where it is.</b> A product that flexed on everything would have no spine, and a lesson with no spine is just activities in a row. A product that flexed on nothing would be a straitjacket, and no good teacher would tolerate it. <b>The line sits exactly where the evidence is unambiguous.</b> The six steps stay because sequence matters. The hinge stays because a lesson without a checkpoint is a lesson taught blind. Modelling before independence stays because the research on novices is about as settled as anything in education. Everything above that line is yours.
+  </div>
+</div>
+
+<script>
+"use strict";
+
+var STEPS = [
+  {name:"First thing",   holds:"<b>Retrieval happens.</b> Every lesson, no exceptions."},
+  {name:"Show them how", holds:"<b>They see the thinking</b> before they do it alone."},
+  {name:"Build it together", holds:"<b>Guided practice.</b> The teacher's hands come off gradually."},
+  {name:"Quick check",   holds:"<b>A hinge.</b> It names a misconception. It decides whether you go on."},
+  {name:"Their turn",    holds:"<b>Independent work</b> on the same shared task."},
+  {name:"Last thing",    holds:"<b>It closes.</b> The lesson returns to what it opened."}
+];
+
+var METHODS = {
+  direct: [
+    ["Do Now", "Five questions on the board, silent, three minutes. Answers up, self-marked."],
+    ["I do", "Teacher drops the book and the pen, narrates the reasoning aloud, writes the explanation as a worked example. Pupils watch. They do not talk yet."],
+    ["We do", "The same reasoning, second example, teacher leads, pupils supply each step. Choral response on the key sentence."],
+    ["Hinge", "Whiteboards. Everyone shows at once, on three. The teacher reads the room in one glance."],
+    ["You do", "Independent written explanation. Silent. Success criteria on the board."],
+    ["Exit", "One sentence, on a slip, on the way out."]
+  ],
+  dialogic: [
+    ["Talk task", "\"Tell your partner three things you know about forces.\" Then pairs report to fours."],
+    ["Think aloud", "Teacher drops the objects and models the reasoning, but pauses at each step: \"What am I thinking now? Talk to me.\""],
+    ["Build the argument", "Class constructs the explanation together, teacher scribing. Deliberate wrong turns offered for the class to reject."],
+    ["Hinge", "Vote, then <b>justify to a partner who disagrees with you</b>. Then re-vote. The talk is the diagnostic."],
+    ["Reasoned response", "Pupils write the reply, then read it to a partner who plays the sceptical friend."],
+    ["Class sentence", "The class negotiates the final wording together, aloud, until everyone agrees."]
+  ],
+  enquiry: [
+    ["The question", "\"Why don't we fall off the Earth?\" On the board. Pupils write what they'd need to know."],
+    ["Guided demonstration", "Teacher demonstrates and models the reasoning. <b>This step stays explicit</b> - the enquiry is what surrounds it, not what replaces it."],
+    ["Investigate together", "Pupils choose which pair of objects to test, predict, drop, and explain. Teacher circulates and presses on reasoning."],
+    ["Hinge", "The Moon question. Same question, no easier. Written answer with evidence."],
+    ["Their own investigation", "\"Design a test that would prove your friend wrong.\" Written up as a method and a prediction."],
+    ["Report back", "Groups report their finding. The class decides what has been shown and what has not."]
+  ],
+  mastery: [
+    ["Fluency starter", "Ten seconds per question. Forces vocabulary, rapid fire, until every hand is up."],
+    ["Small step, modelled", "One idea only: <b>gravity is a pull</b>. Modelled, worked, and checked before anything else is introduced."],
+    ["Practise the step", "The same idea, many examples, until the class is fluent in it. Only then does the second idea arrive."],
+    ["Hinge", "The Moon question. <b>Nobody moves on until the class is secure.</b> If a third get it wrong, the whole class re-does the modelling."],
+    ["Intelligent practice", "Varied examples of the same idea, minimally different, so the reasoning is exposed by the variation."],
+    ["Check for retention", "Same question, tomorrow. And next week."]
+  ],
+  discovery: [
+    ["Provocation", "A pile of objects on each table. \"Find out what makes things fall faster.\""],
+    ["Minimal guidance", "Pupils experiment freely. Teacher does not model. <b>The reasoning is not shown; it must be found.</b>"],
+    ["Independent enquiry", "Pupils continue testing, forming their own explanations. Teacher answers questions with questions."],
+    ["Hinge", "The Moon question. <b>Still here. Still the same.</b> The hinge does not soften, whatever the approach."],
+    ["Write it up", "Pupils write what they found and why they think it happens."],
+    ["Share findings", "Groups report. Class compares explanations."]
+  ]
+};
+
+var LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>';
+
+function render(ped){
+  var m = METHODS[ped];
+  var h = "";
+  for (var i=0; i<STEPS.length; i++){
+    var isHinge = (i===3);
+    h += '<div class="step locked">';
+    h += '<div><div class="step-name">'+STEPS[i].name+'</div>';
+    h += '<div class="step-hold">'+STEPS[i].holds+'</div>';
+    h += '<span class="lockchip">'+LOCK+'Holds</span></div>';
+    h += '<div class="method"><div class="mlabel">'+m[i][0]+'</div><p>'+m[i][1]+'</p>';
+    if (isHinge) h += '<p class="swap">The mechanism changes. The question does not. A hinge that gets easier is a hinge that diagnoses nothing.</p>';
+    h += '</div></div>';
+  }
+  document.getElementById("spine").innerHTML = h;
+}
+
+function pick(ped, btn){
+  document.querySelectorAll(".ped").forEach(function(b){ b.classList.remove("on"); });
+  btn.classList.add("on");
+  document.getElementById("challenge").classList.toggle("on", ped === "discovery");
+  render(ped);
+  window.scrollTo({top: document.getElementById("spine").offsetTop - 120, behavior:"smooth"});
+}
+function dismissChallenge(){
+  document.getElementById("challenge").classList.remove("on");
+}
+render("direct");
+</script>
+</body>
+</html>

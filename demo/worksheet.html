@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS - Y5 Gravity: pupil sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0C8F79; --paper:#F2F7F9; --card:#FFFFFF;
+    --rule:#D7E4EA; --muted:#5B7A90; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --green-soft:#EAF3EE; --success-deep:#0A6B5C;
+    --font:'Lexend',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#8A97A3;font-family:var(--font);padding:2rem 1rem 5rem;color:var(--ink);}
+  .bar{max-width:800px;margin:0 auto 1.2rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
+  .bar button{border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;
+    border-radius:9px;padding:.5rem .95rem;font-family:var(--font);font-weight:600;font-size:.87rem;cursor:pointer;}
+  .bar button.on{background:#fff;color:var(--navy);border-color:#fff;}
+  .bar .t{color:#fff;font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-right:.4rem;}
+
+  /* A4 sheet */
+  .sheet{max-width:800px;margin:0 auto;background:#fff;padding:2.2rem 2.4rem;box-shadow:0 8px 30px rgba(0,0,0,.2);
+    min-height:1120px;}
+  /* reading support - warm ground, wide spacing. Applies to the CHILD'S sheet. */
+  body.rs .sheet{background:#FDFBF6;}
+  body.rs .sheet, body.rs .sheet p, body.rs .sheet li, body.rs .sheet .q{
+    letter-spacing:.055em;word-spacing:.16em;line-height:1.85;font-size:1.05em;}
+
+  .shead{display:flex;align-items:flex-start;gap:1rem;border-bottom:2px solid var(--navy);padding-bottom:.9rem;margin-bottom:1.2rem;}
+  .shead .mark{display:flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:800;
+    letter-spacing:.04em;color:var(--navy);font-size:.9rem;}
+  .shead .mark svg{height:17px;}
+  .shead .nm{margin-left:auto;font-size:.85rem;color:var(--muted);}
+  .shead .nm span{display:inline-block;border-bottom:1.5px solid var(--rule);min-width:130px;margin-left:.4rem;}
+
+  .lo{background:var(--green-soft);border-left:4px solid var(--accent-deep);border-radius:0 8px 8px 0;
+    padding:.8rem 1.1rem;margin-bottom:1rem;}
+  .lo .l{font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);}
+  .lo .t{font-size:1.05rem;color:var(--success-deep);font-weight:600;}
+
+  /* steps to success, as a self-assessment the CHILD ticks */
+  .sts{border:1.5px solid var(--rule);border-radius:9px;padding:.9rem 1.1rem;margin-bottom:1.3rem;}
+  .sts .l{font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+  .sts .row{display:flex;gap:.7rem;align-items:center;padding:.35rem 0;font-size:.95rem;}
+  .sts .row .box{width:20px;height:20px;border:2px solid var(--navy);border-radius:4px;flex-shrink:0;}
+  .sts .row.further .box{border-color:var(--gold-deep);}
+  .sts .row.further{color:var(--gold-deep);}
+
+  .q{margin-bottom:1.2rem;}
+  .q .qn{font-family:var(--head);font-weight:800;color:var(--navy);font-size:1rem;margin-bottom:.4rem;}
+  .q .qtxt{font-size:1rem;margin-bottom:.6rem;}
+  .q .qtxt b{color:var(--navy);}
+  .lines{border-bottom:1.5px solid var(--rule);height:1.9rem;}
+  body.rs .lines{height:2.4rem;}
+  .lines.wide{height:2.2rem;}
+
+  /* the predict-observe table */
+  table{width:100%;border-collapse:collapse;margin-bottom:.5rem;}
+  th{background:var(--steel-soft);color:var(--navy);font-family:var(--head);font-weight:700;font-size:.78rem;
+    padding:.5rem .7rem;text-align:left;border:1.5px solid var(--rule);}
+  td{border:1.5px solid var(--rule);padding:.9rem .7rem;font-size:.9rem;}
+  td.obj{background:#FAFCFD;font-weight:600;color:var(--navy);width:34%;}
+
+  /* stems - offered, never assigned */
+  .stems{background:var(--green-soft);border:1px solid #BEDFD0;border-radius:9px;padding:.8rem 1rem;margin-bottom:.7rem;}
+  .stems .l{font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--success-deep);margin-bottom:.35rem;}
+  .stems p{margin:0;font-size:.92rem;color:var(--success-deep);}
+  .stems .hint{font-size:.8rem;color:var(--muted);margin-top:.35rem;font-style:italic;}
+
+  .further{background:#FBF6E9;border:2px solid #B8912F;border-radius:9px;padding:.85rem 1.1rem;margin-top:1rem;}
+  .further .l{font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold-deep);margin-bottom:.3rem;}
+  .further .t{font-size:1rem;color:#6B531A;}
+  .further .t b{color:var(--gold-deep);}
+
+  .vocab{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+  .vocab span{background:var(--steel-soft);border:1px solid #C5DAEA;border-radius:20px;padding:.3rem .8rem;
+    font-size:.85rem;color:#1F4A6E;font-weight:600;}
+
+  .note{max-width:800px;margin:1.2rem auto 0;background:rgba(255,255,255,.14);border-radius:10px;
+    padding:1rem 1.2rem;color:#fff;font-size:.88rem;line-height:1.6;}
+  .note b{color:#fff;}
+  @media print{ body{background:#fff;padding:0;} .bar,.note{display:none;} .sheet{box-shadow:none;max-width:100%;} }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="t">Pupil sheet</span>
+  <button onclick="rs(this)">Aa Reading support</button>
+  <button onclick="window.print()">Print</button>
+</div>
+
+<div class="sheet">
+  <div class="shead">
+    <span class="mark"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg>Why do things fall?</span>
+    <span class="nm">Name<span></span></span>
+  </div>
+
+  <div class="lo">
+    <div class="l">What we are learning</div>
+    <div class="t">To explain why things fall towards the Earth.</div>
+  </div>
+
+  <div class="sts">
+    <div class="l">Tick when you can do it</div>
+    <div class="row"><span class="box"></span>I can say that gravity is a <b>pull</b>, not a push.</div>
+    <div class="row"><span class="box"></span>I can explain that gravity pulls <b>everything</b> towards the Earth.</div>
+    <div class="row"><span class="box"></span>I can use <b>evidence</b> to explain why a heavy thing and a light thing land together.</div>
+    <div class="row further"><span class="box"></span>I can explain whether things fall slower on the Moon.</div>
+  </div>
+
+  <div class="vocab">
+    <span>gravity</span><span>force</span><span>unsupported</span><span>attract</span>
+  </div>
+
+  <div class="q">
+    <div class="qn">1. Predict, then watch.</div>
+    <table>
+      <tr><th>What we dropped</th><th>What I think will happen</th><th>What actually happened</th></tr>
+      <tr><td class="obj">A book and a pen</td><td></td><td></td></tr>
+      <tr><td class="obj">A marble and a ping-pong ball</td><td></td><td></td></tr>
+      <tr><td class="obj">A book and a shoe</td><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="q">
+    <div class="qn">2. What we thought at the start of the lesson</div>
+    <div class="lines"></div>
+    <div class="qn" style="margin-top:.8rem;">What we think now</div>
+    <div class="lines"></div>
+    <div class="lines"></div>
+  </div>
+
+  <div class="q">
+    <div class="qn">3. Change your friend's mind.</div>
+    <div class="qtxt">Your friend says: <b>"Heavy things fall faster."</b><br>Write a reply that changes their mind. Use the evidence from today.</div>
+    <div class="stems">
+      <div class="l">Starters</div>
+      <p>You might think&hellip; &nbsp;&middot;&nbsp; but actually&hellip; &nbsp;&middot;&nbsp; The evidence is&hellip; &nbsp;&middot;&nbsp; This is because gravity&hellip;</p>
+      <p class="hint">Use one if it helps you get going. You do not have to.</p>
+    </div>
+    <div class="lines wide"></div>
+    <div class="lines wide"></div>
+    <div class="lines wide"></div>
+    <div class="lines wide"></div>
+    <div class="lines wide"></div>
+  </div>
+
+  <div class="further">
+    <div class="l">Going further</div>
+    <div class="t">On the Moon, gravity is <b>weaker</b> than on Earth. So do things fall <b>slower</b> on the Moon?<br>What is your answer, and how do you know?</div>
+    <div class="lines" style="margin-top:.6rem;"></div>
+    <div class="lines"></div>
+  </div>
+</div>
+
+<div class="note">
+  <b>Why this sheet is shaped like this.</b> The <b>steps to success</b> at the top are the same four sentences that are on the board, and the same four the teacher confirms at the end. The child ticks them themselves, which is the only assessment on this sheet that belongs to them.<br><br>
+  <b>Question 2 is the Turn.</b> Their own wrong idea, in their own writing, and then their own corrected one underneath it. When they look back at this page in a month, they can see themselves change their mind.<br><br>
+  <b>The starters are offered, never assigned.</b> They are printed on <b>every</b> sheet, so no child can be identified by what they were given. <b>The reading-support version is also the same sheet</b> - warmer paper, wider spacing - so a child who needs it is not holding a different-looking piece of paper from everyone else.
+</div>
+
+<script>
+"use strict";
+function rs(btn){
+  var on = document.body.classList.toggle("rs");
+  btn.classList.toggle("on", on);
+}
+</script>
+</body>
+</html>

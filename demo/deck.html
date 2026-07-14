@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS Deck - Y5 Science: Gravity</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent:#2DE1C2; --accent2:#7FE7FF; --accent-deep:#0C8F79;
+    --paper:#F2F7F9; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90; --dim:#647A8C;
+    --gold:#B8912F; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --red:#C0453B; --red-soft:#F7E9E7; --success-deep:#0A6B5C; --green-soft:#EAF3EE;
+    --grad:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+    --font:'Lexend','Segoe UI',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#1a2733;color:var(--ink);font-family:var(--font);}
+
+  .controls{position:fixed;bottom:0;left:0;right:0;background:rgba(7,19,34,.94);backdrop-filter:blur(8px);
+    padding:.7rem 1.2rem;display:flex;align-items:center;gap:.8rem;z-index:100;border-top:1px solid rgba(255,255,255,.1);}
+  .controls button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;
+    border-radius:8px;padding:.5rem 1rem;font-weight:600;cursor:pointer;font-family:var(--font);font-size:.9rem;}
+  .controls button:hover{background:rgba(45,225,194,.2);border-color:var(--accent);}
+  .controls .count{color:#9FB6C6;font-size:.85rem;margin-left:auto;font-weight:600;}
+  .controls .step{color:var(--accent);font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+  .controls .toggle{background:rgba(45,225,194,.15);border-color:var(--accent);color:var(--accent);}
+
+  .stage{padding:2rem 1.5rem 6rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+  .slide{width:100%;max-width:1100px;aspect-ratio:16/9;background:var(--card);border-radius:6px;
+    box-shadow:0 12px 40px rgba(0,0,0,.35);padding:2rem 3rem;display:none;flex-direction:column;position:relative;overflow:hidden;}
+  .slide.on{display:flex;}
+  .slide.dark{background:var(--grad);color:#fff;}
+
+  .spine{position:absolute;top:0;left:0;right:0;height:6px;display:flex;}
+  .spine i{flex:1;background:var(--rule);}
+  .spine i.done{background:var(--accent-deep);opacity:.35;}
+  .spine i.now{background:var(--accent-deep);}
+
+  .step-label{font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent-deep);margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;}
+  .step-label .mins{margin-left:auto;background:var(--paper);border-radius:20px;padding:.15rem .6rem;
+    color:var(--muted);font-size:.72rem;letter-spacing:.04em;}
+  .slide.dark .step-label{color:var(--accent);}
+
+  h1{font-family:var(--head);font-weight:800;font-size:3rem;line-height:1.08;letter-spacing:-.02em;color:var(--navy);margin:0 0 1rem;}
+  .slide.dark h1{color:#fff;}
+  h2{font-family:var(--head);font-weight:800;font-size:2.1rem;line-height:1.14;letter-spacing:-.015em;color:var(--navy);margin:0 0 1rem;}
+  .big{font-size:2rem;line-height:1.45;color:var(--ink);margin:0;font-weight:400;}
+  .big b{color:var(--navy);font-weight:700;}
+  .sub{font-size:1.45rem;color:var(--muted);margin:0;}
+  .slide.dark .sub{color:#9FB6C6;}
+  .center{justify-content:center;text-align:center;align-items:center;}
+
+  /* ============ THE MODELLING SPACE ============ */
+  /* A slide the teacher writes INTO. Empty when it appears. This is the point. */
+  /* THE MODELLING SPACE. Empty. That is the point.
+     Nothing goes inside it, because anything inside gets projected to thirty children,
+     and because a prescription is not modelling. The PLAN says what it is for. */
+  .model{flex:1;border:1.5px solid var(--rule);border-radius:14px;margin-top:.9rem;
+    display:flex;flex-direction:column;position:relative;background:#FBFDFE;min-height:0;}
+  .model .mtag{display:none;}
+  .model .ghost{display:none;}
+  /* when the "show me what the teacher writes" toggle is on, the ghost is replaced */
+  .model .filled{display:none;flex:1;padding:1.4rem 1.6rem;flex-direction:column;justify-content:center;gap:.9rem;}
+  body.reveal .model .ghost{display:none;}
+  body.reveal .model .filled{display:flex;}
+  body.reveal .model{border-color:var(--accent-deep);background:#F7FCFB;}
+  body.reveal .model::before{content:"FROM THE LESSON PLAN";position:absolute;top:-9px;left:20px;background:var(--card);padding:0 .6rem;font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.12em;color:var(--accent-deep);}
+  .handwrite{font-size:1.5rem;color:var(--navy);line-height:1.45;}
+  .handwrite b{color:var(--accent-deep);}
+
+  /* the Turn frame, EMPTY, for the teacher to fill */
+  .turnspace{display:flex;align-items:center;gap:2rem;justify-content:center;flex:1;padding:1rem;}
+  .turnspace .state{flex:1;max-width:320px;}
+  .turnspace .box{border-radius:14px;min-height:130px;display:flex;align-items:center;justify-content:center;
+    padding:1.1rem;text-align:center;font-size:1.35rem;line-height:1.4;}
+  .turnspace .was{border:2.5px solid var(--muted);opacity:.55;}
+  .turnspace .now{border:2.5px solid var(--accent-deep);}
+  body.reveal .turnspace .was{color:var(--muted);font-style:normal;}
+  body.reveal .turnspace .now{background:var(--accent-deep);color:#fff;font-weight:600;font-style:normal;}
+  .turnspace .cap{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:.5rem;}
+  .turnspace .arrow svg{width:56px;height:56px;}
+
+  .theirwords{background:var(--red-soft);border-left:5px solid var(--red);padding:1rem 1.4rem;
+    border-radius:0 10px 10px 0;font-size:1.5rem;color:#8A2F27;font-style:italic;}
+  .theirwords .attr{display:block;font-size:.95rem;font-style:normal;color:var(--muted);margin-top:.4rem;}
+
+  /* the demonstration - properly drawn */
+  .demo{display:flex;align-items:flex-end;justify-content:center;gap:5rem;flex:1;padding-bottom:.5rem;}
+  .drop{display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+  .drop .lbl{font-size:1.3rem;font-weight:600;color:var(--navy);}
+  .drop .trail{width:3px;height:80px;background:repeating-linear-gradient(180deg,var(--muted) 0 7px,transparent 7px 14px);}
+  .ground{width:100%;max-width:600px;height:5px;background:var(--navy);border-radius:3px;margin:0 auto;}
+  .landed{font-family:var(--head);font-weight:800;font-size:1.4rem;color:var(--accent-deep);text-align:center;margin-top:.8rem;}
+
+  .slide.hinge{background:var(--steel-soft);}
+  .hinge-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--steel);color:#fff;
+    border-radius:24px;padding:.35rem 1rem;font-weight:700;font-size:.8rem;letter-spacing:.04em;
+    text-transform:uppercase;font-family:var(--head);margin-bottom:.9rem;align-self:flex-start;}
+  .votes{display:flex;gap:1.4rem;margin-top:1rem;}
+  .vote{border:3px solid var(--steel);background:#fff;border-radius:12px;padding:.9rem 1.7rem;
+    font-family:var(--head);font-weight:700;font-size:1.6rem;color:var(--navy);}
+
+  .task{background:var(--card);border:2px solid var(--rule);border-radius:12px;padding:1.2rem 1.5rem;font-size:1.65rem;color:var(--ink);line-height:1.5;}
+  .task b{color:var(--navy);}
+  .stems{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;}
+  .stem{background:var(--green-soft);border:1px solid #BEDFD0;border-radius:8px;padding:.6rem 1rem;font-size:1.25rem;color:var(--success-deep);font-weight:500;}
+
+  .say{font-size:1.8rem;color:var(--navy);font-weight:600;line-height:1.45;}
+  .say em{color:var(--accent-deep);font-style:normal;font-weight:800;}
+
+  .notes{max-width:1100px;width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+    border-radius:8px;padding:1rem 1.3rem;color:#B9CCDA;font-size:.9rem;line-height:1.65;}
+  .notes b{color:var(--accent);}
+  .notes .ttl{font-family:var(--head);font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#7E97AB;margin-bottom:.4rem;}
+
+  /* GOING FURTHER - on the slide, open to anyone, never allocated.
+     The word "stretch" never appears. A challenge a child is ASSIGNED is a label. */
+  .further{background:#FBF6E9;border:2px solid #B8912F;border-radius:11px;padding:.75rem 1.1rem;
+    display:flex;gap:.7rem;align-items:flex-start;margin-top:.8rem;}
+  .further svg{width:20px;height:20px;flex-shrink:0;margin-top:.15rem;}
+  .further .ftxt{font-size:1.4rem;color:#6B531A;line-height:1.4;}
+  .further .ftxt b{color:#8A6A18;display:block;font-family:var(--head);font-size:.68rem;
+    letter-spacing:.12em;text-transform:uppercase;margin-bottom:.15rem;}
+
+  /* LEARNING OBJECTIVE + STEPS TO SUCCESS.
+     The steps are THINKING steps, not task steps. "Write the date" is not success.
+     These are exactly what the assessment tracker records at the end of the lesson. */
+  .lo{background:var(--green-soft);border-left:5px solid var(--accent-deep);border-radius:0 12px 12px 0;
+    padding:.85rem 1.2rem;margin-bottom:.8rem;}
+  .lo .lolabel{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent-deep);margin-bottom:.25rem;}
+  .lo .lotext{font-size:1.5rem;color:var(--success-deep);font-weight:600;line-height:1.3;}
+  .sts{background:#fff;border:2px solid var(--rule);border-radius:12px;padding:.9rem 1.2rem;}
+  .sts .stslabel{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;}
+  .sts ol{margin:0;padding:0;list-style:none;counter-reset:s;}
+  .sts li{counter-increment:s;display:flex;gap:.8rem;align-items:flex-start;padding:.55rem 0;font-size:1.5rem;color:var(--ink);line-height:1.4;}
+  .sts li::before{content:counter(s);flex-shrink:0;width:28px;height:28px;border-radius:50%;
+    background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:var(--head);font-weight:800;font-size:.85rem;margin-top:.1rem;}
+  .sts li.further::before{background:var(--gold-deep);}
+  .sts li b{color:var(--navy);}
+
+  /* TIER 3 VOCABULARY. Not a list to copy. The word, what it means, and the moment it gets used.
+     Morphology where it earns its place - "unsupported" is un + support + ed, and a child who
+     can take a word apart can take apart every word like it. */
+  .vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;flex:1;align-content:center;}
+  .vword{background:#fff;border:2px solid var(--rule);border-radius:12px;padding:.9rem 1rem;display:flex;flex-direction:column;}
+  .vword.key{border-color:var(--accent-deep);background:#F4FBF9;}
+  .vword .w{font-family:var(--head);font-weight:800;font-size:1.5rem;color:var(--navy);line-height:1.1;}
+  .vword.key .w{color:var(--accent-deep);}
+  .vword .morph{font-size:.9rem;color:var(--muted);margin-top:.15rem;font-family:var(--head);font-weight:600;}
+  .vword .def{font-size:1.25rem;color:var(--ink);margin-top:.5rem;line-height:1.35;}
+  .vword .use{font-size:1.1rem;color:var(--muted);margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--rule);font-style:italic;}
+  .vnote{background:var(--steel-soft);border-radius:9px;padding:.7rem 1rem;font-size:1.25rem;color:#1F4A6E;margin-top:.7rem;}
+  .vnote b{color:var(--navy);}
+
+  /* READING SUPPORT. A dyslexic child at the board cannot ask for the font to change.
+     So the teacher can. Increased spacing, warmer ground, no pure white. */
+  body.rs .slide{background:#FDFBF6;}
+  body.rs .slide h1, body.rs .slide h2, body.rs .slide .big, body.rs .slide .sub,
+  body.rs .slide .task, body.rs .slide .sts li, body.rs .slide .vword .def,
+  body.rs .slide .vword .use, body.rs .slide .ftxt, body.rs .slide .stem,
+  body.rs .slide .lotext, body.rs .slide .vnote, body.rs .slide .say{
+    letter-spacing:.06em !important; word-spacing:.16em !important; line-height:1.6 !important;}
+  body.rs .slide.hinge{background:#F7F5EE;}
+  body.rs .lo{background:#F0F6EF;}
+  body.rs .sts{background:#FDFBF6;}
+  body.rs .vword{background:#FDFBF6;}
+  body.rs .model{background:#FDFBF6;}
+  /* larger again, for the back row */
+  body.rs .big{font-size:2rem;}
+  body.rs .sts li{font-size:1.45rem;}
+
+  .controls .rs-btn.on{background:rgba(45,225,194,.25);border-color:var(--accent);color:var(--accent);}
+
+  /* PRESENTER STRIP - what the teacher looks at while standing at the board */
+  .presenter{display:none;max-width:1100px;width:100%;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:.9rem 1.2rem;gap:1.4rem;}
+  body.pres .presenter{display:flex;}
+  .presenter .pcol{flex:1;}
+  .presenter .plabel{font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.12em;
+    text-transform:uppercase;color:#7E97AB;margin-bottom:.3rem;}
+  .presenter .ptxt{font-size:.92rem;color:#CFE0EC;line-height:1.5;}
+  .presenter .ptxt b{color:var(--accent);}
+  .presenter .pnext{flex:0 0 200px;border-left:1px solid rgba(255,255,255,.14);padding-left:1.2rem;}
+  .presenter .pnext .ptxt{color:#9FB6C6;font-size:.86rem;}
+</style>
+</head>
+<body>
+
+<!-- ILLUSTRATION LIBRARY: drawn once, used by reference. Two-colour discipline,
+     confident line, same DNA as the Frames. Structure in navy/muted, focus in teal. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+
+  <!-- BOOK: a real book, three-quarter view, pages visible -->
+  <g id="i-book">
+    <path d="M10 22 Q10 18 14 17 L44 11 Q48 10 48 14 L48 46 Q48 50 44 51 L14 57 Q10 58 10 54 Z"
+          fill="#EAF2F8" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M48 14 L54 16 Q56 17 56 20 L56 50 Q56 53 54 54 L48 52"
+          fill="#D7E4EA" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M10 22 Q10 18 14 17 L44 11" fill="none" stroke="#0A3D62" stroke-width="2.6"/>
+    <line x1="17" y1="28" x2="40" y2="23" stroke="#5B7A90" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="17" y1="35" x2="40" y2="30" stroke="#5B7A90" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="17" y1="42" x2="34" y2="38" stroke="#5B7A90" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- PEN: a proper pen, nib, barrel, clip -->
+  <g id="i-pen">
+    <path d="M18 54 L14 58 L15 51 L44 12 Q46 9 49 11 Q52 13 50 16 Z"
+          fill="#FFFFFF" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M15 51 L18 54" stroke="#0A3D62" stroke-width="2.2"/>
+    <path d="M40 17 L47 22" stroke="#0A3D62" stroke-width="2.2"/>
+    <path d="M44 12 Q46 9 49 11 Q52 13 50 16 L47 20 L41 15 Z" fill="#0C8F79" stroke="#0A3D62" stroke-width="2.4" stroke-linejoin="round"/>
+    <line x1="20" y1="46" x2="24" y2="49" stroke="#5B7A90" stroke-width="2"/>
+  </g>
+
+  <!-- HAMMER -->
+  <g id="i-hammer">
+    <rect x="27" y="20" width="7" height="36" rx="2.5" fill="#EAF2F8" stroke="#0A3D62" stroke-width="2.6"/>
+    <path d="M14 12 Q12 12 12 15 L12 22 Q12 25 14 25 L28 25 L28 12 Z" fill="#0C8F79" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M33 12 L46 14 Q49 15 49 18 Q49 22 46 23 L33 25 Z" fill="#0C8F79" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <rect x="27" y="12" width="7" height="13" fill="#0A3D62"/>
+    <line x1="30.5" y1="34" x2="30.5" y2="50" stroke="#5B7A90" stroke-width="1.6"/>
+  </g>
+
+  <!-- FEATHER -->
+  <g id="i-feather">
+    <path d="M32 56 L32 22" stroke="#0A3D62" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M32 22 Q32 10 42 8 Q52 6 52 16 Q52 30 38 36 L32 38 Z"
+          fill="#EAF3EE" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M32 22 Q32 10 22 8 Q12 6 12 16 Q12 30 26 36 L32 38 Z"
+          fill="#D9EFE8" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M32 26 L40 18 M32 31 L44 22 M32 36 L40 30" stroke="#0C8F79" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M32 26 L24 18 M32 31 L20 22 M32 36 L24 30" stroke="#5B7A90" stroke-width="1.6" stroke-linecap="round"/>
+  </g>
+
+  <!-- PAPER FLAT -->
+  <g id="i-paper-flat">
+    <path d="M14 12 L46 12 Q49 12 49 15 L49 52 Q49 55 46 55 L14 55 Q11 55 11 52 L11 15 Q11 12 14 12 Z"
+          fill="#FFFFFF" stroke="#0A3D62" stroke-width="2.6"/>
+    <line x1="18" y1="22" x2="42" y2="22" stroke="#5B7A90" stroke-width="1.8"/>
+    <line x1="18" y1="30" x2="42" y2="30" stroke="#5B7A90" stroke-width="1.8"/>
+    <line x1="18" y1="38" x2="36" y2="38" stroke="#5B7A90" stroke-width="1.8"/>
+  </g>
+
+  <!-- PAPER SCREWED UP -->
+  <g id="i-paper-ball">
+    <path d="M18 30 L14 22 L22 18 L20 10 L30 14 L38 8 L40 18 L50 20 L44 28 L50 38 L40 40 L38 50 L28 44 L18 48 L20 38 L12 34 Z"
+          fill="#F2F7F9" stroke="#0A3D62" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M24 24 L32 30 L28 38 M32 30 L42 26" fill="none" stroke="#5B7A90" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- MOON: crescent with craters -->
+  <g id="i-moon">
+    <circle cx="32" cy="32" r="22" fill="#EAF2F8" stroke="#0A3D62" stroke-width="2.6"/>
+    <circle cx="24" cy="24" r="5" fill="none" stroke="#5B7A90" stroke-width="2"/>
+    <circle cx="40" cy="36" r="6.5" fill="none" stroke="#5B7A90" stroke-width="2"/>
+    <circle cx="26" cy="41" r="3.5" fill="none" stroke="#5B7A90" stroke-width="2"/>
+    <circle cx="42" cy="20" r="2.8" fill="none" stroke="#5B7A90" stroke-width="2"/>
+  </g>
+
+  <!-- EARTH with a pull arrow -->
+  <g id="i-earth">
+    <circle cx="32" cy="44" r="20" fill="#EAF2F8" stroke="#0A3D62" stroke-width="2.6"/>
+    <path d="M14 38 Q22 34 30 38 Q38 42 50 38" fill="none" stroke="#5B7A90" stroke-width="2"/>
+    <path d="M18 52 Q26 48 34 52 Q42 56 48 52" fill="none" stroke="#5B7A90" stroke-width="2"/>
+    <line x1="32" y1="4" x2="32" y2="18" stroke="#0C8F79" stroke-width="3" stroke-linecap="round"/>
+    <path d="M27 13 L32 19 L37 13" fill="none" stroke="#0C8F79" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</defs></svg>
+
+<div class="stage">
+
+  <!-- 1 TITLE -->
+  <div class="slide dark on center" data-step="0">
+    <div class="step-label">Year 5 &middot; Science &middot; Forces</div>
+    <svg viewBox="0 0 64 64" width="110" height="110" style="margin-bottom:1rem;"><use href="#i-earth"/></svg>
+    <h1>Why do things fall?</h1>
+    <p class="sub" style="font-size:1.35rem;">And why don't they fall <em style="color:var(--accent);font-style:normal;">up</em>?</p>
+  </div>
+
+
+  <!-- 2: LEARNING OBJECTIVE + STEPS TO SUCCESS -->
+  <div class="slide" data-step="0">
+    <div class="step-label">Today</div>
+    <div class="lo">
+      <div class="lolabel">What we are learning</div>
+      <div class="lotext">To explain why things fall towards the Earth.</div>
+    </div>
+    <div class="sts">
+      <div class="stslabel">You have got it when you can</div>
+      <ol>
+        <li>Say that gravity is a <b>pull</b>, not a push.</li>
+        <li>Explain that gravity pulls <b>everything</b> towards the Earth.</li>
+        <li>Use <b>evidence</b> to explain why a heavy thing and a light thing land together.</li>
+        <li class="further">Explain why a feather <b>does</b> fall slower on Earth, but not on the Moon.</li>
+      </ol>
+    </div>
+  </div>
+
+
+  <!-- VOCABULARY: Tier 3, subject-specific -->
+  <div class="slide" data-step="0">
+    <div class="step-label">Words we will use today</div>
+    <div class="vocab">
+      <div class="vword key">
+        <span class="w">gravity</span>
+        <span class="def">A <b>pull</b> between the Earth and everything on it.</span>
+        <span class="use">"Gravity pulled the pen down."</span>
+      </div>
+      <div class="vword">
+        <span class="w">force</span>
+        <span class="def">A push or a pull. You cannot see one. You see what it <b>does</b>.</span>
+        <span class="use">"Gravity is a force."</span>
+      </div>
+      <div class="vword key">
+        <span class="w">unsupported</span>
+        <span class="morph">un &middot; support &middot; ed</span>
+        <span class="def">Nothing is holding it up.</span>
+        <span class="use">"I let go. Now it is unsupported."</span>
+      </div>
+      <div class="vword">
+        <span class="w">attract</span>
+        <span class="def">To pull towards.</span>
+        <span class="use">"The Earth attracts the book."</span>
+      </div>
+
+    </div>
+    <div class="vnote"><b>Take "unsupported" apart:</b> <b>un</b> (not) + <b>support</b> (hold up) + <b>ed</b>. Not being held up. You will meet <b>un-</b> again in every subject you ever study.</div>
+  </div>
+
+  <!-- 2 FIRST THING -->
+  <div class="slide" data-step="1">
+    <div class="spine"><i class="now"></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="step-label">First thing<span class="mins">4 min</span></div>
+    <h2>Three things you know about forces.</h2>
+    <p class="big">Write them. Thirty seconds.</p>
+    <div class="model">      <div class="filled">
+        <p class="handwrite">A force is a <b>push</b> or a <b>pull</b>.</p>
+        <p class="handwrite">Forces can make things <b>speed up</b>, <b>slow down</b> or <b>change direction</b>.</p>
+        <p class="handwrite">You cannot see a force. You see <b>what it does</b>.</p>
+      </div>
+    </div>
+    <p class="big" style="margin-top:.8rem;">Is a force always a <b>push</b>?</p>
+    <div class="further"><svg viewBox="0 0 24 24" fill="none" stroke="#8A6A18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><div class="ftxt"><b>Going further</b>Give me a force you <b>cannot see</b>.</div></div>
+  </div>
+
+  <!-- 3 SHOW THEM HOW - elicit the misconception -->
+  <div class="slide" data-step="2">
+    <div class="spine"><i class="done"></i><i class="now"></i><i></i><i></i><i></i><i></i></div>
+    <div class="step-label">Show them how<span class="mins">10 min</span></div>
+    <h2>I drop a pen. Why did it fall?</h2>
+    <div style="display:flex;gap:2rem;align-items:stretch;flex:1;">
+      <svg viewBox="0 0 64 64" width="120" height="120" style="flex-shrink:0;align-self:center;"><use href="#i-pen"/></svg>
+      <div class="model" style="flex:1;margin-top:0;">
+        <div class="filled">
+          <p class="handwrite">Write up what they say, <b>in their words</b>. Do not correct it.</p>
+          <p class="handwrite" style="font-size:1.2rem;color:var(--muted);">Almost every class gives you some version of <b>"because it's heavy"</b>. You will come back to this exact sentence at the end of the lesson.</p>
+        </div>
+      </div>
+    </div>
+    <p class="big" style="margin-top:.9rem;"><b>Now watch. I am going to drop two things.</b></p>
+  </div>
+
+  <!-- 4 SHOW THEM HOW - the demonstration -->
+  <div class="slide" data-step="2">
+    <div class="spine"><i class="done"></i><i class="now"></i><i></i><i></i><i></i><i></i></div>
+    <div class="step-label">Show them how<span class="mins">10 min</span></div>
+    <h2>Same height. Same moment.</h2>
+    <div class="demo">
+      <div class="drop">
+        <svg viewBox="0 0 64 64" width="100" height="100"><use href="#i-book"/></svg>
+        <div class="lbl">A heavy book</div>
+        <div class="trail"></div>
+      </div>
+      <div class="drop">
+        <svg viewBox="0 0 64 64" width="100" height="100"><use href="#i-pen"/></svg>
+        <div class="lbl">A light pen</div>
+        <div class="trail"></div>
+      </div>
+    </div>
+    <div class="ground"></div>
+    <p class="landed">They land together.</p>
+  </div>
+
+  <!-- 5 SHOW THEM HOW - the Turn, EMPTY for modelling -->
+  <div class="slide" data-step="2">
+    <div class="spine"><i class="done"></i><i class="now"></i><i></i><i></i><i></i><i></i></div>
+    <div class="step-label">Show them how &middot; the Turn<span class="mins">10 min</span></div>
+    <div class="turnspace">
+      <div class="state">
+        <div class="cap">What we thought</div>
+        <div class="box was"></div>
+      </div>
+      <div class="arrow">
+        <svg viewBox="0 0 40 40">
+          <line x1="6" y1="20" x2="28" y2="20" stroke="#5B7A90" stroke-width="3" stroke-linecap="round"/>
+          <path d="M24 14 L30 20 L24 26" fill="none" stroke="#5B7A90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="state">
+        <div class="cap">What we think now</div>
+        <div class="box now"></div>
+      </div>
+    </div>
+    <p class="sub" style="text-align:center;">Changing your mind on evidence is what scientists do.</p>
+  </div>
+
+  <!-- 6 BUILD IT TOGETHER - gravity only. Air resistance is NEXT lesson. -->
+  <div class="slide" data-step="3">
+    <div class="spine"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i><i></i></div>
+    <div class="step-label">Build it together<span class="mins">12 min</span></div>
+    <h2>Predict. Watch. Explain.</h2>
+    <div style="display:flex;gap:1.6rem;align-items:center;justify-content:center;margin:.4rem 0;">
+      <svg viewBox="0 0 64 64" width="80" height="80"><use href="#i-book"/></svg>
+      <span style="font-family:var(--head);font-weight:800;font-size:1.6rem;color:var(--muted);">vs</span>
+      <svg viewBox="0 0 64 64" width="80" height="80"><use href="#i-hammer"/></svg>
+      <p class="big" style="margin-left:1.5rem;flex:1;">A marble and a ping-pong ball.<br>A book and a shoe.<br><b>Predict every time.</b></p>
+    </div>
+    <div class="model">      <div class="filled">
+        <p class="handwrite">They land <b>together</b>. Every time.</p>
+        <p class="handwrite">It does not matter how heavy. <b>Gravity pulls the same on both.</b></p>
+        <p class="handwrite">If someone says "but a feather falls slower" - <b>yes. Ask me next lesson.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7a THE HINGE - the scenario -->
+  <div class="slide hinge center" data-step="4">
+    <div class="spine"><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i></div>
+    <svg viewBox="0 0 64 64" width="130" height="130" style="margin-bottom:1rem;"><use href="#i-moon"/></svg>
+    <h2 style="font-size:2.6rem;margin-bottom:.8rem;">On the Moon there is <em style="font-style:normal;color:var(--steel);">no air</em>.</h2>
+    <p class="big" style="max-width:80%;">An astronaut drops a <b>hammer</b> and a <b>feather</b>.<br>Same height. Same moment.</p>
+  </div>
+
+  <!-- 7b THE HINGE - the question -->
+  <div class="slide hinge" data-step="4">
+    <div class="spine"><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i></div>
+    <div class="hinge-badge">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 3l2.2 4.6L19 9.5l-4 3.6.8 5.4L12 15.8 8.2 18.5l.8-5.4-4-3.6 4.8-1.9z"/></svg>
+      Quick check
+    </div>
+    <h2 style="font-size:2.4rem;">Which lands first?</h2>
+    <div class="votes" style="margin:1.2rem 0;">
+      <div class="vote">Hammer</div>
+      <div class="vote">Feather</div>
+      <div class="vote">Together</div>
+    </div>
+    <p class="big">Then write <b>one sentence</b> saying why.</p>
+    <div class="further" style="margin-top:auto;"><svg viewBox="0 0 24 24" fill="none" stroke="#8A6A18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><div class="ftxt"><b>Going further</b>On the Moon gravity is <b>weaker</b>. So do things fall <b>slower</b> there?</div></div>
+  </div>
+
+  <!-- 8 THEIR TURN -->
+  <div class="slide" data-step="5">
+    <div class="spine"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i><i></i></div>
+    <div class="step-label">Their turn<span class="mins">15 min</span></div>
+    <h2>Change your friend's mind.</h2>
+    <div class="task">A friend says: <b>&ldquo;Heavy things fall faster.&rdquo;</b><br>
+      Write a reply that changes their mind. Use the evidence from today.</div>
+    <div class="stems">
+      <span class="stem">You might think&hellip;</span>
+      <span class="stem">but actually&hellip;</span>
+      <span class="stem">The evidence is&hellip;</span>
+      <span class="stem">This is because gravity&hellip;</span>
+    </div>
+    <div class="further"><svg viewBox="0 0 24 24" fill="none" stroke="#8A6A18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><div class="ftxt"><b>Going further</b>Why <b>does</b> a feather fall slower than a hammer on Earth? Answer <b>without</b> saying gravity is weaker on the feather.</div></div>
+    <p class="sub" style="margin-top:.8rem;">Use a starter if it helps you. You do not have to.</p>
+  </div>
+
+  <!-- 9 LAST THING -->
+  <div class="slide center" data-step="6">
+    <div class="spine"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i></div>
+    <div class="step-label">Last thing<span class="mins">4 min</span></div>
+    <p class="say" style="margin-bottom:1rem;">This is what we wrote<br>at the start.</p>
+    <div class="model" style="width:75%;max-width:640px;flex:0 0 auto;min-height:130px;">
+      <div class="filled" style="align-items:center;text-align:center;">
+        <p class="handwrite">Write their opening sentence back up, <b>word for word</b>.<br>
+        <span style="font-size:1.15rem;color:var(--muted);">Then: "Is it right? Fix it." They rewrite it themselves.</span></p>
+      </div>
+    </div>
+    <p class="say" style="margin-top:1.2rem;"><em>Fix it.</em></p>
+  </div>
+
+  
+  <div class="presenter" id="pres">
+    <div class="pcol">
+      <div class="plabel">Say</div>
+      <div class="ptxt" id="pSay">-</div>
+    </div>
+    <div class="pcol">
+      <div class="plabel">Watch for</div>
+      <div class="ptxt" id="pWatch">-</div>
+    </div>
+    <div class="pnext">
+      <div class="plabel">Next</div>
+      <div class="ptxt" id="pNext">-</div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="ttl">The modelling space</div>
+    <b>The spaces are completely empty.</b> Nothing is written in them, not even a hint, because anything inside that box gets projected onto the board and thirty children would be reading an instruction meant for the teacher. <b>The slide gives the prompt. The space stays blank. The teacher models it their own way.</b> What the space is <em>for</em> lives in the lesson plan, on the desk, never on the wall. The toggle below shows the plan's guidance - a separate document, not the slide.
+  </div>
+
+</div>
+
+<div class="controls">
+  <button onclick="prev()">&larr; Back</button>
+  <button onclick="next()">Next &rarr;</button>
+  <button class="rs-btn" onclick="toggleRS(this)" title="Reading support: more spacing, warmer background">Aa Reading support</button>
+  <button onclick="togglePres(this)" title="Presenter notes">Presenter</button>
+  <button class="toggle" onclick="toggleReveal()" id="revealBtn">Show the teacher's plan</button>
+  <span class="step" id="stepName">Title</span>
+  <span class="count" id="count"></span>
+</div>
+
+<script>
+"use strict";
+var slides = document.querySelectorAll(".slide");
+var STEPS = ["Title","First thing","Show them how","Build it together","Quick check","Their turn","Last thing"];
+var i = 0;
+
+var PRES = [
+ {say:"Year 5 science. Forces.", watch:"", next:"Learning objective"},
+ {say:"Read the objective. Read the steps. <b>They are what I will confirm at the end.</b>", watch:"Step 4 is going further - nobody is expected to have it.", next:"Vocabulary"},
+ {say:"Four words. We will use every one of them today.", watch:"<b>un-support-ed.</b> Take it apart with them.", next:"First thing"},
+ {say:"Three things. Thirty seconds. Go.", watch:"You need the word <b>PULL</b> before the next slide.", next:"The pen drop"},
+ {say:"Why did it fall? Say it again - I am writing exactly what you said.", watch:"<b>Do not correct them.</b> Write the wrong answer up.", next:"The two-object drop"},
+ {say:"Same height. Same moment. Watch.", watch:"<b>Release both at once.</b> If it fails, say so and do it again. Never pretend it worked.", next:"The Turn"},
+ {say:"We are changing our minds. <b>That is what scientists do.</b>", watch:"Their words in the dashed box. The new idea in the solid one.", next:"Build it together"},
+ {say:"Predict first. Every time.", watch:"If a child says 'but a feather' - <b>yes, and ask me next lesson.</b>", next:"The hinge"},
+ {say:"On the Moon there is no air at all. None.", watch:"Let this land before you ask the question.", next:"The question"},
+ {say:"Which lands first? Vote. Then write me ONE sentence saying why.", watch:"<b>Read the sentences, not the votes.</b> 'Because there is no air' is not the same as 'because gravity pulls the same'.", next:"Their turn"},
+ {say:"Change your friend's mind. Use what we SAW.", watch:"Stems on every table. Offered to all.", next:"Last thing"},
+ {say:"This is what we wrote at the start. Fix it.", watch:"<b>Let them rewrite it.</b> Do not do it for them.", next:"End"}
+];
+function toggleRS(btn){
+  var on = document.body.classList.toggle("rs");
+  btn.classList.toggle("on", on);
+}
+function togglePres(btn){
+  var on = document.body.classList.toggle("pres");
+  btn.classList.toggle("on", on);
+  updatePres();
+}
+function updatePres(){
+  var p = PRES[i] || {say:"-",watch:"-",next:"-"};
+  var e;
+  if ((e=document.getElementById("pSay")))   e.innerHTML = p.say || "-";
+  if ((e=document.getElementById("pWatch"))) e.innerHTML = p.watch || "-";
+  if ((e=document.getElementById("pNext")))  e.innerHTML = p.next || "-";
+}
+
+function show(n){
+  i = Math.max(0, Math.min(slides.length-1, n));
+  slides.forEach(function(s,k){ s.classList.toggle("on", k===i); });
+  var step = parseInt(slides[i].getAttribute("data-step") || "0", 10);
+  document.getElementById("stepName").textContent = STEPS[step] || "";
+  document.getElementById("count").textContent = (i+1) + " / " + slides.length;
+  updatePres();
+}
+function next(){ show(i+1); }
+function prev(){ show(i-1); }
+function toggleReveal(){
+  var on = document.body.classList.toggle("reveal");
+  document.getElementById("revealBtn").textContent = on ? "Hide the plan" : "Show the teacher's plan";
+}
+document.addEventListener("keydown", function(e){
+  if(e.key==="ArrowRight" || e.key===" ") next();
+  if(e.key==="ArrowLeft") prev();
+});
+show(0);
+</script>
+</body>
+</html>

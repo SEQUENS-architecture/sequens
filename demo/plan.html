@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS Plan - Y5 Science: Gravity</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0C8F79; --accent:#2DE1C2;
+    --paper:#F2F7F9; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90; --dim:#647A8C;
+    --gold:#B8912F; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --red:#C0453B; --red-soft:#F7E9E7; --success-deep:#0A6B5C; --green-soft:#EAF3EE;
+    --font:'Lexend',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6;padding:2rem 1.4rem 5rem;}
+  .wrap{max-width:860px;margin:0 auto;}
+
+  .head{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.6rem 1.8rem;margin-bottom:1.2rem;}
+  .kick{font-family:var(--head);font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);}
+  h1{font-family:var(--head);font-weight:800;font-size:1.9rem;color:var(--navy);margin:.4rem 0 .6rem;letter-spacing:-.01em;}
+  .obj{background:var(--green-soft);border-left:4px solid var(--accent-deep);padding:.8rem 1.1rem;border-radius:0 8px 8px 0;
+    font-size:.98rem;color:var(--success-deep);}
+  .meta{display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--rule);font-size:.86rem;}
+  .meta div span{display:block;color:var(--dim);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.15rem;}
+  .meta div b{color:var(--navy);font-weight:600;}
+
+  .src{background:var(--steel-soft);border:1px solid #C5DAEA;border-radius:10px;padding:.9rem 1.1rem;font-size:.86rem;color:#1F4A6E;margin-bottom:1.2rem;}
+  .src b{color:var(--navy);}
+
+  .seq{display:flex;gap:.35rem;margin-bottom:1.4rem;}
+  .seq div{flex:1;text-align:center;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--muted);padding:.5rem .2rem;background:var(--card);border:1px solid var(--rule);border-radius:7px;}
+
+  .step{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:.9rem;}
+  .step.hinge{border-color:var(--steel);border-width:2px;background:#FBFDFE;}
+  .step-top{display:flex;align-items:baseline;gap:.8rem;margin-bottom:.8rem;}
+  .step-name{font-family:var(--head);font-weight:800;font-size:1.15rem;color:var(--navy);}
+  .step-time{margin-left:auto;font-size:.8rem;color:var(--dim);font-weight:600;}
+  .step-badge{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--steel);color:#fff;border-radius:20px;padding:.15rem .55rem;}
+  .step p{margin:0 0 .7rem;font-size:.95rem;}
+  .step p:last-child{margin-bottom:0;}
+  .step .say{background:#F6FAFC;border-left:3px solid var(--muted);padding:.7rem 1rem;border-radius:0 7px 7px 0;
+    font-style:italic;color:var(--ink);}
+
+  /* THE MODELLING SPACE GUIDANCE - the whole point of this document */
+  .msg{background:#F7FCFB;border:1.5px solid var(--accent-deep);border-radius:12px;padding:1.1rem 1.3rem;margin:.9rem 0;}
+  .msg .mtitle{display:flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:700;font-size:.72rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.6rem;}
+  .msg .mtitle svg{width:15px;height:15px;}
+  .msg .purpose{font-size:.98rem;color:var(--navy);font-weight:600;margin:0 0 .6rem;}
+  .msg .detail{font-size:.9rem;color:var(--muted);margin:0 0 .6rem;}
+  .msg .detail:last-child{margin:0;}
+  .msg .egs{background:#fff;border:1px dashed #BEDFD0;border-radius:8px;padding:.7rem .9rem;font-size:.88rem;color:var(--success-deep);}
+  .msg .egs b{display:block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;font-weight:700;}
+  .msg .warn{font-size:.85rem;color:#8A6A18;background:#FBF6E9;border-radius:7px;padding:.55rem .8rem;margin-top:.6rem;}
+
+  .misc{background:var(--red-soft);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:.8rem 0;}
+  .misc b{color:#8A2F27;}
+  .misc p{margin:0;font-size:.9rem;color:#8A2F27;}
+
+  .key{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.3rem 1.5rem;margin-top:1.2rem;}
+  .key h3{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem;}
+  .keyrow{display:flex;gap:.5rem;flex-wrap:wrap;}
+  .kchip{border-radius:8px;padding:.5rem .8rem;font-size:.85rem;flex:1;min-width:150px;}
+  .kchip b{display:block;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem;}
+  .k1{background:#EAF6F4;color:#0A6B5C;} .k1 b{color:#7FC8BC;}
+  .k2{background:var(--green-soft);color:var(--success-deep);} .k2 b{color:var(--accent-deep);}
+  .k3{background:#FBF6E9;color:var(--gold-deep);} .k3 b{color:var(--gold);}
+  .k4{background:var(--steel-soft);color:#1F4A6E;} .k4 b{color:var(--steel);}
+  .keynote{font-size:.82rem;color:var(--dim);margin-top:.8rem;font-style:italic;}
+
+  /* ===== LAYER TOGGLES ===== */
+  .layers{position:sticky;top:0;z-index:50;background:rgba(242,247,249,.94);backdrop-filter:blur(8px);
+    padding:.9rem 0 1rem;margin-bottom:1.2rem;border-bottom:1px solid var(--rule);}
+  .layerbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
+  .layerbar .lbl{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--dim);margin-right:.3rem;}
+  .ltog{border:1.5px solid var(--rule);background:#fff;border-radius:9px;padding:.45rem .85rem;
+    font-family:var(--font);font-size:.85rem;font-weight:600;color:var(--muted);cursor:pointer;
+    display:inline-flex;align-items:center;gap:.4rem;transition:.15s;}
+  .ltog svg{width:14px;height:14px;}
+  .ltog:hover{border-color:var(--accent-deep);}
+  .ltog.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .ltog.on.script{background:var(--accent-deep);border-color:var(--accent-deep);}
+  .ltog.on.ta{background:#7A4A8B;border-color:#7A4A8B;}
+  .ltog.on.ai{background:var(--steel);border-color:var(--steel);}
+  .ltog .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5;}
+  .ltog.on .dot{opacity:1;}
+
+  /* the layers themselves - hidden by default */
+  .lay{display:none;border-radius:10px;padding:.95rem 1.15rem;margin-top:.8rem;font-size:.9rem;line-height:1.55;}
+  body.show-script .lay.script{display:block;}
+  body.show-ta .lay.ta{display:block;}
+  body.show-ai .lay.ai{display:block;}
+
+  .lay .ltitle{display:flex;align-items:center;gap:.45rem;font-family:var(--head);font-weight:700;
+    font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+  .lay .ltitle svg{width:14px;height:14px;}
+  .lay p{margin:0 0 .5rem;max-width:68ch;}
+  .lay p:last-child{margin:0;}
+
+  /* SCRIPT layer - what you might actually say */
+  .lay.script{background:#F1FAF8;border:1px solid #BEDFD0;}
+  .lay.script .ltitle{color:var(--accent-deep);}
+  .lay.script .line{background:#fff;border-left:3px solid var(--accent-deep);border-radius:0 7px 7px 0;
+    padding:.6rem .85rem;margin-bottom:.5rem;font-style:italic;color:var(--ink);}
+  .lay.script .line:last-child{margin-bottom:0;}
+  .lay.script .note{font-size:.84rem;color:var(--muted);font-style:normal;}
+
+  /* TA layer - purple, deliberate, documented in the palette lock */
+  .lay.ta{background:#F7F2FA;border:1px dashed #C89AD8;}
+  .lay.ta .ltitle{color:#7A4A8B;}
+  .lay.ta p{color:#5E3A6B;}
+  .lay.ta .todo{background:#fff;border-radius:7px;padding:.55rem .8rem;margin-bottom:.4rem;
+    display:flex;gap:.55rem;align-items:flex-start;font-size:.88rem;color:#5E3A6B;}
+  .lay.ta .todo:last-child{margin-bottom:0;}
+  .lay.ta .todo .b{color:#7A4A8B;font-weight:700;flex-shrink:0;}
+
+  /* AI layer - steel, and honest about where AI should NOT go */
+  .lay.ai{background:var(--steel-soft);border:1px solid #C5DAEA;}
+  .lay.ai .ltitle{color:var(--steel);}
+  .lay.ai p{color:#1F4A6E;}
+  .lay.ai .yes,.lay.ai .no{border-radius:7px;padding:.55rem .85rem;margin-bottom:.4rem;font-size:.88rem;display:flex;gap:.55rem;align-items:flex-start;}
+  .lay.ai .yes{background:#fff;border-left:3px solid var(--steel);color:#1F4A6E;}
+  .lay.ai .no{background:#FBF0EF;border-left:3px solid var(--red);color:#8A2F27;}
+  .lay.ai .tag{font-weight:700;flex-shrink:0;}
+
+  .ltog.on.sup{background:#0A6B5C;border-color:#0A6B5C;}
+  .ltog.on.str{background:#8A6A18;border-color:#8A6A18;}
+  body.show-sup .lay.sup{display:block;}
+  body.show-str .lay.str{display:block;}
+
+  /* SUPPORT layer - what the child is DOING, not what they are given */
+  .lay.sup{background:#EEF8F5;border:1px solid #9FD4C6;}
+  .lay.sup .ltitle{color:#0A6B5C;}
+  .lay.sup p{color:#0A5C4E;}
+  .lay.sup .doing{background:#fff;border-left:3px solid #0A6B5C;border-radius:0 7px 7px 0;
+    padding:.65rem .9rem;margin-bottom:.45rem;font-size:.89rem;color:#0A5C4E;}
+  .lay.sup .doing:last-child{margin-bottom:0;}
+  .lay.sup .doing b{display:block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    color:#7FC8BC;margin-bottom:.2rem;font-weight:700;}
+  .lay.sup .same{background:#0A6B5C;color:#fff;border-radius:8px;padding:.6rem .9rem;
+    font-size:.87rem;font-weight:600;margin-top:.5rem;}
+
+  /* GOING FURTHER layer */
+  .lay.str{background:#FBF6E9;border:1px solid #E0C97F;}
+  .lay.str .ltitle{color:#8A6A18;}
+  .lay.str p{color:#6B531A;}
+  .lay.str .push{background:#fff;border-left:3px solid #8A6A18;border-radius:0 7px 7px 0;
+    padding:.65rem .9rem;margin-bottom:.45rem;font-size:.89rem;color:#6B531A;}
+  .lay.str .push:last-child{margin-bottom:0;}
+  .lay.str .push b{display:block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    color:#B8912F;margin-bottom:.2rem;font-weight:700;}
+  .lay.str .warn{background:#8A6A18;color:#fff;border-radius:8px;padding:.6rem .9rem;
+    font-size:.87rem;font-weight:600;margin-top:.5rem;}
+
+  .ltog.on.send{background:#2C6E9B;border-color:#2C6E9B;}
+  body.show-send .lay.send{display:block;}
+
+  /* SEND & EAL - specific need, specific action. Never a generic box. */
+  .lay.send{background:#EDF4F9;border:1px solid #A9C9E0;padding:1.1rem 1.25rem;}
+  .lay.send .ltitle{color:#1F4A6E;}
+  .lay.send > p{color:#1F4A6E;}
+  .lay.send .needs{display:flex;flex-direction:column;gap:.45rem;}
+  .lay.send .need{background:#fff;border-radius:8px;padding:.65rem .9rem;display:flex;gap:.7rem;align-items:flex-start;}
+  .lay.send .need .who{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.04em;
+    text-transform:uppercase;color:#2C6E9B;min-width:190px;flex-shrink:0;padding-top:.12rem;line-height:1.35;}
+  .lay.send .need .what{font-size:.88rem;color:#1F4A6E;line-height:1.5;}
+  .lay.send .need .what b{color:#0A3D62;}
+  .lay.send .eal{background:#0A3D62;color:#fff;border-radius:9px;padding:.75rem 1rem;margin-top:.6rem;font-size:.88rem;line-height:1.5;}
+  .lay.send .eal .etitle{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.1em;
+    text-transform:uppercase;color:#7FE7FF;margin-bottom:.35rem;}
+  .lay.send .eal b{color:#7FE7FF;}
+  .lay.send .flag{background:#FBF6E9;border:1px solid #E0C97F;border-radius:8px;padding:.6rem .85rem;
+    font-size:.83rem;color:#6B531A;margin-top:.6rem;}
+
+  /* keyboard focus - a teacher navigating by keyboard must see where they are */
+  .ltog:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+  button:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body class="show-send show-sup">
+<div class="wrap">
+  <div class="layers">
+    <div class="layerbar">
+      <span style="font-size:.78rem;color:var(--dim);width:100%;margin-bottom:.5rem;">New to this? <b style="color:var(--navy);">Barriers</b> and <b style="color:var(--navy);">Script</b> are the two to read. The rest are there when you want them.</span>
+      <span class="lbl">Layers</span>
+      <button class="ltog script" onclick="tog('script',this)"><span class="dot"></span>Teacher script</button>
+      <button class="ltog ta" onclick="tog('ta',this)"><span class="dot"></span>TA</button>
+      <button class="ltog ai" onclick="tog('ai',this)"><span class="dot"></span>AI opportunities</button>
+      <button class="ltog sup on" onclick="tog('sup',this)"><span class="dot"></span>Barriers &amp; routes in</button>
+      <button class="ltog str" onclick="tog('str',this)"><span class="dot"></span>Going further</button>
+      <button class="ltog send on" onclick="tog('send',this)"><span class="dot"></span>SEND &amp; EAL</button>
+    </div>
+  </div>
+
+
+  <div class="head">
+    <div class="kick">Lesson plan &middot; teacher's copy</div>
+    <h1>Why do things fall?</h1>
+    <div class="obj"><b>Objective:</b> Explain that unsupported objects fall towards the Earth because of the force of gravity acting between the Earth and the falling object.</div>
+    <div class="meta">
+      <div><span>Year</span><b>5</b></div>
+      <div><span>Subject</span><b>Science &middot; Forces</b></div>
+      <div><span>Frame</span><b>Turn</b></div>
+      <div><span>Duration</span><b>55 minutes</b></div>
+    </div>
+  </div>
+
+  <div class="src"><b>Curriculum source:</b> National Curriculum, Science, Year 5, Forces - "explain that unsupported objects fall towards the Earth because of the force of gravity acting between the Earth and the falling object." Quoted from the Year 5 programme of study. <b>Prior:</b> forces are pushes and pulls (Y3). <b>Next:</b> air resistance - <b>why a feather DOES fall slower on Earth</b>. If a child raises it today, say "yes, and that is exactly what we do next lesson."</div>
+
+  <div class="seq">
+    <div>First thing</div><div>Show them how</div><div>Build together</div><div>Quick check</div><div>Their turn</div><div>Last thing</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-top"><span class="step-name">First thing</span><span class="step-time">4 min</span></div>
+    <p>Three things you know about forces. Write them. Thirty seconds. Then: <b>is a force always a push?</b></p>
+
+    <div class="msg">
+      <div class="mtitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+        The blank space on this slide
+      </div>
+      <p class="purpose">It is for collecting what they already know, in their words.</p>
+      <p class="detail">Write up what the class gives you. Do not tidy it, do not improve it. You are looking for the pull idea to surface - if nobody says it, the question at the bottom of the slide will get you there.</p>
+      <div class="egs">
+        <b>What usually comes up</b>
+        A force is a push or a pull &middot; forces make things speed up, slow down or change direction &middot; you cannot see a force, you see what it does
+      </div>
+      <div class="warn"><b>Do it your way.</b> This space is yours. Bullet it, mind-map it, draw it. The slide does not care how you fill it, only that you fill it with <em>their</em> words rather than yours.</div>
+    </div>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"Three things you know about forces. Whiteboards. Thirty seconds. Go."</div><div class="line">"Right, hands down, shout them at me."</div><div class="line">"Is a force always a push? Think. Thumbs up for yes, down for no."</div><p class="note">Do not accept "a push" and move on. You need "pull" on the board before the next slide, because gravity is a pull and they will not accept that if push is the only word they own.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Before</span><span>Whiteboards and pens out on every table before the class comes in.</span></div><div class="todo"><span class="b">During</span><span>Sit beside the children who freeze at a blank whiteboard. Do not supply an answer - ask them what they saw in the last forces lesson.</span></div><div class="todo"><span class="b">Watch for</span><span>A child writing nothing. That is not always not knowing; it is often not daring.</span></div><p style="font-size:.84rem;margin-top:.5rem;">You are not scribing for them. You are getting them started.</p></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Generate five more retrieval questions on Y3 forces, if this class needs a longer warm-up.</span></div><div class="yes"><span class="tag">Could:</span><span>Turn their three answers into a quick class word cloud for the wall.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not have AI answer the retrieval questions for the children. Retrieval only works if the child does the retrieving - reading an answer is worth nothing.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Retrieving from memory, unaided, exactly like everyone else. This is not a reduced task - it is the same task.</div><div class="doing"><b>What might stop them</b>A blank whiteboard is frightening if you are not sure you know anything. The barrier is usually confidence, not knowledge.</div><div class="doing"><b>What actually helps</b>'What did we do last time with the springs?' A cue to a memory, not a supply of an answer. You are opening a door, not walking through it for them.</div><div class="doing"><b>What does not help</b>Telling them a force is a push or a pull. You have now done the retrieving, and they have done nothing.</div><div class="same">Everyone retrieves. Nobody is given the answer.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>On the slide</b>"Is a force always a push?" is already the challenge, and it is asked of everyone.</div><div class="push"><b>If they are quick</b>"Give me a force you cannot see." That is much harder than it sounds and it walks straight into gravity.</div><div class="warn">Never say "the stretch group". The question is asked to the room.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what">Whiteboards are a written task. <b>Take this orally.</b> Ask them for their three things aloud, and let a partner scribe if needed. You are retrieving forces knowledge, not handwriting.</span></div><div class="need"><span class="who">Sustained attention is the barrier</span><span class="what">Thirty seconds is <b>perfect</b> for this child, and it is why the task is timed. Do not extend it because others are still writing. A short sharp burst is where they are strongest.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">"Three things" is precise and finite, and that is why it works. <b>Do not change it to "as many as you can"</b> - an open-ended task with no end point is genuinely distressing.</span></div><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">Have the last lesson's key words visible on the wall. Retrieval is not cheating if the child still has to <b>choose</b> which words matter.</span></div><div class="need"><span class="who">Time to think is the barrier</span><span class="what">Give the question, then wait. <b>Five seconds of silence</b> before you take answers. It feels endless to you and it is the difference between them answering and not.</span></div></div><div class="need" style="background:#FBF6E9;border:1px solid #E0C97F;">
+      <span class="who" style="color:#8A6A18;">A label is not a need</span>
+      <span class="what">An autistic child may need the closed question - or may need the <b>Going Further</b> one, and be held back by a scaffold nobody asked them if they wanted. A child with ADHD may be the strongest thinker in the room. <b>Read the barrier, not the label.</b> And ask the child - they usually know.</span>
+    </div>
+    <div class="need" style="background:#F0F6EF;border:1px solid #BEDFD0;">
+      <span class="who" style="color:#0A6B5C;">Ask the child</span>
+      <span class="what">Your Year 5s know exactly what helps them, and they are the most under-consulted experts in the building. <b>"What would make this easier for you?"</b> takes ten seconds and is more accurate than anything on this page.</span>
+    </div>
+    <div class="eal"><div class="etitle">EAL - not a learning difficulty</div>This is a <b>recall</b> task and an EAL child may know the science and not the English word. Accept <b>"push"</b> in any language, accept a gesture, accept a drawing. If they can show you a push, they have retrieved it. Write the English word next to their answer, do not correct them into it.</div></div></div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-top"><span class="step-name">Show them how</span><span class="step-time">10 min</span></div>
+    <p>Drop a pen. Ask why it fell. <b>Collect the wrong answer and write it up.</b> Almost every class gives you some version of "because it's heavy."</p>
+    <p class="say">"Right. Let's leave that there. Now watch. I am going to drop two things."</p>
+    <p>Drop the heavy book and the light pen, same height, same moment. <b>They land together.</b> Let that sit.</p>
+
+
+    <div class="misc" style="background:#FBF6E9;border-left-color:#B8912F;">
+      <b>The demonstration will go wrong. Plan for it.</b>
+      <p style="color:#6B531A;">Releasing two objects at exactly the same moment, one-handed, in front of thirty children, is harder than it looks. <b>If they do not land together, you have just proved the misconception.</b><br><br>
+      <b>Practise it three times before the lesson.</b> Hold both at the same height, palms flat, and pull both hands away sideways at once. Do not drop from your fingers.<br><br>
+      <b>If it goes wrong in the lesson:</b> say so. Out loud. <b>"That was my fault, not the science. Watch again."</b> Then do it again, slower. A teacher who admits a failed demonstration is modelling exactly what this lesson is about. A teacher who pretends it worked has taught the class that evidence does not matter.<br><br>
+      <b>The backup:</b> two identical water bottles, one full, one empty. Almost impossible to release unevenly, and the mass difference is large and obvious.</p>
+    </div>
+    <div class="misc">
+      <b>The misconception you are hunting:</b>
+      <p>"Heavy things fall faster" is one of the most robust misconceptions in all of science education. It survives demonstration, because children explain the result away ("you dropped them wrong"). You must surface it before you can move it - which is why you write it up rather than correcting it.</p>
+    </div>
+
+    <div class="msg">
+      <div class="mtitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="4" stroke-dasharray="2 2"/><path d="M13 12h5M16 9l3 3-3 3"/></svg>
+        The Turn frame on this slide
+      </div>
+      <p class="purpose">Both boxes are empty. You fill them, live, with the class watching.</p>
+      <p class="detail"><b>The dashed box (what we thought):</b> put their own words in it. The ones you wrote up two minutes ago. Their thinking, honoured, not erased.</p>
+      <p class="detail"><b>The solid box (what we think now):</b> build this together, after the demonstration. Do not write it before they have seen the book and the pen land.</p>
+      <div class="egs">
+        <b>Where the class usually lands</b>
+        Gravity pulls everything towards the Earth &middot; it pulls the book and it pulls the pen &middot; it pulls you, which is why you are in your chair and not on the ceiling
+      </div>
+
+      <div class="egs" style="background:#F4FBF9;border:1px solid var(--accent-deep);margin-top:.6rem;">
+        <b style="color:var(--accent-deep);">If you are new to this - one teacher's version</b>
+        <div style="font-size:.88rem;color:var(--success-deep);line-height:1.6;">
+        Not the version. <b>One</b>. Copy it the first time, adapt it the third, ignore it by the tenth.<br><br>
+        <i>[Teacher writes on the left of the board]</i><br>
+        "Right. What did we think? <b>Heavy things fall faster.</b> That is what we all thought."<br><br>
+        <i>[Draws an arrow to the right]</i><br>
+        "Then we dropped the book and the pen. What happened? <b>They landed together.</b>"<br><br>
+        <i>[Writes on the right]</i><br>
+        "So what do we think NOW? <b>Gravity pulls everything the same.</b>"<br><br>
+        <b>That is it.</b> Three sentences and an arrow. You do not need to be clever. You need to be visible.
+        </div>
+      </div>
+      <div class="warn"><b>Say the Turn out loud.</b> "We are changing our minds. That is a good thing. Scientists do it all the time." The frame is not decoration - naming it is what makes being wrong safe.</div>
+    </div>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"I am going to drop this pen. Watch. ... Why did it fall?"</div><div class="line">"Say that again. I am writing exactly what you said."</div><div class="line">"Good. Leave it there. Now watch. I am going to drop TWO things."</div><div class="line">"If heavy things fall faster, what SHOULD have happened? What actually happened?"</div><div class="line">"There is a pull between the Earth and every single object. We call it gravity. It pulls the pen. It pulls the book. It pulls YOU, which is why you are in your chair and not on the ceiling."</div><p class="note">The line about the ceiling is doing real work. Gravity is invisible and abstract; their own body in their own chair is not.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Before</span><span>Have the book and pen ready. Practise the drop once. They must land together, which means releasing both at exactly the same moment - not one hand each.</span></div><div class="todo"><span class="b">During</span><span>Stand at the back and watch faces during the drop. The children whose expression does not change are the ones who did not believe it and are explaining it away. Note who they are.</span></div><div class="todo"><span class="b">Say</span><span>Nothing during the drop. Let it be silent. The silence is what makes it land.</span></div><p style="font-size:.84rem;margin-top:.5rem;">You are the second pair of eyes on the misconception. The teacher cannot watch thirty faces while dropping two objects.</p></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Find a short clip of the Apollo 15 hammer-and-feather drop for the hinge, if you want to show it AFTER they have voted.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not show a video of the demonstration instead of doing it live. A child can dismiss a video. They cannot dismiss a book landing on the floor in front of them.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not have AI explain gravity to the class. You are modelling the thinking. If AI does it, they watch an answer appear instead of watching a mind work.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Watching a demonstration and forming an explanation. The same cognitive work as everyone.</div><div class="doing"><b>The real barrier here</b>Not the science. The LANGUAGE. 'Unsupported', 'force', 'attract' are abstract words attached to an invisible thing. A child with weaker language, or new to English, can understand gravity perfectly and be unable to say it.</div><div class="doing"><b>What actually helps</b>Point at the thing while you name it. Drop the pen and say 'gravity pulled it down' at the moment it lands. The word and the event, together, every time.</div><div class="doing"><b>Do not</b>Do not simplify the science. Simplify the sentence. 'Gravity pulls things down' is not a lesser idea than 'objects are attracted to the Earth by gravitational force'. It is the same idea in fewer syllables.</div><div class="same">Same demonstration. Same explanation. Fewer syllables.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>Push, in the moment</b>"You said the book is heavier. So why did they land together?" Let them sit in that.</div><div class="warn">This is a question, not a worksheet. The stretch is the discomfort of a contradiction, and it costs nothing to offer it to the whole room.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Hearing you is the barrier</span><span class="what">You are speaking <b>while dropping objects</b>, which means their eyes cannot be on your face. <b>Say the sentence, then drop.</b> Never both at once.</span></div><div class="need"><span class="who">Seeing it is the barrier</span><span class="what">The drop is a <b>sound</b> as much as a sight. Say it aloud as it lands: "They landed together. Same moment." And let them hold the book and the pen before you drop them.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what"><b>Say what is about to happen before you do it.</b> "I am going to drop two things. They will land on the floor. It will make a noise." A sudden bang is not a surprise, it is an ambush.</span></div><div class="need"><span class="who">Sustained attention is the barrier</span><span class="what">This is the moment they are with you completely. <b>Do not waste it on admin.</b> Drop the things, then talk.</span></div><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what">You are writing their words on the board. <b>Read them aloud as you write.</b> A child who cannot read the board can still hold what was said.</span></div><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">The chain is: heavy idea &rarr; demonstration &rarr; new idea. That is <b>three things</b>. Put the Turn frame up so the chain is on the wall rather than in their head.</span></div></div><div class="eal"><div class="etitle">EAL - not a learning difficulty</div>This lesson turns on the word <b>"pull"</b>, and it is not an obvious word for a force in every language. Give the word, show the action, then use it every single time. <b>Do not simplify the science</b>. "Gravity pulls things down" is not a lesser idea than "objects are attracted by gravitational force" - it is the same idea in fewer syllables, and an EAL child needs the idea whole.</div></div></div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-top"><span class="step-name">Build it together</span><span class="step-time">12 min</span></div>
+    <p>Predict, observe, explain. Three pairs, all dropped together. <b>No paper and no feathers in this lesson</b> - air resistance is a second force, and it belongs to the next lesson, not this one.</p>
+    <p>Use pairs with a <b>big, obvious</b> mass difference. A book and a shoe. A marble and a ping-pong ball. They land together every time, and the bigger the difference, the more surprising it is.</p>
+
+    <div class="msg">
+      <div class="mtitle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+        The blank space on this slide
+      </div>
+      <p class="purpose">It is for the class's explanation, scribed by you as they build it.</p>
+      <p class="detail">You are holding the explanation together while they supply the parts. Write what they say, then sharpen it with them. The point is that the reasoning is visibly theirs.</p>
+      <div class="egs">
+        <b>Where they need to arrive</b>
+        The flat one falls slower &middot; it is not the weight, because it is the same paper &middot; the air is pushing back on it &middot; that is a different force, and we meet it next lesson
+      </div>
+      <div class="warn"><b>Do not name air resistance yet.</b> Let them describe it. The label comes next lesson; the idea comes today.</div>
+    </div>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"Predict first. Whiteboards. Which one lands first?"</div><div class="line">"Now watch. ... Who was right?"</div><div class="line">"Same paper. Same weight. Different result. So it is NOT the weight. What is different?"</div><div class="line">"Something is pushing back on the flat one. What could be pushing back on it?"</div><p class="note">Do not name air resistance. They will get to "the air" themselves, and the label belongs to next lesson. The idea belongs to today.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Prepare</span><span>Two identical sheets of paper. Screw one up while they watch, so they know it is the same paper.</span></div><div class="todo"><span class="b">During</span><span>Take the coin-and-feather pair to the children who are still unsure and let them do it themselves, in their hands, twice.</span></div><div class="todo"><span class="b">Prompt</span><span>'It is the same paper. So what changed?' Do not answer it for them.</span></div></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Build a quick prediction poll so every child commits before they see the result. Commitment is what makes the surprise stick.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not use a simulation instead of the real paper. The whole force of this moment is that it is the same physical object, in the room, in front of them.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Predict, observe, explain. All three. Not a reduced version of it.</div><div class="doing"><b>The barrier</b>Holding a prediction in mind WHILE watching WHILE forming an explanation is three things at once. That is a working-memory load, and it is where these children fall off - not at the science.</div><div class="doing"><b>What actually helps</b>Chunk it. Predict. Stop. Watch. Stop. Now explain. Three separate moments, never overlapping. This is the single most useful thing you can do for them in this lesson.</div><div class="doing"><b>Also helps</b>Let them hold the objects. A child who has felt the screwed-up paper and the flat paper in their own two hands has an anchor that no explanation can give them.</div><div class="same">The thinking is not reduced. The load is.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>The real question</b>"Why does screwing the paper up change ANYTHING? It is the same paper." Ask it to the room and let it hang.</div><div class="warn">The best stretch in this lesson is a question nobody can answer yet. It does not need a worksheet.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">Predict + watch + explain is <b>three simultaneous demands</b>, and this is where these children fall off - not at the science. <b>Chunk it absolutely.</b> Predict. Stop. Watch. Stop. Now explain. Never overlapping.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">Predict-observe-explain is a <b>routine</b>, and routines are a strength here. Use the same three words every time, in the same order, and this child will lead it.</span></div><div class="need"><span class="who">Sustained attention is the barrier</span><span class="what">Give them the objects to drop. <b>Let them do it.</b> A child who is doing is a child who is not fidgeting.</span></div><div class="need"><span class="who">The motor demand is the barrier</span><span class="what">Screwing up paper and dropping two things simultaneously is a <b>motor</b> task. Pair them, or screw the paper up for them. The motor demand is not the objective.</span></div><div class="need"><span class="who">Seeing it is the barrier</span><span class="what">The flat-vs-crumpled paper is <b>tactile</b> and that is a gift here. Let them feel both before predicting.</span></div></div><div class="eal"><div class="etitle">EAL - not a learning difficulty</div>"Predict" is an abstract instruction. <b>Say "what will happen?"</b> instead - concrete, and it means exactly the same thing. And let them answer the prediction with a gesture or a pointed finger. The thinking is in the prediction, not in the sentence.</div></div></div>
+
+  <!-- STEP 4: THE HINGE -->
+  <div class="step hinge">
+    <div class="step-top">
+      <span class="step-name">Quick check</span>
+      <span class="step-badge">The hinge</span>
+      <span class="step-time">4 min</span>
+    </div>
+    <p><b>On the Moon there is no air.</b> An astronaut drops a hammer and a feather, same height, same moment. Which lands first? Vote, then <b>write one sentence saying why</b>.</p>
+
+    <div class="misc">
+      <b>Why this question and not another:</b>
+      <p>The Moon removes air resistance entirely, so a child cannot hide behind it. A child who still says "hammer" has not shifted - they have simply gone quiet. <b>The sentence matters more than the vote.</b> "Together, because gravity pulls the same on both" is the win. "Together, because there is no air" is close, but not yet there - they have understood the demonstration without understanding the force.</p>
+    </div>
+
+
+    <div class="misc" style="background:#F4FBF9;border-left-color:#0C8F79;">
+      <b style="color:var(--success-deep);">If the hinge fails, here is exactly what to do with the next twenty minutes.</b>
+      <p style="color:#0A5C4E;">You have been told your lesson has not worked. That is <b>good news</b> - you found out today rather than in three weeks. Do not panic and do not plough on.<br><br>
+      <b>1. Say it plainly.</b> "Lots of us still think heavy things fall faster. Let's look again." No blame, no drama.<br>
+      <b>2. Do the drop again, bigger.</b> The heaviest book in the room and the lightest pen. From higher. Twice.<br>
+      <b>3. Ask ONE child who got it right to explain it.</b> A child's explanation lands differently from yours.<br>
+      <b>4. Re-ask the Moon question.</b> Same question. Vote again.<br>
+      <b>5. Then stop.</b> Do the independent task tomorrow. <b>The lesson has not failed - it has taken longer, which is a different thing.</b><br><br>
+      Tell SEQUENS at the confirm screen. Next lesson's starter will be built for it.</p>
+    </div>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"On the Moon there is no air at all. None."</div><div class="line">"An astronaut drops a hammer and a feather. Same height. Same moment. Which lands first?"</div><div class="line">"Vote. Now write me ONE sentence saying why."</div><p class="note">Read the sentences, not the votes. "Together, because gravity pulls the same on both" is the win. "Together, because there is no air" is close, and it is not the same thing - they have understood the demonstration without understanding the force.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Collect</span><span>Read over shoulders as they write. Tell the teacher, quietly, roughly how many said 'hammer'.</span></div><div class="todo"><span class="b">Critical</span><span>If more than a third say hammer, the teacher needs to know BEFORE they move on. That is your job in this minute.</span></div><p style="font-size:.84rem;margin-top:.5rem;">This is the most important sixty seconds of the lesson for you. The teacher cannot read thirty sentences at once.</p></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Show the real Apollo 15 footage - AFTER they have voted and written. Never before.</span></div><div class="yes"><span class="tag">Could:</span><span>Sort the written sentences into "gravity" answers and "no air" answers, so the teacher can see the split instantly.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not use AI to mark the hinge. The hinge is a professional judgement about whether to continue teaching. That decision is the teacher's, and it is the whole point of a hinge.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>The same hinge question as everyone else. Do not give them an easier one. The hinge is diagnostic, and an easier hinge diagnoses nothing.</div><div class="doing"><b>Answering</b>Voting is thumbs, not writing. A child who cannot yet write a sentence can still tell you whether they think the hammer lands first, and that is what you need to know.</div><div class="doing"><b>The sentence</b>If writing is the barrier, take it orally. Sit beside them, ask 'why?', and write down what they say. You are removing the writing, not the thinking.</div><div class="doing"><b>Crucial</b>Do not help them get it right. A support child who gives the wrong answer has just told you something enormously valuable, and if you have coached them into 'together', you have destroyed the only real information in the lesson.</div><div class="same">Same question. Same difficulty. A different route to answering it.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>After they vote</b>"Would it be the same on Jupiter? Gravity is stronger there." (Yes - they still land together. Stronger gravity, but still the same on both.)</div><div class="warn">Offer it to the room. Anyone who wants it, takes it.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">For every child</span><span class="what"><b>Do not give an easier hinge.</b> An easier hinge diagnoses nothing, and you have lost the only real information in the lesson. Same question, different route in.</span></div><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what">Take the sentence <b>orally</b>. Sit beside them, ask "why?", and scribe what they say. You are removing the writing, not the thinking.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">"Which lands first?" is a <b>closed question with three options</b>, and that is exactly right. Do not soften it into "what do you think might happen?" - vagueness is harder, not kinder.</span></div><div class="need"><span class="who">Hearing you is the barrier</span><span class="what">The vote is <b>visual</b>, so this child is not disadvantaged. Make sure the three options are written on the board, not just spoken.</span></div><div class="need"><span class="who">Time to think is the barrier</span><span class="what">Give them the question, then genuinely wait. <b>Do not let a quick child answer first.</b> Once it is said aloud, the diagnostic value is gone for everyone.</span></div></div><div class="eal"><div class="etitle">EAL - not a learning difficulty</div>The question is a <b>scenario</b> and it depends on understanding "no air". Check that phrase specifically - not the science, the phrase. An EAL child may know perfectly well that a vacuum has no air resistance and not know the word "air" in this construction.</div><div class="flag"><b>The hinge is where inclusion is easiest to get wrong.</b> The instinct is to help a struggling child answer correctly. Resist it completely. A wrong answer from any child is the most useful thing that will happen in this lesson.</div></div></div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-top"><span class="step-name">Their turn</span><span class="step-time">15 min</span></div>
+    <p><b>"A friend says: heavy things fall faster. Write a reply that changes their mind. Use the evidence from today."</b></p>
+    <p class="detail" style="color:var(--muted);font-size:.9rem;">Sentence stems are on the slide, offered to everyone, assigned to nobody. Stretch: explain why a feather DOES fall slower than a hammer on Earth, without saying gravity is weaker on the feather.</p>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"A friend says heavy things fall faster. You are going to change their mind."</div><div class="line">"Use what we saw today. Not what you think. What we SAW."</div><p class="note">"Use the evidence" is the whole instruction. A reply that just asserts gravity has not changed anyone's mind.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Support</span><span>Sit with the children who need the stems. Read the stems aloud with them; do not write for them.</span></div><div class="todo"><span class="b">Stretch</span><span>The feather question. Ask it, then walk away and let them struggle with it.</span></div><div class="todo"><span class="b">Never</span><span>Do not tell a child their reply is wrong. Ask them what evidence they used.</span></div></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Generate three more "a friend says..." misconception prompts for children who finish early.</span></div><div class="yes"><span class="tag">Could:</span><span>Read a child's reply back to them as a friend who is not yet convinced, and let them try again.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not let AI write the reply. The reply IS the assessment. If AI writes it, you have assessed nothing and the child has learned nothing.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Constructing a scientific explanation from evidence. The hardest thing in the lesson, and they are doing it.</div><div class="doing"><b>The stems</b>The stems are not a lesser task. They are the STRUCTURE of a strong scientific argument - claim, contradiction, evidence, mechanism. A child using them is practising the shape of expert reasoning, not avoiding it.</div><div class="doing"><b>Say this out loud</b>'These are on every table. Use one if it helps you get going.' Offered to all, assigned to nobody. A child who does not need one will not pick one up.</div><div class="doing"><b>Where they will get stuck</b>'The evidence is...' - because they know what they SAW but not how to say it counts as evidence. Ask: 'what happened when I dropped them?' Then: 'that IS your evidence.'</div><div class="same">The scaffold is the shape of the right answer. That is why it is not cheating.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>On the slide</b>"Why DOES a feather fall slower than a hammer on Earth - without saying gravity is weaker on the feather?"</div><div class="push"><b>Why it is hard</b>It forces them to separate two forces they have been treating as one, and to explain a result using something they have not been taught yet.</div><div class="warn">This question is on the slide for everybody. It is not allocated. Some children who you did not expect will take it, and that is the point.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what">The stems are the <b>structure of a scientific argument</b>. Read them aloud with the child. Offer a scribe. The objective is constructing an explanation, not spelling it.</span></div><div class="need"><span class="who">Sustained attention is the barrier</span><span class="what">"Write a reply" is open-ended and that is hard here. <b>Give it a shape:</b> "Four sentences. One for each starter." Finite, visible, done.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">"Change your friend's mind" is a <b>social</b> framing and may not motivate. Reframe it factually: "Write the correct explanation, and the evidence for it." Same task, no social demand.</span></div><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">The evidence is what they saw <b>twenty minutes ago</b>. Put a photograph or a sketch of the book-and-pen drop on the desk. You are supporting recall, not reasoning.</span></div><div class="need"><span class="who">The physical act of writing is the barrier</span><span class="what">Voice note, type, or scribe. <b>Any route to the explanation counts.</b> Handwriting is not being assessed.</span></div></div><div class="eal"><div class="etitle">EAL - not a learning difficulty</div>The stems are <b>the most valuable thing in this lesson for an EAL child</b>, and they are not a reduction. "You might think... but actually... The evidence is..." is academic English, and it is transferable to every science lesson they will ever have. Give it, teach it, expect it back.</div></div></div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-top"><span class="step-name">Last thing</span><span class="step-time">4 min</span></div>
+    <p>Back to the sentence you wrote up at the very start. <b>"Because it's heavy."</b></p>
+    <p class="say">"This is what we wrote at the start. Is it right? Fix it."</p>
+    <p>The class rewrites it: <b>"Because gravity pulls it towards the Earth."</b> Their words at the start, their words at the end, and they can see the distance they travelled. That is the Turn, closed.</p>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"Look at what we wrote at the very start of the lesson."</div><div class="line">"Is it right?"</div><div class="line">"Fix it. Say it properly."</div><p class="note">Let them rewrite it. Do not rewrite it for them. Their words at the start, their words at the end - the distance between the two is the lesson.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Watch</span><span>Who is still nodding along without saying anything? Those are tomorrow's starters.</span></div><div class="todo"><span class="b">Record</span><span>Note the two or three children whose sentence still says 'heavy'. They have not turned.</span></div></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Capture the class's before-and-after sentences into the tracker, so next week's starter is aimed at whoever has not shifted.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not photograph or upload children's work with their names visible. SEQUENS never needs a child's name to do this.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Correcting a scientific statement. The same as everyone.</div><div class="doing"><b>Route in</b>Say it to a partner before writing it. Rehearsing a sentence aloud makes writing it possible.</div><div class="doing"><b>What to look for</b>A child who says 'gravity' but cannot say what gravity DOES has learned a word, not an idea. Ask them: 'gravity does what?'</div><div class="same">Everyone rewrites the sentence. Some of them say it first.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>The last question</b>"If gravity pulls the pen towards the Earth, does the pen pull the Earth?" (Yes. It does. It is just far too small to see.) This is genuinely astonishing to a ten-year-old and it is completely true.</div><div class="warn">Ask it as the bell goes. Let them leave with it.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what"><b>Say it to a partner before writing it.</b> Rehearsing a sentence aloud is what makes writing it possible.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">The lesson returns to where it began, and that <b>closure is genuinely valuable</b>. Name it: "We are going back to what we wrote at the start."</span></div><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">The original sentence must be <b>visible</b>, not remembered. That is why you write it back up.</span></div><div class="need"><span class="who">Fear of being wrong is the barrier</span><span class="what">This is a child publicly correcting their own earlier wrong answer, and that can feel <b>exposing</b>. Frame it as the class's sentence, never as any one child's. "<b>We</b> wrote this. <b>We</b> are fixing it."</span></div></div><div class="eal"><div class="etitle">EAL - not a learning difficulty</div>Ask them to <b>say</b> the corrected sentence before writing it. And accept a partially-correct English sentence with a fully-correct idea. <b>You are assessing the science.</b></div></div></div>
+
+  <div class="key">
+    <h3>Teacher key &middot; never seen by children</h3>
+    <div class="keyrow">
+      <div class="kchip k1"><b>Support</b>Same thinking. Chunked instruction, oral route, stems offered to all.</div>
+      <div class="kchip k2"><b>Core</b>The reply task, unaided.</div>
+      <div class="kchip k3"><b>Secure</b>Gravity named as the cause, not just the word said.</div>
+      <div class="kchip k4"><b>Going further</b>Air resistance, without misattributing it to gravity.</div>
+    </div>
+    <p class="keynote">These four words exist on this sheet and nowhere else. Not on the slides, not on the worksheet, never spoken aloud. <b>A child never learns which one they are.</b><br><br>
+    The <b>Going further</b> questions are printed on the slides <b>for everyone</b>, because a challenge that is allocated is not a challenge - it is a label. Some children you did not expect will take them. That is the point.</p>
+  </div>
+
+</div>
+
+<script>
+"use strict";
+function tog(name, btn){
+  var on = document.body.classList.toggle("show-" + name);
+  btn.classList.toggle("on", on);
+}
+</script>
+
+  <div class="key" style="border-color:#A9C9E0;background:#F7FAFC;">
+    <h3 style="color:#1F4A6E;">On the SEND and EAL layer</h3>
+    <p style="font-size:.9rem;color:#1F4A6E;margin:0 0 .7rem;"><b>SEND is not one thing.</b> A dyslexic child, an autistic child, a child with ADHD and a child with a working-memory difficulty need genuinely different things from this lesson, and sometimes opposite things. A generic instruction to "chunk it and use visuals" helps nobody in particular. Every entry in that layer names a <b>specific need and a specific action</b>.</p>
+    <p style="font-size:.9rem;color:#1F4A6E;margin:0 0 .7rem;"><b>EAL is not a learning difficulty.</b> An EAL child may be well ahead of the class in science and behind it in English. They do not need simpler science. They need the <b>language attached to the science they already have</b>. Conflating the two is a common error and it holds children back for years.</p>
+    <p style="font-size:.88rem;color:#6B531A;background:#FBF6E9;border:1px solid #E0C97F;border-radius:8px;padding:.75rem .95rem;margin:0;"><b>Honest limit.</b> This layer is written from published evidence and general good practice. It is <b>not a substitute for a child's EHCP, a SENDCo's advice, or a specialist assessment</b>. Where they differ, the child's own plan wins, every time. SEQUENS is a tool in the hands of a professional who knows the child. It is not the professional.</p>
+  </div>
+
+</body>
+</html>

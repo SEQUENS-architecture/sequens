@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS - Steps to success, into the tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent:#2DE1C2; --accent-deep:#0C8F79;
+    --paper:#F2F7F9; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90; --dim:#647A8C;
+    --gold:#B8912F; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --red:#C0453B; --red-soft:#F7E9E7; --success-deep:#0A6B5C; --green-soft:#EAF3EE;
+    --font:'Lexend',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6;padding:2rem 1.4rem 5rem;}
+  .wrap{max-width:1020px;margin:0 auto;}
+  h1{font-family:var(--head);font-weight:800;font-size:1.9rem;color:var(--navy);margin:0 0 .4rem;letter-spacing:-.01em;}
+  .lead{color:var(--muted);max-width:66ch;margin:0 0 2rem;}
+  h2{font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);margin:2.2rem 0 .9rem;}
+
+  /* the flow */
+  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.8rem;align-items:center;margin-bottom:2rem;}
+  @media (max-width:820px){.flow{grid-template-columns:1fr;}.flow .arrow{transform:rotate(90deg);margin:0 auto;}}
+  .fbox{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:1rem 1.1rem;text-align:center;}
+  .fbox.hi{border-color:var(--accent-deep);background:#F4FBF9;}
+  .fbox b{display:block;font-family:var(--head);font-weight:700;font-size:.95rem;color:var(--navy);margin-bottom:.2rem;}
+  .fbox span{font-size:.83rem;color:var(--muted);}
+  .arrow svg{width:26px;height:26px;stroke:var(--muted);}
+
+  /* the confirm card */
+  .confirm{background:var(--card);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:1.2rem;}
+  .chead{background:var(--navy);color:#fff;padding:1.1rem 1.4rem;}
+  .chead .ctitle{font-family:var(--head);font-weight:800;font-size:1.15rem;}
+  .chead .csub{font-size:.88rem;color:#9FB6C6;margin-top:.15rem;}
+  .cbody{padding:1.3rem 1.4rem;}
+  .lo-row{background:var(--green-soft);border-left:4px solid var(--accent-deep);border-radius:0 9px 9px 0;
+    padding:.75rem 1rem;margin-bottom:1.1rem;}
+  .lo-row .l{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);}
+  .lo-row .t{font-size:1rem;color:var(--success-deep);font-weight:600;}
+
+  .steprow{border:1px solid var(--rule);border-radius:11px;padding:.85rem 1rem;margin-bottom:.6rem;
+    display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;}
+  .steprow .txt{font-size:.95rem;color:var(--ink);}
+  .steprow .txt .n{font-family:var(--head);font-weight:800;color:var(--navy);margin-right:.4rem;}
+  .steprow .txt small{display:block;color:var(--muted);font-size:.8rem;margin-top:.15rem;}
+  .steprow.further{background:#FBF6E9;border-color:#E0C97F;}
+  .steprow.further .txt .n{color:var(--gold-deep);}
+
+  .judge{display:flex;gap:.35rem;}
+  .judge button{border:1.5px solid var(--rule);background:#fff;border-radius:8px;padding:.45rem .8rem;
+    font-family:var(--font);font-size:.84rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;}
+  .judge button:hover{border-color:var(--navy);}
+  .judge button.sel[data-v="got"]{background:var(--success-deep);border-color:var(--success-deep);color:#fff;}
+  .judge button.sel[data-v="most"]{background:var(--steel);border-color:var(--steel);color:#fff;}
+  .judge button.sel[data-v="few"]{background:var(--gold-deep);border-color:var(--gold-deep);color:#fff;}
+  .judge button.sel[data-v="not"]{background:var(--red);border-color:var(--red);color:#fff;}
+
+  /* what SEQUENS suggests, from the hinge */
+  .sugg{background:var(--steel-soft);border:1px solid #C5DAEA;border-radius:11px;padding:.9rem 1.1rem;margin:1.1rem 0;}
+  .sugg .stitle{display:flex;align-items:center;gap:.45rem;font-family:var(--head);font-weight:700;font-size:.68rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-bottom:.45rem;}
+  .sugg .stitle svg{width:14px;height:14px;}
+  .sugg p{margin:0;font-size:.92rem;color:#1F4A6E;}
+  .sugg p b{color:var(--navy);}
+  .sugg .ev{font-size:.83rem;color:var(--muted);margin-top:.45rem;padding-left:.8rem;border-left:2.5px solid var(--accent);}
+
+  .nextstep{background:#F4FBF9;border:1.5px solid var(--accent-deep);border-radius:11px;padding:.95rem 1.1rem;margin-top:1rem;}
+  .nextstep .ntitle{font-family:var(--head);font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent-deep);margin-bottom:.4rem;}
+  .nextstep p{margin:0 0 .6rem;font-size:.95rem;color:var(--success-deep);}
+  .nextstep p b{color:#08544A;}
+  .nsbtns{display:flex;gap:.5rem;flex-wrap:wrap;}
+  .nsbtns button{border:none;border-radius:9px;padding:.55rem 1rem;font-family:var(--font);font-weight:700;
+    font-size:.88rem;cursor:pointer;}
+  .nsbtns .yes{background:var(--accent-deep);color:#fff;}
+  .nsbtns .adj{background:#fff;border:1.5px solid var(--rule);color:var(--navy);}
+  .nsbtns .no{background:#fff;border:1.5px solid var(--rule);color:var(--muted);}
+
+  .done{display:none;background:var(--green-soft);border:1.5px solid #BEDFD0;border-radius:12px;
+    padding:1.1rem 1.3rem;margin-top:1rem;}
+  .done.on{display:block;}
+  .done b{color:var(--success-deep);font-family:var(--head);font-weight:800;}
+  .done p{margin:.4rem 0 0;font-size:.92rem;color:#0A5C4E;}
+
+  .note{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
+    border-radius:12px;padding:1.2rem 1.4rem;margin-top:1.6rem;font-size:.93rem;color:var(--muted);}
+  .note b{color:var(--navy);}
+  .note p{margin:0 0 .7rem;} .note p:last-child{margin:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Steps to success are what the tracker tracks</h1>
+  <p class="lead">This is the join. The steps a child sees on the board at the start of the lesson are the exact things the teacher confirms at the end, and the exact things that appear in the tracker. Not a separate assessment. Not a second job. <b>The same four sentences, all the way through.</b></p>
+
+  <div class="flow">
+    <div class="fbox"><b>On the board</b><span>Steps to success, in the child's language</span></div>
+    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="fbox hi"><b>At the end</b><span>The teacher confirms each one, in ten seconds</span></div>
+    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="fbox"><b>In the tracker</b><span>And it shapes next week</span></div>
+  </div>
+
+  <h2>The end-of-lesson confirm</h2>
+
+  <div class="confirm">
+    <div class="chead">
+      <div class="ctitle">Year 5 &middot; Science &middot; Gravity</div>
+      <div class="csub">The lesson is finished. Four taps, and you are done.</div>
+    </div>
+    <div class="cbody">
+      <div class="lo-row">
+        <div class="l">The objective</div>
+        <div class="t">To explain why things fall towards the Earth.</div>
+      </div>
+
+      <div class="steprow">
+        <div class="txt"><span class="n">1</span>Say that gravity is a <b>pull</b>, not a push.
+          <small>The prerequisite. Nothing else lands without it.</small></div>
+        <div class="judge" data-step="1">
+          <button data-v="got" onclick="j(this)">Got it</button>
+          <button data-v="most" onclick="j(this)">Most</button>
+          <button data-v="few" onclick="j(this)">A few</button>
+          <button data-v="not" onclick="j(this)">Not yet</button>
+        </div>
+      </div>
+
+      <div class="steprow">
+        <div class="txt"><span class="n">2</span>Explain that gravity pulls <b>everything</b> towards the Earth.
+          <small>The core idea.</small></div>
+        <div class="judge" data-step="2">
+          <button data-v="got" onclick="j(this)">Got it</button>
+          <button data-v="most" onclick="j(this)">Most</button>
+          <button data-v="few" onclick="j(this)">A few</button>
+          <button data-v="not" onclick="j(this)">Not yet</button>
+        </div>
+      </div>
+
+      <div class="steprow">
+        <div class="txt"><span class="n">3</span>Use <b>evidence</b> to explain why a heavy thing and a light thing land together.
+          <small>This is the hinge. SEQUENS already has data on it.</small></div>
+        <div class="judge" data-step="3">
+          <button data-v="got" onclick="j(this)">Got it</button>
+          <button data-v="most" onclick="j(this)">Most</button>
+          <button data-v="few" onclick="j(this)">A few</button>
+          <button data-v="not" onclick="j(this)">Not yet</button>
+        </div>
+      </div>
+
+      <div class="steprow further">
+        <div class="txt"><span class="n">4</span>Explain why a feather <b>does</b> fall slower on Earth, but not on the Moon.
+          <small>Going further. Nobody is expected to have this. It is recorded when they do.</small></div>
+        <div class="judge" data-step="4">
+          <button data-v="got" onclick="j(this)">Some did</button>
+          <button data-v="not" onclick="j(this)">Not this time</button>
+        </div>
+      </div>
+
+      <div class="sugg">
+        <div class="stitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2C6E9B" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l2.2 4.6L19 9.5l-4 3.6.8 5.4L12 15.8 8.2 18.5l.8-5.4-4-3.6 4.8-1.9z"/></svg>
+          What SEQUENS already knows
+        </div>
+        <p>The hinge told us something. <b>9 of your 30 children (30%)</b> voted "hammer" on the Moon question. That is above the 25% line where SEQUENS raises it.</p>
+        <p class="ev">Suggested for step 3: <b>A few</b>. <b>This is a suggestion from 30 votes, not a verdict.</b> You can overrule it. You were in the room and SEQUENS was not.</p>
+      </div>
+
+      <div class="nextstep" id="ns">
+        <div class="ntitle">Suggested next step</div>
+        <p><b>9 children (30%)</b> still think heavier falls faster. That misconception does not fade on its own - <b>it hardens</b>.</p>
+        <p><b>Next lesson's retrieval:</b> re-run the two-object drop as a starter, and ask the Moon question again before you teach anything new.</p>
+        <div class="nsbtns">
+          <button class="yes" onclick="confirmNext()">Yes, build that</button>
+          <button class="adj" onclick="confirmNext()">Adjust it</button>
+          <button class="no" onclick="confirmNext()">Not this time</button>
+        </div>
+      </div>
+
+      <div class="done" id="done">
+        <b>Done. That is the whole job.</b>
+        <p>The four steps are in the tracker against every child. The misconception is flagged. Next week's starter is aimed at it. <b>You did not fill in a mark sheet, and nobody typed a child's name.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><b>Why steps to success are written this way.</b> They are <b>thinking</b> steps, not task steps. "Write the date. Underline the title. Answer three questions." is a to-do list, and a child can complete every item on it having learned nothing. These four say what the child can <b>do with their head</b> at the end that they could not do at the start.</p>
+    <p><b>Why this closes the loop.</b> The steps on the board at the start are the steps the teacher confirms at the end, and the steps that appear in the tracker. <b>One set of sentences, doing three jobs.</b> No separate assessment task. No mark sheet. No re-typing. The lesson assesses itself because it always knew what it was for.</p>
+    <p><b>And SEQUENS suggests, the teacher confirms.</b> The hinge already told it that nine children think heavier falls faster - so it offers a judgement on step 3, with its evidence, and the teacher overrules it or accepts it. <b>A vote is a signal, not a verdict.</b> The teacher was in the room.</p>
+  </div>
+</div>
+
+<script>
+"use strict";
+function j(btn){
+  var row = btn.closest(".judge");
+  row.querySelectorAll("button").forEach(function(b){ b.classList.remove("sel"); });
+  btn.classList.add("sel");
+}
+function confirmNext(){
+  document.getElementById("ns").style.display = "none";
+  document.getElementById("done").classList.add("on");
+}
+// pre-select SEQUENS's suggestion on step 3, to show the confirm-first principle
+window.addEventListener("load", function(){
+  var s3 = document.querySelector('[data-step="3"] [data-v="few"]');
+  if (s3) s3.classList.add("sel");
+});
+</script>
+</body>
+</html>

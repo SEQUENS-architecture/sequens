@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS - Weekly Engine (demo)</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0C8F79; --accent:#2DE1C2;
+    --paper:#F2F7F9; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90; --dim:#647A8C;
+    --gold:#B8912F; --gold-soft:#F3ECD2; --steel:#2C6E9B; --steel-soft:#EAF2F8;
+    --red:#C0453B; --red-soft:#F7E9E7; --amber:#B8912F;
+    --font:'Lexend','Segoe UI',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.6;}
+  .app{max-width:960px;margin:0 auto;padding:1.4rem 1.4rem 4rem;}
+  .apphead{display:flex;align-items:center;gap:.6rem;margin-bottom:.2rem;}
+  .apphead svg{height:22px;} .apphead b{font-family:var(--head);font-weight:800;color:var(--navy);letter-spacing:.04em;font-size:1.1rem;}
+  .demo-chip{margin-left:auto;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--steel);border-radius:20px;padding:3px 10px;}
+  .sub{color:var(--muted);margin:0 0 1.3rem;font-size:.9rem;max-width:70ch;}
+
+  .stepbar{display:flex;gap:.4rem;align-items:center;margin-bottom:1.4rem;flex-wrap:wrap;font-size:.8rem;}
+  .stepbar .s{padding:.3rem .7rem;border-radius:7px;font-weight:600;color:var(--dim);background:#fff;border:1px solid var(--rule);}
+  .stepbar .s.on{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep);}
+  .stepbar .s.done{color:var(--accent-deep);border-color:#BEDFD0;}
+  .stepbar .sep{color:var(--rule);}
+
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+  h2{font-family:var(--head);font-weight:800;font-size:1.25rem;color:var(--navy);margin:0 0 .3rem;}
+  .psub{color:var(--muted);font-size:.9rem;margin:0 0 1.1rem;}
+  .lbl{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:0 0 .6rem;}
+
+  .btn{font-weight:700;font-size:.9rem;border:none;border-radius:10px;padding:.7rem 1.3rem;background:var(--accent-deep);color:#fff;cursor:pointer;}
+  .btn:hover{filter:brightness(1.07);}
+  .btn.ghost{background:transparent;border:1.5px solid var(--rule);color:var(--navy);}
+  .btn.ghost:hover{border-color:var(--accent-deep);color:var(--accent-deep);}
+  .btn.sm{padding:.45rem .85rem;font-size:.82rem;}
+
+  /* class tabs */
+  .tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .tab{border:1.5px solid var(--rule);border-radius:10px;padding:.5rem .95rem;font-weight:700;font-size:.88rem;color:var(--muted);background:#fff;cursor:pointer;}
+  .tab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .tab .n{font-size:.72rem;font-weight:400;opacity:.8;display:block;}
+
+  /* marksheet grid */
+  .sheet{overflow-x:auto;}
+  table{border-collapse:collapse;width:100%;font-size:.86rem;min-width:560px;}
+  th,td{padding:.5rem .6rem;text-align:center;border-bottom:1px solid var(--rule);}
+  th{font-family:var(--head);font-weight:700;font-size:.72rem;color:var(--navy);text-transform:uppercase;letter-spacing:.04em;}
+  td.name{text-align:left;font-weight:600;color:var(--ink);white-space:nowrap;}
+  .qcell{font-variant-numeric:tabular-nums;}
+  .qcell.miss{background:var(--red-soft);color:var(--red);font-weight:700;}
+  .qcell.ok{color:var(--muted);}
+  .totcell{font-weight:700;color:var(--navy);}
+  .blockhead th{font-size:.64rem;color:var(--muted);border-bottom:2px solid var(--rule);padding-bottom:.2rem;}
+  .qb-a{color:var(--accent-deep);} .qb-b{color:var(--steel);} .qb-c{color:var(--gold-deep);}
+
+  /* suggestion cards */
+  .suggest{border:1.5px solid var(--rule);border-radius:12px;padding:1rem 1.1rem;margin-bottom:.8rem;}
+  .suggest.high{border-color:#E3B7B2;background:#FCF6F5;}
+  .suggest.low{border-color:#BEDFD0;background:#F4FBF8;}
+  .sg-top{display:flex;align-items:flex-start;gap:.7rem;}
+  .sg-badge{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;border-radius:20px;padding:2px 9px;flex-shrink:0;margin-top:2px;}
+  .sg-badge.high{background:var(--red);} .sg-badge.low{background:var(--accent-deep);}
+  .sg-body{flex:1;}
+  .sg-title{font-weight:700;color:var(--navy);font-size:.98rem;margin:0 0 .2rem;}
+  .sg-ev{font-size:.85rem;color:var(--muted);margin:0 0 .3rem;}
+  .sg-ev b{color:var(--navy);}
+  .sg-reads{font-size:.9rem;color:var(--ink);border-left:2.5px solid var(--accent);padding-left:.7rem;margin:.4rem 0 0;}
+  .sg-actions{display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap;}
+  .sg-actions .btn.sm.dismiss{background:transparent;border:1.5px solid var(--rule);color:var(--muted);}
+  /* decision state */
+  .sg-decision{margin-top:.8rem;border-top:1px dashed var(--rule);padding-top:.7rem;font-size:.86rem;display:none;}
+  .sg-decision.show{display:block;}
+  .sg-decision .tag{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 9px;}
+  .tag.confirmed{background:#E4F3EC;color:#0A6B5C;}
+  .tag.adjusted{background:var(--gold-soft);color:#6B531A;}
+  .tag.dismissed{background:#EEF2F5;color:var(--muted);}
+  .sg-decision .detail{margin-top:.4rem;color:var(--ink);}
+  .sg-decision .detail .was{color:var(--muted);text-decoration:line-through;}
+  .sg-decision .undo{margin-left:.4rem;color:var(--steel);font-weight:600;font-size:.8rem;cursor:pointer;text-decoration:underline;}
+
+  /* adjust inline editor */
+  .adjustbox{margin-top:.7rem;display:none;background:#fff;border:1px solid var(--rule);border-radius:9px;padding:.8rem;}
+  .adjustbox.show{display:block;}
+  .adjustbox label{font-size:.78rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.3rem;}
+  .adjustbox input,.adjustbox textarea{width:100%;border:1.5px solid var(--rule);border-radius:8px;padding:.55rem .7rem;font-family:var(--font);font-size:.9rem;margin-bottom:.5rem;}
+  .adjustbox textarea{min-height:52px;resize:vertical;}
+
+  /* dismiss reason */
+  .dismissbox{margin-top:.7rem;display:none;background:#fff;border:1px solid var(--rule);border-radius:9px;padding:.8rem;}
+  .dismissbox.show{display:block;}
+  .dismissbox .why{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem;}
+  .rchip{border:1.5px solid var(--rule);border-radius:20px;padding:.35rem .8rem;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;background:#fff;}
+  .rchip.on{background:var(--muted);color:#fff;border-color:var(--muted);}
+
+  /* audit trail */
+  .audit{background:#0A2C49;color:#CFE0EC;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1rem;}
+  .audit h2{color:#fff;}
+  .audit .psub{color:#9FB6C6;}
+  .arow{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem 0;border-top:1px solid rgba(255,255,255,.1);font-size:.86rem;}
+  .arow:first-of-type{border-top:none;}
+  .a-icon{width:26px;height:26px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;}
+  .a-icon.c{background:rgba(45,225,194,.15);color:var(--accent);}
+  .a-icon.a{background:rgba(184,145,47,.2);color:#E7C766;}
+  .a-icon.d{background:rgba(255,255,255,.1);color:#9FB6C6;}
+  .a-body{flex:1;} .a-body .cls{font-weight:700;color:#fff;}
+  .a-body .line{color:#B9CCDA;} .a-body .was{color:#7E97AB;text-decoration:line-through;}
+  .a-body .reason{color:#9FB6C6;font-style:italic;}
+  .a-time{color:#6E8BA0;font-size:.76rem;white-space:nowrap;}
+  .audit-empty{color:#7E97AB;font-size:.88rem;font-style:italic;}
+  .audit-note{margin-top:1rem;font-size:.8rem;color:#9FB6C6;line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:.8rem;}
+
+  .foot{margin-top:1.4rem;font-size:.78rem;color:var(--muted);text-align:center;}
+  .pupil-sec{margin-top:1rem;}
+  .pupil-flag{display:flex;gap:.7rem;align-items:flex-start;border:1.5px solid var(--rule);border-radius:12px;padding:.9rem 1rem;margin-bottom:.7rem;}
+  .pupil-flag.watch{border-color:#E3B7B2;background:#FCF6F5;}
+  .pupil-flag.hidden-risk{border-color:#E3B7B2;background:#FCF6F5;}
+  .pupil-flag.cap{border-color:#D8B24E;background:#FBF6E9;}
+  .pf-badge{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;border-radius:20px;padding:2px 8px;flex-shrink:0;margin-top:2px;white-space:nowrap;}
+  .pf-badge.watch{background:var(--red);} .pf-badge.hidden-risk{background:var(--red);} .pf-badge.cap{background:var(--gold);}
+  .pf-body{flex:1;}
+  .pf-name{font-weight:700;color:var(--navy);font-size:.95rem;margin:0 0 .15rem;}
+  .pf-ev{font-size:.84rem;color:var(--muted);margin:0 0 .3rem;} .pf-ev b{color:var(--navy);}
+  .pf-reads{font-size:.88rem;color:var(--ink);border-left:2.5px solid var(--accent);padding-left:.7rem;margin:.3rem 0 0;}
+  .pf-reads.capr{border-color:var(--gold-deep);}
+  .pf-actions{display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap;}
+  .pf-decision{margin-top:.7rem;border-top:1px dashed var(--rule);padding-top:.6rem;font-size:.85rem;display:none;}
+  .pf-decision.show{display:block;}
+  .pupil-clear{font-size:.86rem;color:var(--accent-deep);background:#F4FBF8;border:1px solid #BEDFD0;border-radius:10px;padding:.6rem .85rem;margin-bottom:.7rem;}
+  .pupil-clear b{color:#0A6B5C;}
+  .bignote{background:var(--steel-soft);border:1px solid #CADEEC;border-radius:11px;padding:.8rem 1rem;font-size:.85rem;color:var(--navy);margin-bottom:1rem;line-height:1.5;}
+  .bignote b{font-weight:700;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="apphead"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg><b>SEQUENS</b><span class="demo-chip">Demo · Weekly Engine</span></div>
+  <p class="sub">The Thursday data drop, the honest way. Four Year 6 classes, this week's arithmetic quiz already marked. SEQUENS suggests where each class stumbled from where marks were lost - you confirm, adjust, or dismiss. Nothing is decided for you.</p>
+
+  <div class="stepbar"><span class="s done">1 · Marks in</span><span class="sep">›</span><span class="s on">2 · Confirm the gaps</span><span class="sep">›</span><span class="s">3 · Agenda &amp; lessons</span></div>
+
+  <div class="bignote"><b>How to read this:</b> a red cell is a lost mark. SEQUENS groups the quiz's 12 questions into three skill blocks, sees which block a class lost most marks on, and offers that as a <b>suggestion to confirm</b> - never a verdict. Every decision you make, including overriding SEQUENS, is written to the record at the bottom.</p>
+
+  <!-- CLASS MARKSHEET -->
+  <div class="card">
+    <div class="tabs" id="tabs"></div>
+    <p class="lbl" id="sheetTitle">Year 6A · weekly arithmetic quiz (12 questions)</p>
+    <div class="sheet"><table id="marksheet"></table></div>
+  </div>
+
+  <!-- SUGGESTIONS -->
+  <div class="card">
+    <h2>What SEQUENS noticed in <span id="sgClass">6A</span></h2>
+    <p class="psub">Suggested from where marks were lost. Confirm if it matches what you saw, adjust it if the real gap is different, or dismiss it if the scores don't reflect a real gap (a wet-play distraction, a gala, a bad morning).</p>
+    <div id="suggestions"></div>
+  </div>
+
+  <!-- PUPIL LEVEL -->
+  <div class="card">
+    <h2>And the individuals in <span id="pupClass">6A</span></h2>
+    <p class="psub">The class average hides the child. SEQUENS also looks pupil by pupil - who lost marks where, who’s slipped for more than one week, and who the class picture would miss. Same rule: it flags, you decide.</p>
+    <div id="pupilFlags"></div>
+  </div>
+
+  <!-- AUDIT TRAIL -->
+  <div class="audit">
+    <h2>The record</h2>
+    <p class="psub">Every suggestion and every decision, kept side by side - including where your judgement overrode SEQUENS. This is what an inspector or coach sees: a human in the loop, not a machine deciding.</p>
+    <div id="auditRows"><p class="audit-empty" id="auditEmpty">No decisions yet. Confirm, adjust, or dismiss a suggestion above and it appears here.</p></div>
+    <div class="audit-note" id="auditNote" style="display:none;"></div>
+  </div>
+
+  <p class="foot">SEQUENS · a demo of the confirm-first weekly flow. Suggestions here are illustrative; in the live product they come from the school's own quiz map, scored in the generation stress-test.</p>
+</div>
+
+<script>
+"use strict";
+// ===== FAKE DATA: 4 classes x 6 pupils, 12-question quiz, 3 skill blocks =====
+// blocks: Q1-4 = basic fractions | Q5-8 = multi-step division layout | Q9-12 = worded inference
+var BLOCKS=[
+  {id:"a",name:"Basic fractions",qs:[1,2,3,4],cls:"qb-a"},
+  {id:"b",name:"Multi-step division (layout)",qs:[5,6,7,8],cls:"qb-b"},
+  {id:"c",name:"Worded problems (reading inference)",qs:[9,10,11,12],cls:"qb-c"}
+];
+// 1 = correct, 0 = lost mark. Each class engineered to lean on a different block.
+var CLASSES={
+  "6A":{teacher:"Ms Okafor", pupils:[
+    ["Amina",   [1,1,1,1, 0,0,1,0, 1,1,1,1], 0],
+    ["Marcus",  [1,1,0,1, 0,0,0,0, 1,1,1,0], 2],
+    ["Priya",   [1,1,1,1, 1,0,0,0, 1,1,1,1], 0],
+    ["Leo",     [1,0,1,1, 0,0,0,1, 1,1,0,1], 0],
+    ["Sana",    [1,1,1,0, 0,1,0,0, 1,1,1,1], 0],
+    ["Tom",     [1,1,1,1, 0,0,0,0, 1,0,1,1], 1]
+  ]},
+  "6B":{teacher:"Mr Idris", pupils:[
+    ["Barnaby", [1,1,1,1, 1,1,1,1, 0,0,0,1], 0],
+    ["Yusuf",   [1,1,1,0, 1,1,1,1, 0,0,1,0], 0],
+    ["Kayla",   [1,1,1,1, 1,1,0,1, 0,0,0,0], 1],
+    ["Reece",   [1,0,1,1, 1,1,1,1, 0,1,0,0], 0],
+    ["Alia",    [1,1,1,1, 0,1,1,1, 0,0,0,1], 0],
+    ["Freya",   [0,0,1,0, 0,0,1,0, 1,0,0,0], 2]
+  ]},
+  "6C":{teacher:"Miss Bello", pupils:[
+    ["Mariam",  [0,1,0,1, 1,1,1,1, 1,1,1,1], 0],
+    ["Farid",   [0,0,0,0, 1,0,1,1, 1,1,1,1], 3],
+    ["Grace",   [1,0,0,1, 1,1,1,1, 1,1,0,1], 0],
+    ["Deng",    [0,1,0,0, 1,1,1,1, 1,1,1,1], 1],
+    ["Laila",   [0,0,1,1, 1,0,1,1, 1,1,1,1], 0],
+    ["Oscar",   [1,0,0,0, 1,1,1,1, 1,1,1,0], 0]
+  ]},
+  "6D":{teacher:"Mr Chen", pupils:[
+    ["Ivy",     [1,1,1,1, 1,1,1,0, 1,1,1,1], 0],
+    ["Zaid",    [1,1,1,1, 1,0,1,1, 1,1,1,1], 0],
+    ["Nadia",   [1,1,1,0, 1,1,1,1, 1,1,1,1], 0],
+    ["Harry",   [1,1,1,1, 1,1,1,1, 1,1,0,1], 0],
+    ["Esme",    [1,0,1,1, 1,1,1,1, 1,1,1,1], 0],
+    ["Kofi",    [0,0,1,0, 0,0,1,0, 0,1,1,1], 1]
+  ]}
+};
+var THRESHOLD=7; // /12 fixed floor for "below" in the demo
+
+// suggested-gap text per block
+var GAPREAD={
+  a:{title:"Basic fraction fluency", reads:"This looks like a gap in the underlying fraction basics \u2014 worth a retrieval starter before anything new is built on top."},
+  b:{title:"Multi-step division layout", reads:"This looks like a layout gap in long division \u2014 the method, not the number sense. A bar-model / column scaffold in Monday's modelling would target it."},
+  c:{title:"Reading inference in worded problems", reads:"Marks held up on the calculation but fell on the worded questions \u2014 this looks like a reading-inference block, not a maths one. It points at the reading lesson, not more arithmetic."}
+};
+
+var state={ current:"6A", decisions:{} }; // decisions keyed by class+block
+
+function blockLostPct(rows, block){
+  var lost=0,total=0;
+  rows.forEach(function(r){ block.qs.forEach(function(q){ total++; if(r[1][q-1]===0) lost++; }); });
+  return Math.round(lost/total*100);
+}
+
+function renderTabs(){
+  var h="";
+  Object.keys(CLASSES).forEach(function(c){
+    h+='<button class="tab'+(c===state.current?' on':'')+'" onclick="pick(\''+c+'\')">Year '+c+'<span class="n">'+CLASSES[c].teacher+'</span></button>';
+  });
+  document.getElementById("tabs").innerHTML=h;
+}
+function renderSheet(){
+  var c=CLASSES[state.current];
+  document.getElementById("sheetTitle").textContent="Year "+state.current+" \u00b7 "+c.teacher+" \u00b7 weekly arithmetic quiz (12 questions)";
+  var h="<thead><tr class='blockhead'><th></th>";
+  BLOCKS.forEach(function(b){ h+="<th colspan='"+b.qs.length+"' class='"+b.cls+"'>"+b.name+"</th>"; });
+  h+="<th></th></tr><tr><th class='name'>Pupil</th>";
+  for(var q=1;q<=12;q++){ var blk=BLOCKS.find(function(b){return b.qs.includes(q);}); h+="<th class='"+blk.cls+"'>Q"+q+"</th>"; }
+  h+="<th>/12</th></tr></thead><tbody>";
+  c.pupils.forEach(function(p){
+    h+="<tr><td class='name'>"+p[0]+"</td>";
+    var tot=0;
+    p[1].forEach(function(v,i){ tot+=v; h+="<td class='qcell "+(v?'ok':'miss')+"'>"+(v?'\u2713':'\u2717')+"</td>"; });
+    h+="<td class='totcell'>"+tot+"</td></tr>";
+  });
+  h+="</tbody>";
+  document.getElementById("marksheet").innerHTML=h;
+}
+function renderSuggestions(){
+  var c=CLASSES[state.current];
+  document.getElementById("sgClass").textContent=state.current;
+  // rank blocks by lost %
+  var ranked=BLOCKS.map(function(b){ return {b:b, pct:blockLostPct(c.pupils,b)}; }).sort(function(x,y){return y.pct-x.pct;});
+  var h="";
+  ranked.forEach(function(r){
+    var high=r.pct>=35;               // threshold from the spec
+    if(r.pct<15) return;              // don't surface near-noise
+    var key=state.current+"_"+r.b.id;
+    var dec=state.decisions[key];
+    var gr=GAPREAD[r.b.id];
+    h+='<div class="suggest '+(high?'high':'low')+'" id="sg_'+key+'">';
+    h+='<div class="sg-top"><span class="sg-badge '+(high?'high':'low')+'">'+(high?'High priority':'Worth a look')+'</span><div class="sg-body">';
+    h+='<p class="sg-title">'+gr.title+'</p>';
+    h+='<p class="sg-ev">Block: <b>'+r.b.name+'</b> \u00b7 the class lost <b>'+r.pct+'%</b> of the marks here \u2014 the most of any block'+(high?' and past the 35% line where SEQUENS raises it.':'.')+'</p>';
+    h+='<p class="sg-reads">'+gr.reads+'</p>';
+    // action row (hidden once decided)
+    h+='<div class="sg-actions" id="act_'+key+'"'+(dec?' style="display:none"':'')+'>';
+    h+='<button class="btn sm" onclick="confirmGap(\''+key+'\',\''+r.b.id+'\')">Confirm</button>';
+    h+='<button class="btn sm ghost" onclick="openAdjust(\''+key+'\')">Adjust</button>';
+    h+='<button class="btn sm dismiss" onclick="openDismiss(\''+key+'\')">Dismiss</button>';
+    h+='</div>';
+    // adjust editor
+    h+='<div class="adjustbox" id="adj_'+key+'"><label>What was the actual gap? (your judgement replaces the suggestion \u2014 both are kept)</label><input type="text" id="adjin_'+key+'" placeholder="e.g. times-tables recall underneath the division" value="'+gr.title+'"><label>Why the change? (optional, for the record)</label><textarea id="adjwhy_'+key+'" placeholder="e.g. watched them in class \u2014 it\u2019s the tables they\u2019re missing, not the layout"></textarea><button class="btn sm" onclick="saveAdjust(\''+key+'\')">Save my judgement</button> <button class="btn sm ghost" onclick="closeEditors(\''+key+'\')">Cancel</button></div>';
+    // dismiss editor
+    h+='<div class="dismissbox" id="dis_'+key+'"><label>Why dismiss this? (kept on the record so the override is transparent)</label><div class="why" id="why_'+key+'">'+
+       ['Timing / ran out of time','Behaviour / distraction','Absences (gala, trip, illness)','Not a real gap \u2014 I saw them secure'].map(function(w,i){return '<span class="rchip" onclick="pickReason(\''+key+'\',this)">'+w+'</span>';}).join('')+
+       '</div><button class="btn sm" onclick="saveDismiss(\''+key+'\')">Dismiss with reason</button> <button class="btn sm ghost" onclick="closeEditors(\''+key+'\')">Cancel</button></div>';
+    // decision state
+    h+='<div class="sg-decision'+(dec?' show':'')+'" id="dec_'+key+'">'+(dec?decisionHTML(key,dec):'')+'</div>';
+    h+='</div></div></div>';
+  });
+  document.getElementById("suggestions").innerHTML=h;
+}
+
+function decisionHTML(key,dec){
+  if(dec.type==="confirmed") return '<span class="tag confirmed">\u2713 Confirmed</span><span class="detail"> You agreed with SEQUENS: <b>'+dec.label+'</b> is the gap to target.</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
+  if(dec.type==="adjusted") return '<span class="tag adjusted">\u270e Your judgement</span><span class="detail"> Changed to <b>'+dec.label+'</b> <span class="was">was: '+dec.was+'</span>'+(dec.why?' \u2014 <span style="color:var(--muted)">"'+dec.why+'"</span>':'')+'</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
+  if(dec.type==="dismissed") return '<span class="tag dismissed">\u2014 Dismissed</span><span class="detail"> Set aside: <span style="color:var(--muted)">"'+dec.reason+'"</span>. SEQUENS won\u2019t act on this one.</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
+  return "";
+}
+
+function setDecision(key,dec){ state.decisions[key]=dec; renderSuggestions(); renderAudit(); }
+function confirmGap(key,bid){ setDecision(key,{type:"confirmed",label:GAPREAD[bid].title,cls:state.current}); }
+function openAdjust(key){ closeEditors(key); document.getElementById("adj_"+key).classList.add("show"); }
+function openDismiss(key){ closeEditors(key); document.getElementById("dis_"+key).classList.add("show"); }
+function closeEditors(key){ var a=document.getElementById("adj_"+key), d=document.getElementById("dis_"+key); if(a)a.classList.remove("show"); if(d)d.classList.remove("show"); }
+function saveAdjust(key){
+  var label=document.getElementById("adjin_"+key).value.trim()||"(edited gap)";
+  var why=document.getElementById("adjwhy_"+key).value.trim();
+  var bid=key.split("_")[1];
+  setDecision(key,{type:"adjusted",label:label,was:GAPREAD[bid].title,why:why,cls:state.current});
+}
+var reasonPick={};
+function pickReason(key,el){ el.parentElement.querySelectorAll(".rchip").forEach(function(c){c.classList.remove("on");}); el.classList.add("on"); reasonPick[key]=el.textContent; }
+function saveDismiss(key){ var reason=reasonPick[key]||"no reason given"; setDecision(key,{type:"dismissed",reason:reason,cls:state.current}); }
+function undo(key){ delete state.decisions[key]; renderSuggestions(); renderAudit(); }
+
+function renderAudit(){
+  var keys=Object.keys(state.decisions);
+  var wrap=document.getElementById("auditRows");
+  var note=document.getElementById("auditNote");
+  if(keys.length===0){ wrap.innerHTML='<p class="audit-empty">No decisions yet. Confirm, adjust, or dismiss a suggestion above and it appears here.</p>'; note.style.display="none"; return; }
+  var h="";
+  keys.forEach(function(k){
+    var d=state.decisions[k];
+    var t=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    if(d.type==="confirmed"){ h+='<div class="arow"><div class="a-icon c">\u2713</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">confirmed SEQUENS\u2019 read: <b>'+d.label+'</b></span></div><span class="a-time">Thu '+t+'</span></div>'; }
+    else if(d.type==="adjusted"){ h+='<div class="arow"><div class="a-icon a">\u270e</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">overrode SEQUENS \u2014 now <b>'+d.label+'</b>, <span class="was">'+d.was+'</span>'+(d.why?' <span class="reason">\u201c'+d.why+'\u201d</span>':'')+'</span></div><span class="a-time">Thu '+t+'</span></div>'; }
+    else if(d.type==="dismissed"){ h+='<div class="arow"><div class="a-icon d">\u2014</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">dismissed a suggestion \u2014 <span class="reason">\u201c'+d.reason+'\u201d</span></span></div><span class="a-time">Thu '+t+'</span></div>'; }
+    else if(d.type==="pupil"){
+      var pmap={support:["c","\u2713","added targeted support for"],monitor:["a","\u25c9","is monitoring"],dismissed:["d","\u2014","judged no real gap for"],escalated:["c","\u2713","escalated to Lead Coach review"],kept:["a","\u25c9","kept supporting (noted for Lead Coach)"]};
+      var pm=pmap[d.action]||["a","\u25c9",d.action];
+      h+='<div class="arow"><div class="a-icon '+pm[0]+'">'+pm[1]+'</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">'+pm[2]+' <b>'+d.pupil+'</b></span></div><span class="a-time">Thu '+t+'</span></div>';
+    }
+  });
+  wrap.innerHTML=h;
+  note.style.display="block";
+  var conf=keys.filter(function(k){return state.decisions[k].type==="confirmed";}).length;
+  var adj=keys.filter(function(k){return state.decisions[k].type==="adjusted";}).length;
+  var dis=keys.filter(function(k){return state.decisions[k].type==="dismissed";}).length;
+  var pup=keys.filter(function(k){return state.decisions[k].type==="pupil";}).length;
+  note.innerHTML="This term\u2019s record so far: <b style='color:#fff'>"+conf+"</b> class gaps confirmed, <b style='color:#fff'>"+adj+"</b> overridden by teacher judgement, <b style='color:#fff'>"+dis+"</b> dismissed, <b style='color:#fff'>"+pup+"</b> individual-pupil decision"+(pup===1?"":"s")+". Confirmed class gaps and pupil support flow onward; dismissed items are recorded but not acted on.";
+}
+
+function pupilBlockLost(pupilRow){
+  // returns block id with most losses for this pupil, and counts
+  var best=null,bestLost=-1,total4=4;
+  BLOCKS.forEach(function(b){
+    var lost=0; b.qs.forEach(function(q){ if(pupilRow[q-1]===0) lost++; });
+    if(lost>bestLost){bestLost=lost;best=b;}
+  });
+  return {block:best,lost:bestLost};
+}
+function classTopBlockId(){
+  var c=CLASSES[state.current];
+  var ranked=BLOCKS.map(function(b){return {id:b.id,pct:blockLostPct(c.pupils,b)};}).sort(function(x,y){return y.pct-x.pct;});
+  return ranked[0].pct>=15?ranked[0].id:null;
+}
+function renderPupils(){
+  var c=CLASSES[state.current];
+  document.getElementById("pupClass").textContent=state.current;
+  var classTop=classTopBlockId();
+  var classGapPct=classTop?blockLostPct(c.pupils,BLOCKS.find(function(b){return b.id===classTop;})):0;
+  var flagged=[];
+  c.pupils.forEach(function(p){
+    var name=p[0], row=p[1], weeks=p[2]||0;
+    var tot=row.reduce(function(a,v){return a+v;},0);
+    var pb=pupilBlockLost(row);
+    var below=tot<THRESHOLD;
+    // INCLUSION CAP: on support 3+ weeks -> human review, stop auto-scaffold
+    if(weeks>=3){
+      flagged.push({name:name,kind:"cap",tot:tot,weeks:weeks,
+        ev:"Below the line for a <b>"+weeks+ordinal(weeks)+" week</b> - "+tot+"/12 again.",
+        reads:"This has gone past a pattern SEQUENS should keep patching. Automated scaffolding pauses here - "+name+" needs a person: a Lead Coach review, not another generated worksheet. A scaffold is a bridge to age-related expectation, never a place a child lives."});
+      return;
+    }
+    // HIDDEN RISK: class is broadly secure (low class gap) but this child is below
+    if(below && classGapPct<35){
+      flagged.push({name:name,kind:"hidden-risk",tot:tot,weeks:weeks,
+        ev:"Scored <b>"+tot+"/12</b> in a class that mostly held up - the average would have hidden this.",
+        reads:name+" lost most marks in <b>"+pb.block.name.toLowerCase()+"</b>. The class doesn’t need this as a whole-class focus, but "+name+" needs a quiet word and a targeted scaffold, or they slip while the class moves on."});
+      return;
+    }
+    // INDIVIDUAL DIFFERS FROM CLASS: below, and their worst block isn't the class's gap
+    if(below && classTop && pb.block.id!==classTop && pb.lost>=3){
+      flagged.push({name:name,kind:"watch",tot:tot,weeks:weeks,
+        ev:"Scored <b>"+tot+"/12</b>, but lost most in <b>"+pb.block.name+"</b> - not the class’s gap.",
+        reads:"Careful: putting "+name+" in the class intervention would aim at the wrong thing. Their gap is "+pb.block.name.toLowerCase()+", so they need a different scaffold from the rest."+(weeks>=2?" And this is their "+weeks+ordinal(weeks)+" week below - watch closely.":"")});
+      return;
+    }
+    // STANDARD BELOW-THRESHOLD (matches class gap)
+    if(below){
+      flagged.push({name:name,kind:"watch",tot:tot,weeks:weeks,
+        ev:"Scored <b>"+tot+"/12</b>"+(weeks>=2?", <b>"+weeks+ordinal(weeks)+" week</b> below the line":"")+".",
+        reads:name+" lost most marks in <b>"+pb.block.name.toLowerCase()+"</b>, in line with the class focus - the whole-class scaffold will help, but keep an eye on them."+(weeks>=2?" Two weeks running means it’s worth a targeted check, not just the class input.":"")});
+    }
+  });
+  var wrap=document.getElementById("pupilFlags");
+  if(flagged.length===0){
+    wrap.innerHTML='<div class="pupil-clear"><b>No individual flags this week.</b> Every pupil is at or above the line, and no one is hidden by the class average. SEQUENS won’t invent a concern where the data doesn’t show one.</div>';
+    return;
+  }
+  var h="";
+  flagged.forEach(function(f){
+    var key="p_"+state.current+"_"+f.name;
+    var dec=state.decisions[key];
+    var badgeText=f.kind==="cap"?"Inclusion review":(f.kind==="hidden-risk"?"Hidden by the average":"Watch");
+    h+='<div class="pupil-flag '+f.kind+'">';
+    h+='<span class="pf-badge '+f.kind+'">'+badgeText+'</span><div class="pf-body">';
+    h+='<p class="pf-name">'+f.name+'</p>';
+    h+='<p class="pf-ev">'+f.ev+'</p>';
+    h+='<p class="pf-reads'+(f.kind==="cap"?" capr":"")+'">'+f.reads+'</p>';
+    if(f.kind==="cap"){
+      h+='<div class="pf-actions" id="pact_'+key+'"'+(dec?' style="display:none"':'')+'><button class="btn sm" onclick="pupilDecide(&#39;'+key+'&#39;,&#39;'+f.name+'&#39;,&#39;escalated&#39;)">Send to Lead Coach review</button><button class="btn sm ghost" onclick="pupilDecide(&#39;'+key+'&#39;,&#39;'+f.name+'&#39;,&#39;kept&#39;)">Keep supporting for now (noted)</button></div>';
+    } else {
+      h+='<div class="pf-actions" id="pact_'+key+'"'+(dec?' style="display:none"':'')+'><button class="btn sm" onclick="pupilDecide(&#39;'+key+'&#39;,&#39;'+f.name+'&#39;,&#39;support&#39;)">Add targeted support</button><button class="btn sm ghost" onclick="pupilDecide(&#39;'+key+'&#39;,&#39;'+f.name+'&#39;,&#39;monitor&#39;)">Monitor, no action yet</button><button class="btn sm dismiss" onclick="pupilDecide(&#39;'+key+'&#39;,&#39;'+f.name+'&#39;,&#39;dismissed&#39;)">Not a real gap</button></div>';
+    }
+    h+='<div class="pf-decision'+(dec?' show':'')+'" id="pdec_'+key+'">'+(dec?pupilDecisionHTML(key,f.name,dec):'')+'</div>';
+    h+='</div></div>';
+  });
+  wrap.innerHTML=h;
+}
+function ordinal(n){return n===1?"st":n===2?"nd":n===3?"rd":"th";}
+function pupilDecisionHTML(key,name,dec){
+  if(dec==="support") return '<span class="tag confirmed">✓ Targeted support added</span><span class="detail"> '+name+' gets a scaffold aimed at their gap, on top of the class lesson.</span><span class="undo" onclick="pupilUndo(&#39;'+key+'&#39;)">undo</span>';
+  if(dec==="monitor") return '<span class="tag adjusted">◉ Monitoring</span><span class="detail"> Noted, watching '+name+' next week - no intervention yet.</span><span class="undo" onclick="pupilUndo(&#39;'+key+'&#39;)">undo</span>';
+  if(dec==="dismissed") return '<span class="tag dismissed">- Dismissed</span><span class="detail"> You judged this isn’t a real gap for '+name+'. Recorded, not acted on.</span><span class="undo" onclick="pupilUndo(&#39;'+key+'&#39;)">undo</span>';
+  if(dec==="escalated") return '<span class="tag confirmed">✓ Sent to Lead Coach</span><span class="detail"> '+name+' escalated for human review. Automated scaffolding stays paused.</span><span class="undo" onclick="pupilUndo(&#39;'+key+'&#39;)">undo</span>';
+  if(dec==="kept") return '<span class="tag adjusted">◉ Kept, noted</span><span class="detail"> You chose to keep supporting '+name+' - recorded, and it stays on the Lead Coach’s list.</span><span class="undo" onclick="pupilUndo(&#39;'+key+'&#39;)">undo</span>';
+  return "";
+}
+function pupilDecide(key,name,type){ state.decisions[key]={type:"pupil",pupil:name,cls:state.current,action:type,raw:type}; renderPupils(); renderAudit(); }
+function pupilUndo(key){ delete state.decisions[key]; renderPupils(); renderAudit(); }
+
+function pick(c){ state.current=c; closeAll(); renderTabs(); renderSheet(); renderSuggestions(); renderPupils(); }
+function closeAll(){}
+// init
+renderTabs(); renderSheet(); renderSuggestions(); renderPupils(); renderAudit();
+</script>
+</div>
+</body>
+</html>
