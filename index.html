@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEQUENS | Coaching, Lesson Builder, Home Education</title>
-<meta name="description" content="One evidence base, three ways in: instructional coaching that sticks, a lesson builder that turns an objective into a full lesson, and home education.">
+<title>SEQUENS | Instructional Coaching, Lesson Builder and Home Education</title>
+<meta name="description" content="One evidence base, three ways in. Instructional coaching that changes what teachers do, a lesson builder that turns an objective into a full lesson, and home education that stands up to a local authority.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -63,14 +63,13 @@
   .foot-in a{color:var(--grey);font-size:.85rem;}
   .foot-in a:hover{color:var(--accent);}
   .foot-in .sp{margin-left:auto;}
-  }
 
   /* Small phones: .top-in is a nowrap flex row and cannot hold the nav plus
      the reading-support control. It must WRAP, not hide - a dyslexic reader on
      a small phone needs that control more than anyone, not less. */
   @media (max-width:430px){
-    .top-in{flex-wrap:wrap !important;row-gap:.55rem;}
-    .top-in .rs-toggle{margin-left:0;}
+    .top-in,.wrap-h{flex-wrap:wrap !important;row-gap:.55rem;}
+    .top-in .rs-toggle,.wrap-h .rs-toggle{margin-left:0;}
     .rs-toggle{font-size:.8rem;padding:.4rem .7rem;}
   }
 
@@ -78,9 +77,9 @@
      row rather than being squeezed or hidden. It is the last thing we would ever
      hide, because the reader who needs it is the reader on the small old phone. */
   @media (max-width:400px){
-    .top-in{flex-wrap:wrap !important;row-gap:.5rem;padding-left:1rem;padding-right:1rem;}
-    .top-in .rs-toggle{flex:1 0 100%;margin-left:0;justify-content:center;text-align:center;}
-    .top-in .links{flex:1 0 100%;}
+    .top-in,.wrap-h{flex-wrap:wrap !important;row-gap:.5rem;padding-left:1rem;padding-right:1rem;}
+    .top-in .rs-toggle,.wrap-h .rs-toggle{flex:1 0 100%;margin-left:0;justify-content:center;text-align:center;}
+    .top-in .links,.wrap-h .links{flex:1 0 100%;}
   }
 </style>
 <meta name="keywords" content="instructional coaching, lesson planning, home education, teacher CPD, evidence based teaching">
@@ -90,8 +89,8 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SEQUENS">
-<meta property="og:title" content="SEQUENS | Coaching, Lesson Builder, Home Education">
-<meta property="og:description" content="One evidence base, three ways in: instructional coaching that sticks, a lesson builder that turns an objective into a full lesson, and home education.">
+<meta property="og:title" content="SEQUENS | Instructional Coaching, Lesson Builder and Home Education">
+<meta property="og:description" content="One evidence base, three ways in. Instructional coaching that changes what teachers do, a lesson builder that turns an objective into a full lesson, and home education that stands up to a local authority.">
 <meta property="og:url" content="https://sequens.education/">
 <meta property="og:image" content="https://sequens.education/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -99,18 +98,14 @@
 <meta property="og:locale" content="en_GB">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SEQUENS | Coaching, Lesson Builder, Home Education">
-<meta name="twitter:description" content="One evidence base, three ways in: instructional coaching that sticks, a lesson builder that turns an objective into a full lesson, and home education.">
+<meta name="twitter:title" content="SEQUENS | Instructional Coaching, Lesson Builder and Home Education">
+<meta name="twitter:description" content="One evidence base, three ways in. Instructional coaching that changes what teachers do, a lesson builder that turns an objective into a full lesson, and home education that stands up to a local authority.">
 <meta name="twitter:image" content="https://sequens.education/og-image.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SEQUENS","alternateName":"SEQUENS - The Coherence Architecture","url":"https://sequens.education","logo":"https://sequens.education/logo.png","description":"SEQUENS is an implementation coherence architecture for education: instructional coaching, a lesson builder, and home education, on one evidence base.","founder":{"@type":"Person","name":"James Banfield","jobTitle":"SEQUENS Architect"},"areaServed":"GB","knowsAbout":["Instructional coaching","Lesson planning","Retrieval practice","Formative assessment","Hinge questions","Adaptive teaching","Home education","Cognitive load theory"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a hinge question?","acceptedAnswer":{"@type":"Answer","text":"A hinge question is a checkpoint where the wrong answer is diagnostic. It does not just tell you that a child is confused, it tells you what they have misunderstood. For example, in a Year 5 gravity lesson: on the Moon there is no air, an astronaut drops a hammer and a feather, which lands first? A child who says hammer still believes heavier objects fall faster, and you would never have known."}},{"@type":"Question","name":"Why does CPD not stick?","acceptedAnswer":{"@type":"Answer","text":"One-off training does not change deeply grooved professional habits. The research is consistent: sustained, job-embedded instructional coaching produces some of the largest improvements in teaching quality ever measured, while a single day of input produces almost none."}},{"@type":"Question","name":"What is the difference between adaptive teaching and differentiation?","acceptedAnswer":{"@type":"Answer","text":"Differentiation typically means different tasks for different children, and children know which group they are in. Adaptive teaching means one shared task, with scaffolds that get a child into the same thinking rather than around it. A scaffold should be a bridge to where everyone else is standing, not a track that runs alongside forever."}},{"@type":"Question","name":"What records do I need to keep for home education in the UK?","acceptedAnswer":{"@type":"Answer","text":"There is no statutory requirement to follow the National Curriculum or to keep records in a particular format. However, a local authority may make informal enquiries about the education being provided. Keeping a simple ongoing record of what your child has covered, with occasional examples of their work, means that if you are asked, the answer is straightforward rather than stressful."}},{"@type":"Question","name":"Can instructional coaching be used for performance management?","acceptedAnswer":{"@type":"Answer","text":"It should not be. The moment staff sense that coaching conversations feed into appraisal, they stop being honest and coaching stops working. SEQUENS maintains a hard wall between coaching and appraisal for exactly this reason."}}]}</script>
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
 </head>
 <body>
 <a class="skip" href="#doors">Skip to content</a>
@@ -173,9 +168,9 @@
       <circle cx="30" cy="29" r="5.5" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
     </svg>
     <span class="who">For families</span>
-    <h2>Homeschool</h2>
+    <h2>Home education</h2>
     <p>You don&#39;t need to be a teacher. Turn a moment, an interest, or an objective into a real session for your child, with coverage you can show anyone who asks.</p>
-    <span class="go">Enter the homeschool planner &rarr;</span>
+    <span class="go">Enter home education &rarr;</span>
   </a>
 
 </div></div></section>
