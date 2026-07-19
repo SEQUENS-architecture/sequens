@@ -114,7 +114,7 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 6</span></div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 7</span></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
       <div class="msg" id="m-signin"></div>
@@ -363,12 +363,35 @@ async function boot(){
       + "\u201CLegacy anon, service_role API keys\u201D and copy the anon key. It starts eyJ.");
     return;
   }
-  const hash = location.hash || "";
-  const params = new URLSearchParams(hash.replace(/^#/,""));
+  const hash   = location.hash || "";
+  const hashP  = new URLSearchParams(hash.replace(/^#/,""));
+  const queryP = new URLSearchParams(location.search);
 
-  /* a recovery link lands here with a session already established */
-  if(params.get("type")==="recovery" || hash.includes("#reset")){
-    show("reset"); return;
+  /* A recovery link can arrive three ways depending on the flow:
+       PKCE      ->  ?code=...&reset=1
+       implicit  ->  #access_token=...&type=recovery
+       our flag  ->  ?reset=1
+     Catch all of them. */
+  const isRecovery =
+      queryP.get("reset")==="1" ||
+      queryP.get("type")==="recovery" ||
+      hashP.get("type")==="recovery" ||
+      hash.includes("#reset");
+
+  if(isRecovery){
+    recovering = true;
+    /* PKCE needs the code swapped for a session before the password can change */
+    const code = queryP.get("code");
+    if(code){
+      const { error } = await sb.auth.exchangeCodeForSession(code);
+      if(error){
+        show("signin");
+        say("signin","err","That reset link has expired or has already been used. Ask for a new one.");
+        return;
+      }
+    }
+    show("reset");
+    return;
   }
   if(params.get("error") || params.get("error_code")){
     show("signin");
@@ -453,13 +476,14 @@ async function finishProfile(school){
 
 /* ---------- forgot ---------- */
 let lastAction=null;
+let recovering=false;
 $("btn-forgot").addEventListener("click", async ()=>{
   clear("forgot");
   const email=$("fg-email").value.trim();
   if(!email){ say("forgot","err","Put in the email you sign in with."); return; }
   busy($("btn-forgot"),true,"Sending...");
   const { error } = await sb.auth.resetPasswordForEmail(email,{
-    redirectTo: location.origin + location.pathname + "#reset"
+    redirectTo: location.origin + location.pathname + "?reset=1"
   });
   busy($("btn-forgot"),false);
   /* deliberately the same answer either way, so this page cannot be used
@@ -476,7 +500,7 @@ $("btn-resend").addEventListener("click", async ()=>{
   busy($("btn-resend"),true,"Sending...");
   if(lastAction.kind==="reset"){
     await sb.auth.resetPasswordForEmail(lastAction.email,{
-      redirectTo: location.origin + location.pathname + "#reset" });
+      redirectTo: location.origin + location.pathname + "?reset=1" });
   } else {
     await sb.auth.resend({ type:"signup", email:lastAction.email,
       options:{ emailRedirectTo: location.origin + location.pathname + "#signin" } });
@@ -497,6 +521,7 @@ $("btn-reset").addEventListener("click", async ()=>{
   busy($("btn-reset"),false);
   if(error){ say("reset","err",humanise(error)); return; }
   say("reset","ok","Password changed. Taking you in...");
+  recovering=false;
   history.replaceState(null,"",location.pathname);
   const { data:{ session } } = await sb.auth.getSession();
   setTimeout(()=>{ if(session) showSignedIn(session); else show("signin"); },900);
@@ -514,7 +539,9 @@ $("btn-signout").addEventListener("click", async ()=>{
    have no profile yet, finish it using what they typed at sign up */
 if(sb){
   sb.auth.onAuthStateChange(async (event,session)=>{
+    if(event==="PASSWORD_RECOVERY"){ recovering=true; show("reset"); return; }
     if(event==="SIGNED_IN" && session){
+      if(recovering){ show("reset"); return; }
       const { data:prof } = await sb.from("profiles").select("id").eq("id",session.user.id).maybeSingle();
       if(!prof){
         const md=session.user.user_metadata||{};
