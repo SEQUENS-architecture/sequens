@@ -240,6 +240,58 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
   .paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border:none;border-radius:0;margin:0;padding:0 8px}
   .conf,.side,.top,.phead{display:none!important}
 }
+
+  /* ---------- plan from a moment ---------- */
+  .kidrow{display:flex;gap:10px;flex-wrap:wrap;}
+  .kid{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:var(--card2);
+    border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;
+    font-family:var(--body);text-align:left;transition:border-color .14s,background .14s;}
+  .kid:hover{border-color:var(--accent);}
+  .kid.on{border-color:var(--accent);background:#F1FAF7;}
+  .kid .kn{font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink);}
+  .kid .ka{font-size:11.5px;color:var(--ink-soft);}
+  .kid.off{opacity:.5;}
+
+  .onemoment{background:var(--ink);color:#DCE9F1;border-radius:14px;padding:16px 18px;margin-top:18px;}
+  .onemoment .om-h{font-family:var(--display);font-weight:800;font-size:16px;color:#fff;margin-bottom:5px;}
+  .onemoment .om-p{margin:0;font-size:13px;color:#A9C4D6;max-width:66ch;}
+  .onemoment .om-p b{color:#fff;}
+
+  .secttl{font-family:var(--display);font-weight:700;font-size:17px;color:var(--ink);margin:20px 0 4px;}
+
+  .mcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;
+    margin-top:11px;position:relative;}
+  .mcard.picked{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent);}
+  .mtop{display:flex;align-items:flex-start;gap:12px;}
+  .mtop .mt-txt{flex:1;min-width:0;}
+  .mcard .mtitle{font-family:var(--display);font-weight:700;font-size:15.5px;color:var(--ink);margin:3px 0 3px;}
+  .mcard .mdesc{font-size:13px;color:var(--ink-soft);margin:0;max-width:70ch;}
+  .mpick{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line);background:#fff;
+    cursor:pointer;flex-shrink:0;color:#fff;font-size:13px;line-height:1;}
+  .mcard.picked .mpick{background:var(--accent);border-color:var(--accent);}
+
+  .mtags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .mtag{font-family:var(--display);font-size:10.5px;font-weight:700;letter-spacing:.4px;
+    border-radius:6px;padding:3px 8px;}
+  .mtag.nc{background:var(--teal-soft);color:#1F4F73;}
+  .mtag.enrich{background:var(--line-soft);color:var(--ink-soft);}
+  .mtag.year{background:#F3ECD2;color:#7A6118;}
+  .mtag.unconf{background:#F7E9E7;color:#9A4A3E;}
+
+  .kids{margin-top:13px;border-top:1px solid var(--line-soft);padding-top:11px;}
+  .kids .kh{font-family:var(--display);font-size:10.5px;font-weight:700;letter-spacing:.6px;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;}
+  .krow{display:grid;grid-template-columns:104px 1fr;gap:12px;padding:7px 0;align-items:start;}
+  .krow + .krow{border-top:1px dashed var(--line-soft);}
+  .krow .who{font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink);}
+  .krow .who span{display:block;font-family:var(--body);font-weight:400;font-size:11px;color:var(--ink-soft);}
+  .krow .does{font-size:13px;color:var(--ink);}
+  .krow .same{font-size:12px;color:#1F4F73;background:var(--teal-soft);border-radius:7px;padding:6px 10px;}
+  @media (max-width:640px){
+    .krow{grid-template-columns:1fr;gap:3px;}
+    .onemoment{padding:14px;}
+  }
+
 </style>
 </head>
 <body>
@@ -373,65 +425,58 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
     <!-- PLAN FROM A MOMENT -->
     <section class="apage hide" data-ap="moment">
-      <div class="phead"><div><h1>Plan from a moment</h1><p>What's happening this week? We'll find the learning in it.</p></div></div>
-      <div class="seg" style="margin-bottom:16px"><button class="on" onclick="momentChild('leo',this)">Leo · Year 3</button><button onclick="momentChild('sam',this)">Sam · Year 9</button></div>
-      <div class="nc-banner">Every activity shows its National Curriculum link - and says so plainly when something is enrichment beyond a set statement. No ambiguity.</div>
-      <div id="m-leo">
-      <div class="card" style="max-width:840px;margin-bottom:18px">
-        <label class="fl">Tell us what you're doing - in your own words</label>
-        <input class="inp" value="We're going to the beach on Thursday">
-        <div class="row3" style="margin-top:14px">
-          <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Leo · age 8</option><option>Maya · age 6</option></select></div>
-          <div><label class="fl" style="font-size:12px">Roughly how long?</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Half a day</option><option selected>A full day</option><option>A few hours</option></select></div>
-          <div><label class="fl" style="font-size:12px">Depth</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Light &amp; playful</option><option selected>Balanced</option><option>Stretch him</option></select></div>
-        </div>
-        <div style="margin-top:14px"><button class="btn btn-primary">Find the learning ✺</button></div>
+      <div class="phead"><div><h1>Plan from a moment</h1>
+        <p class="muted">Tell SEQUENS what is actually happening. It finds the learning in it, for everyone who is there.</p></div>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
-        <div><span class="eyebrow">Learning we found at the beach</span><div class="muted" style="font-size:13px;margin-top:3px">Tap any to keep it. Each is a proper SEQUENS session - and themed to Leo.</div></div>
-        <span class="tag">4 link to the National Curriculum</span>
-      </div>
-      <div class="opps">
-        <div class="opp"><div class="chk">✓</div><div class="subj">Maths</div><h4>Tides &amp; measurement</h4><p>Read the tide times; measure how far the sea moves each hour.</p><span class="obj">NC · KS2 Maths (Y3) - measure &amp; compare lengths (m/cm/mm)</span></div>
-        <div class="opp"><div class="chk">✓</div><div class="subj">Science</div><h4>Rock-pool classification</h4><p>Sort what you find - living, dead, never alive - and group the creatures.</p><span class="obj">NC · KS2 Science (Y4) - group living things; use classification keys</span></div>
-        <div class="opp"><div class="chk">✓</div><div class="subj">English</div><h4>Beach diary</h4><p>Write the day as a recount - with a Sonic-speed "fastest find" challenge.</p><span class="obj">NC · KS2 English (LKS2) - compose &amp; organise a recount</span></div>
-        <div class="opp"><div class="subj">Geography</div><h4>Coast &amp; erosion</h4><p>Why is the cliff that shape? Watch the waves do their slow work.</p><span class="obj enr">NC · KS2 Geography - physical processes (topic-linked enrichment)</span></div>
-        <div class="opp"><div class="subj">D&amp;T / Science</div><h4>Sandcastle engineering</h4><p>Which shape stands up to a wave? Test, fail, rebuild.</p><span class="obj">NC · KS2 D&amp;T - strengthen &amp; reinforce structures</span></div>
-        <div class="opp"><div class="subj">PSHE</div><h4>Water safety</h4><p>Flags, currents, and the one rule that matters most.</p><span class="obj enr">Wider learning - water safety (PSHE, non-statutory)</span></div>
-      </div>
-      <div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="note" style="margin:0">These 4 ticked activities will be logged to Leo's coverage map automatically - emergent learning that still counts.</div>
-        <button class="btn btn-primary" onclick="show('session',document.querySelector('[data-s=session]'))">Build the package</button>
-      </div>
-    </div>
-      <div id="m-sam" class="hide">
-        <div class="card" style="max-width:840px;margin-bottom:18px">
-          <label class="fl">Tell us what you're doing - in your own words</label>
-          <input class="inp" value="Sam's cooking the family dinner tonight on a £15 budget">
-          <div class="row3" style="margin-top:14px">
-            <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Sam · age 14 (Year 9)</option></select></div>
-            <div><label class="fl" style="font-size:12px">Roughly how long?</label><select class="inp" style="padding:11px 12px;font-size:14px"><option selected>An evening</option><option>An hour</option></select></div>
-            <div><label class="fl" style="font-size:12px">Depth</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Light</option><option selected>Balanced</option><option>GCSE-stretch</option></select></div>
+      <div class="card" style="padding:18px;">
+        <label class="fl">Tell us what you're doing, in your own words</label>
+        <input class="inp" id="mom-text" value="We're spending the afternoon at the beach" aria-label="What you are doing">
+
+        <div style="margin-top:16px;">
+          <label class="fl">Who's there?</label>
+          <div class="kidrow" id="mom-kids">
+            <button class="kid on" data-kid="maya" aria-pressed="true">
+              <span class="kn">Maya</span><span class="ka">age 6 &middot; Year 1</span></button>
+            <button class="kid on" data-kid="leo" aria-pressed="true">
+              <span class="kn">Leo</span><span class="ka">age 8 &middot; Year 3</span></button>
+            <button class="kid on" data-kid="sam" aria-pressed="true">
+              <span class="kn">Sam</span><span class="ka">age 14 &middot; Year 9</span></button>
           </div>
-          <div style="margin-top:14px"><button class="btn btn-primary">Find the learning ✺</button></div>
+          <p class="muted" style="font-size:12px;margin-top:8px;">Tap a child to leave them out of this one.</p>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
-          <div><span class="eyebrow">Learning we found in tonight's dinner</span><div class="muted" style="font-size:13px;margin-top:3px">Year 9 level · each links explicitly to the KS3 National Curriculum.</div></div>
-          <span class="tag">4 link to the National Curriculum</span>
+
+        <div class="row3" style="margin-top:16px;">
+          <div><label class="fl">Roughly how long?</label>
+            <div class="seg"><button class="btn" >A few hours</button>
+              <button class="btn on">Half a day</button><button class="btn">A full day</button></div></div>
+          <div><label class="fl">Depth</label>
+            <div class="seg"><button class="btn">Light &amp; playful</button>
+              <button class="btn on">Balanced</button><button class="btn">Stretch them</button></div></div>
+          <div style="display:flex;align-items:flex-end;">
+            <button class="btn btn-primary" style="width:100%;" onclick="findLearning()">Find the learning &#10038;</button></div>
         </div>
-        <div class="opps">
-          <div class="opp"><div class="chk">✓</div><div class="subj">Maths</div><h4>Scale the recipe &amp; the budget</h4><p>Adjust quantities for 5 people; keep it under £15; work out cost per portion.</p><span class="obj">NC · KS3 Maths - ratio, proportion &amp; percentage change</span></div>
-          <div class="opp"><div class="chk">✓</div><div class="subj">D&amp;T · Food</div><h4>A balanced plate</h4><p>Build the meal around the principles of nutrition; cook a savoury dish from scratch.</p><span class="obj">NC · KS3 D&amp;T - principles of nutrition; cook savoury dishes</span></div>
-          <div class="opp"><div class="chk">✓</div><div class="subj">Citizenship</div><h4>Budgeting &amp; money</h4><p>Plan the shop, track the spend, handle the trade-offs of a tight budget.</p><span class="obj">NC · KS3 Citizenship - money, budgeting &amp; managing risk</span></div>
-          <div class="opp"><div class="chk">✓</div><div class="subj">Science</div><h4>The chemistry of cooking</h4><p>What's a physical change and what's chemical? Watch it happen in the pan.</p><span class="obj">NC · KS3 Science - chemical vs physical changes</span></div>
-          <div class="opp"><div class="subj">English</div><h4>Write the method</h4><p>Turn the cook into clear instructions someone else could follow.</p><span class="obj enr">NC · KS3 English - writing for a clear purpose</span></div>
-          <div class="opp"><div class="subj">Independence</div><h4>Cooking safely</h4><p>Knives, heat, hygiene - the life-skill running underneath it all.</p><span class="obj enr">Wider learning - kitchen safety &amp; independence</span></div>
-        </div>
-        <div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div class="note" style="margin:0">The 4 ticked activities log to Sam's coverage map against their KS3 National Curriculum statements.</div>
-          <button class="btn btn-primary" onclick="show('y9',document.querySelector('[data-s=y9]'))">Build the package</button>
-        </div>
+      </div>
+
+      <div class="onemoment">
+        <div class="om-h">One afternoon. Every child. Different outcomes.</div>
+        <p class="om-p">You run <b>one activity</b>, not three. SEQUENS sets what it expects from each
+          child out of their own profile, so the afternoon stays whole and the learning still fits each of them.</p>
+      </div>
+
+      <div class="nc-banner" style="margin-top:14px;">
+        <b>4 of these link to the National Curriculum.</b> Where a match sits in a different year from your
+        child, it says so. Where something is enrichment rather than a curriculum objective, it is tagged
+        as exactly that, and never dressed up as coverage.
+      </div>
+
+      <h3 class="secttl">Learning we found at the beach</h3>
+      <div id="mom-out"></div>
+
+      <div class="card" style="padding:16px;margin-top:16px;">
+        <p class="note" style="margin:0 0 12px;">Ticked activities log to each child's own coverage map, at
+          their own level. One afternoon, three different records.</p>
+        <button class="btn btn-primary" onclick="show('y3',document.querySelector('[data-s=y3]'))">Build the package</button>
       </div>
     </section>
 
@@ -758,7 +803,6 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
 var reportKind="la";function setReport(k){reportKind=k;}function openReport(){show(reportKind==="eoy"?"report-eoy":"report-doc",null);}
 function sesTab(btn,idx){var ap=btn.closest(".apage");ap.querySelectorAll(".tabs button").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");ap.querySelectorAll(".ltabp").forEach(function(p){p.classList.toggle("hide",+p.dataset.lt!==idx)});}
-function momentChild(c,btn){document.getElementById("m-leo").classList.toggle("hide",c!=="leo");document.getElementById("m-sam").classList.toggle("hide",c!=="sam");btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));btn.classList.add("on");}
 function startOnboarding(){document.getElementById('site').classList.add('hide');document.querySelector('.top').classList.add('hide');document.getElementById('onb').classList.remove('hide');onbGo(0);window.scrollTo(0,0);}
 function onbGo(n){document.querySelectorAll('.onb-step').forEach(st=>st.classList.toggle('on',+st.dataset.step===n));document.querySelectorAll('.onb-dots i').forEach((d,i)=>d.classList.toggle('on',i<=n));}
 function onbPick(b){b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
@@ -791,6 +835,146 @@ document.addEventListener('click',e=>{
   const seg=e.target.closest('.seg button'); if(seg){seg.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));seg.classList.add('on');}
   const opp=e.target.closest('.opp'); if(opp&&!opp.querySelector('.chk')){const c=document.createElement('div');c.className='chk';c.textContent='✓';opp.appendChild(c);} else if(opp&&e.target.closest('.chk')){e.target.closest('.chk').remove();}
 });
+
+/* ================= PLAN FROM A MOMENT =================
+   One moment in, one set of learning out, and for each objective a
+   different expectation per child. The activity does not fork.
+
+   Curriculum honesty: the only National Curriculum references used here are
+   the ones already written into this file for KS2. Where a child sits in a
+   different phase, the expectation is shown but no curriculum link is
+   asserted, because that link has not been confirmed against a framework.
+   Nothing is invented to fill the gap. */
+
+var KIDS = {
+  maya:{ name:"Maya", age:"age 6",  yr:"Year 1", phase:"KS1" },
+  leo :{ name:"Leo",  age:"age 8",  yr:"Year 3", phase:"KS2" },
+  sam :{ name:"Sam",  age:"age 14", yr:"Year 9", phase:"KS3" }
+};
+var picked = {maya:true, leo:true, sam:true};
+
+var MOMENT = [
+ { subj:"Science", title:"Rock-pool classification",
+   desc:"Sort what you find, and group the creatures by what they have in common.",
+   nc:"NC \u00b7 KS2 Science (Y4): group living things; use classification keys",
+   ncPhase:"KS2", aboveFor:"leo", aboveNote:"This is Year 4. Leo is Year 3.",
+   keep:true,
+   does:{ maya:"Sort them into groups. Crabs here, shells there, and say why they belong together, out loud.",
+          leo :"Build a classification key. Yes-or-no questions that split the group. Test it on a creature you did not use.",
+          sam :"Explain the adaptation. Why that shell, that claw, that colour, in that pool. Argue it from evidence." } },
+
+ { subj:"Maths", title:"Tides and measurement",
+   desc:"Read the tide times, then measure how far the sea moves each hour.",
+   nc:"NC \u00b7 KS2 Maths (Y3): measure and compare lengths (m/cm/mm)",
+   ncPhase:"KS2", keep:true,
+   does:{ maya:"Count the steps from the water to the towel. Do it again an hour later. Which was more?",
+          leo :"Measure the distance in metres and centimetres, twice, and work out the difference.",
+          sam :"Plot the readings, find the rate of change, and predict where the water will be at five o'clock." } },
+
+ { subj:"English", title:"Beach diary",
+   desc:"Tell the afternoon back, in the order it happened.",
+   nc:"NC \u00b7 KS2 English (LKS2): compose and organise a recount",
+   ncPhase:"KS2", keep:true,
+   does:{ maya:"Say the three biggest things that happened, in order, out loud. Draw the best one.",
+          leo :"Write it as a recount, in order, using time words to join it up.",
+          sam :"Write it for someone who was not there. Decide what to leave out, and be ready to say why." } },
+
+ { subj:"Geography", title:"Coast and erosion",
+   desc:"Why is the cliff that shape? Watch the waves do their slow work.",
+   nc:"NC \u00b7 KS2 Geography: physical processes",
+   ncPhase:"KS2", enrichment:true,
+   does:{ maya:"Find something the sea has changed. A stone rubbed smooth, a shell worn thin.",
+          leo :"Watch where the waves hit hardest, and say what you think will change first.",
+          sam :"Explain the process that shaped that cliff, and over roughly what timescale." } },
+
+ { subj:"D&T and Science", title:"Sandcastle engineering",
+   desc:"Which shape stands up to a wave? Test it, watch it fail, rebuild it.",
+   nc:"NC \u00b7 KS2 D&T: strengthen and reinforce structures",
+   ncPhase:"KS2",
+   does:{ maya:"Build one that stands up on its own. If it falls, build it again.",
+          leo :"Test which shape survives the wave. Change one thing at a time so you know what did it.",
+          sam :"Justify the design from what you know about force, load and structure." } },
+
+ { subj:"PSHE", title:"Water safety",
+   desc:"Flags, currents, and the one rule that matters most.",
+   nonStat:true, sameForAll:true,
+   sameText:"The same for all three, and not negotiable. Some things do not get differentiated.",
+   keep:true, does:{} }
+];
+
+function findLearning(){ renderMoment(); }
+
+function renderMoment(){
+  var out = document.getElementById("mom-out");
+  if(!out) return;
+  var order = ["maya","leo","sam"];
+  var on = order.filter(function(k){ return picked[k]; });
+
+  out.innerHTML = MOMENT.map(function(o,idx){
+    var tags = "";
+    if(o.nonStat){
+      tags += '<span class="mtag enrich">Wider learning, non-statutory</span>';
+    } else if(o.enrichment){
+      tags += '<span class="mtag enrich">Enrichment, not a curriculum objective</span>';
+      tags += '<span class="mtag nc">'+o.nc+'</span>';
+    } else {
+      tags += '<span class="mtag nc">'+o.nc+'</span>';
+    }
+    if(o.aboveFor && picked[o.aboveFor]) tags += '<span class="mtag year">'+o.aboveNote+'</span>';
+    /* be honest about the phases we have not checked */
+    var others = on.filter(function(k){ return KIDS[k].phase !== o.ncPhase; });
+    if(o.ncPhase && others.length){
+      tags += '<span class="mtag unconf">Link confirmed for '+o.ncPhase+' only. '
+            + others.map(function(k){return KIDS[k].name+" ("+KIDS[k].phase+")";}).join(" and ")
+            + ': expectation set, curriculum link not yet checked.</span>';
+    }
+
+    var kidrows = o.sameForAll
+      ? '<div class="krow"><div class="who">All three</div><div class="same">'+o.sameText+'</div></div>'
+      : on.map(function(k){
+          return '<div class="krow"><div class="who">'+KIDS[k].name
+               + '<span>'+KIDS[k].age+' \u00b7 '+KIDS[k].yr+'</span></div>'
+               + '<div class="does">'+(o.does[k]||"")+'</div></div>';
+        }).join("");
+
+    return '<div class="mcard'+(o.keep?" picked":"")+'" data-obj="'+idx+'">'
+      + '<div class="mtop">'
+      +   '<div class="mt-txt">'
+      +     '<div class="subj">'+o.subj+'</div>'
+      +     '<div class="mtitle">'+o.title+'</div>'
+      +     '<p class="mdesc">'+o.desc+'</p>'
+      +     '<div class="mtags">'+tags+'</div>'
+      +   '</div>'
+      +   '<button class="mpick" data-pick="'+idx+'" aria-label="Keep this">'+(o.keep?"\u2713":"")+'</button>'
+      + '</div>'
+      + '<div class="kids"><div class="kh">'
+      +   (o.sameForAll ? "What everyone does" : "What each child is expected to do, from the same activity")
+      + '</div>'+kidrows+'</div></div>';
+  }).join("");
+}
+
+document.addEventListener("click", function(e){
+  var k = e.target.closest("[data-kid]");
+  if(k){
+    var id = k.dataset.kid;
+    picked[id] = !picked[id];
+    k.classList.toggle("on", picked[id]);
+    k.classList.toggle("off", !picked[id]);
+    k.setAttribute("aria-pressed", picked[id] ? "true" : "false");
+    renderMoment();
+    return;
+  }
+  var p = e.target.closest("[data-pick]");
+  if(p){
+    var i = parseInt(p.dataset.pick,10);
+    MOMENT[i].keep = !MOMENT[i].keep;
+    renderMoment();
+    return;
+  }
+});
+
+renderMoment();
+
 </script>
 </body>
 </html>
