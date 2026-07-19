@@ -171,5 +171,29 @@ function rs(btn){
   btn.classList.toggle("on", on);
 }
 </script>
+
+<!-- back to the demonstration -->
+<style>
+  .sqns-back{max-width:800px;margin:2.4rem auto 0;padding:1.2rem 1.4rem 2.2rem;
+    border-top:1px solid rgba(255,255,255,.16);display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;
+    font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
+  .sqns-back .sqns-bl{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.06);
+    border:1.5px solid rgba(255,255,255,.16);border-radius:10px;padding:.58rem 1rem;text-decoration:none;
+    font-family:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;font-weight:600;
+    font-size:.87rem;color:#DCE9F1;transition:border-color .14s,color .14s;}
+  .sqns-back .sqns-bl:hover{border-color:#2DE1C2;color:#2DE1C2;}
+  .sqns-back .sqns-bl.home{border-color:#2DE1C2;}
+  .sqns-back .sqns-note{margin-left:auto;font-size:.82rem;color:#93AABB;}
+  @media (max-width:560px){
+    .sqns-back{padding:1.1rem 1.1rem 1.8rem;}
+    .sqns-back .sqns-note{margin-left:0;flex:1 0 100%;}
+  }
+</style>
+<nav class="sqns-back" aria-label="Back to the demonstration">
+  <a class="sqns-bl home" href="index.html">&larr; Back to the demonstration</a>
+  <a class="sqns-bl" href="plan.html">The plan</a><a class="sqns-bl" href="confirm.html">The confirm screen</a>
+  <span class="sqns-note">Nothing here needs a sign-up.</span>
+</nav>
+
 </body>
 </html>
