@@ -113,7 +113,7 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching</div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 4</span></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
       <div class="msg" id="m-signin"></div>
@@ -213,16 +213,25 @@
    NEVER put the service_role key in this file.
    ===================================================================== */
 const SUPABASE_URL      = "https://hidkleumxlurqgfuanpa.supabase.co/rest/v1/";
-const SUPABASE_ANON_KEY = "sb_publishable_B-mdMczUzrQaPZ6cPwmXSA_e674Cl3G";
+const SUPABASE_ANON_KEY = "sb_publishable_B-mdMczUzrQaPZ6cPwmXSA_e674Cl3Gb";
 
 /* where to send people once they are in */
 const APP_URL = "coaching-mockup.html";
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const configured = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20;
+const keyTruncated = /\u2026|\.\.\.\s*$/.test(SUPABASE_ANON_KEY);
+const configured = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20 && !keyTruncated;
 if(!configured){
-  document.getElementById("setupWarn").style.display = "block";
+  (function(){
+    const w=document.getElementById("setupWarn");
+    w.style.display="block";
+    if(keyTruncated){
+      w.innerHTML="<b>The key is cut short.</b> It ends in an ellipsis, which means it was copied from the "
+        +"text on screen instead of with the copy button. In Supabase go to Settings, then API Keys, and click "
+        +"the small copy icon beside the <b>Publishable key</b>. Paste that into <code>SUPABASE_ANON_KEY</code>.";
+    }
+  })();
 } else {
   document.getElementById("card").style.display = "block";
 }
@@ -251,19 +260,47 @@ const busy = (btn,on,label) => {
 
 /* human error text, because Supabase messages are for developers */
 function humanise(err){
-  const m=(err && err.message ? err.message : String(err)).toLowerCase();
-  if(m.includes("invalid login credentials")) return "That email and password do not match. Check both, or reset your password.";
-  if(m.includes("email not confirmed"))       return "Your email is not confirmed yet. Open the link we sent you first.";
-  if(m.includes("user already registered") || m.includes("already been registered"))
-                                              return "There is already an account on that address. Try signing in, or reset the password.";
-  if(m.includes("password should be at least"))return "That password is too short. Use at least 10 characters.";
-  if(m.includes("rate limit") || m.includes("too many"))
-                                              return "Too many attempts just now. Wait a minute and try again.";
-  if(m.includes("expired") || m.includes("invalid"))
-                                              return "That link has expired or has already been used. Ask for a new one.";
-  if(m.includes("school name is needed"))     return "You have not been invited yet, so please put in your school name to start a new school.";
-  if(m.includes("failed to fetch"))           return "Could not reach the server. Check your connection and try again.";
-  return (err && err.message) ? err.message : "Something went wrong. Try again.";
+  const raw = (err && err.message) ? err.message : String(err);
+  const m = raw.toLowerCase();
+  /* the real error always goes to the console, whatever we show the user */
+  console.error("SEQUENS auth error:", raw, err);
+
+  /* key and configuration problems first, because they masquerade as
+     everything else and they are the ones that waste an afternoon */
+  if(m.includes("invalid api key") || m.includes("no api key") || m.includes("apikey"))
+    return "The Supabase key in this file is not being accepted. Check you pasted the Publishable key, and that Supabase has finished starting up.";
+  if(m.includes("failed to fetch") || m.includes("networkerror"))
+    return "Could not reach Supabase. Check the project URL in this file, and that the project is not paused.";
+  if(m.includes("project not found") || m.includes("not found") && m.includes("supabase"))
+    return "That project URL does not resolve. Check it against Settings, then API in Supabase.";
+
+  /* account problems */
+  if(m.includes("invalid login credentials"))
+    return "That email and password do not match. Check both, or reset your password.";
+  if(m.includes("email not confirmed"))
+    return "Your email is not confirmed yet. Open the link we sent you first.";
+  if(m.includes("already registered") || m.includes("already been registered") || m.includes("user already"))
+    return "There is already an account on that address. Try signing in, or reset the password.";
+  if(m.includes("password should be at least") || m.includes("password is too short"))
+    return "That password is too short. Use at least 10 characters.";
+  if(m.includes("email address") && m.includes("invalid"))
+    return "Supabase is rejecting that email address. Try a different one, and check Authentication, then Providers, for any domain restrictions.";
+  if(m.includes("signups not allowed") || m.includes("signup is disabled"))
+    return "Sign ups are switched off in Supabase. Authentication, then Sign In / Providers, then enable Allow new users to sign up.";
+  if(m.includes("rate limit") || m.includes("too many") || m.includes("over_email_send_rate"))
+    return "Too many attempts just now. Wait a minute and try again.";
+
+  /* link problems: only when the message is actually about a token */
+  if((m.includes("token") || m.includes("otp") || m.includes("link")) &&
+     (m.includes("expired") || m.includes("invalid") || m.includes("used")))
+    return "That link has expired or has already been used. Ask for a new one.";
+
+  if(m.includes("school name is needed"))
+    return "You have not been invited yet, so please put in your school name to start a new school.";
+
+  /* anything unrecognised is shown as-is. Better an ugly truth than a
+     confident wrong answer. */
+  return raw;
 }
 
 /* password strength: length first, because length is what matters */
@@ -288,8 +325,19 @@ document.addEventListener("click",e=>{
 });
 
 /* ---------- session on load ---------- */
+async function reachable(){
+  try{
+    const { error } = await sb.from("schools").select("id").limit(1);
+    /* a permission error means we got through, which is what we want to know */
+    if(error && /api key|apikey|jwt|unauthorized|failed to fetch/i.test(error.message)) return error.message;
+    return null;
+  }catch(e){ return e.message || String(e); }
+}
+
 async function boot(){
   if(!sb) return;
+  const bad = await reachable();
+  if(bad){ show("signin"); say("signin","err", humanise({message:bad})); return; }
   const hash = location.hash || "";
   const params = new URLSearchParams(hash.replace(/^#/,""));
 
@@ -297,9 +345,11 @@ async function boot(){
   if(params.get("type")==="recovery" || hash.includes("#reset")){
     show("reset"); return;
   }
-  if(hash.includes("error")){
+  if(params.get("error") || params.get("error_code")){
     show("signin");
-    say("signin","err", decodeURIComponent(params.get("error_description")||"That link is no longer valid. Ask for a new one."));
+    const d = params.get("error_description");
+    say("signin","err", d ? decodeURIComponent(d.replace(/\+/g," "))
+                          : "That link is no longer valid. Ask for a new one.");
     return;
   }
 
@@ -456,7 +506,19 @@ document.addEventListener("keydown",e=>{
   const b=v.querySelector(".btn:not(.ghost)"); if(b && !b.disabled) b.click();
 });
 
+/* connection check on load: catches a bad key or URL before you type anything */
+async function selfTest(){
+  if(!sb) return;
+  try{
+    const { error } = await sb.from("schools").select("id").limit(1);
+    if(error && /api key|apikey|jwt|not found/i.test(error.message||"")){
+      say("signin","err","Connection problem: "+humanise(error)+" (Nothing else on this page will work until that is fixed.)");
+    }
+  }catch(e){ console.error("self test",e); }
+}
+
 boot();
+selfTest();
 </script>
 </body>
 </html>
