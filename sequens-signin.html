@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in | SEQUENS</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#F2F6FA; --grey:#9AACBC; --dim:#647A8C;
+    --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16);
+    --panel:rgba(255,255,255,.04);
+    --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --navy:#0A3D62;
+    --warn:#FFB4A2; --ok:#8BE9C8;
+    --font:'Lexend','Segoe UI',system-ui,sans-serif;
+    --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+    color:var(--grey);font-family:var(--font);font-size:1rem;line-height:1.65;
+    -webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;}
+  a{color:var(--white);text-decoration:none;}
+  a:hover{color:var(--accent);}
+  h1,h2{color:var(--white);font-family:var(--head);font-weight:700;letter-spacing:-.02em;margin:0;}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:8px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  header{padding:1rem 0;border-bottom:1px solid var(--hair);}
+  .hin{max-width:1120px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+  .brand{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);
+    font-weight:800;letter-spacing:.04em;color:var(--white);font-size:1.05rem;}
+  .brand svg{height:20px;}
+  .hin .back{margin-left:auto;font-size:.87rem;color:var(--grey);}
+
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:2.5rem 1.5rem 3.5rem;}
+  .card{width:100%;max-width:432px;background:var(--panel);border:1px solid var(--hair2);
+    border-radius:18px;padding:2rem 1.9rem 1.8rem;}
+  .eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:.6rem;}
+  .card h1{font-size:1.6rem;line-height:1.2;margin-bottom:.5rem;}
+  .card .lede{font-size:.92rem;color:var(--grey);margin:0 0 1.5rem;}
+
+  label{display:block;font-size:.82rem;font-weight:600;color:var(--white);margin:0 0 .35rem;}
+  .hintline{font-size:.78rem;color:var(--dim);margin:.3rem 0 0;}
+  input,select{width:100%;background:rgba(255,255,255,.06);border:1.5px solid var(--hair2);
+    border-radius:11px;padding:.75rem .9rem;color:var(--white);font-family:var(--font);
+    font-size:.97rem;margin-bottom:1rem;}
+  input::placeholder{color:#6E8399;}
+  input:focus,select:focus{border-color:var(--accent);outline:none;background:rgba(255,255,255,.09);}
+  select option{background:#0A2C49;color:#fff;}
+
+  .btn{width:100%;background:var(--accent);color:var(--accent-ink);border:0;border-radius:11px;
+    padding:.82rem 1.2rem;font-family:var(--font);font-weight:700;font-size:.98rem;cursor:pointer;}
+  .btn:hover{filter:brightness(1.07);}
+  .btn[disabled]{opacity:.55;cursor:not-allowed;filter:none;}
+  .btn.ghost{background:transparent;color:var(--white);border:1.5px solid var(--hair2);font-weight:600;}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);filter:none;}
+
+  .row{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+    margin-top:1.1rem;font-size:.87rem;flex-wrap:wrap;}
+  .row a{font-weight:600;}
+
+  .msg{display:none;border-radius:11px;padding:.8rem .95rem;font-size:.88rem;margin-bottom:1.1rem;line-height:1.5;}
+  .msg.on{display:block;}
+  .msg.err{background:rgba(255,120,100,.13);border:1px solid rgba(255,140,120,.35);color:var(--warn);}
+  .msg.ok{background:rgba(45,225,194,.12);border:1px solid rgba(45,225,194,.35);color:var(--ok);}
+  .msg.info{background:rgba(127,231,255,.1);border:1px solid rgba(127,231,255,.28);color:#BEE9F7;}
+
+  .view{display:none;} .view.on{display:block;}
+  .pwbar{height:4px;border-radius:3px;background:rgba(255,255,255,.12);margin:-.6rem 0 .5rem;overflow:hidden;}
+  .pwbar i{display:block;height:100%;width:0;background:var(--warn);transition:width .2s,background .2s;}
+  .pwnote{font-size:.76rem;color:var(--dim);margin:0 0 1rem;}
+
+  footer{border-top:1px solid var(--hair);padding:1.3rem 0 1.8rem;font-size:.82rem;color:var(--dim);}
+  .fin{max-width:1120px;margin:0 auto;padding:0 1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
+  .fin .sp{margin-left:auto;}
+  .setup{max-width:640px;margin:0 auto;background:rgba(255,180,100,.1);
+    border:1px solid rgba(255,190,120,.35);border-radius:14px;padding:1.2rem 1.3rem;color:#FFD9B0;
+    font-size:.9rem;line-height:1.6;}
+  .setup code{background:rgba(0,0,0,.3);padding:.1rem .35rem;border-radius:5px;font-size:.85rem;}
+  @media (max-width:430px){.card{padding:1.5rem 1.25rem;}}
+</style>
+</head>
+<body>
+
+<header><div class="hin">
+  <span class="brand">
+    <svg viewBox="0 0 44 44" aria-hidden="true">
+      <rect x="2" y="3"  width="6"  height="3" rx="1.5" fill="#2DE1C2"/>
+      <rect x="2" y="8"  width="11" height="3" rx="1.5" fill="#2DE1C2"/>
+      <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+    </svg>SEQUENS</span>
+  <a class="back" href="index.html">&larr; All of SEQUENS</a>
+</div></header>
+
+<main>
+  <div id="setupWarn" class="setup" style="display:none;">
+    <b>Not configured yet.</b> Open this file and fill in <code>SUPABASE_URL</code> and
+    <code>SUPABASE_ANON_KEY</code> at the top of the script block. Both come from your
+    Supabase project, under Settings, then API. The anon key is designed to be public and
+    is safe in this file. The service_role key is not: never put that here.
+  </div>
+
+  <div class="card" id="card" style="display:none;">
+
+    <!-- ---------- SIGN IN ---------- -->
+    <div class="view on" id="v-signin">
+      <div class="eyebrow">Coaching</div>
+      <h1>Sign in</h1>
+      <p class="lede">For pilot schools. Your school admin provisions access.</p>
+      <div class="msg" id="m-signin"></div>
+      <label for="si-email">School email</label>
+      <input id="si-email" type="email" autocomplete="username" placeholder="you@school.org">
+      <label for="si-pw">Password</label>
+      <input id="si-pw" type="password" autocomplete="current-password" placeholder="Your password">
+      <button class="btn" id="btn-signin">Sign in</button>
+      <div class="row">
+        <a href="#forgot" data-go="forgot">Forgotten your password?</a>
+        <a href="#signup" data-go="signup">Create an account</a>
+      </div>
+    </div>
+
+    <!-- ---------- SIGN UP ---------- -->
+    <div class="view" id="v-signup">
+      <div class="eyebrow">Coaching</div>
+      <h1>Create your account</h1>
+      <p class="lede">If your school admin has invited you, use the same address they invited. You will join their school automatically, and be given your coaching code.</p>
+      <div class="msg" id="m-signup"></div>
+      <label for="su-email">School email</label>
+      <input id="su-email" type="email" autocomplete="username" placeholder="you@school.org">
+      <label for="su-school">School name <span style="font-weight:400;color:var(--dim)">(only if you have not been invited)</span></label>
+      <input id="su-school" type="text" placeholder="El Alsson British and American International School">
+      <label for="su-pw">Choose a password</label>
+      <input id="su-pw" type="password" autocomplete="new-password" placeholder="At least 10 characters">
+      <div class="pwbar"><i id="su-bar"></i></div>
+      <p class="pwnote" id="su-pwnote">Longer beats complicated. Three unrelated words works well.</p>
+      <div class="msg info on" style="margin-bottom:1rem;">We do not ask for your name. Your coaching records are held against a code such as T07. Only your school can link that code to a person.</div>
+      <button class="btn" id="btn-signup">Create account</button>
+      <div class="row"><a href="#signin" data-go="signin">&larr; Back to sign in</a></div>
+    </div>
+
+    <!-- ---------- FORGOT ---------- -->
+    <div class="view" id="v-forgot">
+      <div class="eyebrow">Coaching</div>
+      <h1>Reset your password</h1>
+      <p class="lede">Put in your school email and we will send you a link. The link works once,
+        and expires after an hour.</p>
+      <div class="msg" id="m-forgot"></div>
+      <label for="fg-email">School email</label>
+      <input id="fg-email" type="email" autocomplete="username" placeholder="you@school.org">
+      <button class="btn" id="btn-forgot">Send the reset link</button>
+      <div class="row"><a href="#signin" data-go="signin">&larr; Back to sign in</a></div>
+    </div>
+
+    <!-- ---------- SENT ---------- -->
+    <div class="view" id="v-sent">
+      <div class="eyebrow">Check your inbox</div>
+      <h1 id="sent-h">Email on its way</h1>
+      <p class="lede" id="sent-p"></p>
+      <div class="msg info on">Nothing arrived? Check spam, and check the address was right.
+        School filters sometimes hold new senders for a few minutes.</div>
+      <button class="btn ghost" id="btn-resend">Send it again</button>
+      <div class="row"><a href="#signin" data-go="signin">&larr; Back to sign in</a></div>
+    </div>
+
+    <!-- ---------- SET NEW PASSWORD ---------- -->
+    <div class="view" id="v-reset">
+      <div class="eyebrow">Almost done</div>
+      <h1>Set a new password</h1>
+      <p class="lede">Choose something you have not used here before.</p>
+      <div class="msg" id="m-reset"></div>
+      <label for="rs-pw">New password</label>
+      <input id="rs-pw" type="password" autocomplete="new-password" placeholder="At least 10 characters">
+      <div class="pwbar"><i id="rs-bar"></i></div>
+      <label for="rs-pw2">Type it again</label>
+      <input id="rs-pw2" type="password" autocomplete="new-password" placeholder="The same again">
+      <button class="btn" id="btn-reset">Save the new password</button>
+    </div>
+
+    <!-- ---------- SIGNED IN ---------- -->
+    <div class="view" id="v-in">
+      <div class="eyebrow">Signed in</div>
+      <h1 id="in-name">Welcome back</h1>
+      <p class="lede" id="in-detail"></p>
+      <button class="btn" id="btn-app">Open the coaching app</button>
+      <div style="height:.6rem"></div>
+      <button class="btn ghost" id="btn-signout">Sign out</button>
+    </div>
+
+  </div>
+</main>
+
+<footer><div class="fin">
+  <span>SEQUENS &middot; The Coherence Architecture</span>
+  <a href="privacy.html">GDPR &amp; privacy</a>
+  <span class="sp">Elegant on the surface. Massive underneath.</span>
+</div></footer>
+
+<script type="module">
+/* =====================================================================
+   CONFIGURE THESE TWO LINES.
+   Supabase dashboard, your project, Settings, then API.
+   The anon (publishable) key is meant to be public. Row level security
+   is what protects the data, not the secrecy of this key.
+   NEVER put the service_role key in this file.
+   ===================================================================== */
+const SUPABASE_URL      = "https://hidkleumxlurqgfuanpa.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "sb_publishable_B-mdMczUzrQaPZ6cPwmXSA_e674Cl3G";
+
+/* where to send people once they are in */
+const APP_URL = "coaching-mockup.html";
+
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const configured = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20;
+if(!configured){
+  document.getElementById("setupWarn").style.display = "block";
+} else {
+  document.getElementById("card").style.display = "block";
+}
+
+const sb = configured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth:{ detectSessionInUrl:true, persistSession:true, autoRefreshToken:true, flowType:"pkce" }
+}) : null;
+
+/* ---------- tiny helpers ---------- */
+const $  = id => document.getElementById(id);
+const show = v => {
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));
+  $("v-"+v).classList.add("on");
+  const first = $("v-"+v).querySelector("input");
+  if(first) setTimeout(()=>first.focus(),40);
+};
+const say = (where,kind,text) => {
+  const m=$("m-"+where); if(!m) return;
+  m.className="msg on "+kind; m.textContent=text;
+};
+const clear = where => { const m=$("m-"+where); if(m) m.className="msg"; };
+const busy = (btn,on,label) => {
+  btn.disabled=on; btn.dataset.label = btn.dataset.label || btn.textContent;
+  btn.textContent = on ? (label||"Working...") : btn.dataset.label;
+};
+
+/* human error text, because Supabase messages are for developers */
+function humanise(err){
+  const m=(err && err.message ? err.message : String(err)).toLowerCase();
+  if(m.includes("invalid login credentials")) return "That email and password do not match. Check both, or reset your password.";
+  if(m.includes("email not confirmed"))       return "Your email is not confirmed yet. Open the link we sent you first.";
+  if(m.includes("user already registered") || m.includes("already been registered"))
+                                              return "There is already an account on that address. Try signing in, or reset the password.";
+  if(m.includes("password should be at least"))return "That password is too short. Use at least 10 characters.";
+  if(m.includes("rate limit") || m.includes("too many"))
+                                              return "Too many attempts just now. Wait a minute and try again.";
+  if(m.includes("expired") || m.includes("invalid"))
+                                              return "That link has expired or has already been used. Ask for a new one.";
+  if(m.includes("school name is needed"))     return "You have not been invited yet, so please put in your school name to start a new school.";
+  if(m.includes("failed to fetch"))           return "Could not reach the server. Check your connection and try again.";
+  return (err && err.message) ? err.message : "Something went wrong. Try again.";
+}
+
+/* password strength: length first, because length is what matters */
+function strength(pw){
+  let s = Math.min(pw.length/16,1)*0.7;
+  if(/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s+=0.1;
+  if(/\d/.test(pw)) s+=0.1;
+  if(/[^A-Za-z0-9]/.test(pw)) s+=0.1;
+  return Math.min(s,1);
+}
+function paintBar(pw,barId){
+  const b=$(barId); if(!b) return;
+  const s=strength(pw);
+  b.style.width=(s*100)+"%";
+  b.style.background = s<0.4 ? "#FFB4A2" : s<0.7 ? "#F6D488" : "#2DE1C2";
+}
+
+/* ---------- routing ---------- */
+document.addEventListener("click",e=>{
+  const a=e.target.closest("[data-go]");
+  if(a){ e.preventDefault(); const v=a.dataset.go; location.hash="#"+v; show(v); }
+});
+
+/* ---------- session on load ---------- */
+async function boot(){
+  if(!sb) return;
+  const hash = location.hash || "";
+  const params = new URLSearchParams(hash.replace(/^#/,""));
+
+  /* a recovery link lands here with a session already established */
+  if(params.get("type")==="recovery" || hash.includes("#reset")){
+    show("reset"); return;
+  }
+  if(hash.includes("error")){
+    show("signin");
+    say("signin","err", decodeURIComponent(params.get("error_description")||"That link is no longer valid. Ask for a new one."));
+    return;
+  }
+
+  const { data:{ session } } = await sb.auth.getSession();
+  if(session){ await showSignedIn(session); return; }
+
+  const v = hash.replace("#","");
+  show(["signin","signup","forgot"].includes(v) ? v : "signin");
+}
+
+async function showSignedIn(session){
+  show("in");
+  const email = session.user.email;
+  $("in-name").textContent = "You are signed in";
+  const { data:prof, error } = await sb.from("profiles")
+    .select("code, display_name, role, schools(name, show_names)").eq("id",session.user.id).maybeSingle();
+  if(error || !prof){
+    $("in-detail").textContent = email + ". No profile yet, so finish creating your account.";
+    return;
+  }
+  const roleName = {teacher:"Teacher",coach:"Coach",lead_coach:"Lead coach",
+                    senior_leader:"Senior leader",admin:"School admin"}[prof.role] || prof.role;
+  const school = prof.schools ? prof.schools.name : "";
+  const named  = prof.schools && prof.schools.show_names && prof.display_name;
+  $("in-name").textContent = named ? prof.display_name : prof.code;
+  $("in-detail").textContent = roleName + " at " + school + ". Signed in as " + email + "."
+    + (named ? "" : " Your coaching records are held against " + prof.code + ", not your name.");
+}
+
+/* ---------- sign in ---------- */
+$("btn-signin").addEventListener("click", async ()=>{
+  clear("signin");
+  const email=$("si-email").value.trim(), pw=$("si-pw").value;
+  if(!email || !pw){ say("signin","err","Put in your email and your password."); return; }
+  busy($("btn-signin"),true,"Signing in...");
+  const { data, error } = await sb.auth.signInWithPassword({ email, password:pw });
+  busy($("btn-signin"),false);
+  if(error){ say("signin","err",humanise(error)); return; }
+  await showSignedIn(data.session);
+});
+
+/* ---------- sign up ---------- */
+$("su-pw").addEventListener("input",e=>paintBar(e.target.value,"su-bar"));
+$("rs-pw").addEventListener("input",e=>paintBar(e.target.value,"rs-bar"));
+
+$("btn-signup").addEventListener("click", async ()=>{
+  clear("signup");
+  const email=$("su-email").value.trim();
+  const school=$("su-school").value.trim(), pw=$("su-pw").value;
+  if(!email){ say("signup","err","Put in your school email."); return; }
+  if(pw.length<10){ say("signup","err","Use at least 10 characters. Three unrelated words is easier to remember and harder to guess."); return; }
+  busy($("btn-signup"),true,"Creating...");
+  const { data, error } = await sb.auth.signUp({
+    email, password:pw,
+    options:{ emailRedirectTo: location.origin + location.pathname + "#signin",
+              data:{ school_name:school } }
+  });
+  busy($("btn-signup"),false);
+  if(error){ say("signup","err",humanise(error)); return; }
+
+  /* if confirmation is off, there is a session already: finish the profile */
+  if(data.session){ await finishProfile(school); return; }
+
+  lastAction={kind:"signup",email,school};
+  $("sent-h").textContent="Confirm your email";
+  $("sent-p").textContent="We have sent a link to "+email+". Open it, and you will be brought back here to sign in.";
+  location.hash="#sent"; show("sent");
+});
+
+async function finishProfile(school){
+  const { data, error } = await sb.rpc("claim_or_create",{ p_school_name:school });
+  if(error){ show("signup"); say("signup","err",humanise(error)); return; }
+  const { data:{ session } } = await sb.auth.getSession();
+  await showSignedIn(session);
+}
+
+/* ---------- forgot ---------- */
+let lastAction=null;
+$("btn-forgot").addEventListener("click", async ()=>{
+  clear("forgot");
+  const email=$("fg-email").value.trim();
+  if(!email){ say("forgot","err","Put in the email you sign in with."); return; }
+  busy($("btn-forgot"),true,"Sending...");
+  const { error } = await sb.auth.resetPasswordForEmail(email,{
+    redirectTo: location.origin + location.pathname + "#reset"
+  });
+  busy($("btn-forgot"),false);
+  /* deliberately the same answer either way, so this page cannot be used
+     to discover which email addresses have accounts */
+  lastAction={kind:"reset",email};
+  $("sent-h").textContent="Check your inbox";
+  $("sent-p").textContent="If there is an account on "+email+", a reset link is on its way. It works once and expires after an hour.";
+  location.hash="#sent"; show("sent");
+  if(error) console.warn(error);
+});
+
+$("btn-resend").addEventListener("click", async ()=>{
+  if(!lastAction) { show("signin"); return; }
+  busy($("btn-resend"),true,"Sending...");
+  if(lastAction.kind==="reset"){
+    await sb.auth.resetPasswordForEmail(lastAction.email,{
+      redirectTo: location.origin + location.pathname + "#reset" });
+  } else {
+    await sb.auth.resend({ type:"signup", email:lastAction.email,
+      options:{ emailRedirectTo: location.origin + location.pathname + "#signin" } });
+  }
+  busy($("btn-resend"),false);
+  $("btn-resend").textContent="Sent again";
+  setTimeout(()=>{ $("btn-resend").textContent="Send it again"; },2500);
+});
+
+/* ---------- set new password ---------- */
+$("btn-reset").addEventListener("click", async ()=>{
+  clear("reset");
+  const pw=$("rs-pw").value, pw2=$("rs-pw2").value;
+  if(pw.length<10){ say("reset","err","Use at least 10 characters."); return; }
+  if(pw!==pw2){ say("reset","err","Those two do not match."); return; }
+  busy($("btn-reset"),true,"Saving...");
+  const { error } = await sb.auth.updateUser({ password:pw });
+  busy($("btn-reset"),false);
+  if(error){ say("reset","err",humanise(error)); return; }
+  say("reset","ok","Password changed. Taking you in...");
+  history.replaceState(null,"",location.pathname);
+  const { data:{ session } } = await sb.auth.getSession();
+  setTimeout(()=>{ if(session) showSignedIn(session); else show("signin"); },900);
+});
+
+/* ---------- signed in actions ---------- */
+$("btn-app").addEventListener("click",()=>{ location.href=APP_URL; });
+$("btn-signout").addEventListener("click", async ()=>{
+  await sb.auth.signOut();
+  history.replaceState(null,"",location.pathname);
+  show("signin");
+});
+
+/* if a confirmation link brings them back with a live session, and they
+   have no profile yet, finish it using what they typed at sign up */
+if(sb){
+  sb.auth.onAuthStateChange(async (event,session)=>{
+    if(event==="SIGNED_IN" && session){
+      const { data:prof } = await sb.from("profiles").select("id").eq("id",session.user.id).maybeSingle();
+      if(!prof){
+        const md=session.user.user_metadata||{};
+        await finishProfile(md.school_name||"");
+      }
+    }
+  });
+}
+
+/* Enter submits the visible view */
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Enter") return;
+  const v=document.querySelector(".view.on"); if(!v) return;
+  const b=v.querySelector(".btn:not(.ghost)"); if(b && !b.disabled) b.click();
+});
+
+boot();
+</script>
+</body>
+</html>
