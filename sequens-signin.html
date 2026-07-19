@@ -65,6 +65,7 @@
 
   .msg{display:none;border-radius:11px;padding:.8rem .95rem;font-size:.88rem;margin-bottom:1.1rem;line-height:1.5;}
   .msg.on{display:block;}
+  .msg{white-space:pre-line;}
   .msg.err{background:rgba(255,120,100,.13);border:1px solid rgba(255,140,120,.35);color:var(--warn);}
   .msg.ok{background:rgba(45,225,194,.12);border:1px solid rgba(45,225,194,.35);color:var(--ok);}
   .msg.info{background:rgba(127,231,255,.1);border:1px solid rgba(127,231,255,.28);color:#BEE9F7;}
@@ -113,7 +114,7 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 4</span></div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 6</span></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
       <div class="msg" id="m-signin"></div>
@@ -212,16 +213,23 @@
    is what protects the data, not the secrecy of this key.
    NEVER put the service_role key in this file.
    ===================================================================== */
-const SUPABASE_URL      = "https://hidkleumxlurqgfuanpa.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhpZGtsZXVteGx1cnFnZnVhbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzYzNTMsImV4cCI6MjEwMDAxMjM1M30.Cj85fCf5AegNHECQPK4lGgDSxoDowMDeNSIvLPx53Kw";
+const SUPABASE_URL      = "PASTE_YOUR_PROJECT_URL_HERE";
+const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_KEY_HERE";
 
 /* where to send people once they are in */
 const APP_URL = "coaching-mockup.html";
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.58.0";
 
 const keyTruncated = /\u2026|\.\.\.\s*$/.test(SUPABASE_ANON_KEY);
-const configured = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20 && !keyTruncated;
+/* Tidy the URL no matter what was pasted: strip /rest/v1, /auth/v1,
+   any other path, query, hash or trailing slash. Only the origin is wanted. */
+let SB_URL = String(SUPABASE_URL).trim();
+try{
+  if(/^https?:\/\//i.test(SB_URL)) SB_URL = new URL(SB_URL).origin;
+}catch(e){ /* leave it, the check below will catch it */ }
+
+const configured = SB_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20 && !keyTruncated;
 if(!configured){
   (function(){
     const w=document.getElementById("setupWarn");
@@ -236,7 +244,7 @@ if(!configured){
   document.getElementById("card").style.display = "block";
 }
 
-const sb = configured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+const sb = configured ? createClient(SB_URL, SUPABASE_ANON_KEY, {
   auth:{ detectSessionInUrl:true, persistSession:true, autoRefreshToken:true, flowType:"pkce" }
 }) : null;
 
@@ -269,6 +277,8 @@ function humanise(err){
      everything else and they are the ones that waste an afternoon */
   if(m.includes("invalid api key") || m.includes("no api key") || m.includes("apikey"))
     return "The Supabase key in this file is not being accepted. Check you pasted the Publishable key, and that Supabase has finished starting up.";
+  if(m.includes("invalid path") || m.includes("invalid request url"))
+    return "The project URL has a path on the end. It must stop at .supabase.co with nothing after it. This page now trims that automatically, so if you still see this, the uploaded file is an older build.";
   if(m.includes("failed to fetch") || m.includes("networkerror"))
     return "Could not reach Supabase. Check the project URL in this file, and that the project is not paused.";
   if(m.includes("project not found") || m.includes("not found") && m.includes("supabase"))
@@ -337,7 +347,22 @@ async function reachable(){
 async function boot(){
   if(!sb) return;
   const bad = await reachable();
-  if(bad){ show("signin"); say("signin","err", humanise({message:bad})); return; }
+  if(bad){
+    show("signin");
+    const k = SUPABASE_ANON_KEY;
+    const shape = k.startsWith("sb_publishable_") ? "new publishable key"
+                : k.startsWith("eyJ")            ? "legacy anon key"
+                : "unrecognised format";
+    say("signin","err",
+      humanise({message:bad})
+      + "\n\nWhat this page is using:"
+      + "\nURL used: " + SB_URL + "  (you typed: " + SUPABASE_URL + ")"
+      + "\nKey: " + shape + ", " + k.length + " characters, starts " + k.slice(0,22)
+      + "\n\nIf the URL is not your project, fix that first. If it is right, use the "
+      + "legacy anon key instead: in Supabase, Settings, API Keys, click the tab "
+      + "\u201CLegacy anon, service_role API keys\u201D and copy the anon key. It starts eyJ.");
+    return;
+  }
   const hash = location.hash || "";
   const params = new URLSearchParams(hash.replace(/^#/,""));
 
