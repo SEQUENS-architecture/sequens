@@ -3,17 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEQUENS Home - homeschool mockup</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>SEQUENS Home - the family walkthrough</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&family=Andika:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;--line-soft:#F0E7D7;
-  --accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
-  --diff-support:#7FBDB9;--diff-core:#1F8E8A;--diff-secure:#C9A24B;--diff-stretch:#C45F2E;
+  --bg:#F2F7F9;--card:#FFFFFF;--card2:#F8FBFC;--ink:#0A3D62;--ink-soft:#3D5A6E;--line:#D7E4EA;--line-soft:#E9F1F5;
+  --accent:#0C8F79;--accent-deep:#0A7563;--accent-soft:#BFE5DC;--teal:#2C6E9B;--teal-soft:#D8E8F1;--good:#3F8F6B;--gold:#B8912F;
+  --diff-support:#9CC4DC;--diff-core:#2C6E9B;--diff-secure:#B8912F;--diff-stretch:#0C8F79;
   /* objective states */
-  --st-none:#EFE6D6;--st-intro:#CDE6E4;--st-practised:#5FB0AB;--st-secure:#1F8E8A;--st-retrieval:#C9A24B;
-  --display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;
-  --r:16px;--r-sm:11px;--r-pill:22px;--shadow:0 2px 14px rgba(58,46,38,.07);
+  --st-none:#E4EDF2;--st-intro:#D8E8F1;--st-practised:#5FA8C4;--st-secure:#2C6E9B;--st-retrieval:#B8912F;
+  --display:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;--body:'Lexend','Segoe UI',system-ui,sans-serif;
+    /* Andika stays for anything a child actually reads. Its single-story a
+       and unambiguous letterforms are for young readers, not for parents. */
+    --child:'Andika','Segoe UI',sans-serif;
+  --r:16px;--r-sm:11px;--r-pill:22px;--shadow:0 2px 14px rgba(10,61,98,.07);
 }
 *{box-sizing:border-box}html,body{margin:0}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -52,7 +55,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .doormock{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
 .doormock .dd{background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
 .doormock .dd .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;font-size:18px}
-.doormock .dd .ic.a{background:var(--accent-soft);color:#a94e22}.doormock .dd .ic.b{background:var(--teal-soft);color:#15706c}
+.doormock .dd .ic.a{background:var(--accent-soft);color:#0A7563}.doormock .dd .ic.b{background:var(--teal-soft);color:#15706c}
 .doormock .dd b{font-family:var(--display);font-size:15px}
 .doormock .dd p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
 
@@ -74,7 +77,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .side button.nav.on{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
 .side .ico{width:18px;text-align:center;flex:0 0 auto}
 .kid{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff,var(--card2));border:1px solid var(--line);border-radius:14px;padding:11px;margin-top:6px}
-.kid .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:#a94e22;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
+.kid .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:#0A7563;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
 .kid b{font-family:var(--display);font-size:14px}.kid p{margin:0;font-size:11.5px;color:var(--ink-soft)}
 .main{padding:30px 34px;overflow:auto}
 .phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
@@ -89,7 +92,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .door{border:1.5px solid var(--line);border-radius:var(--r);padding:22px;background:var(--card);cursor:pointer;transition:.15s}
 .door:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
 .door .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:12px}
-.door.a .ic{background:var(--accent-soft);color:#a94e22}.door.b .ic{background:var(--teal-soft);color:#15706c}
+.door.a .ic{background:var(--accent-soft);color:#0A7563}.door.b .ic{background:var(--teal-soft);color:#15706c}
 .door h3{margin:0 0 5px;font-size:19px}.door p{margin:0;font-size:14px;color:var(--ink-soft)}
 
 /* inputs */
@@ -126,7 +129,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .cov-head b{font-family:var(--display);font-size:15px}
 .cov-head .pct{font-family:var(--display);font-size:12.5px;color:var(--ink-soft)}
 .cov-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px}
-.cell{aspect-ratio:1;border-radius:7px;position:relative;cursor:pointer;border:1px solid rgba(58,46,38,.06)}
+.cell{aspect-ratio:1;border-radius:7px;position:relative;cursor:pointer;border:1px solid rgba(10,61,98,.06)}
 .cell.s0{background:var(--st-none)}.cell.s1{background:var(--st-intro)}.cell.s2{background:var(--st-practised)}.cell.s3{background:var(--st-secure)}
 .cell.due::after{content:"";position:absolute;inset:0;border-radius:7px;box-shadow:inset 0 0 0 2.5px var(--st-retrieval)}
 .barwrap{height:9px;background:var(--line-soft);border-radius:6px;overflow:hidden}
@@ -193,7 +196,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
 .obj.enr{background:var(--line-soft);color:var(--ink-soft)}
 .nc-banner{background:var(--teal-soft);border-radius:10px;padding:9px 12px;font-size:12.5px;color:#15706c;margin-bottom:14px}
-.conf{position:fixed;left:12px;bottom:12px;z-index:55;background:rgba(58,46,38,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px;letter-spacing:.3px}
+.conf{position:fixed;left:12px;bottom:12px;z-index:55;background:rgba(10,61,98,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px;letter-spacing:.3px}
 
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
 .tabs button{padding:11px 16px;font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink-soft);border-bottom:2.5px solid transparent;margin-bottom:-1px;background:none}
@@ -212,6 +215,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .paper h1.dt{font-family:var(--display);font-size:27px;margin:14px 0 4px}
 .paper .meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:14px 0;margin:14px 0 22px;font-size:13.5px}
 .paper .meta b{font-family:var(--display)}
+.paper{font-family:var(--child);}
 .paper h3.sec{font-family:var(--display);font-size:16px;margin:24px 0 8px;color:var(--ink)}
 .paper p.bd{font-size:14px;line-height:1.65;margin:0 0 10px}
 .cvbar{display:grid;grid-template-columns:170px 1fr 92px;gap:12px;align-items:center;margin:7px 0;font-size:13.5px}
@@ -219,7 +223,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .cvbar .track i{display:block;height:100%;background:var(--teal);border-radius:6px}
 .cvbar .v{font-family:var(--display);font-size:12.5px;color:var(--ink-soft);text-align:right}
 .paper ul.fl{margin:6px 0 0;padding-left:18px;font-size:14px;line-height:1.7}
-.paper .disc{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-size:11.5px;color:#6F6155;line-height:1.6}
+.paper .disc{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-size:11.5px;color:#3D5A6E;line-height:1.6}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 8px}
 .stat{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
 .stat b{font-family:var(--display);font-weight:700;font-size:24px;display:block;color:var(--accent);line-height:1.1}
@@ -458,7 +462,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       <div class="grid3">
         <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#cfe3df,#e7d3bf);color:#15706c">🏖</div><div class="m"><h4>A day at the beach</h4><div class="row"><span class="chipk">6 activities</span><span class="chipk">4 subjects</span></div></div></div>
         <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#d8e7cf,#eee2c8);color:#4f7340">🌲</div><div class="m"><h4>Nature walk</h4><div class="row"><span class="chipk">5 activities</span><span class="chipk">science</span></div></div></div>
-        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#f4d59b,#f1b59a);color:#a94e22">🧁</div><div class="m"><h4>Baking together</h4><div class="row"><span class="chipk">maths</span><span class="chipk">reading</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#f4d59b,#f1b59a);color:#8A6A18">🧁</div><div class="m"><h4>Baking together</h4><div class="row"><span class="chipk">maths</span><span class="chipk">reading</span></div></div></div>
         <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#cfe0f0,#d6e8d6);color:#3a6ea5">🏛</div><div class="m"><h4>Museum visit</h4><div class="row"><span class="chipk">history</span><span class="chipk">writing</span></div></div></div>
         <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#e7d3bf,#d8c4e0);color:#7a5a8a">🧱</div><div class="m"><h4>Lego &amp; structures</h4><div class="row"><span class="chipk">D&amp;T</span><span class="chipk">maths</span></div></div></div>
         <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#d8e7cf,#cfe3df);color:#4f7340">🌱</div><div class="m"><h4>Growing things</h4><div class="row"><span class="chipk">science</span><span class="chipk">over weeks</span></div></div></div>
@@ -527,7 +531,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
         </div>
         <div class="report">
           <h3>Leo · Learning record</h3>
-          <div class="rsub">September 2025 – June 2026 · prepared 16 June 2026</div>
+          <div class="rsub">September 2025 - June 2026 · prepared 16 June 2026</div>
           <div class="rrow"><span>Approach</span><b>Mixed - structured &amp; experiential</b></div>
           <div class="rrow"><span>Mathematics</span><b>71% secure · on track</b></div>
           <div class="rrow"><span>English</span><b>66% secure</b></div>
@@ -598,7 +602,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       </div>
 </div>
       <div class="ltabp hide" data-lt="1">
-        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>What happened at the beach?</h4></div></div><div class="sld"><div class="h" style="background:#2f9b96">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>How a recount works: first, then, after</h4></div></div><div class="sld"><div class="h" style="background:#3aa7a1">Build together</div><div class="c"><div class="n">Slide 3</div><h4>Tell the day in order</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Put these moments in order</h4></div></div><div class="sld"><div class="h" style="background:#cf6d3d">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Write your beach diary</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Read it back together</h4></div></div></div>
+        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>What happened at the beach?</h4></div></div><div class="sld"><div class="h" style="background:#2C6E9B">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>How a recount works: first, then, after</h4></div></div><div class="sld"><div class="h" style="background:#0C8F79">Build together</div><div class="c"><div class="n">Slide 3</div><h4>Tell the day in order</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Put these moments in order</h4></div></div><div class="sld"><div class="h" style="background:#0A7563">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Write your beach diary</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Read it back together</h4></div></div></div>
         <p class="muted" style="margin-top:16px;font-size:13.5px">Present mode runs full-screen with arrow keys. The images and the reading slide are themed to Leo and matched to his reading level. Choose a calm or bright deck style in his profile.</p>
       </div>
       <div class="ltabp hide" data-lt="2">
@@ -621,7 +625,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
     <section class="apage hide" data-ap="y9">
       <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Year 9 · History · for Sam</span><h1>Why did war break out in 1914?</h1><p>Causes of the First World War · ~60 min · a full curriculum lesson, themed for Sam</p></div>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost">Print</button><button class="btn btn-primary">Mark as done ✓</button></div></div>
-      <div class="nc-banner" style="max-width:none"><b style="font-family:var(--display)">National Curriculum link:</b> KS3 History - <i>"the First World War and the Second World War"</i> (challenges for Britain, Europe and the wider world, 1901–present). Historical concept: <b>cause &amp; consequence</b>. <span class="muted">(2014 programmes of study - the current statutory curriculum.)</span></div>
+      <div class="nc-banner" style="max-width:none"><b style="font-family:var(--display)">National Curriculum link:</b> KS3 History - <i>"the First World War and the Second World War"</i> (challenges for Britain, Europe and the wider world, 1901-present). Historical concept: <b>cause &amp; consequence</b>. <span class="muted">(2014 programmes of study - the current statutory curriculum.)</span></div>
       <div class="tabs"><button class="on" onclick="sesTab(this,0)">Lesson plan</button><button onclick="sesTab(this,1)">Slides</button><button onclick="sesTab(this,2)">Rubric</button></div>
       <div class="ltabp" data-lt="0">
       <div class="lessonwrap">
@@ -637,11 +641,11 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
           <div class="aside"><h4>◷ Frame · Spokes <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">blank - model it</span></h4>
             <div style="background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:12px;text-align:center">
               <svg viewBox="0 0 220 130" width="100%" style="max-width:240px">
-                <ellipse cx="110" cy="65" rx="38" ry="25" fill="#fff" stroke="#3A2E26" stroke-width="2"/>
-                <text x="110" y="69" text-anchor="middle" font-family="Quicksand" font-size="10" fill="#6F6155">Causes of WW1</text>
-                <g stroke="#cdbfa8" stroke-width="1.5"><line x1="78" y1="50" x2="42" y2="28"/><line x1="142" y1="50" x2="178" y2="28"/><line x1="78" y1="80" x2="42" y2="102"/><line x1="142" y1="80" x2="178" y2="102"/></g>
-                <g fill="#fff" stroke="#cdbfa8" stroke-width="1.5"><ellipse cx="40" cy="24" rx="30" ry="15"/><ellipse cx="180" cy="24" rx="30" ry="15"/><ellipse cx="40" cy="106" rx="30" ry="15"/><ellipse cx="180" cy="106" rx="30" ry="15"/></g>
-                <g font-family="Quicksand" font-size="9" fill="#6F6155" text-anchor="middle"><text x="40" y="27">Militarism</text><text x="180" y="27">Alliances</text><text x="40" y="109">Imperialism</text><text x="180" y="109">Nationalism</text></g>
+                <ellipse cx="110" cy="65" rx="38" ry="25" fill="#fff" stroke="#0A3D62" stroke-width="2"/>
+                <text x="110" y="69" text-anchor="middle" font-family="Schibsted Grotesk" font-size="10" fill="#3D5A6E">Causes of WW1</text>
+                <g stroke="#C2D6DF" stroke-width="1.5"><line x1="78" y1="50" x2="42" y2="28"/><line x1="142" y1="50" x2="178" y2="28"/><line x1="78" y1="80" x2="42" y2="102"/><line x1="142" y1="80" x2="178" y2="102"/></g>
+                <g fill="#fff" stroke="#C2D6DF" stroke-width="1.5"><ellipse cx="40" cy="24" rx="30" ry="15"/><ellipse cx="180" cy="24" rx="30" ry="15"/><ellipse cx="40" cy="106" rx="30" ry="15"/><ellipse cx="180" cy="106" rx="30" ry="15"/></g>
+                <g font-family="Schibsted Grotesk" font-size="9" fill="#3D5A6E" text-anchor="middle"><text x="40" y="27">Militarism</text><text x="180" y="27">Alliances</text><text x="40" y="109">Imperialism</text><text x="180" y="109">Nationalism</text></g>
               </svg>
               <div class="muted" style="font-size:12px;margin-top:4px">Sam fills the branches with you</div>
             </div></div>
@@ -660,7 +664,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       </div>
 </div>
       <div class="ltabp hide" data-lt="1">
-        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>June 1914 - the spark</h4></div></div><div class="sld"><div class="h" style="background:#2f9b96">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>MAIN: the long-term causes</h4></div></div><div class="sld"><div class="h" style="background:#3aa7a1">Build together</div><div class="c"><div class="n">Slide 3</div><h4>From spark to system</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Why did it become a world war?</h4></div></div><div class="sld"><div class="h" style="background:#cf6d3d">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Which cause mattered most?</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Rank & justify</h4></div></div></div>
+        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>June 1914 - the spark</h4></div></div><div class="sld"><div class="h" style="background:#2C6E9B">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>MAIN: the long-term causes</h4></div></div><div class="sld"><div class="h" style="background:#0C8F79">Build together</div><div class="c"><div class="n">Slide 3</div><h4>From spark to system</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Why did it become a world war?</h4></div></div><div class="sld"><div class="h" style="background:#0A7563">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Which cause mattered most?</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Rank & justify</h4></div></div></div>
         <p class="muted" style="margin-top:16px;font-size:13.5px">A projector-ready deck on the same six-part spine. The Spokes Frame slide builds live; the source/quote slides can carry a confirmed video. Present mode: full-screen, arrow keys, teacher-prompts toggle.</p>
       </div>
       <div class="ltabp hide" data-lt="2">
@@ -688,7 +692,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
         <h1 class="dt">Home Education Learning Record</h1>
         <div class="meta">
           <div><b>Child:</b> Leo Okonkwo</div><div><b>Age / stage:</b> 8 · working around Year 3 (England)</div>
-          <div><b>Period:</b> September 2025 – June 2026</div><div><b>Prepared:</b> 16 June 2026, by Jordan Okonkwo</div>
+          <div><b>Period:</b> September 2025 - June 2026</div><div><b>Prepared:</b> 16 June 2026, by Jordan Okonkwo</div>
           <div><b>Framework used:</b> England National Curriculum (2014)</div><div><b>Approach:</b> Structured &amp; experiential</div>
         </div>
         <h3 class="sec">Our approach to Leo’s education</h3>
@@ -721,7 +725,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       <div class="paper">
         <div class="wm"><span class="dot"></span>SEQUENS HOME</div>
         <h1 class="dt">Leo’s Year in Review</h1>
-        <p class="bd" style="font-size:15px;color:var(--ink-soft);margin-top:2px">2025–2026 · a year of learning at home</p>
+        <p class="bd" style="font-size:15px;color:var(--ink-soft);margin-top:2px">2025-2026 · a year of learning at home</p>
         <p class="bd" style="margin-top:18px">What a year, Leo. You went from writing single sentences to filling a beach diary; from counting to sharing fractions; from naming animals to grouping them like a scientist. Here’s the whole of it in one place.</p>
         <div class="stats"><div class="stat"><b>128</b><span>lessons &amp; sessions</span></div><div class="stat"><b>12</b><span>real-world projects</span></div><div class="stat"><b>24</b><span>books finished</span></div><div class="stat"><b>9</b><span>subjects explored</span></div></div>
         <h3 class="sec">How Leo grew this year</h3>
