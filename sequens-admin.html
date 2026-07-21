@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A3D62">
+<meta name="robots" content="noindex">
+<title>School admin | SEQUENS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F7F9; --surface:#F8FBFC; --card:#FFFFFF;
+    --ink:#0A3D62; --ink-soft:#3D5A6E; --muted:#5B7A90;
+    --rule:#D7E4EA; --rule2:#C2D6DF;
+    --terra:#0C8F79; --terra-deep:#0A7563; --terra-soft:#D9F2EC;
+    --steel:#2C6E9B; --steel-soft:#E4EFF6; --steel-deep:#1F4F73;
+    --gold-soft:#F5EEDA; --gold-deep:#7A6118;
+    --red:#C0453B; --red-soft:#F9EBE9; --red-deep:#8E362E;
+    --green-soft:#E2F1EA; --green-deep:#2C6B4F;
+    --font:'Lexend','Segoe UI',system-ui,sans-serif;
+    --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
+    --shadow:0 2px 16px rgba(10,61,98,.07);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink-soft);font-family:var(--font);
+    font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:var(--head);color:var(--ink);margin:0;letter-spacing:-.015em;}
+  a{color:var(--terra-deep);}
+  :focus-visible{outline:2.5px solid var(--terra);outline-offset:2px;border-radius:7px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  .topbar{background:#0A3D62;color:#CFE0EC;}
+  .topbar-in{max-width:1000px;margin:0 auto;padding:.85rem 1.3rem;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;}
+  .brand{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--head);
+    font-weight:800;letter-spacing:.05em;color:#fff;font-size:.98rem;text-decoration:none;}
+  .brand svg{height:18px;}
+  .topbar .who{margin-left:auto;font-size:.82rem;color:#9FBDD1;}
+  .topbar .who a{color:#CFE0EC;}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:1.5rem 1.3rem 4rem;}
+  .head{margin-bottom:1.2rem;}
+  .head h1{font-size:1.5rem;}
+  .head p{margin:.25rem 0 0;color:var(--muted);font-size:.92rem;max-width:62ch;}
+
+  .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.1rem;border-bottom:1px solid var(--rule);}
+  .tab{background:none;border:0;border-bottom:2.5px solid transparent;padding:.6rem .9rem;
+    font-family:var(--head);font-weight:600;font-size:.9rem;color:var(--muted);cursor:pointer;}
+  .tab:hover{color:var(--ink);}
+  .tab.on{color:var(--ink);border-bottom-color:var(--terra);}
+  .tab .n{background:var(--terra);color:#fff;border-radius:99px;font-size:.68rem;
+    padding:.05rem .4rem;margin-left:.35rem;vertical-align:.08em;}
+
+  .view{display:none;} .view.on{display:block;}
+
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:14px;
+    padding:1.2rem 1.3rem;margin-bottom:1rem;box-shadow:var(--shadow);}
+  .card h3{font-size:1.05rem;margin-bottom:.2rem;}
+  .card .sub{font-size:.87rem;color:var(--muted);margin:0 0 1rem;max-width:64ch;}
+
+  label{display:block;font-size:.8rem;font-weight:600;color:var(--ink);margin:0 0 .3rem;}
+  input,select{width:100%;background:#fff;border:1.5px solid var(--rule);border-radius:10px;
+    padding:.6rem .8rem;font-family:var(--font);font-size:.93rem;color:var(--ink);}
+  input:focus,select:focus{border-color:var(--terra);outline:none;}
+  .row{display:grid;grid-template-columns:1fr 190px 130px auto;gap:.6rem;align-items:end;}
+  @media (max-width:760px){.row{grid-template-columns:1fr;}}
+
+  .btn{background:var(--terra);color:#fff;border:0;border-radius:10px;padding:.62rem 1.1rem;
+    font-family:var(--head);font-weight:600;font-size:.9rem;cursor:pointer;white-space:nowrap;}
+  .btn:hover{background:var(--terra-deep);}
+  .btn[disabled]{background:var(--rule2);cursor:not-allowed;}
+  .btn.ghost{background:transparent;color:var(--terra-deep);border:1.5px solid var(--terra-soft);}
+  .btn.ghost:hover{background:var(--terra-soft);}
+  .btn.small{padding:.35rem .7rem;font-size:.8rem;}
+  .btn.danger{background:transparent;color:var(--red-deep);border:1.5px solid #EFD5D1;}
+  .btn.danger:hover{background:var(--red-soft);}
+
+  table{width:100%;border-collapse:collapse;}
+  th{text-align:left;font-family:var(--head);font-size:.68rem;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);padding:0 .6rem .5rem;border-bottom:1px solid var(--rule);}
+  td{padding:.65rem .6rem;border-bottom:1px solid var(--surface);font-size:.9rem;vertical-align:middle;}
+  tr:last-child td{border-bottom:0;}
+  .code{font-family:var(--head);font-weight:700;color:var(--ink);}
+  .em{font-size:.84rem;color:var(--muted);word-break:break-all;}
+
+  .pill{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.04em;
+    border-radius:6px;padding:.14rem .5rem;}
+  .pill.teacher{background:var(--steel-soft);color:var(--steel-deep);}
+  .pill.coach{background:var(--terra-soft);color:var(--terra-deep);}
+  .pill.lead_coach{background:#E6E2F5;color:#4A3E7A;}
+  .pill.senior_leader{background:var(--gold-soft);color:var(--gold-deep);}
+  .pill.admin{background:#E7EDF1;color:var(--ink);}
+  .pill.you{background:var(--green-soft);color:var(--green-deep);margin-left:.35rem;}
+
+  .msg{display:none;border-radius:10px;padding:.75rem .9rem;font-size:.88rem;margin-bottom:.9rem;
+    white-space:pre-line;}
+  .msg.on{display:block;}
+  .msg.err{background:var(--red-soft);border:1px solid #EFD5D1;color:var(--red-deep);}
+  .msg.ok{background:var(--green-soft);border:1px solid #BEDFD0;color:var(--green-deep);}
+  .msg.info{background:var(--steel-soft);border:1px solid #C7DDEB;color:var(--steel-deep);}
+
+  .empty{padding:1.6rem;text-align:center;color:var(--muted);font-size:.88rem;
+    border:1px dashed var(--rule2);border-radius:11px;}
+
+  .note{background:var(--surface);border-radius:10px;padding:.75rem .9rem;
+    font-size:.83rem;color:var(--muted);margin-top:.9rem;}
+  .note b{color:var(--ink);}
+
+  .copybox{display:flex;gap:.5rem;align-items:center;margin-top:.5rem;}
+  .copybox input{font-size:.82rem;background:var(--surface);}
+
+  .gate{max-width:520px;margin:4rem auto;text-align:center;}
+  .gate h2{font-size:1.3rem;margin-bottom:.5rem;}
+  .gate p{color:var(--muted);font-size:.95rem;}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="topbar-in">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 44 44" aria-hidden="true">
+      <rect x="2" y="7"  width="15" height="3" rx="1.5" fill="#2DE1C2"/>
+      <rect x="2" y="13" width="21" height="3" rx="1.5" fill="#2DE1C2"/>
+      <rect x="2" y="19" width="27" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="25" width="32" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="31" width="36" height="3" rx="1.5" fill="#DEE7EF"/>
+      <rect x="2" y="37" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+    </svg>SEQUENS</a>
+  <span class="who" id="who"></span>
+</div></div>
+
+<div class="wrap">
+
+  <div id="gate" class="gate">
+    <h2>Checking who you are</h2>
+    <p id="gateMsg">One moment.</p>
+  </div>
+
+  <div id="panel" style="display:none;">
+    <div class="head">
+      <h1>School admin</h1>
+      <p id="schoolLine"></p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-v="people">People</button>
+      <button class="tab" data-v="invites">Invitations <span class="n" id="nInv">0</span></button>
+      <button class="tab" data-v="pairs">Coaching pairs</button>
+      <button class="tab" data-v="school">School settings</button>
+    </div>
+
+    <!-- ---------- PEOPLE ---------- -->
+    <div class="view on" id="v-people">
+      <div class="card">
+        <h3>Everyone in your school</h3>
+        <p class="sub">Codes, not names. The sheet linking a code to a person stays with you and
+          never enters SEQUENS.</p>
+        <div id="peopleWrap"></div>
+      </div>
+    </div>
+
+    <!-- ---------- INVITES ---------- -->
+    <div class="view" id="v-invites">
+      <div class="card">
+        <h3>Invite someone</h3>
+        <p class="sub">They sign up with this exact address and land in your school with this role
+          and code already set. The invitation is deleted the moment it is used.</p>
+        <div class="msg" id="mInv"></div>
+        <div class="row">
+          <div><label for="iEmail">Their school email</label>
+            <input id="iEmail" type="email" placeholder="someone@school.org"></div>
+          <div><label for="iRole">Role</label>
+            <select id="iRole">
+              <option value="teacher">Teacher</option>
+              <option value="coach">Coach</option>
+              <option value="lead_coach">Lead coach</option>
+              <option value="senior_leader">Senior leader</option>
+              <option value="admin">School admin</option>
+            </select></div>
+          <div><label for="iCode">Code</label><input id="iCode" placeholder="T01"></div>
+          <div><button class="btn" id="btnInvite">Create invitation</button></div>
+        </div>
+        <div class="note"><b>No email is sent yet.</b> Send them the sign-up link yourself for now.
+          Automatic invitation emails need your own sending domain, which is a separate job.
+          <div class="copybox">
+            <input id="signupUrl" readonly>
+            <button class="btn ghost small" id="btnCopy">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Waiting to be accepted</h3>
+        <p class="sub">Nobody is in your school until they sign up with the address below.</p>
+        <div id="invWrap"></div>
+      </div>
+    </div>
+
+    <!-- ---------- PAIRS ---------- -->
+    <div class="view" id="v-pairs">
+      <div class="card">
+        <h3>Who coaches whom</h3>
+        <p class="sub">Each teacher has one coach. A coach can hold several teachers, though your
+          own stress test said six is the point where the fortnight stops fitting.</p>
+        <div class="msg" id="mPair"></div>
+        <div id="pairWrap"></div>
+      </div>
+    </div>
+
+    <!-- ---------- SCHOOL ---------- -->
+    <div class="view" id="v-school">
+      <div class="card">
+        <h3>Your school</h3>
+        <p class="sub">The coaching day is yours to choose. SEQUENS has no opinion on which day it
+          is, only that once chosen it does not move.</p>
+        <div class="msg" id="mSchool"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+          <div style="grid-column:1/-1;"><label for="sName">School name</label>
+            <input id="sName"></div>
+          <div><label for="sDay">Protected coaching day</label>
+            <select id="sDay">
+              <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+              <option>Thursday</option><option>Friday</option><option>Sunday</option>
+            </select></div>
+          <div><label for="sPart">When in the day</label>
+            <select id="sPart">
+              <option value="morning">morning</option>
+              <option value="afternoon">afternoon</option>
+              <option value="after school">after school</option>
+            </select></div>
+        </div>
+        <div class="note" style="margin-top:1rem;">
+          <label style="display:flex;align-items:flex-start;gap:.6rem;font-weight:400;font-size:.86rem;">
+            <input type="checkbox" id="sNames" style="width:auto;margin-top:.25rem;">
+            <span><b>Show real names instead of codes.</b> Off by default, and I would leave it off.
+              With it off, a leak of the coaching data shows codes against microsteps and nothing else.
+              Only turn it on if your data protection officer has agreed to it.</span>
+          </label>
+        </div>
+        <div style="margin-top:1rem;"><button class="btn" id="btnSchool">Save</button></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+"use strict";
+const SUPABASE_URL      = "https://hidkleumxlurqgfuanpa.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhpZGtsZXVteGx1cnFnZnVhbnBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MzYzNTMsImV4cCI6MjEwMDAxMjM1M30.Cj85fCf5AegNHECQPK4lGgDSxoDowMDeNSIvLPx53Kw";
+
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.58.0";
+
+let SB_URL = String(SUPABASE_URL).trim();
+try{ if(/^https?:\/\//i.test(SB_URL)) SB_URL = new URL(SB_URL).origin; }catch(e){}
+const sb = createClient(SB_URL, SUPABASE_ANON_KEY, {
+  auth:{ detectSessionInUrl:true, persistSession:true, autoRefreshToken:true, flowType:"pkce" }
+});
+
+const $ = id => document.getElementById(id);
+const ROLE = {teacher:"Teacher",coach:"Coach",lead_coach:"Lead coach",
+              senior_leader:"Senior leader",admin:"School admin"};
+const PREFIX = {teacher:"T",coach:"C",lead_coach:"LC",senior_leader:"SL",admin:"ADM"};
+
+let me=null, school=null, people=[], invites=[], pairs=[];
+
+function say(where,kind,text){ const m=$("m"+where); if(!m) return;
+  m.className="msg on "+kind; m.textContent=text;
+  if(kind==="ok") setTimeout(()=>{ m.className="msg"; },4000); }
+function esc(s){ return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function human(e){
+  const m=(e&&e.message?e.message:String(e)).toLowerCase();
+  if(m.includes("duplicate key") && m.includes("invites")) return "There is already an invitation on that email address.";
+  if(m.includes("duplicate key") && m.includes("code"))    return "That code is already used in your school. Pick another.";
+  if(m.includes("duplicate key") && m.includes("teacher_id")) return "That teacher already has a coach. Change it instead.";
+  if(m.includes("row-level security") || m.includes("violates row"))
+    return "The database refused that. Your role does not have permission for it.";
+  console.error(e);
+  return (e&&e.message) ? e.message : "Something went wrong.";
+}
+
+/* ---------- load ---------- */
+async function boot(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session){
+    $("gateMsg").innerHTML = 'You are not signed in. <a href="sequens-signin.html">Sign in</a> and come back.';
+    $("gate").querySelector("h2").textContent = "Sign in first";
+    return;
+  }
+  const { data:prof, error } = await sb.from("profiles")
+    .select("id, code, role, school_id, schools(name, coaching_day, window_part, show_names)")
+    .eq("id", session.user.id).maybeSingle();
+  if(error || !prof){
+    $("gate").querySelector("h2").textContent = "No profile yet";
+    $("gateMsg").innerHTML = 'Finish creating your account on the <a href="sequens-signin.html">sign-in page</a> first.';
+    return;
+  }
+  me = prof; school = prof.schools;
+  if(!["admin","lead_coach"].includes(prof.role)){
+    $("gate").querySelector("h2").textContent = "Not your screen";
+    $("gateMsg").textContent = "This is for school admins and lead coaches. You are signed in as "
+      + (ROLE[prof.role]||prof.role) + ", code " + prof.code + ".";
+    return;
+  }
+  $("who").innerHTML = esc(prof.code) + " &middot; " + esc(ROLE[prof.role])
+    + ' &middot; <a href="sequens-signin.html">Sign out</a>';
+  $("schoolLine").textContent = school.name;
+  $("signupUrl").value = location.origin + "/sequens-signin.html#signup";
+  $("gate").style.display="none";
+  $("panel").style.display="block";
+  await refresh();
+}
+
+async function refresh(){
+  const [p,i,a] = await Promise.all([
+    sb.from("profiles").select("id, code, role, active").order("code"),
+    sb.from("invites").select("id, email, code, role, created_at").order("created_at"),
+    sb.from("assignments").select("id, teacher_id, coach_id")
+  ]);
+  people  = p.data || [];
+  invites = i.data || [];
+  pairs   = a.data || [];
+  $("nInv").textContent = invites.length;
+  renderPeople(); renderInvites(); renderPairs(); fillSchool(); suggestCode();
+}
+
+/* ---------- people ---------- */
+function renderPeople(){
+  if(!people.length){ $("peopleWrap").innerHTML='<div class="empty">Nobody yet.</div>'; return; }
+  $("peopleWrap").innerHTML =
+    '<table><thead><tr><th>Code</th><th>Role</th><th>Status</th></tr></thead><tbody>'
+    + people.map(p=>'<tr><td class="code">'+esc(p.code)
+        +(p.id===me.id?'<span class="pill you">you</span>':'')+'</td>'
+        +'<td><span class="pill '+p.role+'">'+esc(ROLE[p.role]||p.role)+'</span></td>'
+        +'<td>'+(p.active?'Active':'Inactive')+'</td></tr>').join("")
+    + '</tbody></table>';
+}
+
+/* ---------- invites ---------- */
+function suggestCode(){
+  const role=$("iRole").value, pre=PREFIX[role];
+  const used=[...people,...invites].filter(x=>x.code&&x.code.startsWith(pre))
+    .map(x=>parseInt(String(x.code).replace(/^[A-Z]+/,""),10)).filter(n=>!isNaN(n));
+  const n=(used.length?Math.max(...used):0)+1;
+  $("iCode").value = pre + String(n).padStart(2,"0");
+}
+$("iRole").addEventListener("change", suggestCode);
+
+$("btnInvite").addEventListener("click", async ()=>{
+  const email=$("iEmail").value.trim().toLowerCase();
+  const role=$("iRole").value, code=$("iCode").value.trim().toUpperCase();
+  if(!email || !email.includes("@")){ say("Inv","err","Put in a valid email address."); return; }
+  if(!code){ say("Inv","err","A code is needed."); return; }
+  $("btnInvite").disabled=true;
+  const { error } = await sb.from("invites")
+    .insert({ school_id: me.school_id, email, code, role });
+  $("btnInvite").disabled=false;
+  if(error){ say("Inv","err",human(error)); return; }
+  $("iEmail").value="";
+  say("Inv","ok","Invitation created for "+email+" as "+ROLE[role]+", code "+code
+      +". Send them the sign-up link and they will land in your school.");
+  await refresh();
+});
+
+$("btnCopy").addEventListener("click", ()=>{
+  $("signupUrl").select();
+  navigator.clipboard && navigator.clipboard.writeText($("signupUrl").value);
+  $("btnCopy").textContent="Copied";
+  setTimeout(()=>{ $("btnCopy").textContent="Copy"; },1600);
+});
+
+function renderInvites(){
+  if(!invites.length){ $("invWrap").innerHTML='<div class="empty">No invitations waiting.</div>'; return; }
+  $("invWrap").innerHTML =
+    '<table><thead><tr><th>Email</th><th>Code</th><th>Role</th><th></th></tr></thead><tbody>'
+    + invites.map(v=>'<tr><td class="em">'+esc(v.email)+'</td>'
+        +'<td class="code">'+esc(v.code)+'</td>'
+        +'<td><span class="pill '+v.role+'">'+esc(ROLE[v.role]||v.role)+'</span></td>'
+        +'<td style="text-align:right"><button class="btn danger small" data-revoke="'+v.id+'">Revoke</button></td></tr>').join("")
+    + '</tbody></table>';
+}
+
+/* ---------- coaching pairs ---------- */
+function renderPairs(){
+  const teachers = people.filter(p=>p.role==="teacher");
+  const coaches  = people.filter(p=>["coach","lead_coach"].includes(p.role));
+  if(!teachers.length || !coaches.length){
+    $("pairWrap").innerHTML='<div class="empty">You need at least one teacher and one coach before you can pair anyone.<br>'
+      +'Teachers: '+teachers.length+'. Coaches: '+coaches.length+'.</div>';
+    return;
+  }
+  $("pairWrap").innerHTML =
+    '<table><thead><tr><th>Teacher</th><th>Coach</th><th></th></tr></thead><tbody>'
+    + teachers.map(t=>{
+        const cur = pairs.find(x=>x.teacher_id===t.id);
+        const opts = '<option value="">Nobody yet</option>' + coaches.map(c=>
+          '<option value="'+c.id+'"'+(cur&&cur.coach_id===c.id?' selected':'')+'>'
+          +esc(c.code)+' ('+esc(ROLE[c.role])+')</option>').join("");
+        const load = cur ? pairs.filter(x=>x.coach_id===cur.coach_id).length : 0;
+        return '<tr><td class="code">'+esc(t.code)+'</td>'
+          +'<td><select data-pair="'+t.id+'">'+opts+'</select></td>'
+          +'<td class="em">'+(cur? (load>6?('that coach holds '+load+', over the six'):('coach holds '+load)) :'')+'</td></tr>';
+      }).join("")
+    + '</tbody></table>';
+}
+
+/* ---------- school ---------- */
+function fillSchool(){
+  $("sName").value  = school.name || "";
+  $("sDay").value   = school.coaching_day || "Monday";
+  $("sPart").value  = school.window_part || "afternoon";
+  $("sNames").checked = !!school.show_names;
+  $("btnSchool").disabled = me.role!=="admin";
+}
+
+$("btnSchool").addEventListener("click", async ()=>{
+  $("btnSchool").disabled=true;
+  const { error } = await sb.from("schools").update({
+    name: $("sName").value.trim(),
+    coaching_day: $("sDay").value,
+    window_part: $("sPart").value,
+    show_names: $("sNames").checked
+  }).eq("id", me.school_id);
+  $("btnSchool").disabled=false;
+  if(error){ say("School","err",human(error)); return; }
+  school.name=$("sName").value.trim(); school.coaching_day=$("sDay").value;
+  school.window_part=$("sPart").value; school.show_names=$("sNames").checked;
+  $("schoolLine").textContent = school.name;
+  say("School","ok","Saved. Every screen now reads "+school.coaching_day+" "+school.window_part+".");
+});
+
+/* ---------- events ---------- */
+document.addEventListener("click", async (e)=>{
+  const t=e.target.closest("[data-v]");
+  if(t){
+    document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t));
+    document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="v-"+t.dataset.v));
+    return;
+  }
+  const r=e.target.closest("[data-revoke]");
+  if(r){
+    r.disabled=true;
+    const { error } = await sb.from("invites").delete().eq("id", r.dataset.revoke);
+    if(error){ say("Inv","err",human(error)); r.disabled=false; return; }
+    say("Inv","ok","Invitation revoked.");
+    await refresh();
+  }
+});
+
+document.addEventListener("change", async (e)=>{
+  const s=e.target.closest("[data-pair]");
+  if(!s) return;
+  const teacher=s.dataset.pair, coach=s.value;
+  const existing=pairs.find(x=>x.teacher_id===teacher);
+  let error=null;
+  if(!coach && existing){
+    ({ error } = await sb.from("assignments").delete().eq("id", existing.id));
+  } else if(coach && existing){
+    ({ error } = await sb.from("assignments").update({coach_id:coach}).eq("id", existing.id));
+  } else if(coach){
+    ({ error } = await sb.from("assignments")
+      .insert({school_id:me.school_id, teacher_id:teacher, coach_id:coach}));
+  }
+  if(error){ say("Pair","err",human(error)); return; }
+  say("Pair","ok","Saved.");
+  await refresh();
+});
+
+boot();
+</script>
+</body>
+</html>
