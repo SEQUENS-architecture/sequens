@@ -83,6 +83,15 @@
     font-size:.9rem;line-height:1.6;}
   .setup code{background:rgba(0,0,0,.3);padding:.1rem .35rem;border-radius:5px;font-size:.85rem;}
   @media (max-width:430px){.card{padding:1.5rem 1.25rem;}}
+
+  .swap{display:flex;gap:.35rem;background:rgba(255,255,255,.05);border:1px solid var(--hair2);
+    border-radius:12px;padding:.3rem;margin-bottom:1.5rem;}
+  .swap button{flex:1;background:transparent;border:0;border-radius:9px;padding:.6rem .5rem;
+    font-family:var(--font);font-weight:600;font-size:.92rem;color:var(--grey);cursor:pointer;
+    transition:background .14s,color .14s;}
+  .swap button:hover{color:var(--white);}
+  .swap button.on{background:var(--accent);color:var(--accent-ink);}
+
 </style>
 </head>
 <body>
@@ -114,7 +123,8 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 8</span></div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 10</span></div>
+      <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Create an account</button></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
       <div class="msg" id="m-signin"></div>
@@ -125,13 +135,13 @@
       <button class="btn" id="btn-signin">Sign in</button>
       <div class="row">
         <a href="#forgot" data-go="forgot">Forgotten your password?</a>
-        <a href="#signup" data-go="signup">Create an account</a>
       </div>
     </div>
 
     <!-- ---------- SIGN UP ---------- -->
     <div class="view" id="v-signup">
       <div class="eyebrow">Coaching</div>
+      <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Create an account</button></div>
       <h1>Create your account</h1>
       <p class="lede">If your school admin has invited you, use the same address they invited. You will join their school automatically, and be given your coaching code.</p>
       <div class="msg" id="m-signup"></div>
@@ -145,8 +155,7 @@
       <p class="pwnote" id="su-pwnote">Longer beats complicated. Three unrelated words works well.</p>
       <div class="msg info on" style="margin-bottom:1rem;">We do not ask for your name. Your coaching records are held against a code such as T07. Only your school can link that code to a person.</div>
       <button class="btn" id="btn-signup">Create account</button>
-      <div class="row"><a href="#signin" data-go="signin">&larr; Back to sign in</a></div>
-    </div>
+      </div>
 
     <!-- ---------- FORGOT ---------- -->
     <div class="view" id="v-forgot">
@@ -192,6 +201,8 @@
       <h1 id="in-name">Welcome back</h1>
       <p class="lede" id="in-detail"></p>
       <button class="btn" id="btn-app">Open the coaching app</button>
+      <div style="height:.6rem"></div>
+      <button class="btn ghost" id="btn-admin" style="display:none;">School admin</button>
       <div style="height:.6rem"></div>
       <button class="btn ghost" id="btn-signout">Sign out</button>
     </div>
@@ -253,6 +264,7 @@ const $  = id => document.getElementById(id);
 const show = v => {
   document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));
   $("v-"+v).classList.add("on");
+  document.querySelectorAll(".swap button").forEach(b=>b.classList.toggle("on", b.dataset.go===v));
   const first = $("v-"+v).querySelector("input");
   if(first) setTimeout(()=>first.focus(),40);
 };
@@ -434,6 +446,9 @@ async function showSignedIn(session){
                     senior_leader:"Senior leader",admin:"School admin"}[prof.role] || prof.role;
   const school = prof.schools ? prof.schools.name : "";
   const named  = prof.schools && prof.schools.show_names && prof.display_name;
+  const ADMIN_URL = "sequens-admin.html";
+  const ab = $("btn-admin");
+  if(ab) ab.style.display = ["admin","lead_coach"].includes(prof.role) ? "block" : "none";
   $("in-name").textContent = named ? prof.display_name : prof.code;
   $("in-detail").textContent = roleName + " at " + school + ". Signed in as " + email + "."
     + (named ? "" : " Your coaching records are held against " + prof.code + ", not your name.");
@@ -541,6 +556,7 @@ $("btn-reset").addEventListener("click", async ()=>{
 
 /* ---------- signed in actions ---------- */
 $("btn-app").addEventListener("click",()=>{ location.href=APP_URL; });
+const ab0=$("btn-admin"); if(ab0) ab0.addEventListener("click",()=>{ location.href="sequens-admin.html"; });
 $("btn-signout").addEventListener("click", async ()=>{
   await sb.auth.signOut();
   history.replaceState(null,"",location.pathname);
