@@ -335,6 +335,14 @@
   .dp .dp-lbl{margin-bottom:.5rem;}
   @media (max-width:520px){.nextlook{margin-left:0;width:100%;}}
 
+
+  .demo-out{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-top:1.4rem;
+    padding-top:1rem;border-top:1px solid var(--rule);font-size:.85rem;color:var(--muted);}
+  .demo-out a{color:var(--ink);font-weight:600;text-decoration:none;}
+  .demo-out a:hover{color:var(--terra-deep);}
+  .demo-out .sp{margin-left:auto;}
+  @media (max-width:520px){.demo-out .sp{margin-left:0;}}
+
 </style>
 </head>
 <body>
@@ -343,9 +351,13 @@
 <div id="login">
   <div class="login-card">
     <div class="brand"><svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg>SEQUENS</div>
-    <h1>Sign in to your dashboard</h1>
-    <p class="sub">Choose your view. This is a mockup - pick a role to see exactly what that person lands on.</p>
+    <h1>See it from every seat</h1>
+    <p class="sub">A demonstration. No account needed, and nothing here is real data. Pick a role and you land exactly where that person lands.</p>
     <div class="role-grid" id="roleGrid"></div>
+    <div class="demo-out">
+      <a href="sequens-linear.html">&larr; Back to coaching</a>
+      <span class="sp">Have an account? <a href="sequens-signin.html">Sign in properly</a></span>
+    </div>
   </div>
 </div>
 

@@ -114,7 +114,7 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 7</span></div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 8</span></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
       <div class="msg" id="m-signin"></div>
@@ -393,11 +393,23 @@ async function boot(){
     show("reset");
     return;
   }
-  if(params.get("error") || params.get("error_code")){
+  const errCode = queryP.get("error_code") || hashP.get("error_code") || "";
+  const errRaw  = queryP.get("error")      || hashP.get("error")      || "";
+  const errDesc = queryP.get("error_description") || hashP.get("error_description") || "";
+  if(errCode || errRaw){
     show("signin");
-    const d = params.get("error_description");
-    say("signin","err", d ? decodeURIComponent(d.replace(/\+/g," "))
-                          : "That link is no longer valid. Ask for a new one.");
+    history.replaceState(null,"",location.pathname);
+    if(/otp_expired|access_denied/i.test(errCode + " " + errRaw)){
+      say("signin","err",
+        "That reset link is already spent.\n\n"
+        + "Usually this is not you. Outlook, Hotmail and some antivirus tools open links "
+        + "automatically to check they are safe. A reset link only works once, so the "
+        + "scanner uses it up before you get there.\n\n"
+        + "Two ways round it. Request a new link and open it from a Gmail address, or "
+        + "right-click the link, copy it, and paste it into the address bar yourself.");
+    } else {
+      say("signin","err", decodeURIComponent(errDesc.replace(/\+/g," ")) || "That link is no longer valid. Ask for a new one.");
+    }
     return;
   }
 
