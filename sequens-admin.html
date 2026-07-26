@@ -113,6 +113,26 @@
   .gate{max-width:520px;margin:4rem auto;text-align:center;}
   .gate h2{font-size:1.3rem;margin-bottom:.5rem;}
   .gate p{color:var(--muted);font-size:.95rem;}
+
+  /* bulk import */
+  .drop{border:2px dashed var(--rule2);border-radius:12px;padding:1.4rem 1.2rem;text-align:center;
+    background:var(--card2);cursor:pointer;transition:border-color .14s,background .14s;}
+  .drop:hover,.drop.over{border-color:var(--terra);background:var(--terra-soft);}
+  .drop .di{font-family:var(--head);font-weight:700;color:var(--ink);font-size:.98rem;margin-bottom:.2rem;}
+  .drop .ds{font-size:.83rem;color:var(--muted);}
+  .drop input{display:none;}
+  .paste{width:100%;min-height:96px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;
+    border:1.5px solid var(--rule);border-radius:10px;padding:.7rem .8rem;margin-top:.7rem;resize:vertical;color:var(--ink);}
+  .prev{margin-top:1rem;}
+  .prev .pv-row{display:grid;grid-template-columns:1fr 120px 90px 1fr;gap:.5rem;align-items:center;
+    padding:.45rem .5rem;border-bottom:1px solid var(--surface);font-size:.85rem;}
+  .prev .pv-head{font-family:var(--head);font-size:.66rem;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);}
+  .prev .warn{color:var(--red-deep);font-size:.8rem;}
+  .prev .ok2{color:var(--green-deep);}
+  .tmpl{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;background:var(--surface);
+    border-radius:8px;padding:.5rem .7rem;color:var(--ink-soft);margin:.4rem 0 0;white-space:pre;overflow-x:auto;}
+
 </style>
 </head>
 <body>
@@ -162,6 +182,42 @@
 
     <!-- ---------- INVITES ---------- -->
     <div class="view" id="v-invites">
+      <div class="card">
+        <h3>Add your staff from a list</h3>
+        <p class="sub">Paste or upload a list of staff and SEQUENS creates an invitation for each one.
+          They never fill in a sign-up form. They get a link, choose a password, and they are in with
+          the right role and code already set.</p>
+        <div class="msg" id="mBulk"></div>
+
+        <div class="drop" id="drop">
+          <div class="di">Drop a CSV here, or click to choose one</div>
+          <div class="ds">Three columns: email, name, role</div>
+          <input type="file" id="csvFile" accept=".csv,text/csv">
+        </div>
+
+        <p class="sub" style="margin:1rem 0 .3rem;">Or paste it straight in, one person per line:</p>
+        <textarea class="paste" id="pasteBox" placeholder="email, name, role
+sara.adel@school.org, Sara Adel, teacher
+omar.f@school.org, Omar Farouk, teacher
+lina.h@school.org, Lina Hassan, coach"></textarea>
+        <div class="tmpl">email, name, role
+sara.adel@school.org, Sara Adel, teacher
+omar.f@school.org, Omar Farouk, coach</div>
+        <p class="sub" style="margin:.5rem 0 0;font-size:.8rem;">Roles: teacher, coach, lead_coach,
+          senior_leader, admin. Name is optional. If you leave the role off, it defaults to teacher.</p>
+
+        <div style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+          <button class="btn" id="btnPreview">Check the list</button>
+        </div>
+
+        <div class="prev" id="preview" style="display:none;"></div>
+
+        <div id="bulkConfirm" style="display:none;margin-top:1rem;">
+          <button class="btn" id="btnBulkCreate">Create these invitations</button>
+          <span class="conf" id="bulkCount"></span>
+        </div>
+      </div>
+
       <div class="card">
         <h3>Invite someone</h3>
         <p class="sub">They sign up with this exact address and land in your school with this role
@@ -466,6 +522,150 @@ document.addEventListener("change", async (e)=>{
   say("Pair","ok","Saved.");
   await refresh();
 });
+
+
+
+/* ================= BULK IMPORT =================
+   A list of staff becomes one invitation each. The existing sign-up flow then
+   matches each teacher on their email and drops them into this school with the
+   role and code already set, so no member of staff ever fills in a sign-up form.
+   They receive a link, set a password, and they are in. */
+
+var parsed = [];
+
+function splitCSV(text){
+  var rows = text.split(/\r?\n/).map(function(l){ return l.trim(); }).filter(Boolean);
+  var out = [];
+  rows.forEach(function(line){
+    // skip an obvious header row
+    if(/^\s*e-?mail\b/i.test(line) && /name/i.test(line)) return;
+    // split on comma or tab, tolerate quotes
+    var parts = line.split(/\s*[,\t]\s*/).map(function(p){ return p.replace(/^"|"$/g,"").trim(); });
+    out.push(parts);
+  });
+  return out;
+}
+
+var VALID_ROLES = ["teacher","coach","lead_coach","senior_leader","admin"];
+
+function nextCode(role, taken){
+  var pre = PREFIX[role];
+  var used = taken.filter(function(c){ return c && c.indexOf(pre)===0; })
+    .map(function(c){ return parseInt(c.replace(/^[A-Z]+/,""),10); }).filter(function(n){ return !isNaN(n); });
+  var n = (used.length?Math.max.apply(null,used):0)+1;
+  taken.push(pre+String(n).padStart(2,"0"));
+  return pre+String(n).padStart(2,"0");
+}
+
+function buildPreview(text){
+  var rows = splitCSV(text);
+  // codes already in use across people and pending invites
+  var taken = [].concat(
+    people.map(function(p){ return p.code; }),
+    invites.map(function(v){ return v.code; })
+  ).filter(Boolean).slice();
+  var existingEmails = invites.map(function(v){ return v.email.toLowerCase(); });
+
+  var seenInFile = [];
+  parsed = rows.map(function(cols){
+    var email = (cols[0]||"").toLowerCase();
+    var name  = cols[1]||"";
+    var role  = (cols[2]||"teacher").toLowerCase().replace(/\s+/g,"_");
+    var problems = [];
+    if(!email || email.indexOf("@")<0) problems.push("no valid email");
+    if(VALID_ROLES.indexOf(role)<0){ problems.push("unknown role, using teacher"); role="teacher"; }
+    if(existingEmails.indexOf(email)>=0) problems.push("already invited");
+    if(email && seenInFile.indexOf(email)>=0) problems.push("duplicate in list");
+    if(email) seenInFile.push(email);
+    var blocked = problems.indexOf("no valid email")>=0
+               || problems.indexOf("already invited")>=0
+               || problems.indexOf("duplicate in list")>=0;
+    var code = blocked ? "-" : nextCode(role, taken);
+    return { email:email, name:name, role:role, code:code, problems:problems };
+  });
+  return parsed;
+}
+
+function renderPreview(){
+  var el = document.getElementById("preview");
+  var good = parsed.filter(isGood);
+  el.style.display = "block";
+  el.innerHTML =
+    '<div class="pv-row pv-head"><span>Email</span><span>Code</span><span>Role</span><span>Status</span></div>'
+    + parsed.map(function(r){
+        var blocked = !isGood(r);
+        var status = r.problems.length
+          ? '<span class="'+(blocked?"warn":"ok2")+'">'+r.problems.join(", ")+'</span>'
+          : '<span class="ok2">ready</span>';
+        return '<div class="pv-row"><span class="em">'+esc(r.email||"(missing)")+'</span>'
+          + '<span class="code">'+esc(r.code)+'</span>'
+          + '<span>'+esc(ROLE[r.role]||r.role)+'</span>'
+          + status+'</div>';
+      }).join("");
+
+  document.getElementById("bulkConfirm").style.display = good.length ? "block" : "none";
+  document.getElementById("bulkCount").textContent = good.length
+    ? good.length+" will be created"+(parsed.length>good.length?(", "+(parsed.length-good.length)+" skipped"):"")
+    : "Nothing to create yet.";
+}
+
+document.getElementById("btnPreview").addEventListener("click", function(){
+  var text = document.getElementById("pasteBox").value.trim();
+  if(!text){ say("Bulk","err","Paste a list, or drop a CSV, first."); return; }
+  buildPreview(text);
+  renderPreview();
+});
+
+function isGood(r){
+  return r.problems.indexOf("no valid email")<0
+      && r.problems.indexOf("already invited")<0
+      && r.problems.indexOf("duplicate in list")<0;
+}
+document.getElementById("btnBulkCreate").addEventListener("click", async function(){
+  var good = parsed.filter(isGood);
+  if(!good.length) return;
+  this.disabled = true;
+  var rows = good.map(function(r){
+    return { school_id: me.school_id, email: r.email, code: r.code, role: r.role };
+  });
+  var { error } = await sb.from("invites").insert(rows);
+  this.disabled = false;
+  if(error){ say("Bulk","err",human(error)); return; }
+  say("Bulk","ok","Created "+good.length+" invitations. Each person can now activate their account "
+    + "with their email address and set a password.");
+  document.getElementById("pasteBox").value = "";
+  document.getElementById("preview").style.display = "none";
+  document.getElementById("bulkConfirm").style.display = "none";
+  await refresh();
+});
+
+/* file drop */
+(function(){
+  var drop = document.getElementById("drop");
+  var file = document.getElementById("csvFile");
+  if(!drop) return;
+  drop.addEventListener("click", function(){ file.click(); });
+  file.addEventListener("change", function(e){ readFile(e.target.files[0]); });
+  ["dragover","dragenter"].forEach(function(ev){
+    drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add("over"); });
+  });
+  ["dragleave","drop"].forEach(function(ev){
+    drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove("over"); });
+  });
+  drop.addEventListener("drop", function(e){
+    var f = e.dataTransfer.files[0]; if(f) readFile(f);
+  });
+  function readFile(f){
+    if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      document.getElementById("pasteBox").value = r.result;
+      buildPreview(r.result); renderPreview();
+    };
+    r.readAsText(f);
+  }
+})();
+
 
 boot();
 </script>

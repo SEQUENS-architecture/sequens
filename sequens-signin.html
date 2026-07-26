@@ -123,8 +123,8 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 10</span></div>
-      <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Create an account</button></div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 12</span></div>
+      <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Activate my account</button></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
       <div class="msg" id="m-signin"></div>
@@ -141,9 +141,11 @@
     <!-- ---------- SIGN UP ---------- -->
     <div class="view" id="v-signup">
       <div class="eyebrow">Coaching</div>
-      <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Create an account</button></div>
-      <h1>Create your account</h1>
-      <p class="lede">If your school admin has invited you, use the same address they invited. You will join their school automatically, and be given your coaching code.</p>
+      <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Activate my account</button></div>
+      <h1>Activate your account</h1>
+      <p class="lede">If your school added you, use the exact email address they used. You will
+        join your school automatically with your role already set, and just choose a password. If you
+        are setting up a brand new school yourself, put its name in the box below.</p>
       <div class="msg" id="m-signup"></div>
       <label for="su-email">School email</label>
       <input id="su-email" type="email" autocomplete="username" placeholder="you@school.org">
@@ -154,7 +156,7 @@
       <div class="pwbar"><i id="su-bar"></i></div>
       <p class="pwnote" id="su-pwnote">Longer beats complicated. Three unrelated words works well.</p>
       <div class="msg info on" style="margin-bottom:1rem;">We do not ask for your name. Your coaching records are held against a code such as T07. Only your school can link that code to a person.</div>
-      <button class="btn" id="btn-signup">Create account</button>
+      <button class="btn" id="btn-signup">Activate account</button>
       </div>
 
     <!-- ---------- FORGOT ---------- -->
@@ -485,20 +487,46 @@ $("btn-signup").addEventListener("click", async ()=>{
   busy($("btn-signup"),false);
   if(error){ say("signup","err",humanise(error)); return; }
 
-  /* if confirmation is off, there is a session already: finish the profile */
-  if(data.session){ await finishProfile(school); return; }
+  /* Supabase returns a user with an empty identities array when the email is
+     ALREADY registered, on purpose, to avoid leaking who has an account.
+     Detect it and say so plainly instead of hanging. */
+  const already = data && data.user && Array.isArray(data.user.identities)
+                  && data.user.identities.length === 0;
+  if(already){
+    show("signin");
+    say("signin","err","There is already an account on "+email+". Try signing in, or use "
+      + "\u201CForgotten your password?\u201D if you cannot remember it.");
+    if($("si-email")) $("si-email").value = email;
+    return;
+  }
 
+  /* Confirmation OFF: a session is present, so finish the profile now. */
+  if(data && data.session){ await finishProfile(school); return; }
+
+  /* Confirmation ON: no session yet. Show check-your-email, with a fallback
+     so it can never sit on "Creating..." forever. */
   lastAction={kind:"signup",email,school};
-  $("sent-h").textContent="Confirm your email";
-  $("sent-p").textContent="We have sent a link to "+email+". Open it, and you will be brought back here to sign in.";
-  location.hash="#sent"; show("sent");
+  if($("sent-h") && $("sent-p")){
+    $("sent-h").textContent="Check your email";
+    $("sent-p").textContent="We have sent a link to "+email+". Open it to confirm your account, then come back and sign in.";
+    location.hash="#sent"; show("sent");
+  } else {
+    show("signin");
+    say("signin","ok","Account started. Check your email for a confirmation link, then sign in.");
+  }
 });
 
 async function finishProfile(school){
-  const { data, error } = await sb.rpc("claim_or_create",{ p_school_name:school });
-  if(error){ show("signup"); say("signup","err",humanise(error)); return; }
-  const { data:{ session } } = await sb.auth.getSession();
-  await showSignedIn(session);
+  try{
+    const { data, error } = await sb.rpc("claim_or_create",{ p_school_name:school });
+    if(error){ show("signup"); say("signup","err",humanise(error)); return; }
+    const { data:{ session } } = await sb.auth.getSession();
+    if(!session){ show("signin"); say("signin","ok","Account created. Please sign in."); return; }
+    await showSignedIn(session);
+  }catch(e){
+    show("signin");
+    say("signin","err","Account created, but loading it failed. Please sign in.");
+  }
 }
 
 /* ---------- forgot ---------- */
