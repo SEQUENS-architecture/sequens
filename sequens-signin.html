@@ -123,7 +123,7 @@
 
     <!-- ---------- SIGN IN ---------- -->
     <div class="view on" id="v-signin">
-      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 12</span></div>
+      <div class="eyebrow">Coaching <span style="opacity:.5">&middot; build 13</span></div>
       <div class="swap" role="tablist"><button data-go="signin" role="tab">Sign in</button><button data-go="signup" role="tab">Activate my account</button></div>
       <h1>Sign in</h1>
       <p class="lede">For pilot schools. Your school admin provisions access.</p>
@@ -434,13 +434,41 @@ async function boot(){
   show(["signin","signup","forgot"].includes(v) ? v : "signin");
 }
 
+function withTimeout(promise, ms, label){
+  return Promise.race([
+    promise,
+    new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout:"+label)), ms))
+  ]);
+}
+
 async function showSignedIn(session){
-  show("in");
   const email = session.user.email;
+  let prof=null, error=null;
+  try{
+    const res = await withTimeout(
+      sb.from("profiles").select("code, display_name, role, schools(name, show_names)")
+        .eq("id",session.user.id).maybeSingle(),
+      8000, "profile");
+    prof = res.data; error = res.error;
+  }catch(e){ error = e; }
+
+  if(error){
+    show("signin");
+    const m = (error.message||String(error));
+    if(m.indexOf("timeout")===0){
+      say("signin","err","Signed in, but reading your profile timed out. This is usually a database "
+        + "policy problem rather than your login. Tell the developer: the profiles select is hanging.");
+    } else if(/recursion|infinite/i.test(m)){
+      say("signin","err","Signed in, but the database has a recursive security policy on profiles. "
+        + "The read policy needs the own-row fix. Error: "+m);
+    } else {
+      say("signin","err","Signed in, but could not load your profile. Error: "+m);
+    }
+    return;
+  }
+  show("in");
   $("in-name").textContent = "You are signed in";
-  const { data:prof, error } = await sb.from("profiles")
-    .select("code, display_name, role, schools(name, show_names)").eq("id",session.user.id).maybeSingle();
-  if(error || !prof){
+  if(!prof){
     $("in-detail").textContent = email + ". No profile yet, so finish creating your account.";
     return;
   }
