@@ -212,6 +212,17 @@ omar.f@school.org, Omar Farouk, coach</div>
 
         <div class="prev" id="preview" style="display:none;"></div>
 
+        <div id="sendBox" style="display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--rule);">
+          <h3 style="font-size:1rem;margin-bottom:.2rem;">Email them the activation link</h3>
+          <p class="sub" id="sendSub" style="margin-bottom:.7rem;"></p>
+          <div class="msg" id="mSend"></div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+            <button class="btn" id="btnSend">Send activation emails</button>
+            <button class="btn ghost" id="btnCopyLink">Copy the link instead</button>
+          </div>
+          <div class="note" id="sendFallback" style="display:none;margin-top:.8rem;"></div>
+        </div>
+
         <div id="bulkConfirm" style="display:none;margin-top:1rem;">
           <button class="btn" id="btnBulkCreate">Create these invitations</button>
           <span class="conf" id="bulkCount"></span>
@@ -631,12 +642,15 @@ document.getElementById("btnBulkCreate").addEventListener("click", async functio
   var { error } = await sb.from("invites").insert(rows);
   this.disabled = false;
   if(error){ say("Bulk","err",human(error)); return; }
-  say("Bulk","ok","Created "+good.length+" invitations. Each person can now activate their account "
-    + "with their email address and set a password.");
   document.getElementById("pasteBox").value = "";
   document.getElementById("preview").style.display = "none";
   document.getElementById("bulkConfirm").style.display = "none";
   await refresh();
+
+  // now offer to email them the activation link
+  lastBatch = good.map(function(r){ return { email:r.email, name:r.name }; });
+  say("Bulk","ok","Created "+good.length+" "+(good.length===1?"account":"accounts")+".");
+  showSendBox(lastBatch);
 });
 
 /* file drop */
@@ -665,6 +679,91 @@ document.getElementById("btnBulkCreate").addEventListener("click", async functio
     r.readAsText(f);
   }
 })();
+
+
+
+
+/* ================= EMAILING ACTIVATION LINKS =================
+   Calls the /api/send-invites serverless function. That function holds the
+   Resend key and does the actual sending. If the key is not set yet (domain not
+   finished, or the env var missing), the function returns "not_configured" and
+   we fall back to a copyable link so the admin can send it themselves. Nothing
+   here ever hangs, and nothing here holds a secret. */
+
+var lastBatch = [];
+
+function showSendBox(batch){
+  var box = document.getElementById("sendBox");
+  if(!box) return;
+  box.style.display = "block";
+  document.getElementById("sendSub").textContent =
+    batch.length + " " + (batch.length===1?"person is":"people are")
+    + " ready. Send them an email with a link to choose their password, or copy the link and send it yourself.";
+  document.getElementById("mSend").className = "msg";
+  document.getElementById("sendFallback").style.display = "none";
+  box.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+function activateLink(){
+  return location.origin + "/sequens-signin.html#signup";
+}
+
+document.getElementById("btnCopyLink").addEventListener("click", function(){
+  var link = activateLink();
+  if(navigator.clipboard) navigator.clipboard.writeText(link);
+  var fb = document.getElementById("sendFallback");
+  fb.style.display = "block";
+  fb.innerHTML = "<b>Link copied.</b> Send your staff this message:<br><br>"
+    + "\u201CSEQUENS is set up. Go to <span style='color:var(--terra-deep)'>" + esc(link)
+    + "</span>, click Activate my account, use your school email, and choose a password.\u201D<br><br>"
+    + "Everyone uses the same link. Their role is already set.";
+});
+
+document.getElementById("btnSend").addEventListener("click", async function(){
+  if(!lastBatch.length){ return; }
+  this.disabled = true;
+  this.textContent = "Sending...";
+  var msg = document.getElementById("mSend");
+  try{
+    var r = await fetch("/api/send-invites", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ people: lastBatch, schoolName: (school && school.name) || "" })
+    });
+
+    if(r.status === 503){
+      // key not set yet: fall back to the copyable link, honestly
+      msg.className = "msg info on";
+      msg.textContent = "Email sending is not switched on yet. You can still get everyone in by copying the link and sending it yourself.";
+      document.getElementById("btnCopyLink").click();
+      return;
+    }
+
+    var data = await r.json();
+    if(!r.ok || !data.ok){
+      msg.className = "msg err on";
+      msg.textContent = (data && data.error) ? data.error : "Could not send just now. Use Copy the link instead.";
+      return;
+    }
+
+    var sent = (data.sent||[]).length, failed = (data.failed||[]).length;
+    if(failed === 0){
+      msg.className = "msg ok on";
+      msg.textContent = "Sent " + sent + " activation " + (sent===1?"email":"emails") + ". They can set their password now.";
+    } else {
+      msg.className = "msg info on";
+      msg.textContent = "Sent " + sent + ", but " + failed + " did not go through: "
+        + data.failed.map(function(f){ return f.email; }).join(", ")
+        + ". Check those addresses, or use Copy the link for them.";
+    }
+  }catch(e){
+    msg.className = "msg err on";
+    msg.textContent = "Could not reach the mail server. Use Copy the link instead, and try email again later.";
+  }finally{
+    this.disabled = false;
+    this.textContent = "Send activation emails";
+  }
+});
 
 
 boot();
