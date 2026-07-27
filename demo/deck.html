@@ -188,6 +188,22 @@
   .presenter .ptxt b{color:var(--accent);}
   .presenter .pnext{flex:0 0 200px;border-left:1px solid rgba(255,255,255,.14);padding-left:1.2rem;}
   .presenter .pnext .ptxt{color:#9FB6C6;font-size:.86rem;}
+
+  /* ===== PLAN VIEW SIZING FIX =====
+     The modelling box is flex:1 so it fills leftover space on the board.
+     That is right when it is EMPTY (the teacher writes into it).
+     It is wrong when the plan is open, because the plan text is taller than
+     the leftover space and the bottom gets cut off by the slide's overflow.
+     With the plan open: the box sizes to its content, and the slide scrolls
+     rather than clipping. The teacher never loses a word of their own notes. */
+  body.reveal .slide{overflow-y:auto;}
+  body.reveal .model{flex:0 0 auto;min-height:0;}
+  body.reveal .model .filled{padding:1.1rem 1.3rem;}
+  body.reveal .handwrite{font-size:1.25rem;line-height:1.4;}
+  /* the slide can grow past 16:9 when the teacher is reading the plan */
+  body.reveal .slide{aspect-ratio:auto;min-height:min(56.25vw,620px);}
+  /* keep the empty-board experience untouched */
+  body:not(.reveal) .model{flex:1;}
 </style>
 </head>
 <body>
