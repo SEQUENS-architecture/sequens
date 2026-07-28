@@ -180,6 +180,28 @@
   /* keyboard focus - a teacher navigating by keyboard must see where they are */
   .ltog:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
   button:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+
+  /* Phones: the SEND layer puts a wide label column beside its text.
+     At 320px that pushes the content off screen. Stack instead of columns.
+     Never hide it - a teacher on a phone still needs the SEND guidance. */
+  @media (max-width:520px){
+    .lay.send .need{flex-direction:column;gap:.25rem;}
+    .lay.send .need .who{min-width:0;width:100%;}
+    .lay.ta .todo{flex-direction:column;gap:.2rem;}
+    .lay.ta .todo .b{min-width:0;}
+    .lay.ai .yes,.lay.ai .no{flex-direction:column;gap:.2rem;}
+    .layerbar{gap:.35rem;}
+    .ltog{font-size:.78rem;padding:.35rem .6rem;}
+    .keyrow{flex-direction:column;}
+    .kchip{min-width:0;}
+  }
+
+  /* Phones: the six-step overview bar cannot fit six columns at 320px.
+     Wrap to two rows rather than shrinking the text to nothing. */
+  @media (max-width:520px){
+    .seq{flex-wrap:wrap;}
+    .seq div{flex:1 1 30%;min-width:0;font-size:.6rem;padding:.4rem .15rem;}
+  }
 </style>
 </head>
 <body class="show-send show-sup">
