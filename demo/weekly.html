@@ -224,9 +224,9 @@ var THRESHOLD=7; // /12 fixed floor for "below" in the demo
 
 // suggested-gap text per block
 var GAPREAD={
-  a:{title:"Basic fraction fluency", reads:"This looks like a gap in the underlying fraction basics \u2014 worth a retrieval starter before anything new is built on top."},
-  b:{title:"Multi-step division layout", reads:"This looks like a layout gap in long division \u2014 the method, not the number sense. A bar-model / column scaffold in Monday's modelling would target it."},
-  c:{title:"Reading inference in worded problems", reads:"Marks held up on the calculation but fell on the worded questions \u2014 this looks like a reading-inference block, not a maths one. It points at the reading lesson, not more arithmetic."}
+  a:{title:"Basic fraction fluency", reads:"This looks like a gap in the underlying fraction basics - worth a retrieval starter before anything new is built on top."},
+  b:{title:"Multi-step division layout", reads:"This looks like a layout gap in long division - the method, not the number sense. A bar-model / column scaffold in Monday's modelling would target it."},
+  c:{title:"Reading inference in worded problems", reads:"Marks held up on the calculation but fell on the worded questions - this looks like a reading-inference block, not a maths one. It points at the reading lesson, not more arithmetic."}
 };
 
 var state={ current:"6A", decisions:{} }; // decisions keyed by class+block
@@ -276,7 +276,7 @@ function renderSuggestions(){
     h+='<div class="suggest '+(high?'high':'low')+'" id="sg_'+key+'">';
     h+='<div class="sg-top"><span class="sg-badge '+(high?'high':'low')+'">'+(high?'High priority':'Worth a look')+'</span><div class="sg-body">';
     h+='<p class="sg-title">'+gr.title+'</p>';
-    h+='<p class="sg-ev">Block: <b>'+r.b.name+'</b> \u00b7 the class lost <b>'+r.pct+'%</b> of the marks here \u2014 the most of any block'+(high?' and past the 35% line where SEQUENS raises it.':'.')+'</p>';
+    h+='<p class="sg-ev">Block: <b>'+r.b.name+'</b> \u00b7 the class lost <b>'+r.pct+'%</b> of the marks here - the most of any block'+(high?' and past the 35% line where SEQUENS raises it.':'.')+'</p>';
     h+='<p class="sg-reads">'+gr.reads+'</p>';
     // action row (hidden once decided)
     h+='<div class="sg-actions" id="act_'+key+'"'+(dec?' style="display:none"':'')+'>';
@@ -285,10 +285,10 @@ function renderSuggestions(){
     h+='<button class="btn sm dismiss" onclick="openDismiss(\''+key+'\')">Dismiss</button>';
     h+='</div>';
     // adjust editor
-    h+='<div class="adjustbox" id="adj_'+key+'"><label>What was the actual gap? (your judgement replaces the suggestion \u2014 both are kept)</label><input type="text" id="adjin_'+key+'" placeholder="e.g. times-tables recall underneath the division" value="'+gr.title+'"><label>Why the change? (optional, for the record)</label><textarea id="adjwhy_'+key+'" placeholder="e.g. watched them in class \u2014 it\u2019s the tables they\u2019re missing, not the layout"></textarea><button class="btn sm" onclick="saveAdjust(\''+key+'\')">Save my judgement</button> <button class="btn sm ghost" onclick="closeEditors(\''+key+'\')">Cancel</button></div>';
+    h+='<div class="adjustbox" id="adj_'+key+'"><label>What was the actual gap? (your judgement replaces the suggestion - both are kept)</label><input type="text" id="adjin_'+key+'" placeholder="e.g. times-tables recall underneath the division" value="'+gr.title+'"><label>Why the change? (optional, for the record)</label><textarea id="adjwhy_'+key+'" placeholder="e.g. watched them in class - it\u2019s the tables they\u2019re missing, not the layout"></textarea><button class="btn sm" onclick="saveAdjust(\''+key+'\')">Save my judgement</button> <button class="btn sm ghost" onclick="closeEditors(\''+key+'\')">Cancel</button></div>';
     // dismiss editor
     h+='<div class="dismissbox" id="dis_'+key+'"><label>Why dismiss this? (kept on the record so the override is transparent)</label><div class="why" id="why_'+key+'">'+
-       ['Timing / ran out of time','Behaviour / distraction','Absences (gala, trip, illness)','Not a real gap \u2014 I saw them secure'].map(function(w,i){return '<span class="rchip" onclick="pickReason(\''+key+'\',this)">'+w+'</span>';}).join('')+
+       ['Timing / ran out of time','Behaviour / distraction','Absences (gala, trip, illness)','Not a real gap - I saw them secure'].map(function(w,i){return '<span class="rchip" onclick="pickReason(\''+key+'\',this)">'+w+'</span>';}).join('')+
        '</div><button class="btn sm" onclick="saveDismiss(\''+key+'\')">Dismiss with reason</button> <button class="btn sm ghost" onclick="closeEditors(\''+key+'\')">Cancel</button></div>';
     // decision state
     h+='<div class="sg-decision'+(dec?' show':'')+'" id="dec_'+key+'">'+(dec?decisionHTML(key,dec):'')+'</div>';
@@ -299,7 +299,7 @@ function renderSuggestions(){
 
 function decisionHTML(key,dec){
   if(dec.type==="confirmed") return '<span class="tag confirmed">\u2713 Confirmed</span><span class="detail"> You agreed with SEQUENS: <b>'+dec.label+'</b> is the gap to target.</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
-  if(dec.type==="adjusted") return '<span class="tag adjusted">\u270e Your judgement</span><span class="detail"> Changed to <b>'+dec.label+'</b> <span class="was">was: '+dec.was+'</span>'+(dec.why?' \u2014 <span style="color:var(--muted)">"'+dec.why+'"</span>':'')+'</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
+  if(dec.type==="adjusted") return '<span class="tag adjusted">\u270e Your judgement</span><span class="detail"> Changed to <b>'+dec.label+'</b> <span class="was">was: '+dec.was+'</span>'+(dec.why?' - <span style="color:var(--muted)">"'+dec.why+'"</span>':'')+'</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
   if(dec.type==="dismissed") return '<span class="tag dismissed">\u2014 Dismissed</span><span class="detail"> Set aside: <span style="color:var(--muted)">"'+dec.reason+'"</span>. SEQUENS won\u2019t act on this one.</span><span class="undo" onclick="undo(\''+key+'\')">undo</span>';
   return "";
 }
@@ -330,8 +330,8 @@ function renderAudit(){
     var d=state.decisions[k];
     var t=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
     if(d.type==="confirmed"){ h+='<div class="arow"><div class="a-icon c">\u2713</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">confirmed SEQUENS\u2019 read: <b>'+d.label+'</b></span></div><span class="a-time">Thu '+t+'</span></div>'; }
-    else if(d.type==="adjusted"){ h+='<div class="arow"><div class="a-icon a">\u270e</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">overrode SEQUENS \u2014 now <b>'+d.label+'</b>, <span class="was">'+d.was+'</span>'+(d.why?' <span class="reason">\u201c'+d.why+'\u201d</span>':'')+'</span></div><span class="a-time">Thu '+t+'</span></div>'; }
-    else if(d.type==="dismissed"){ h+='<div class="arow"><div class="a-icon d">\u2014</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">dismissed a suggestion \u2014 <span class="reason">\u201c'+d.reason+'\u201d</span></span></div><span class="a-time">Thu '+t+'</span></div>'; }
+    else if(d.type==="adjusted"){ h+='<div class="arow"><div class="a-icon a">\u270e</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">overrode SEQUENS - now <b>'+d.label+'</b>, <span class="was">'+d.was+'</span>'+(d.why?' <span class="reason">\u201c'+d.why+'\u201d</span>':'')+'</span></div><span class="a-time">Thu '+t+'</span></div>'; }
+    else if(d.type==="dismissed"){ h+='<div class="arow"><div class="a-icon d">\u2014</div><div class="a-body"><span class="cls">Year '+d.cls+'</span> <span class="line">dismissed a suggestion - <span class="reason">\u201c'+d.reason+'\u201d</span></span></div><span class="a-time">Thu '+t+'</span></div>'; }
     else if(d.type==="pupil"){
       var pmap={support:["c","\u2713","added targeted support for"],monitor:["a","\u25c9","is monitoring"],dismissed:["d","\u2014","judged no real gap for"],escalated:["c","\u2713","escalated to Lead Coach review"],kept:["a","\u25c9","kept supporting (noted for Lead Coach)"]};
       var pm=pmap[d.action]||["a","\u25c9",d.action];

@@ -274,7 +274,7 @@ function renderCohort(){
     h+='<div class="cstat"><div class="n '+(under>0?'amber':'')+'">'+under+'</div><div class="l">underachieving</div></div>';
     h+='<div class="cstat"><div class="n '+(support>0?'red':'')+'">'+support+'</div><div class="l">need support</div></div>';
     h+='</div>';
-    h+='<div class="ccard-foot">'+(under>0?'<b>'+under+'</b> capable of more than they\u2019re showing \u2014 worth a look.':'No mismatches flagged this cycle.')+'</div>';
+    h+='<div class="ccard-foot">'+(under>0?'<b>'+under+'</b> capable of more than they\u2019re showing. Worth a look.':'No mismatches flagged this cycle.')+'</div>';
     h+='</div>';
   });
   document.getElementById("cohortCards").innerHTML=h;
@@ -330,7 +330,7 @@ function renderClass(){
   document.getElementById("classTable").innerHTML=h;
   var uc=rows.filter(function(r){return r.t.kind==="under";}).length;
   var scn=rows.filter(function(r){return r.t.kind==="support";}).length;
-  document.getElementById("cvInfo").innerHTML='<b>Reading this class:</b> '+(scn>0?scn+' need targeted support (reasoning and attainment agree). ':'')+(uc>0?uc+' capable of more than they\u2019re showing \u2014 the flag is a prompt to look, not a label. ':'')+'Standardised scores (blue) move slowly; the quiz and comprehension (green) are this fortnight \u2014 when they disagree, the recent one is the news.';
+  document.getElementById("cvInfo").innerHTML='<b>Reading this class:</b> '+(scn>0?scn+' need targeted support (reasoning and attainment agree). ':'')+(uc>0?uc+' capable of more than they\u2019re showing. The flag is a prompt to look, not a label. ':'')+'Standardised scores (blue) move slowly; the quiz and comprehension (green) are this fortnight. When they disagree, the recent one is the news.';
 }
 
 // ============ VIEW 3: child profile ============
@@ -353,7 +353,7 @@ function renderChild(pid){
     '<div class="measure"><span class="ml">Reading test<small>standardised reading SAS</small></span>'+mv(p.pte)+'</div>';
   // triangle note
   var potential=p.cat4, attain=Math.round((p.ptm+p.pte)/2);
-  document.getElementById("chTriangle").innerHTML='<b>Potential vs attainment:</b> CAT4 '+p.cat4+' against an attainment average of '+attain+'. '+(potential-attain>=12?'A gap this wide is the "underachieving" prompt \u2014 capable of more.':(potential<92&&attain<92?'Both point the same way \u2014 the need is real, not a mystery.':'Broadly aligned.'));
+  document.getElementById("chTriangle").innerHTML='<b>Potential vs attainment:</b> CAT4 '+p.cat4+' against an attainment average of '+attain+'. '+(potential-attain>=12?'A gap this wide is the "underachieving" prompt. Capable of more.':(potential<92&&attain<92?'Both point the same way. The need is real, not a mystery.':'Broadly aligned.'));
   // formative
   document.getElementById("chFormative").innerHTML=
     '<div class="measure"><span class="ml">Writing<small>fortnightly, teacher-assessed</small></span><span class="mv '+writingBand(p.writing)+'">'+p.writing+'</span></div>'+
