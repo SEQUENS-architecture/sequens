@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS Home - the morning board</title>
+<meta name="description" content="One board, every morning. Nine small things, aimed at what your child actually needs, built before you come downstairs.">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
+<style>
+:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0C8F79;--paper:#F7F4EE;
+--card:#FFF;--rule:#E4DDD2;--muted:#6B6154;--dim:#7A7063;--steel:#2C6E9B;--steel-soft:#EAF2F8;
+--gold:#B8912F;--gold-deep:#8A6A18;--warm:#C97B4A;--green-soft:#EAF3EE;--success-deep:#0A6B5C;
+--sea:#3E7C8C;--sea-soft:#E8F1F2;--rose:#B4553F;--rose-soft:#FBEEEA;
+--grad:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+--font:'Lexend',sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
+*{box-sizing:border-box}
+html,body{overflow-x:clip;max-width:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--accent-deep);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* reading support */
+body.rs{font-size:1.09rem;line-height:1.85;letter-spacing:.012em}
+body.rs .cell .q{font-size:1.16rem}
+
+.top{background:var(--grad);color:#CFE0EC}
+.top-in{max-width:1060px;margin:0 auto;padding:1.05rem 1.3rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.mark{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:800;color:#fff;font-size:1.02rem;letter-spacing:.03em}
+.mark svg{height:18px}
+.chip{background:rgba(45,225,194,.16);border:1px solid rgba(45,225,194,.32);border-radius:20px;
+padding:.2rem .7rem;font-size:.74rem;color:var(--accent);font-weight:700}
+.back{margin-left:auto;font-size:.85rem;color:#9FB6C6;font-weight:600}
+.back:hover{color:#fff}
+.rs-toggle{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:#CFE0EC;
+border-radius:20px;padding:.28rem .8rem;font-size:.76rem;font-weight:600;cursor:pointer;font-family:var(--font)}
+.rs-toggle:hover{background:rgba(255,255,255,.16);color:#fff}
+.rs-toggle[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#06231C}
+
+.hero{max-width:1060px;margin:0 auto;padding:2.8rem 1.3rem 2.4rem}
+.kick{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--head);font-weight:800;font-size:clamp(1.9rem,5vw,2.9rem);line-height:1.08;
+letter-spacing:-.02em;color:#fff;margin:.8rem 0}
+.dek{font-size:clamp(1rem,2vw,1.18rem);color:#B9CCDA;max-width:58ch;margin:0}
+
+.body{max-width:1060px;margin:0 auto;padding:2.6rem 1.3rem 5rem}
+h2{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;
+color:var(--muted);margin:2.8rem 0 1rem}
+h2:first-child{margin-top:0}
+.lead{font-size:1.1rem;color:var(--navy);max-width:62ch;margin:0 0 1.6rem}
+.lead b{color:var(--accent-deep)}
+
+/* generation gate */
+.gate{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:1.1rem 1.3rem;
+display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:0 2px 12px rgba(80,60,40,.06)}
+.gate .dot{width:11px;height:11px;border-radius:50%;background:var(--accent-deep);flex:none}
+.gate.fail .dot{background:var(--rose)}
+.gate .st{font-family:var(--head);font-weight:800;color:var(--navy);font-size:1rem}
+.gate .sub{font-size:.87rem;color:var(--muted);flex:1;min-width:190px}
+.gate.fail .st{color:var(--rose)}
+.btn{border-radius:10px;padding:.55rem 1.05rem;font-weight:700;font-size:.87rem;cursor:pointer;
+font-family:var(--font);border:1.5px solid var(--rule);background:#fff;color:var(--navy)}
+.btn:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+.btn.p{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
+.btn.p:hover{background:#0A7A67;color:#fff}
+
+/* tabs */
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:0 0 1rem}
+.tab{background:#fff;border:1.5px solid var(--rule);border-radius:11px;padding:.55rem 1rem;cursor:pointer;
+font-family:var(--head);font-weight:700;font-size:.94rem;color:var(--muted)}
+.tab .a{font-family:var(--font);font-weight:400;font-size:.8rem;opacity:.8;margin-left:.35rem}
+.tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.tab:hover{border-color:var(--accent-deep)}
+
+/* the board */
+.board{background:var(--card);border:2px solid var(--rule);border-radius:20px;overflow:hidden;
+box-shadow:0 3px 18px rgba(80,60,40,.08)}
+.bhead{background:var(--navy);color:#fff;padding:1.05rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.bhead .t{font-family:var(--head);font-weight:800;font-size:1.16rem}
+.bhead .d{margin-left:auto;font-size:.82rem;color:#9FB6C6}
+.bgrid{padding:1.2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+@media (max-width:880px){.bgrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.bgrid{grid-template-columns:1fr}}
+
+.cell{background:var(--paper);border:1px solid var(--rule);border-radius:13px;padding:.85rem .95rem;
+display:flex;flex-direction:column;gap:.35rem}
+.cell .lab{display:flex;align-items:center;gap:.4rem;font-family:var(--head);font-weight:800;
+font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;color:var(--sea)}
+.cell .lab svg{width:15px;height:15px;flex:none}
+.cell .q{font-size:1rem;color:var(--ink);line-height:1.4;font-weight:500}
+.cell.together{background:var(--sea-soft);border-color:#CFE3E6}
+.cell.words{background:#FBF6E9;border-color:#E0C97F;grid-column:span 2}
+@media (max-width:560px){.cell.words{grid-column:span 1}}
+.cell.words .lab{color:var(--gold-deep)}
+.cell.think{background:var(--green-soft);border-color:#BEDFD0}
+.cell.think .lab{color:var(--accent-deep)}
+.wlist{display:flex;flex-direction:column;gap:.4rem;margin-top:.15rem}
+.w{display:flex;gap:.55rem;align-items:baseline}
+.w b{font-family:var(--head);color:var(--navy);font-size:.98rem;flex:none}
+.w span{font-size:.87rem;color:var(--muted)}
+.tgt{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sea);
+background:#fff;border:1px solid #CFE3E6;border-radius:20px;padding:.1rem .5rem;align-self:flex-start}
+
+/* the working */
+.why{display:none;font-size:.82rem;color:var(--muted);border-top:1px dashed var(--rule);
+padding-top:.45rem;margin-top:.15rem;line-height:1.45}
+.why b{color:var(--accent-deep)}
+body.show-why .why{display:block}
+.whybar{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:0 0 1rem;
+background:var(--card);border:1px solid var(--rule);border-radius:13px;padding:.75rem 1rem}
+.whybar p{margin:0;font-size:.87rem;color:var(--muted);flex:1;min-width:200px}
+
+/* parent key */
+.keybox{background:var(--card);border:2px solid var(--navy);border-radius:18px;overflow:hidden}
+.keybox .h{background:var(--navy);color:#fff;padding:.95rem 1.3rem;font-family:var(--head);font-weight:800;
+font-size:1.02rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.keybox .h .tagn{margin-left:auto;font-family:var(--font);font-weight:600;font-size:.74rem;
+background:rgba(45,225,194,.18);border:1px solid rgba(45,225,194,.34);color:var(--accent);
+border-radius:20px;padding:.15rem .6rem}
+.keyrows{padding:.4rem 1.3rem 1.1rem}
+.krow{display:flex;gap:.9rem;align-items:flex-start;padding:.75rem 0;border-bottom:1px solid var(--rule)}
+.krow:last-child{border-bottom:none}
+.krow .n{font-family:var(--head);font-weight:800;color:var(--navy);min-width:64px;font-size:.97rem}
+.krow .t{flex:1;font-size:.9rem;color:var(--ink)}
+.krow .t em{font-style:normal;color:var(--muted);display:block;font-size:.83rem;margin-top:.15rem}
+
+/* notes */
+.note{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
+border-radius:14px;padding:1.2rem 1.4rem;margin-top:1.4rem;font-size:.93rem;color:var(--muted)}
+.note b{color:var(--navy)}
+.note p{margin:0 0 .75rem}.note p:last-child{margin:0}
+.note.warm{border-left-color:var(--gold-deep);background:#FBF6E9;color:#6B531A}
+.note.warm b{color:var(--gold-deep)}
+.note.rose{border-left-color:var(--rose);background:var(--rose-soft);color:#7A3527}
+.note.rose b{color:var(--rose)}
+
+.cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem}
+.cta a{border-radius:11px;padding:.72rem 1.25rem;font-weight:700;font-size:.94rem}
+.cta .p{background:var(--accent-deep);color:#fff}
+.cta .s{background:#fff;border:1.5px solid var(--rule);color:var(--navy)}
+
+footer{background:var(--grad);color:#7E97AB}
+.foot{max-width:1060px;margin:0 auto;padding:2.2rem 1.3rem;text-align:center;font-size:.82rem}
+.foot .mark{justify-content:center;margin-bottom:.45rem;font-size:.94rem}
+@media (max-width:460px){.top-in{row-gap:.5rem}.bgrid{padding:.9rem}}
+
+@media print{
+  .top,.foot,footer,.whybar,.tabs,.gate,.cta,.rs-toggle{display:none!important}
+  body{background:#fff}
+  .board{border:1px solid #999;box-shadow:none;page-break-inside:avoid}
+  .bhead{background:#fff;color:#000;border-bottom:1px solid #999}
+  .bhead .t{color:#000}
+  .why{display:none!important}
+}
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<g id="i-num" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M14 20h36M14 32h36M14 44h36M24 12v40M40 12v40"/></g>
+<g id="i-pen" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50l4-12L40 16l8 8-22 22z"/><path d="M36 20l8 8"/></g>
+<g id="i-back" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M20 32a12 12 0 1 1 4 9"/><path d="M20 20v12h12"/></g>
+<g id="i-think" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 12a14 14 0 0 1 8 25v7H24v-7a14 14 0 0 1 8-25z"/><path d="M26 52h12"/></g>
+<g id="i-word" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16h40v32H26l-10 8v-8h-4z"/><path d="M22 28h20M22 36h13"/></g>
+</defs></svg>
+
+<div class="top">
+  <div class="top-in">
+    <a href="/" class="mark"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a>
+    <span class="chip">Home education</span>
+    <button class="rs-toggle" id="rsT" aria-pressed="false" title="Larger, more spaced text">Aa&ensp;Reading support</button>
+    <a href="sequens-home.html" class="back">Back to home education</a>
+  </div>
+  <div class="hero">
+    <div class="kick">The morning board</div>
+    <h1>Nine small things,<br>waiting downstairs.</h1>
+    <p class="dek">Not one long task. A spread of quick questions, each one aimed at something your child actually needs, built before you came down. You read it out, or you put it on the wall.</p>
+  </div>
+</div>
+
+<div class="body">
+
+<h2>Before you start</h2>
+<p class="lead">A morning board is not a lesson. It is the ten minutes that switches thinking on. <b>Three of the nine are the same for everyone.</b> The other six are aimed at one child, and no child is told why.</p>
+
+<div class="gate" id="gate">
+  <span class="dot" aria-hidden="true"></span>
+  <span class="st" id="gateSt">Board ready. All 9 built.</span>
+  <span class="sub" id="gateSub">Every cell generated and checked. A board is never shown half finished.</span>
+  <button class="btn" id="failBtn">Show me what happens if one fails</button>
+</div>
+
+<h2>This morning's board</h2>
+
+<div class="whybar">
+  <p><b>Nothing here is random.</b> Turn this on to see why each question was chosen.</p>
+  <button class="btn p" id="whyBtn" aria-pressed="false">Show the working</button>
+  <button class="btn" id="printBtn">Print the board</button>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Choose a child">
+  <button class="tab" role="tab" id="tab-ivy"  aria-selected="true"  aria-controls="board">Ivy<span class="a">age 5</span></button>
+  <button class="tab" role="tab" id="tab-otis" aria-selected="false" aria-controls="board">Otis<span class="a">age 8</span></button>
+  <button class="tab" role="tab" id="tab-nell" aria-selected="false" aria-controls="board">Nell<span class="a">age 12</span></button>
+</div>
+
+<div class="board" id="board" role="tabpanel" aria-labelledby="tab-ivy">
+  <div class="bhead">
+    <span class="t" id="bName">Ivy's morning board</span>
+    <span class="d">Tuesday &middot; about 10 minutes</span>
+  </div>
+  <div class="bgrid" id="bgrid"></div>
+</div>
+
+<div class="note">
+  <p><b>Why nine small things, and not one big one.</b> A long task at eight in the morning asks a child to concentrate before they are ready. Nine short questions ask for one thought each, and each one finishes. Working memory is small, and a morning board should cost almost nothing to start.</p>
+  <p><b>Why these nine.</b> Five fluency questions on the thing that was shaky, one on writing, one deliberately old, one that has no right answer, and two words. Turn on the working above and every cell tells you where it came from.</p>
+</div>
+
+<h2>What your child never sees</h2>
+<p class="lead">Ivy is not on the easy board and Nell is not on the hard one. <b>They are each on their own board, and the reason lives with you.</b></p>
+
+<div class="keybox">
+  <div class="h">Your key for this morning <span class="tagn">Parent only</span></div>
+  <div class="keyrows">
+    <div class="krow"><span class="n">Ivy</span><span class="t">Bonds to ten, same idea as Monday, different numbers.<em>Monday she had three of five. If today is clean, it moves on by itself.</em></span></div>
+    <div class="krow"><span class="n">Otis</span><span class="t">Four times table, held back while two and five went ahead.<em>He is secure on two and five. This is the one gap, so this is the one target.</em></span></div>
+    <div class="krow"><span class="n">Nell</span><span class="t">Fractions into decimals, marked partly a fortnight ago.<em>Partly is not failure. It is the signal that it needs one more go, in a new way.</em></span></div>
+    <div class="krow"><span class="n">All three</span><span class="t">The gravity question is nineteen days old on purpose.<em>This is roughly where a memory starts to fade. Pulling it back now is what makes it stick.</em></span></div>
+  </div>
+</div>
+
+<div class="note warm">
+  <p><b>Going further is offered, never allocated.</b> If a child finishes the board and wants more, the extra question is there for any of them. It is not attached to a name and it is not expected. Nobody is put on it.</p>
+</div>
+
+<h2>When the board is done</h2>
+<p class="lead">Two minutes, three answers per child. That is the whole record, and it is what tomorrow's board is built from.</p>
+
+<div class="note">
+  <p><b>Yes, partly, or not yet.</b> You were in the room, so you already know. Partly is a real answer and the most common one. A board that only offered yes and no would make you round up or round down, and tomorrow would be built on the rounding.</p>
+  <p><b>Gaps are normal.</b> Every family has them and every school has them. A not yet is the most useful thing you can tell SEQUENS, because it is exactly what tomorrow aims at. Recording it honestly is worth more than recording it kindly.</p>
+</div>
+
+<div class="cta">
+  <a class="p" href="sequens-home-confirm.html">Go to the end-of-session check</a>
+  <a class="s" href="sequens-demo-home-three.html">See one afternoon, three children</a>
+  <a class="s" href="sequens-home-mockup.html">Open the app demonstration</a>
+</div>
+
+<h2>What was sent, and what was not</h2>
+<div class="note">
+  <p><b>Nothing about your child left your account.</b> To build Ivy's five fluency questions, SEQUENS asked for five number bond questions to ten, for a five year old. That was the entire request. It did not send her name, her age in months, Monday's three wrong answers, or anything you have ever recorded about her.</p>
+  <p><b>The aiming is arithmetic, not a conversation.</b> Choosing bonds to ten because Monday was three out of five is code, running on your own record, on your account. The model was only asked for the questions once the decision had already been made.</p>
+  <p><b>You see the board before your child does.</b> It is built overnight, and it waits for you. Nothing is shown to a child that you have not looked at first.</p>
+</div>
+
+<div class="note rose">
+  <p><b>Honest about what this is.</b> This page is a demonstration built from a written specification. The board you are reading was written by hand to show the shape. Live generation, accounts and your own record are not built yet, and no board has been generated by the engine at the standard this shows.</p>
+  <p><b>And one honest cost.</b> A board of nine aimed cells is nine separate generations, not one. That is slower and dearer than a single lesson, so fluency sets and word lists are reused rather than rebuilt each morning. It is named here because it has to be designed for, not discovered later.</p>
+</div>
+
+</div>
+
+<footer><div class="foot">
+  <span class="mark"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
+  <div>Elegant on the surface. Massive underneath.</div>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+
+var shared = [
+  {cls:"", icon:"i-back", lab:"Bring it back",
+   q:"Nineteen days ago we dropped a hammer and a feather. On the Moon, which one lands first?",
+   why:"<b>Spacing.</b> You did gravity nineteen days ago. This is roughly the point a memory starts to fade, so it comes back now rather than later."},
+  {cls:"think", icon:"i-think", lab:"Thinking question",
+   q:"A crab keeps its hard bits on the outside. You keep yours on the inside. Which is the better idea, and why?",
+   why:"<b>No curriculum link, and it is not pretending to have one.</b> It is here because thinking out loud is worth practising, and because there is no right answer to be wrong about."},
+  {cls:"words", icon:"i-word", lab:"Words of the day", words:[
+     ["camouflage","when a colour or a pattern helps something hide where it lives"],
+     ["habitat","the place a creature lives, with everything it needs to stay alive"]],
+   why:"<b>From your own afternoon.</b> Both words came out of the rockpooling on Tuesday, so they are attached to something your child actually saw."}
+];
+
+var kids = {
+  ivy:{name:"Ivy", fluency:{lab:"Number bonds to ten", icon:"i-num",
+        items:["7 + ? = 10","10 = 4 + ?","2 + 8 = ?","? + 6 = 10","10 take away 3 = ?"],
+        why:"<b>Aimed.</b> On Monday Ivy had three of five wrong on bonds to ten. Same idea, different numbers, so it is a fresh go and not a repeat."},
+      spag:{lab:"Writing", icon:"i-pen",
+        q:"Put the capital letter and the full stop where they belong:<br><em>we saw a crab in the pool</em>",
+        why:"<b>From last week's writing.</b> Ivy's recount ran on without a full stop. One sentence is enough to practise on."}},
+  otis:{name:"Otis", fluency:{lab:"Four times table", icon:"i-num",
+        items:["4 x 6 = ?","4 x 9 = ?","28 &divide; 4 = ?","4 x 7 = ?","How many fours in 24?"],
+        why:"<b>Aimed.</b> Otis is secure on twos and fives and shaky on fours. Only the gap is targeted, so the board stays short."},
+      spag:{lab:"Writing", icon:"i-pen",
+        q:"Which one is right, and why?<br><em>Its a crab.</em> &nbsp;or&nbsp; <em>It's a crab.</em>",
+        why:"<b>From last week's writing.</b> Two apostrophes went missing in his recount. The why matters more than the answer here."}},
+  nell:{name:"Nell", fluency:{lab:"Fractions and decimals", icon:"i-num",
+        items:["3/4 as a decimal","0.6 as a fraction, simplest form","2/5 as a decimal","Which is larger: 0.7 or 3/5?","1/8 as a decimal"],
+        why:"<b>Aimed.</b> Nell marked partly on converting fractions to decimals a fortnight ago. Partly means one more go, in a new way, before moving on."},
+      spag:{lab:"Writing", icon:"i-pen",
+        q:"Join these correctly:<br><em>The tide was out. We could reach the far pool.</em>",
+        why:"<b>From last week's writing.</b> Nell is joining sentences with commas where the join needs more. This is the next step, not a correction."}}
+};
+
+var grid=document.getElementById("bgrid"), bName=document.getElementById("bName");
+function esc(s){return s;}
+
+function cell(cls,icon,lab,inner,why){
+  return '<div class="cell '+cls+'">'
+    +'<span class="lab"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#'+icon+'"/></svg>'+lab+'</span>'
+    +inner
+    +'<div class="why">'+why+'</div></div>';
+}
+
+function render(key){
+  var k=kids[key], h="";
+  bName.textContent=k.name+"'s morning board";
+  // 5 fluency cells, one question each
+  k.fluency.items.forEach(function(q,i){
+    h+=cell("", k.fluency.icon, k.fluency.lab+" &middot; "+(i+1)+" of 5",
+      '<span class="q">'+q+'</span>'+(i===0?'<span class="tgt">Aimed at Monday</span>':''),
+      k.fluency.why);
+  });
+  // spag
+  h+=cell("", k.spag.icon, k.spag.lab, '<span class="q">'+k.spag.q+'</span>', k.spag.why);
+  // shared three
+  shared.forEach(function(s){
+    var inner;
+    if(s.words){
+      inner='<div class="wlist">'+s.words.map(function(w){
+        return '<span class="w"><b>'+w[0]+'</b><span>'+w[1]+'</span></span>';}).join("")+'</div>';
+    } else { inner='<span class="q">'+s.q+'</span>'; }
+    h+=cell(s.cls+" together", s.icon, s.lab+' &middot; everyone', inner, s.why);
+  });
+  grid.innerHTML=h;
+}
+
+// tabs
+var tabs=[["tab-ivy","ivy"],["tab-otis","otis"],["tab-nell","nell"]];
+function select(id){
+  tabs.forEach(function(t){
+    var el=document.getElementById(t[0]);
+    var on=(t[0]===id);
+    el.setAttribute("aria-selected", on?"true":"false");
+    if(on){ render(t[1]); document.getElementById("board").setAttribute("aria-labelledby",t[0]); }
+  });
+}
+tabs.forEach(function(t,i){
+  var el=document.getElementById(t[0]);
+  el.addEventListener("click",function(){select(t[0]);});
+  el.addEventListener("keydown",function(e){
+    var n=null;
+    if(e.key==="ArrowRight") n=tabs[(i+1)%tabs.length][0];
+    if(e.key==="ArrowLeft")  n=tabs[(i-1+tabs.length)%tabs.length][0];
+    if(n){ e.preventDefault(); select(n); document.getElementById(n).focus(); }
+  });
+});
+
+// show the working
+var whyBtn=document.getElementById("whyBtn");
+whyBtn.addEventListener("click",function(){
+  var on=document.body.classList.toggle("show-why");
+  whyBtn.setAttribute("aria-pressed", on?"true":"false");
+  whyBtn.textContent = on ? "Hide the working" : "Show the working";
+});
+
+// reading support
+var rsT=document.getElementById("rsT");
+rsT.addEventListener("click",function(){
+  var on=document.body.classList.toggle("rs");
+  rsT.setAttribute("aria-pressed", on?"true":"false");
+});
+
+// the all-or-nothing gate
+var gate=document.getElementById("gate"), gSt=document.getElementById("gateSt"),
+    gSub=document.getElementById("gateSub"), failBtn=document.getElementById("failBtn"), failed=false;
+failBtn.addEventListener("click",function(){
+  failed=!failed;
+  if(failed){
+    gate.classList.add("fail");
+    gSt.textContent="Board not ready. 8 of 9 built.";
+    gSub.textContent="One cell did not build to standard, so the board is held back. You get this message rather than a board with a hole in it.";
+    failBtn.textContent="Try that cell again";
+    grid.setAttribute("aria-busy","true");
+    grid.style.opacity=".35";
+  } else {
+    gate.classList.remove("fail");
+    gSt.textContent="Board ready. All 9 built.";
+    gSub.textContent="Every cell generated and checked. A board is never shown half finished.";
+    failBtn.textContent="Show me what happens if one fails";
+    grid.removeAttribute("aria-busy");
+    grid.style.opacity="1";
+  }
+});
+
+document.getElementById("printBtn").addEventListener("click",function(){window.print();});
+
+select("tab-ivy");
+})();
+</script>
+</body></html>

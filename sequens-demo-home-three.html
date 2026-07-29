@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS Home - one afternoon, three children</title>
+<meta name="description" content="A rockpooling afternoon, taught together, expecting something different from a five year old, an eight year old and a twelve year old.">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0C8F79;--paper:#F7F4EE;
+--card:#FFF;--rule:#E4DDD2;--muted:#6B6154;--dim:#7A7063;--steel:#2C6E9B;--steel-soft:#EAF2F8;
+--gold:#B8912F;--gold-deep:#8A6A18;--warm:#C97B4A;--green-soft:#EAF3EE;--success-deep:#0A6B5C;
+--sea:#3E7C8C;--sea-soft:#E8F1F2;
+--grad:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+--font:'Lexend',sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
+*{box-sizing:border-box}
+html,body{overflow-x:clip;max-width:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+.top{background:var(--grad);color:#CFE0EC}
+.top-in{max-width:1000px;margin:0 auto;padding:1.05rem 1.3rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.mark{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:800;color:#fff;font-size:1.02rem;letter-spacing:.03em}
+.mark svg{height:18px}
+.chip{background:rgba(45,225,194,.16);border:1px solid rgba(45,225,194,.32);border-radius:20px;
+padding:.2rem .7rem;font-size:.74rem;color:var(--accent);font-weight:700}
+.back{margin-left:auto;font-size:.85rem;color:#9FB6C6;font-weight:600}
+.back:hover{color:#fff}
+
+.hero{max-width:1000px;margin:0 auto;padding:2.8rem 1.3rem 2.4rem}
+.kick{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--head);font-weight:800;font-size:clamp(1.9rem,5vw,2.9rem);line-height:1.08;
+letter-spacing:-.02em;color:#fff;margin:.8rem 0}
+.dek{font-size:clamp(1rem,2vw,1.18rem);color:#B9CCDA;max-width:56ch;margin:0}
+
+.body{max-width:1000px;margin:0 auto;padding:2.6rem 1.3rem 5rem}
+h2{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;
+color:var(--muted);margin:2.6rem 0 1rem}
+h2:first-child{margin-top:0}
+.lead{font-size:1.1rem;color:var(--navy);max-width:60ch;margin:0 0 1.8rem}
+
+/* the moment */
+.moment{background:var(--card);border:1px solid var(--rule);border-radius:18px;overflow:hidden;
+box-shadow:0 2px 12px rgba(80,60,40,.06)}
+.mhead{background:var(--sea);color:#fff;padding:1.1rem 1.5rem;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.mhead .t{font-family:var(--head);font-weight:800;font-size:1.12rem}
+.mhead .w{margin-left:auto;font-size:.83rem;color:#D6E8EB}
+.mbody{padding:1.4rem 1.5rem}
+.said{background:var(--paper);border-left:4px solid var(--sea);border-radius:0 10px 10px 0;
+padding:.85rem 1.1rem;font-size:1.05rem;color:var(--ink);font-style:italic;margin-bottom:1.2rem}
+.said b{font-style:normal;color:var(--navy)}
+
+.found{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.7rem}
+.f{background:var(--sea-soft);border:1px solid #CFE3E6;border-radius:12px;padding:.85rem 1rem}
+.f .s{font-family:var(--head);font-weight:800;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sea);margin-bottom:.25rem}
+.f .o{font-size:.93rem;color:var(--ink);line-height:1.4}
+.f .src{font-size:.76rem;color:var(--muted);margin-top:.4rem;padding-top:.4rem;border-top:1px solid #CFE3E6}
+.f.enrich{background:#FBF6E9;border-color:#E0C97F}
+.f.enrich .s{color:var(--gold-deep)}
+.f.enrich .src{border-top-color:#E0C97F;color:var(--gold-deep)}
+
+/* the three children */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media (max-width:840px){.three{grid-template-columns:1fr}}
+.ch{background:var(--card);border:2px solid var(--rule);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
+box-shadow:0 2px 12px rgba(80,60,40,.06)}
+.ch .h{padding:1rem 1.2rem;color:#fff;display:flex;align-items:baseline;gap:.55rem}
+.ch1 .h{background:#5E9EA8}.ch2 .h{background:#3E7C8C}.ch3 .h{background:#2C5F72}
+.ch .h .n{font-family:var(--head);font-weight:800;font-size:1.15rem}
+.ch .h .a{font-size:.83rem;opacity:.88}
+.ch .b{padding:1.1rem 1.2rem;flex:1;display:flex;flex-direction:column}
+.ch .task{font-family:var(--head);font-weight:800;font-size:1.02rem;color:var(--navy);margin-bottom:.4rem;line-height:1.25}
+.ch .how{font-size:.92rem;color:var(--muted);margin-bottom:.9rem;line-height:1.45}
+.ch .lbl{font-family:var(--head);font-weight:700;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:.7rem 0 .35rem}
+.ch ul{margin:0;padding-left:1.05rem}
+.ch li{font-size:.87rem;color:var(--ink);margin-bottom:.28rem}
+.ch .look{background:var(--green-soft);border:1px solid #BEDFD0;border-radius:9px;padding:.6rem .8rem;
+font-size:.85rem;color:var(--success-deep);margin-top:auto}
+.ch .look b{display:block;font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.2rem}
+
+/* the one-activity band */
+.oneact{background:var(--navy);color:#fff;border-radius:18px;padding:1.5rem 1.7rem;margin-top:1.2rem}
+.oneact h3{font-family:var(--head);font-weight:800;font-size:1.25rem;margin:0 0 .55rem;color:#fff}
+.oneact p{font-size:.96rem;color:#B9CCDA;margin:0 0 .7rem;max-width:64ch}
+.oneact p:last-child{margin:0}
+.oneact b{color:var(--accent)}
+
+/* records */
+.recs{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+@media (max-width:840px){.recs{grid-template-columns:1fr}}
+.rec{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1rem 1.1rem}
+.rec .n{font-family:var(--head);font-weight:800;color:var(--navy);font-size:1rem;margin-bottom:.5rem}
+.rec .row{display:flex;gap:.5rem;align-items:flex-start;font-size:.85rem;padding:.32rem 0;border-bottom:1px solid var(--rule)}
+.rec .row:last-child{border-bottom:none}
+.rec .sub{font-weight:700;color:var(--sea);min-width:56px;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;padding-top:.1rem}
+.rec .txt{flex:1;color:var(--ink)}
+.rec .yr{font-size:.74rem;color:var(--muted);display:block;margin-top:.1rem}
+
+.note{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
+border-radius:14px;padding:1.2rem 1.4rem;margin-top:1.6rem;font-size:.93rem;color:var(--muted)}
+.note b{color:var(--navy)}
+.note p{margin:0 0 .75rem}.note p:last-child{margin:0}
+.note.warm{border-left-color:var(--gold-deep);background:#FBF6E9;color:#6B531A}
+.note.warm b{color:var(--gold-deep)}
+
+.cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem}
+.cta a{border-radius:11px;padding:.7rem 1.25rem;font-weight:700;font-size:.94rem}
+.cta .p{background:var(--accent-deep);color:#fff}
+.cta .s{background:#fff;border:1.5px solid var(--rule);color:var(--navy)}
+
+footer{background:var(--grad);color:#7E97AB}
+.foot{max-width:1000px;margin:0 auto;padding:2.2rem 1.3rem;text-align:center;font-size:.82rem}
+.foot .mark{justify-content:center;margin-bottom:.45rem;font-size:.94rem}
+@media (max-width:460px){.top-in{flex-wrap:wrap;row-gap:.5rem}}
+</style><link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
+</head><body>
+
+<div class="top">
+  <div class="top-in">
+    <a href="/" class="mark"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a>
+    <span class="chip">Home education</span>
+    <a href="sequens-home.html" class="back">Back to home education</a>
+  </div>
+  <div class="hero">
+    <div class="kick">Plan from a moment</div>
+    <h1>One afternoon.<br>Three children.<br>Three different outcomes.</h1>
+    <p class="dek">You went rockpooling. That is all you told SEQUENS. Here is what it found in the afternoon, and what it expects from a five year old, an eight year old and a twelve year old who were all standing in the same pool.</p>
+  </div>
+</div>
+
+<div class="body">
+
+<h2>What you told it</h2>
+<div class="moment">
+  <div class="mhead">
+    <span class="t">A rockpooling afternoon</span>
+    <span class="w">Tuesday &middot; low tide &middot; about two hours</span>
+  </div>
+  <div class="mbody">
+    <div class="said">"We went rockpooling this afternoon. <b>Found crabs, limpets, some anemones and a lot of seaweed.</b> Ivy got soaked."</div>
+
+    <div class="found">
+      <div class="f">
+        <div class="s">Science</div>
+        <div class="o">Living things can be grouped by observable features</div>
+        <div class="src">National Curriculum linked</div>
+      </div>
+      <div class="f">
+        <div class="s">Science</div>
+        <div class="o">Living things are suited to the place they live</div>
+        <div class="src">National Curriculum linked</div>
+      </div>
+      <div class="f enrich">
+        <div class="s">Geography</div>
+        <div class="o">Why the pools appear and disappear</div>
+        <div class="src">Enrichment, not a curriculum objective</div>
+      </div>
+      <div class="f">
+        <div class="s">English</div>
+        <div class="o">Recount writing: tell the afternoon back in order</div>
+        <div class="src">National Curriculum linked</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>The same activity, three expectations</h2>
+<p class="lead">Nobody is doing a different afternoon. They are all sorting the same creatures out of the same pool. <b>What changes is what you expect back.</b></p>
+
+<div class="three">
+  <div class="ch ch1">
+    <div class="h"><span class="n">Ivy</span><span class="a">age 5</span></div>
+    <div class="b">
+      <div class="task">Sort them into groups</div>
+      <div class="how">Crabs here, shells there. Then say <b>why</b> they belong together, out loud.</div>
+      <div class="lbl">What you are asking for</div>
+      <ul>
+        <li>Groups that hold together</li>
+        <li>A reason said aloud, not written</li>
+        <li>One feature named: "it has a hard bit"</li>
+      </ul>
+      <div class="look"><b>You have got it when</b>She sorts them without you, and the reason is about the creature rather than about where she found it.</div>
+    </div>
+  </div>
+
+  <div class="ch ch2">
+    <div class="h"><span class="n">Otis</span><span class="a">age 8</span></div>
+    <div class="b">
+      <div class="task">Build a classification key</div>
+      <div class="how">Yes-or-no questions that split the group. Then <b>test it on a creature you did not use</b>.</div>
+      <div class="lbl">What you are asking for</div>
+      <ul>
+        <li>Questions with only two answers</li>
+        <li>Each question splits the group properly</li>
+        <li>The test on a new creature actually works</li>
+      </ul>
+      <div class="look"><b>You have got it when</b>The key sorts a creature he had not thought about when he made it. That is the whole point of a key.</div>
+    </div>
+  </div>
+
+  <div class="ch ch3">
+    <div class="h"><span class="n">Nell</span><span class="a">age 12</span></div>
+    <div class="b">
+      <div class="task">Explain the adaptation</div>
+      <div class="how">Why <b>that</b> shell, <b>that</b> claw, <b>that</b> colour, in <b>that</b> pool. Argue it from what you saw.</div>
+      <div class="lbl">What you are asking for</div>
+      <ul>
+        <li>A claim about a specific feature</li>
+        <li>Evidence from the pool, not from memory</li>
+        <li>Because, not then. The mechanism, not the sequence</li>
+      </ul>
+      <div class="look"><b>You have got it when</b>She says <em>because</em> and means it: "the limpet clamps down <em>because</em> the tide takes the water away."</div>
+    </div>
+  </div>
+</div>
+
+<div class="oneact">
+  <h3>You run one activity, not three.</h3>
+  <p>That is the whole design. You are not managing three lessons on a beach. You are running <b>one afternoon</b>, and SEQUENS is holding three different expectations behind it so you do not have to.</p>
+  <p><b>And no child is told which one they are.</b> Ivy is not on the easy task and Nell is not on the hard one. They are all rockpooling. The expectation lives with you.</p>
+</div>
+
+<h2>What it records, without you filling anything in</h2>
+<div class="recs">
+  <div class="rec">
+    <div class="n">Ivy &middot; 5</div>
+    <div class="row"><span class="sub">Sci</span><span class="txt">Grouping living things by what you can see<span class="yr">Year 1 expectation</span></span></div>
+    <div class="row"><span class="sub">Eng</span><span class="txt">Explaining a choice out loud<span class="yr">Year 1 expectation</span></span></div>
+  </div>
+  <div class="rec">
+    <div class="n">Otis &middot; 8</div>
+    <div class="row"><span class="sub">Sci</span><span class="txt">Classification keys<span class="yr">Year 4 expectation</span></span></div>
+    <div class="row"><span class="sub">Eng</span><span class="txt">Recount in time order<span class="yr">Year 3 expectation</span></span></div>
+  </div>
+  <div class="rec">
+    <div class="n">Nell &middot; 12</div>
+    <div class="row"><span class="sub">Sci</span><span class="txt">Adaptation and habitat<span class="yr">Year 6 expectation</span></span></div>
+    <div class="row"><span class="sub">Sci</span><span class="txt">Argument from evidence<span class="yr">Year 7, a year above</span></span></div>
+    <div class="row"><span class="sub">Geo</span><span class="txt">Tides and the coastline<span class="yr">Enrichment, not an objective</span></span></div>
+  </div>
+</div>
+
+<div class="note warm">
+  <p><b>Notice what it did not do.</b> It did not claim the tides work was a curriculum objective, because it is not one. It said <b>enrichment</b>, and it will keep saying enrichment however useful the afternoon was.</p>
+  <p style="margin:0;">And it told you Nell's argument-from-evidence sits <b>a year above</b> her age, rather than quietly filing it as normal. <b>SEQUENS will not tell you that you covered something you did not.</b></p>
+</div>
+
+<div class="note">
+  <p><b>Three children is where this actually matters.</b> With one child you could hold the expectations in your head. With three, at different ages, on a beach, in the rain, you cannot. <b>That is the job.</b></p>
+  <p><b>Gaps are normal. Every family has them.</b> If Otis's key does not work on a new creature, that is not a failed afternoon. It is the most useful thing you can record, because the next session is built from it.</p>
+  <p><b>Nothing about your children is sent to an AI.</b> SEQUENS asks a model for a rockpooling activity. It never hears their names, their ages, or a word of what you recorded.</p>
+</div>
+
+<div class="cta">
+  <a class="p" href="sequens-home-confirm.html">See how you record it, in twenty seconds</a>
+  <a class="s" href="sequens-home.html">Back to home education</a>
+</div>
+</div>
+
+<footer><div class="foot">
+  <span class="mark"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
+  <div>Elegant on the surface. Massive underneath.</div>
+</div></footer>
+</body></html>
