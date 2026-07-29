@@ -151,6 +151,8 @@
   .msg{display:none;margin-top:1rem;font-size:.95rem;color:var(--accent);}
   .msg.on{display:block;}
   .joinnote{margin-top:1.6rem;font-size:.9rem;color:var(--dim);max-width:56ch;}
+  .joinlinks{list-style:none;margin:.5rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem .9rem;font-size:.9rem;}
+  .joinlinks a{color:var(--accent);font-weight:600;}
 
   footer{border-top:1px solid var(--hair);padding:2.4rem 0 2.8rem;font-size:.85rem;color:var(--dim);}
   .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.2rem;}
@@ -385,7 +387,13 @@
     <button class="btn" type="submit">Join the waiting list</button>
     <div class="msg" id="wlmsg">You are on the list. We will write when the free trial opens.</div>
   </form>
-  <p class="joinnote">Want to look around first? <a href="sequens-home-mockup.html" target="_blank" rel="noopener" style="color:var(--accent);">Open the app demonstration</a>, no sign-up needed.</p>
+  <p class="joinnote">Want to look around first? No sign-up needed.</p>
+  <ul class="joinlinks">
+    <li><a href="sequens-home-mockup.html" target="_blank" rel="noopener">Open the app demonstration</a></li>
+    <li><a href="sequens-demo-home-single.html" target="_blank" rel="noopener">See a session for one child</a></li>
+    <li><a href="sequens-demo-home-two.html" target="_blank" rel="noopener">See one session, two children</a></li>
+    <li><a href="sequens-home-confirm.html" target="_blank" rel="noopener">See the end-of-session check</a></li>
+  </ul>
 </div></section>
 </main>
 

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS Home education - a session for two children</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0C8F79; --accent:#2DE1C2;
+    --paper:#F4F8F6; --card:#FFFFFF; --rule:#D7E4EA; --muted:#5B7A90;
+    --warm:#2C6E9B; --warm-soft:#EAF2F8;
+    --younger:#0C8F79; --older:#2C6E9B; --older-soft:#EAF2F8; --younger-soft:#EAF3EE;
+    --font:'Lexend','Segoe UI',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.65;}
+  .app{max-width:820px;margin:0 auto;padding:1.6rem 1.4rem 4rem;}
+  .apphead{display:flex;align-items:center;gap:.6rem;margin-bottom:.2rem;}
+  .apphead svg{height:22px;} .apphead b{font-family:var(--head);font-weight:800;color:var(--navy);letter-spacing:.04em;font-size:1.1rem;}
+  .demo-chip{margin-left:auto;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent-deep);border-radius:20px;padding:3px 10px;}
+  .sub{color:var(--muted);margin:0 0 1.3rem;font-size:.9rem;}
+
+  .sessionhead{background:linear-gradient(180deg,#FFFFFF,#F1F7F3);border:1px solid var(--rule);border-radius:16px;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+  .kids{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.7rem;}
+  .child{display:inline-flex;align-items:center;gap:.5rem;border-radius:20px;padding:.3rem .8rem .3rem .4rem;font-size:.85rem;font-weight:600;}
+  .child.younger{background:var(--younger-soft);color:var(--younger);}
+  .child.older{background:var(--older-soft);color:var(--older);}
+  .child .dot{width:24px;height:24px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-family:var(--head);font-weight:700;}
+  .child.younger .dot{background:var(--younger);} .child.older .dot{background:var(--older);}
+  .sh-title{font-family:var(--head);font-weight:700;font-size:1.35rem;color:var(--navy);margin:0 0 .3rem;line-height:1.2;}
+  .sh-sub{font-size:.95rem;color:var(--muted);margin:0;}
+  .sh-meta{display:flex;gap:1.3rem;flex-wrap:wrap;margin-top:.9rem;padding-top:.8rem;border-top:1px solid var(--rule);font-size:.83rem;color:var(--muted);}
+  .sh-meta b{color:var(--navy);font-weight:600;}
+  .howitworks{font-size:.9rem;color:var(--ink);margin:.9rem 0 0;background:var(--warm-soft);border-radius:10px;padding:.7rem .9rem;}
+  .howitworks b{color:#1F4A6E;}
+
+  .flow{display:flex;flex-direction:column;gap:.7rem;}
+  .part{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.1rem 1.3rem;}
+  .part-head{display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem;}
+  .part-ico{width:36px;height:36px;border-radius:10px;background:#EAF3EE;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .part-ico svg{width:20px;height:20px;}
+  .part-name{font-family:var(--head);font-weight:700;font-size:1.02rem;color:var(--navy);margin:0;flex:1;}
+  .part-time{font-size:.78rem;color:var(--muted);}
+  .together{font-size:.93rem;color:var(--ink);margin:0 0 .6rem;}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+  @media (max-width:620px){.split{grid-template-columns:1fr;}}
+  .lane{border-radius:11px;padding:.8rem .9rem;}
+  .lane.younger{background:var(--younger-soft);border:1px solid #BEDFD0;}
+  .lane.older{background:var(--older-soft);border:1px solid #C3D8E8;}
+  .lane-who{display:flex;align-items:center;gap:.4rem;font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;}
+  .lane.younger .lane-who{color:var(--younger);}
+  .lane.older .lane-who{color:var(--older);}
+  .lane-who .yr{font-family:var(--font);font-weight:600;font-size:.68rem;color:var(--muted);text-transform:none;letter-spacing:0;}
+  .lane p{margin:0;font-size:.89rem;color:var(--ink);}
+  .lane .you{display:block;margin-top:.45rem;font-size:.85rem;font-style:italic;color:var(--muted);}
+
+  .tip{display:block;margin-top:.6rem;font-size:.85rem;color:var(--warm);background:var(--warm-soft);border-radius:8px;padding:.5rem .7rem;}
+  .tip b{color:#1F4A6E;}
+
+  .after{background:linear-gradient(180deg,#FFFFFF,#F1F7F3);border:1px solid var(--rule);border-radius:14px;padding:1.1rem 1.3rem;margin-top:1rem;}
+  .after h3{font-family:var(--head);font-weight:700;font-size:.95rem;color:var(--navy);margin:0 0 .5rem;}
+  .after p{margin:0 0 .6rem;font-size:.9rem;color:var(--muted);}
+  .covrow{display:flex;flex-direction:column;gap:.4rem;}
+  .cov{font-size:.83rem;border-radius:8px;padding:.4rem .7rem;}
+  .cov.younger{background:var(--younger-soft);color:var(--younger);}
+  .cov.older{background:var(--older-soft);color:var(--older);}
+  .foot{margin-top:1.4rem;font-size:.78rem;color:var(--muted);text-align:center;}
+</style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
+<style>
+.sqnav{background:linear-gradient(90deg,#0A3D62,#0D2F4A);position:sticky;top:0;z-index:99999;}
+.sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+.sqnav a{text-decoration:none;}
+.sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-weight:800;letter-spacing:.04em;color:#fff;font-size:.95rem;}
+.sqnav-brand svg{height:16px;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back:hover{color:#fff;}
+@media print{.sqnav{display:none;}}
+</style>
+</head>
+<body>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="sequens-home.html">Back to home education</a></div></div>
+
+<div class="app">
+  <div class="apphead"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0C8F79"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg><b>SEQUENS</b><span class="demo-chip">Demo · Home education</span></div>
+  <p class="sub">Home education - one session, two children, two different levels. The same starting point, pitched honestly for each age.</p>
+
+  <div class="sessionhead">
+    <div class="kids">
+      <span class="child younger"><span class="dot">L</span>Leo · age 10</span>
+      <span class="child older"><span class="dot">N</span>Nadia · age 14</span>
+    </div>
+    <h1 class="sh-title">How does a bridge hold up so much weight?</h1>
+    <p class="sh-sub">A build-and-test session sparked by a trip over a big suspension bridge - one activity, two levels of thinking.</p>
+    <div class="sh-meta"><span><b>About 45 minutes</b></span><span><b>You'll need:</b> paper, tape, a few coins or small weights, scissors</span></div>
+    <p class="howitworks"><b>How this works with two ages:</b> you run one shared activity so nobody's left out - but Leo and Nadia each get their own goal and their own thinking. You're not teaching two lessons at once; you're pitching one, two ways.</p>
+  </div>
+
+  <div class="flow">
+    <div class="part">
+      <div class="part-head"><div class="part-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div><p class="part-name">Start together</p><span class="part-time">5 min</span></div>
+      <p class="together">Show them a picture of the bridge from your trip. Ask them both: what stops it collapsing under all those cars? Take every guess, no wrong answers yet.</p>
+      <div class="split">
+        <div class="lane younger"><div class="lane-who">Leo <span class="yr">· Year 6 level</span></div><p>Focus his thinking on shape: which shapes are strong?<span class="you">“Have you noticed bridges have arches and triangles in them?”</span></p></div>
+        <div class="lane older"><div class="lane-who">Nadia <span class="yr">· Year 10 level</span></div><p>Push her toward forces by name: where is the bridge being pushed, and where pulled?<span class="you">“Where do you think it's under tension, and where under compression?”</span></p></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="part-head"><div class="part-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></div><p class="part-name">The shared build</p><span class="part-time">20 min · both together</span></div>
+      <p class="together">Same task for both: using only paper and tape, build a bridge across a 20cm gap between two books that holds the most coins. This is the fun bit - let them build, fail, and rebuild.</p>
+      <div class="split">
+        <div class="lane younger"><div class="lane-who">Leo's goal</div><p>Make it hold as many coins as he can, and spot which shape worked best.<span class="you">He learns by doing - let him just try things.</span></p></div>
+        <div class="lane older"><div class="lane-who">Nadia's goal</div><p>Test a folded (corrugated) beam vs a flat one, and explain <i>why</i> the fold is stronger.<span class="you">She's testing a hypothesis, not just building.</span></p></div>
+      </div>
+      <span class="tip"><b>They'll want to compete - let them.</b> Whose bridge holds more? The rivalry does the motivating for you.</span>
+    </div>
+
+    <div class="part">
+      <div class="part-head"><div class="part-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 1 6 0c0 2-3 3-3 5"/><circle cx="12" cy="19" r="0.5" fill="#0C8F79"/></svg></div><p class="part-name">Make sense of it</p><span class="part-time">15 min · split</span></div>
+      <p class="together">Now the thinking. Each explains what they found - at their own level. Have the younger one explain to the older, and the older one stretch further.</p>
+      <div class="split">
+        <div class="lane younger"><div class="lane-who">Leo explains</div><p>Which shape held the most weight, and why he thinks so.<span class="you">Check: can he say “arches/triangles are stronger”? That's the win.</span></p></div>
+        <div class="lane older"><div class="lane-who">Nadia goes deeper</div><p>How the shape spreads the load - compression along the top, tension along the bottom - and where she's seen it in real bridges.<span class="you">Check: can she use “tension” and “compression” correctly?</span></p></div>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="part-head"><div class="part-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#0C8F79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><p class="part-name">Finish together</p><span class="part-time">5 min</span></div>
+      <p class="together">Back to the real bridge from your trip. Ask each of them to spot one thing in the photo they now understand - Leo a shape, Nadia a force. Done.</p>
+    </div>
+  </div>
+
+  <div class="after">
+    <h3>Afterwards - two children, two records</h3>
+    <p>One shared afternoon, but each child keeps their own coverage. SEQUENS logs it at the right level for each of them, so both maps stay honest.</p>
+    <div class="covrow">
+      <span class="cov younger">Leo's map: Science &amp; D&amp;T → Structures &amp; strong shapes (practised)</span>
+      <span class="cov older">Nadia's map: Physics → Forces → Tension &amp; compression in structures (practised)</span>
+    </div>
+  </div>
+
+  <p class="foot">SEQUENS</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS Home - how did it go?</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0C8F79;--paper:#F7F4EE;
+--card:#FFF;--rule:#E4DDD2;--muted:#6B6154;--dim:#7A7063;--steel:#2C6E9B;--steel-soft:#EAF2F8;
+--gold:#B8912F;--gold-deep:#8A6A18;--red:#C0453B;--green-soft:#EAF3EE;--success-deep:#0A6B5C;
+--warm:#C97B4A;--font:'Lexend',sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
+*{box-sizing:border-box}
+html,body{overflow-x:clip;max-width:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6;padding:2rem 1.3rem 5rem}
+.wrap{max-width:820px;margin:0 auto}
+h1{font-family:var(--head);font-weight:800;font-size:1.8rem;color:var(--navy);margin:0 0 .3rem;letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:60ch;margin:0 0 1.6rem}
+h2{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:2rem 0 .8rem}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:18px;overflow:hidden;margin-bottom:1rem;
+box-shadow:0 2px 10px rgba(80,60,40,.05)}
+.chead{background:linear-gradient(170deg,#0A3D62,#0A2C49);color:#fff;padding:1.2rem 1.5rem}
+.chead .t{font-family:var(--head);font-weight:800;font-size:1.2rem}
+.chead .s{font-size:.87rem;color:#9FB6C6;margin-top:.15rem}
+.cbody{padding:1.4rem 1.5rem}
+
+.kids{display:flex;gap:.5rem;margin-bottom:1.3rem;flex-wrap:wrap}
+.kid{border:2px solid var(--rule);background:#fff;border-radius:12px;padding:.5rem .95rem;cursor:pointer;
+font-family:var(--font);font-weight:700;font-size:.92rem;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.kid.on{border-color:var(--accent-deep);background:#F4FBF9;color:var(--accent-deep)}
+.kid .age{font-size:.75rem;font-weight:500;opacity:.75}
+.kid .tick{width:16px;height:16px;border-radius:50%;background:var(--accent-deep);color:#fff;
+font-size:.68rem;display:none;align-items:center;justify-content:center;font-weight:800}
+.kid.filled .tick{display:flex}
+
+.what{background:var(--green-soft);border-left:4px solid var(--accent-deep);border-radius:0 10px 10px 0;
+padding:.8rem 1.05rem;margin-bottom:1.3rem}
+.what .l{font-size:.64rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep)}
+.what .t{font-size:1rem;color:var(--success-deep);font-weight:600}
+
+.st{border:1px solid var(--rule);border-radius:14px;padding:1.05rem 1.15rem;margin-bottom:.75rem;background:#fff}
+.st .q{font-size:1.02rem;color:var(--ink);margin-bottom:.75rem;display:flex;gap:.7rem;align-items:flex-start}
+.st .q .ico{width:30px;height:30px;flex-shrink:0;border-radius:9px;background:var(--paper);
+display:flex;align-items:center;justify-content:center;font-size:1rem}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.opts button{border:2px solid var(--rule);background:#fff;border-radius:11px;padding:.65rem .5rem;
+font-family:var(--font);font-weight:700;font-size:.88rem;color:var(--muted);cursor:pointer;
+display:flex;flex-direction:column;align-items:center;gap:.15rem;line-height:1.25}
+.opts button small{font-weight:400;font-size:.74rem;opacity:.8}
+.opts button:hover{border-color:var(--navy)}
+.opts button.sel[data-v="yes"]{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
+.opts button.sel[data-v="part"]{background:var(--gold-deep);border-color:var(--gold-deep);color:#fff}
+.opts button.sel[data-v="not"]{background:var(--warm);border-color:var(--warm);color:#fff}
+.opts button.sel small{opacity:.95}
+
+.gf{background:#FBF6E9;border:2px solid #E0C97F}
+.gf .q .ico{background:#fff}
+
+.actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.2rem}
+.actions button{border:none;border-radius:11px;padding:.7rem 1.25rem;font-family:var(--font);font-weight:700;font-size:.94rem;cursor:pointer}
+.actions .go{background:var(--accent-deep);color:#fff}
+.actions .go:disabled{background:var(--rule);color:var(--dim);cursor:not-allowed}
+.actions .alt{background:#fff;border:1.5px solid var(--rule);color:var(--navy)}
+
+.result{display:none}
+.result.on{display:block}
+.rsum{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:1.3rem 1.5rem;margin-bottom:1rem}
+.rrow{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--rule)}
+.rrow:last-child{border-bottom:none}
+.rname{font-family:var(--head);font-weight:800;color:var(--navy);min-width:76px;font-size:.98rem}
+.rbits{flex:1}
+.pill{display:inline-block;border-radius:20px;padding:.2rem .65rem;font-size:.78rem;font-weight:700;margin:.15rem .3rem .15rem 0}
+.p-yes{background:var(--green-soft);color:var(--success-deep)}
+.p-part{background:#FBF6E9;color:var(--gold-deep)}
+.p-not{background:#FBEFE9;color:#8A4A26}
+.p-gf{background:#FBF6E9;color:var(--gold-deep);border:1px solid #E0C97F}
+
+.next{background:var(--navy);color:#fff;border-radius:16px;padding:1.4rem 1.6rem}
+.next h3{font-family:var(--head);font-weight:800;font-size:1.1rem;margin:0 0 .5rem;color:#fff}
+.next p{font-size:.93rem;color:#B9CCDA;margin:0 0 .7rem}
+.next p b{color:var(--accent)}
+.nrow{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:11px;
+padding:.85rem 1rem;margin-bottom:.5rem}
+.nrow .h{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.25rem}
+.nrow .b{font-size:.92rem;color:#CFE0EC}
+.nbtns{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.nbtns button{border:none;border-radius:10px;padding:.6rem 1.1rem;font-family:var(--font);font-weight:700;font-size:.9rem;cursor:pointer}
+.nbtns .yes{background:var(--accent);color:#062B24}
+.nbtns .no{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22)}
+
+.note{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
+border-radius:14px;padding:1.2rem 1.4rem;margin-top:1.4rem;font-size:.92rem;color:var(--muted)}
+.note b{color:var(--navy)}
+.note p{margin:0 0 .7rem}.note p:last-child{margin:0}
+.gaps{background:var(--green-soft);border:1px solid #BEDFD0;border-left:3px solid var(--accent-deep);color:#0A5C4E}
+.gaps b{color:var(--success-deep)}
+</style><link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
+<style>
+.sqnav{background:linear-gradient(90deg,#0A3D62,#0D2F4A);position:sticky;top:0;z-index:99999;}
+.sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+.sqnav a{text-decoration:none;}
+.sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-weight:800;letter-spacing:.04em;color:#fff;font-size:.95rem;}
+.sqnav-brand svg{height:16px;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back:hover{color:#fff;}
+@media print{.sqnav{display:none;}}
+</style>
+</head><body>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="sequens-home.html">Back to home education</a></div></div>
+
+<div class="wrap">
+<h1>How did it go?</h1>
+<p class="lead">Three things, for each child. It takes about twenty seconds and it is the only recording you have to do.</p>
+
+<div class="card">
+  <div class="chead">
+    <div class="t">Why do things fall?</div>
+    <div class="s">Tuesday 28 July &middot; about 45 minutes &middot; Science</div>
+  </div>
+  <div class="cbody">
+    <div class="what"><div class="l">What we were learning</div>
+      <div class="t">Why things fall down when you let go of them.</div></div>
+
+    <div class="kids" id="kids"></div>
+    <div id="steps"></div>
+
+    <div class="actions">
+      <button class="go" id="goBtn" onclick="finish()">Save and see what is next</button>
+      <button class="alt" onclick="finish()">Just save it</button>
+    </div>
+  </div>
+</div>
+
+<div class="result" id="result">
+  <h2>What you recorded</h2>
+  <div class="rsum" id="rsum"></div>
+  <h2>What comes next</h2>
+  <div class="next" id="next"></div>
+</div>
+
+<div class="note gaps">
+  <p><b>Gaps are normal. Every family has them. Every school has them.</b></p>
+  <p style="margin:0;">A "not yet" is not a bad afternoon. It is the most useful thing you can tell SEQUENS, because it is what the next session is built from. <b>Recording it honestly is worth more than recording it kindly.</b></p>
+</div>
+
+<div class="note">
+  <p><b>Why three, and why these words.</b> Three is what a child can hold and what a parent can judge without a rubric. And they are written as things your child can <b>do or say</b>, not as curriculum statements, because you were in the room and you already know the answer.</p>
+  <p><b>Why "partly" is a real answer.</b> Most learning lands partly. A system that only offers yes and no forces you to lie in one direction, and then the next session is built on the lie.</p>
+  <p><b>Where this goes.</b> Into your own record, on your own account. It builds the coverage map and the report you can hand a local authority if you are ever asked. <b>Your child's name and everything about them stays with you.</b> Nothing about your child is ever sent to an AI: SEQUENS asks it for a lesson about gravity, and that is all it ever hears.</p>
+</div>
+</div>
+
+<script>
+"use strict";
+var KIDS = [ {id:"leo", name:"Leo", age:9}, {id:"mabel", name:"Mabel", age:6} ];
+var STEPS = [
+  {icon:"\u2b07", text:"Said that gravity <b>pulls</b> things down"},
+  {icon:"\u{1f30d}", text:"Explained it pulls <b>everything</b>, not just heavy things"},
+  {icon:"\u{1f50d}", text:"Used what we saw to explain why they landed <b>together</b>"}
+];
+var GF = {icon:"\u2b50", text:"Wondered about the Moon, or asked a question we could not answer yet"};
+var cur = 0;
+var data = {};
+KIDS.forEach(function(k){ data[k.id] = [null,null,null,null]; });
+
+function drawKids(){
+  document.getElementById("kids").innerHTML = KIDS.map(function(k,i){
+    var done = data[k.id].slice(0,3).every(function(x){ return x !== null; });
+    return '<button class="kid'+(i===cur?' on':'')+(done?' filled':'')+'" onclick="pick('+i+')">'
+      + '<span class="tick">\u2713</span>' + k.name + ' <span class="age">'+k.age+'</span></button>';
+  }).join("");
+}
+function drawSteps(){
+  var k = KIDS[cur], d = data[k.id];
+  var html = STEPS.map(function(s,i){
+    return '<div class="st"><div class="q"><span class="ico">'+s.icon+'</span><span>'+s.text+'</span></div>'
+      + '<div class="opts">'
+      + opt(i, "yes",  "Yes",     "did it confidently", d[i])
+      + opt(i, "part", "Partly",  "got there with help", d[i])
+      + opt(i, "not",  "Not yet", "we will come back to it", d[i])
+      + '</div></div>';
+  }).join("");
+  html += '<div class="st gf"><div class="q"><span class="ico">'+GF.icon+'</span><span>'+GF.text+'</span></div>'
+        + '<div class="opts" style="grid-template-columns:1fr 1fr">'
+        + opt(3, "yes", "Yes, they did", "recorded, never expected", d[3])
+        + opt(3, "not", "Not this time", "completely fine", d[3])
+        + '</div></div>';
+  document.getElementById("steps").innerHTML = html;
+  var allDone = KIDS.every(function(kk){ return data[kk.id].slice(0,3).every(function(x){return x!==null;}); });
+  document.getElementById("goBtn").disabled = !allDone;
+}
+function opt(i,v,label,sub,cursel){
+  return '<button data-v="'+v+'"'+(cursel===v?' class="sel"':'')+' onclick="setV('+i+',\''+v+'\')">'
+       + label + '<small>' + sub + '</small></button>';
+}
+function pick(i){ cur = i; drawKids(); drawSteps(); }
+function setV(i,v){ data[KIDS[cur].id][i] = v; drawKids(); drawSteps(); }
+
+var LABEL = {yes:"Yes", part:"Partly", not:"Not yet"};
+function finish(){
+  var rs = KIDS.map(function(k){
+    var d = data[k.id];
+    var bits = STEPS.map(function(s,i){
+      var v = d[i] || "not";
+      var t = s.text.replace(/<[^>]+>/g,"");
+      return '<span class="pill p-'+v+'">'+LABEL[v]+' \u00b7 '+t.slice(0,34)+'</span>';
+    }).join("");
+    if (d[3] === "yes") bits += '<span class="pill p-gf">\u2b50 Went further</span>';
+    return '<div class="rrow"><span class="rname">'+k.name+'</span><span class="rbits">'+bits+'</span></div>';
+  }).join("");
+  document.getElementById("rsum").innerHTML = rs;
+
+  // work out what is next, per child, from what was recorded
+  var rows = "", anyGap = false;
+  KIDS.forEach(function(k){
+    var d = data[k.id];
+    var gap = -1;
+    for (var i=0;i<3;i++){ if (d[i]==="not"){ gap=i; break; } }
+    if (gap === -1) for (var j=0;j<3;j++){ if (d[j]==="part"){ gap=j; break; } }
+    var body;
+    if (gap === -1){
+      body = "All three landed. Next session moves on to <b>why a feather falls slower than a hammer</b>, and this one comes back as a quick question in a few days.";
+    } else {
+      anyGap = true;
+      var t = STEPS[gap].text.replace(/<[^>]+>/g,"");
+      body = "Start the next session with <b>one question about this</b>: \u201c" + t.toLowerCase() + "\u201d. "
+           + (d[gap]==="not"
+              ? "Not yet means we go back to the dropping, with two very different objects, before anything new."
+              : "Partly means one more go at it, in a new way, and then move on.");
+    }
+    if (d[3] === "yes") body += " And they went further, so there is a harder question waiting when they want it.";
+    rows += '<div class="nrow"><div class="h">'+k.name+'</div><div class="b">'+body+'</div></div>';
+  });
+
+  document.getElementById("next").innerHTML =
+    '<h3>' + (anyGap ? "One thing to pick up next time" : "Ready to move on") + '</h3>'
+    + '<p>Built from what you just recorded. <b>Nothing happens until you say so.</b></p>'
+    + rows
+    + '<div class="nbtns"><button class="yes" onclick="alert(\'The next session would be built now.\')">Build the next session</button>'
+    + '<button class="no" onclick="alert(\'Kept, with the reason attached. It will wait.\')">Not today</button></div>';
+
+  var r = document.getElementById("result"); r.classList.add("on");
+  r.scrollIntoView({behavior:"smooth", block:"start"});
+}
+drawKids(); drawSteps();
+</script></body></html>
