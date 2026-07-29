@@ -236,7 +236,29 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
   .paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border:none;border-radius:0;margin:0;padding:0 8px}
   .conf,.side,.top,.phead{display:none!important}
 }
+
+  /* Small phones: .top .wrap is a nowrap flex row and cannot hold the brand
+     plus both buttons at 320px. Wrap it. Nothing is hidden - a parent on an
+     old phone is exactly the parent this product is for. */
+  @media (max-width:460px){
+    .top .wrap{flex-wrap:wrap !important; row-gap:.55rem; justify-content:center;}
+    .top .wrap .btn{font-size:.84rem; padding:.48rem .8rem; white-space:nowrap;}
+    .onb-actions{flex-wrap:wrap !important; row-gap:.5rem;}
+    .onb-actions .btn{flex:1 1 auto;}
+  }
+  @media (max-width:360px){
+    .top .wrap .btn{font-size:.8rem; padding:.44rem .68rem;}
+    .onb-actions{flex-direction:column; align-items:stretch;}
+    .onb-actions .btn{width:100%;}
+  }
 </style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
 </head>
 <body>
 
@@ -284,7 +306,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 </div></div>
 
 <div class="top"><div class="wrap">
-  <div class="brand"><span class="dot"></span>SEQUENS <small>home</small></div>
+  <a class="brand" href="/" style="text-decoration:none;color:inherit;"><span class="dot"></span>SEQUENS <small>home</small></a>
   <div class="spacer"></div>
   <button class="btn btn-ghost" onclick="goApp()">Sign in</button>
   <button class="btn btn-primary" onclick="startOnboarding()">Start free</button>

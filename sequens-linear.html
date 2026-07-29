@@ -171,10 +171,10 @@
   .light .pn{border-color:var(--accent-deep);color:var(--accent-deep);}
   .archlead{max-width:66ch;font-size:1.12rem;margin:0 0 1.2rem;} .archlead b{color:var(--navy);}
   .archgrid{display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;margin-top:1.4rem;}
-  @media (max-width:760px){.archgrid{grid-template-columns:1fr;}}
+  @media (max-width:760px){.archgrid{grid-template-columns:1fr;}.dom{height:auto;padding:.55rem 0;}}
   .archgrid h3{font-family:var(--head);font-size:1.25rem;letter-spacing:.08em;color:var(--accent-deep);margin:0 0 .15rem;}
-  .gsub{font-size:.95rem;color:#7A93A6;margin:0 0 1rem;}
-  .dom{display:flex;gap:.8rem;align-items:flex-start;padding:.55rem 0;min-height:4.2rem;}
+  .gsub{font-size:.95rem;color:#7A93A6;margin:0 0 1rem;min-height:2.4rem;}
+  .dom{display:flex;gap:.8rem;align-items:center;padding:0;height:4.6rem;box-sizing:border-box;}
   .dnum{font-weight:700;color:var(--accent-deep);font-size:.85rem;min-width:1.2rem;}
   .dname{color:var(--navy);font-weight:600;}
   .dcount{color:#7A93A6;font-size:.8rem;font-weight:600;margin-left:.35rem;}
@@ -295,7 +295,7 @@
     <button class="iconbtn" id="menuBtn" aria-expanded="false" aria-controls="dLeft" title="Menu">
       <svg width="18" height="14" viewBox="0 0 18 14" fill="none"><path d="M1 1h16M1 7h16M1 13h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
-    <a class="brand" href="#top"><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#markDark"/></svg>SEQUENS</a>
+    <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#markDark"/></svg>SEQUENS</a>
     <a href="index.html" style="margin-left:1rem;font-size:.85rem;color:#9FB6C6;font-weight:600;text-decoration:none;align-self:center;">← All of SEQUENS</a>
     <span class="sp"></span>
     <button class="signin" id="signBtn" aria-expanded="false" aria-controls="dRight">Sign in</button>
@@ -332,7 +332,7 @@
     <div class="msg" id="signMsg">Sign-in opens with the pilot. Until then, the demonstration is open below.</div>
   </form>
   <div class="divide"></div>
-  <a class="btn ghost" href="/demo/" target="_blank" rel="noopener" style="width:100%;text-align:center;">Open the demonstration</a>
+  <a class="btn ghost" href="coaching-mockup.html" target="_blank" rel="noopener" style="width:100%;text-align:center;">Open the demonstration</a>
 </aside>
 
 <main>
@@ -467,7 +467,7 @@
     <button class="btn" type="submit">Join the waiting list</button>
     <div class="msg2" id="wlMsg2">You are on the list. We will write when the pilot opens.</div>
   </form>
-  <p class="ctanote" style="margin-top:1.4rem;">Or <a class="ctalink" href="mailto:hello@sequens.education" style="color:var(--accent);">email us</a>, or <a class="ctalink" href="/demo/" target="_blank" rel="noopener" style="color:var(--accent);">open the demonstration</a>. Direct contact opens with the pilot; until then, the demonstration is open.</p>
+  <p class="ctanote" style="margin-top:1.4rem;">Or email <span style="color:var(--accent);font-weight:600;">hello@sequens.education</span>, or <a class="ctalink" href="coaching-mockup.html" target="_blank" rel="noopener" style="color:var(--accent);">open the demonstration</a>. Direct contact opens with the pilot; until then, the demonstration is open.</p>
 </div></section>
 
 </main>
