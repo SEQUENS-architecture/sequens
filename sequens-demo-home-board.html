@@ -12,8 +12,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0A3D62">
 <style>
-:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0C8F79;--paper:#F7F4EE;
---card:#FFF;--rule:#E4DDD2;--muted:#6B6154;--dim:#7A7063;--steel:#2C6E9B;--steel-soft:#EAF2F8;
+:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0A7A67;--paper:#F2F7F9;
+--card:#FFF;--rule:#D7E4EA;--muted:#5B7A90;--dim:#647A8C;--steel:#2C6E9B;--steel-soft:#EAF2F8;
 --gold:#B8912F;--gold-deep:#8A6A18;--warm:#C97B4A;--green-soft:#EAF3EE;--success-deep:#0A6B5C;
 --sea:#3E7C8C;--sea-soft:#E8F1F2;--rose:#B4553F;--rose-soft:#FBEEEA;
 --grad:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
@@ -57,7 +57,7 @@ h2:first-child{margin-top:0}
 
 /* generation gate */
 .gate{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:1.1rem 1.3rem;
-display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:0 2px 12px rgba(80,60,40,.06)}
+display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;box-shadow:0 2px 12px rgba(24,58,82,.06)}
 .gate .dot{width:11px;height:11px;border-radius:50%;background:var(--accent-deep);flex:none}
 .gate.fail .dot{background:var(--rose)}
 .gate .st{font-family:var(--head);font-weight:800;color:var(--navy);font-size:1rem}
@@ -79,7 +79,7 @@ font-family:var(--head);font-weight:700;font-size:.94rem;color:var(--muted)}
 
 /* the board */
 .board{background:var(--card);border:2px solid var(--rule);border-radius:20px;overflow:hidden;
-box-shadow:0 3px 18px rgba(80,60,40,.08)}
+box-shadow:0 3px 18px rgba(24,58,82,.08)}
 .bhead{background:var(--navy);color:#fff;padding:1.05rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
 .bhead .t{font-family:var(--head);font-weight:800;font-size:1.16rem}
 .bhead .d{margin-left:auto;font-size:.82rem;color:#9FB6C6}
@@ -268,6 +268,7 @@ footer{background:var(--grad);color:#7E97AB}
 <footer><div class="foot">
   <span class="mark"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
   <div>Elegant on the surface. Massive underneath.</div>
+  <div style="margin-top:.5rem;font-size:.78rem;"><a href="privacy.html" style="color:#9FB6C6;text-decoration:underline">Privacy and data</a></div>
 </div></footer>
 
 <script>

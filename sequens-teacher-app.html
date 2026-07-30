@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SEQUENS - teacher</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;--line-soft:#F0E7D7;
---accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
---support:#7FBDB9;--core:#1F8E8A;--secure:#C9A24B;--stretch:#C45F2E;--wt:#C9A24B;--wt-soft:#F3E7C7;--sec:#5C8A4A;--gd:#1F8E8A;
---display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;--shadow:0 2px 14px rgba(58,46,38,.07)}
+:root{--bg:#F2F7F9;--card:#FFFFFF;--card2:#F8FBFC;--ink:#12303F;--ink-soft:#5B7A90;--line:#D7E4EA;--line-soft:#E8F0F4;
+--accent:#0A7A67;--accent-deep:#0A6B5C;--accent-soft:#CFEDE6;--teal:#2C6E9B;--teal-soft:#EAF2F8;--good:#2E7D5B;--gold:#B8912F;
+--support:#8FB8CE;--core:#0A7A67;--secure:#B8912F;--stretch:#0A3D62;--wt:#B8912F;--wt-soft:#F5EDD9;--sec:#2E7D5B;--gd:#2C6E9B;
+--display:'Schibsted Grotesk',Arial,sans-serif;--body:'Lexend','Segoe UI',sans-serif;--shadow:0 2px 14px rgba(24,58,82,.07)}
 *{box-sizing:border-box}html,body{margin:0}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4,.df{font-family:var(--display)}
@@ -14,13 +14,13 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .muted{color:var(--ink-soft)}.hide{display:none!important}
 .wrap{max-width:1180px;margin:0 auto;padding:0 26px}
 .eyebrow{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
-.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:12px;padding:4px 11px;border-radius:22px;background:var(--teal-soft);color:#15706c}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:12px;padding:4px 11px;border-radius:22px;background:var(--teal-soft);color:#1F5478}
 .btn{font-weight:600;border-radius:11px;padding:10px 17px;font-size:14.5px;transition:.15s;display:inline-block}
 .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-deep)}
 .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 .btn-teal{background:var(--teal);color:#fff}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}.card.flat{background:var(--card2)}
-.ai-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-size:11.5px;font-weight:600;color:#7a6320;background:var(--wt-soft);border:1px solid #e3cf95;border-radius:20px;padding:4px 11px}
+.ai-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-size:11.5px;font-weight:600;color:#8A6A18;background:var(--wt-soft);border:1px solid #e3cf95;border-radius:20px;padding:4px 11px}
 .top{position:sticky;top:0;z-index:40;background:rgba(244,236,222,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:22px;height:64px}
 .brand{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:.5px;display:flex;align-items:center;gap:9px}
@@ -39,7 +39,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .section{padding:42px 0;border-top:1px solid var(--line)}.section h2{font-size:31px;font-weight:700;margin:8px 0 6px}
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
 .feat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--teal-soft);display:grid;place-items:center;margin-bottom:12px;color:#15706c;font-size:18px}
+.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--teal-soft);display:grid;place-items:center;margin-bottom:12px;color:#1F5478;font-size:18px}
 .feat h3{font-size:17px;margin:0 0 5px}.feat p{margin:0;font-size:14px;color:var(--ink-soft)}
 @media(max-width:880px){.hero-grid{grid-template-columns:1fr}.hero h1{font-size:34px}.feat-grid{grid-template-columns:1fr}}
 .foot{border-top:1px solid var(--line);padding:22px 0;color:var(--ink-soft);font-size:13px}
@@ -52,7 +52,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .side button.nav.on{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
 .side .ico{width:18px;text-align:center;flex:0 0 auto}
 .claz{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff,var(--card2));border:1px solid var(--line);border-radius:14px;padding:11px;margin-top:6px}
-.claz .av{width:34px;height:34px;border-radius:9px;background:var(--teal-soft);color:#15706c;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
+.claz .av{width:34px;height:34px;border-radius:9px;background:var(--teal-soft);color:#1F5478;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
 .claz b{font-family:var(--display);font-size:13.5px}.claz p{margin:0;font-size:11.5px;color:var(--ink-soft)}
 .main{padding:28px 32px;overflow:auto;max-height:100vh}
 .phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -78,7 +78,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .scaff .h{font-family:var(--display);font-weight:600;font-size:12.5px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .scaff .sw{width:12px;height:12px;border-radius:4px;flex:0 0 auto}
 .scaff p{margin:0;font-size:12.5px;color:var(--ink-soft)}
-.scaff .print{margin-top:7px;font-size:11px;color:#15706c;background:var(--teal-soft);border-radius:7px;padding:4px 8px;display:inline-block}
+.scaff .print{margin-top:7px;font-size:11px;color:#1F5478;background:var(--teal-soft);border-radius:7px;padding:4px 8px;display:inline-block}
 .diffkey div{display:flex;align-items:center;gap:9px;font-size:13px;padding:3px 0}.diffkey .sw{width:13px;height:13px;border-radius:4px}
 .seqbar{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:14px;flex-wrap:wrap}
 .seqbar b{font-family:var(--display);color:var(--ink)}
@@ -94,12 +94,12 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .weekstrip{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap;align-items:center}
 .wk{border:1.5px solid var(--line);background:var(--card2);border-radius:11px;padding:8px 13px;font-family:var(--display);font-weight:600;font-size:13px;color:var(--ink-soft);text-align:center;min-width:66px;line-height:1.15}
 .wk small{display:block;font-weight:500;font-size:10px;opacity:.8}.wk.on{border-color:var(--accent);background:var(--accent);color:#fff}
-.wrtag{font-family:var(--display);font-size:11px;font-weight:600;color:#7a6320;background:var(--wt-soft);border:1px solid #e3cf95;border-radius:20px;padding:3px 10px}
+.wrtag{font-family:var(--display);font-size:11px;font-weight:600;color:#8A6A18;background:var(--wt-soft);border:1px solid #e3cf95;border-radius:20px;padding:3px 10px}
 .kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}
 .kid{background:var(--card2);border:1px solid var(--line);border-left:4px solid var(--sec);border-radius:11px;padding:11px 12px}
 .kid.lWT{border-left-color:var(--wt)}.kid.lGD{border-left-color:var(--gd)}
 .kid .nm{font-family:var(--display);font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
-.kid .av{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:#a94e22;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:11px;flex:0 0 auto}
+.kid .av{width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:#0A6B5C;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:11px;flex:0 0 auto}
 .kseg{display:flex;gap:5px;margin-top:8px}
 .kseg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:5px 3px;font-size:10.5px;font-weight:600;color:var(--ink-soft)}
 .kseg button.on.wt{border-color:var(--wt);background:var(--wt);color:#fff}
@@ -108,7 +108,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .kfb{margin-top:8px;font-size:11.5px;background:var(--line-soft);border-radius:8px;padding:7px 9px;display:none}.kfb.show{display:block}
 .kfb .say{font-family:var(--display);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
 .kfb .lg{font-size:10px;color:var(--sec);font-family:var(--display);font-weight:600;margin-top:4px}
-.note{font-size:12.5px;color:#15706c;background:var(--teal-soft);border-radius:10px;padding:9px 12px}
+.note{font-size:12.5px;color:#1F5478;background:var(--teal-soft);border-radius:10px;padding:9px 12px}
 .legend{display:flex;gap:14px;font-size:12.5px;color:var(--ink-soft);flex-wrap:wrap}
 .legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:13px;height:13px;border-radius:4px}
 .cov-row{display:grid;grid-template-columns:240px 1fr 78px;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line-soft);font-size:13.5px}
@@ -116,7 +116,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .bar{height:11px;background:var(--line-soft);border-radius:6px;overflow:hidden;display:flex}
 .bar .se{background:var(--sec)}.bar .wtb{background:var(--wt)}.bar .gdb{background:var(--gd)}
 .cov-row .v{font-family:var(--display);font-size:12px;color:var(--ink-soft);text-align:right}
-.paper{background:#fff;max-width:740px;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:40px 46px;color:#2a221c}
+.paper{background:#fff;max-width:740px;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:40px 46px;color:#0B2430}
 .paper .wm{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--accent);display:flex;align-items:center;gap:7px}
 .paper .wm .d{width:9px;height:9px;border-radius:50%;background:var(--accent)}
 .paper h1.dt{font-family:var(--display);font-size:24px;margin:13px 0 4px}
@@ -124,7 +124,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .paper .meta b{font-family:var(--display)}
 .paper h3.sec{font-family:var(--display);font-size:15px;margin:20px 0 7px}
 .paper p.bd{font-size:13.5px;line-height:1.6;margin:0 0 9px}
-.paper .disc{margin-top:22px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:#6F6155;line-height:1.55}
+.paper .disc{margin-top:22px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:#5B7A90;line-height:1.55}
 .drop{border:2px dashed var(--line);border-radius:14px;padding:28px;text-align:center;background:var(--card2)}.drop .ic{font-size:30px}
 .exrow{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line-soft);font-size:13.5px}
 .exrow .wkn{font-family:var(--display);font-weight:600}.exrow .ok{color:var(--good);font-family:var(--display);font-weight:600;font-size:12.5px}
@@ -132,15 +132,15 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .tog .t{width:42px;height:24px;border-radius:14px;background:var(--line);position:relative;transition:.18s}
 .tog .t::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
 .tog.on .t{background:var(--teal)}.tog.on .t::after{left:20px}
-.summary{position:sticky;bottom:0;margin-top:16px;background:var(--ink);color:#F4ECDE;border-radius:13px;padding:13px 18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.summary{position:sticky;bottom:0;margin-top:16px;background:var(--ink);color:#F2F7F9;border-radius:13px;padding:13px 18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .summary b{font-size:19px;font-family:var(--display)}.summary span{font-size:12px;opacity:.85}
 .summary .sp{flex:1}.summary .nt{font-size:12px;opacity:.9;max-width:32ch}
 .summary button{font-family:var(--display);font-weight:600;font-size:12.5px;border-radius:9px;padding:8px 13px}
-.summary .b1{background:#F4ECDE;color:var(--ink)}.summary .b2{border:1px solid rgba(244,236,222,.35);color:#F4ECDE}
-.conf{position:fixed;left:12px;bottom:12px;z-index:30;background:rgba(58,46,38,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px}
-#present{position:fixed;inset:0;z-index:80;background:#2a221c;display:none;flex-direction:column}#present.on{display:flex}
-#present .pbar{height:50px;display:flex;align-items:center;gap:12px;padding:0 18px;color:#F4ECDE;font-family:var(--display)}
-#present .pbar button{color:#F4ECDE;border:1px solid rgba(244,236,222,.3);background:rgba(244,236,222,.06);border-radius:9px;padding:7px 13px;font-weight:600;font-size:13px}
+.summary .b1{background:#F2F7F9;color:var(--ink)}.summary .b2{border:1px solid rgba(244,236,222,.35);color:#F2F7F9}
+.conf{position:fixed;left:12px;bottom:12px;z-index:30;background:rgba(24,58,82,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px}
+#present{position:fixed;inset:0;z-index:80;background:#0B2430;display:none;flex-direction:column}#present.on{display:flex}
+#present .pbar{height:50px;display:flex;align-items:center;gap:12px;padding:0 18px;color:#F2F7F9;font-family:var(--display)}
+#present .pbar button{color:#F2F7F9;border:1px solid rgba(244,236,222,.3);background:rgba(244,236,222,.06);border-radius:9px;padding:7px 13px;font-weight:600;font-size:13px}
 #present iframe{flex:1;width:100%;border:0;background:var(--bg)}
 </style><link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -168,9 +168,9 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
     </div>
     <div class="heromock">
       <div class="muted df" style="font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">One objective becomes</div>
-      <div class="r"><span class="ic" style="background:var(--teal-soft);color:#15706c">▤</span><div><b>A six-part lesson</b><p>Spine, modelling, hinge check, adaptive scaffold &amp; stretch.</p></div></div>
-      <div class="r"><span class="ic" style="background:var(--teal-soft);color:#15706c">◫</span><div><b>The slides to teach it</b><p>Animated, dual-coded, video optional.</p></div></div>
-      <div class="r"><span class="ic" style="background:var(--accent-soft);color:#a94e22">✓</span><div><b>The marking</b><p>Whole class on one screen - tap the few, feedback writes itself.</p></div></div>
+      <div class="r"><span class="ic" style="background:var(--teal-soft);color:#1F5478">▤</span><div><b>A six-part lesson</b><p>Spine, modelling, hinge check, adaptive scaffold &amp; stretch.</p></div></div>
+      <div class="r"><span class="ic" style="background:var(--teal-soft);color:#1F5478">◫</span><div><b>The slides to teach it</b><p>Animated, dual-coded, video optional.</p></div></div>
+      <div class="r"><span class="ic" style="background:var(--accent-soft);color:#0A6B5C">✓</span><div><b>The marking</b><p>Whole class on one screen - tap the few, feedback writes itself.</p></div></div>
     </div>
   </div></div>
   <section class="section"><div class="wrap">
@@ -258,7 +258,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
   </div>
   <div class="grid2">
     <div class="card"><span class="wrtag">Maths · White Rose B3 S4</span><div class="df" style="font-weight:700;font-size:16px;margin-top:8px">Recognise &amp; show equivalent fractions</div><div style="margin-top:10px;display:flex;gap:8px"><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Open lesson</button><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('mark',document.querySelector('[data-s=mark]'))">Mark</button></div></div>
-    <div class="card"><span class="wrtag" style="color:#15706c;background:var(--teal-soft);border-color:#9fd0cc">Science · NC Y4</span><div class="df" style="font-weight:700;font-size:16px;margin-top:8px">Group living things; use classification keys</div><div style="margin-top:10px;display:flex;gap:8px"><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Open lesson</button><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="openPresent()">Present</button></div></div>
+    <div class="card"><span class="wrtag" style="color:#1F5478;background:var(--teal-soft);border-color:#9fd0cc">Science · NC Y4</span><div class="df" style="font-weight:700;font-size:16px;margin-top:8px">Group living things; use classification keys</div><div style="margin-top:10px;display:flex;gap:8px"><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="show('lesson',document.querySelector('[data-s=lesson]'))">Open lesson</button><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px" onclick="openPresent()">Present</button></div></div>
   </div>
 </section>
 <!-- LESSON VIEW -->
@@ -302,10 +302,10 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
   <div class="tabp" data-lt="1">
     <div class="sldgrid">
       <div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>Sort these animals</h4></div></div>
-      <div class="sld"><div class="h" style="background:#2f9b96">Vocabulary</div><div class="c"><div class="n">Slide 2</div><h4>Four words, dual-coded</h4></div></div>
-      <div class="sld"><div class="h" style="background:#3aa7a1">Show me how</div><div class="c"><div class="n">Slide 3</div><h4>The classification key</h4></div></div>
+      <div class="sld"><div class="h" style="background:#3A7DA8">Vocabulary</div><div class="c"><div class="n">Slide 2</div><h4>Four words, dual-coded</h4></div></div>
+      <div class="sld"><div class="h" style="background:#4A8CB5">Show me how</div><div class="c"><div class="n">Slide 3</div><h4>The classification key</h4></div></div>
       <div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Vertebrate or not?</h4></div></div>
-      <div class="sld"><div class="h" style="background:#cf6d3d">Your turn</div><div class="c"><div class="n">Slide 5</div><h4>Sort - your way in</h4></div></div>
+      <div class="sld"><div class="h" style="background:#14A48C">Your turn</div><div class="c"><div class="n">Slide 5</div><h4>Sort - your way in</h4></div></div>
       <div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Recall &amp; exit</h4></div></div>
     </div>
     <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn btn-primary" onclick="openPresent()">▶ Present full screen</button><span class="muted" style="font-size:13px">Animated, dual-coded, video optional. Present mode: arrow keys, teacher prompts.</span></div>
@@ -364,6 +364,28 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
   <div class="kgrid" id="kgrid"></div>
   <div class="note" style="margin-top:14px">Verbal feedback in the moment, tracked by tap. The record is your evidence - no written marking. Your school sets the policy; SEQUENS provides the proof feedback happened and what came next.</div>
   <div class="summary"><div><b id="s-sec">-</b> <span>secure</span></div><div><b id="s-wt">-</b> <span>working towards</span></div><div><b id="s-gd">-</b> <span>greater depth</span></div><div class="sp"></div><div class="nt">Logged to coverage. Verbal feedback ready for the <b id="s-non">-</b> who need a word.</div><button class="b2" onclick="alert('Demo: compact ink-light strips, only for those who need one.')">Print strips</button><button class="b1" onclick="alert('Demo: saved to class coverage.')">Save</button></div>
+
+  <!-- CLOSE THE LOOP: the marking produces a next move, not just a record -->
+  <div class="card" id="nextstep" style="margin-top:14px;border-left:3px solid var(--accent)">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
+      <span class="df" style="font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)">What this marking suggests</span>
+      <span class="muted" style="font-size:12px;margin-left:auto">Taught before:</span>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-ghost" style="padding:3px 10px;font-size:12px" onclick="setPass(1,this)">1st time</button>
+        <button class="btn btn-ghost" style="padding:3px 10px;font-size:12px" onclick="setPass(2,this)">2nd</button>
+        <button class="btn btn-ghost" style="padding:3px 10px;font-size:12px" onclick="setPass(3,this)">3rd</button>
+      </div>
+    </div>
+    <div id="ns-finding" style="font-family:var(--display);font-weight:600;font-size:15.5px;color:var(--ink);margin-bottom:6px"></div>
+    <div id="ns-move" style="font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:8px"></div>
+    <div id="ns-who" style="font-size:13px;color:var(--ink-soft);margin-bottom:12px"></div>
+    <div id="ns-doors" style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" style="background:var(--accent);color:#fff;border-color:var(--accent)" onclick="alert('Demo: SEQUENS would build this, then hand it to you to check before anyone sees it.')">Build it</button>
+      <button class="btn btn-ghost" onclick="alert('Demo: you would edit the objective, the group, or the approach first.')">Adjust it</button>
+      <button class="btn btn-ghost" onclick="alert('Demo: dismissed. Nothing is built, and the gap stays on the record.')">Not this time</button>
+    </div>
+    <div class="note" style="margin-top:12px">SEQUENS suggests from what you recorded. You confirm, adjust, or ignore. Nothing is generated until you say so, and a suggestion is never an instruction.</div>
+  </div>
 </section>
 
 <!-- CLASS COVERAGE -->
@@ -468,16 +490,16 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 <meta charset=&quot;utf-8&quot;>
 <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
 <title>SEQUENS - lesson deck</title>
-<link href=&quot;https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Andika:wght@400;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&amp;family=Lexend:wght@400;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
 <style>
 :root{
-  --bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;
-  --accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
-  --support:#7FBDB9;--core:#1F8E8A;--stretch:#C45F2E;
-  --display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;
+  --bg:#F2F7F9;--card:#FFFFFF;--card2:#F8FBFC;--ink:#12303F;--ink-soft:#5B7A90;--line:#D7E4EA;
+  --accent:#0A7A67;--accent-deep:#0A6B5C;--accent-soft:#CFEDE6;--teal:#2C6E9B;--teal-soft:#EAF2F8;--good:#2E7D5B;--gold:#B8912F;
+  --support:#8FB8CE;--core:#0A7A67;--stretch:#0A3D62;
+  --display:'Schibsted Grotesk',Arial,sans-serif;--body:'Lexend','Segoe UI',sans-serif;
 }
 *{box-sizing:border-box}html,body{margin:0;height:100%}
-body{font-family:var(--body);background:#2a221c;color:var(--ink);overflow:hidden}
+body{font-family:var(--body);background:#0B2430;color:var(--ink);overflow:hidden}
 .stage-wrap{height:100vh;display:flex;flex-direction:column}
 /* deck surface */
 .deck{flex:1;position:relative;margin:18px;border-radius:18px;background:var(--bg);overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.4)}
@@ -489,7 +511,7 @@ body{font-family:var(--body);background:#2a221c;color:var(--ink);overflow:hidden
 .stage-tag .pip{width:11px;height:11px;border-radius:50%;background:currentColor}
 h1.slh{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.08;margin:14px 0 0;max-width:20ch}
 .lo{margin-top:16px;font-size:20px;color:var(--ink-soft);max-width:36ch}
-.ncchip{margin-top:auto;align-self:flex-start;font-family:var(--display);font-size:13px;font-weight:600;color:#15706c;background:var(--teal-soft);border-radius:20px;padding:7px 14px}
+.ncchip{margin-top:auto;align-self:flex-start;font-family:var(--display);font-size:13px;font-weight:600;color:#1F5478;background:var(--teal-soft);border-radius:20px;padding:7px 14px}
 .brandmark{position:absolute;top:24px;right:30px;font-family:var(--display);font-weight:700;letter-spacing:1px;font-size:14px;color:var(--accent);display:flex;align-items:center;gap:8px;opacity:.9}
 .brandmark .d{width:10px;height:10px;border-radius:50%;background:var(--accent)}
 /* reveal animations (restart each time slide becomes active) */
@@ -504,11 +526,11 @@ h1.slh{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.0
 /* animal hook row */
 .iconrow{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px}
 .animal{display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink-soft)}
-.animal .chip{width:96px;height:96px;border-radius:18px;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 3px 12px rgba(58,46,38,.06)}
+.animal .chip{width:96px;height:96px;border-radius:18px;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 3px 12px rgba(24,58,82,.06)}
 .prompt-q{font-size:22px;margin-top:22px;max-width:30ch}
 /* vocab dual-coding cards */
 .vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px;max-width:920px}
-.vcard{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;box-shadow:0 3px 12px rgba(58,46,38,.05)}
+.vcard{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;gap:16px;align-items:center;box-shadow:0 3px 12px rgba(24,58,82,.05)}
 .vcard .ic{width:74px;height:74px;border-radius:14px;background:var(--teal-soft);display:grid;place-items:center;flex:0 0 auto}
 .vcard h4{font-family:var(--display);font-size:20px;margin:0 0 3px}
 .vcard p{margin:0;font-size:15px;color:var(--ink-soft)}
@@ -543,19 +565,19 @@ h1.slh{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.0
 .recap .animal .chip{width:86px;height:86px}
 .exitq{margin-top:auto;font-size:21px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:18px 22px;align-self:flex-start}
 /* teacher prompt strip */
-.tprompt{position:absolute;left:0;right:0;bottom:0;background:rgba(58,46,38,.94);color:#F4ECDE;padding:14px 64px;font-size:15px;display:none;align-items:center;gap:12px}
+.tprompt{position:absolute;left:0;right:0;bottom:0;background:rgba(24,58,82,.94);color:#F2F7F9;padding:14px 64px;font-size:15px;display:none;align-items:center;gap:12px}
 .tprompt.show{display:flex}
 .tprompt b{font-family:var(--display);color:var(--gold);font-size:12px;letter-spacing:1px;text-transform:uppercase}
 /* control bar */
-.bar{height:58px;display:flex;align-items:center;gap:14px;padding:0 24px;color:#F4ECDE;font-family:var(--display)}
+.bar{height:58px;display:flex;align-items:center;gap:14px;padding:0 24px;color:#F2F7F9;font-family:var(--display)}
 .bar .nav{display:flex;align-items:center;gap:10px}
-.bar button{font-family:var(--display);font-weight:600;font-size:14px;color:#F4ECDE;border:1px solid rgba(244,236,222,.3);background:rgba(244,236,222,.06);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
+.bar button{font-family:var(--display);font-weight:600;font-size:14px;color:#F2F7F9;border:1px solid rgba(244,236,222,.3);background:rgba(244,236,222,.06);border-radius:9px;padding:8px 14px;cursor:pointer;transition:.15s}
 .bar button:hover{background:rgba(244,236,222,.16)}
 .bar .count{font-size:14px;opacity:.8;min-width:54px;text-align:center}
 .bar .sp{flex:1}
 .tg{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none}
 .tg .t{width:38px;height:22px;border-radius:12px;background:rgba(244,236,222,.2);position:relative;transition:.18s}
-.tg .t::after{content:&quot;&quot;;position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#F4ECDE;transition:.18s}
+.tg .t::after{content:&quot;&quot;;position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#F2F7F9;transition:.18s}
 .tg.on .t{background:var(--teal)}.tg.on .t::after{left:18px}
 .dots{display:flex;gap:6px}
 .dots i{width:7px;height:7px;border-radius:50%;background:rgba(244,236,222,.25)}
@@ -608,26 +630,26 @@ h1.slh{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.0
       <div class=&quot;keywrap&quot;>
         <svg viewBox=&quot;0 0 460 300&quot; width=&quot;560&quot; style=&quot;max-width:62vw&quot;>
           <!-- root -->
-          <rect class=&quot;reveal d1&quot; x=&quot;150&quot; y=&quot;10&quot; width=&quot;160&quot; height=&quot;44&quot; rx=&quot;10&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/>
-          <text class=&quot;reveal d1&quot; x=&quot;230&quot; y=&quot;37&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;600&quot; fill=&quot;#3A2E26&quot;>Has a backbone?</text>
+          <rect class=&quot;reveal d1&quot; x=&quot;150&quot; y=&quot;10&quot; width=&quot;160&quot; height=&quot;44&quot; rx=&quot;10&quot; fill=&quot;#F8FBFC&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;reveal d1&quot; x=&quot;230&quot; y=&quot;37&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;600&quot; fill=&quot;#12303F&quot;>Has a backbone?</text>
           <!-- branches -->
-          <line class=&quot;draw&quot; x1=&quot;200&quot; y1=&quot;54&quot; x2=&quot;90&quot; y2=&quot;120&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.5&quot;/>
-          <line class=&quot;draw&quot; x1=&quot;260&quot; y1=&quot;54&quot; x2=&quot;370&quot; y2=&quot;120&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.5&quot;/>
-          <text class=&quot;reveal d3&quot; x=&quot;120&quot; y=&quot;92&quot; font-family=&quot;Quicksand&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#5C8A4A&quot;>YES</text>
-          <text class=&quot;reveal d3&quot; x=&quot;320&quot; y=&quot;92&quot; font-family=&quot;Quicksand&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#C45F2E&quot;>NO</text>
+          <line class=&quot;draw&quot; x1=&quot;200&quot; y1=&quot;54&quot; x2=&quot;90&quot; y2=&quot;120&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.5&quot;/>
+          <line class=&quot;draw&quot; x1=&quot;260&quot; y1=&quot;54&quot; x2=&quot;370&quot; y2=&quot;120&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.5&quot;/>
+          <text class=&quot;reveal d3&quot; x=&quot;120&quot; y=&quot;92&quot; font-family=&quot;Quicksand&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#2E7D5B&quot;>YES</text>
+          <text class=&quot;reveal d3&quot; x=&quot;320&quot; y=&quot;92&quot; font-family=&quot;Quicksand&quot; font-size=&quot;13&quot; font-weight=&quot;700&quot; fill=&quot;#0A7A67&quot;>NO</text>
           <!-- leaf left -->
-          <rect class=&quot;reveal d4&quot; x=&quot;20&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;42&quot; rx=&quot;10&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot;/>
-          <text class=&quot;reveal d4&quot; x=&quot;90&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#15706c&quot;>VERTEBRATE</text>
+          <rect class=&quot;reveal d4&quot; x=&quot;20&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;42&quot; rx=&quot;10&quot; fill=&quot;#EAF2F8&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;reveal d4&quot; x=&quot;90&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#1F5478&quot;>VERTEBRATE</text>
           <!-- leaf right -->
-          <rect class=&quot;reveal d4&quot; x=&quot;300&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;42&quot; rx=&quot;10&quot; fill=&quot;#F3E2D6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2&quot;/>
-          <text class=&quot;reveal d4&quot; x=&quot;370&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#A94E22&quot;>INVERTEBRATE</text>
+          <rect class=&quot;reveal d4&quot; x=&quot;300&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;42&quot; rx=&quot;10&quot; fill=&quot;#DDF0EB&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;reveal d4&quot; x=&quot;370&quot; y=&quot;146&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;14&quot; font-weight=&quot;700&quot; fill=&quot;#0A6B5C&quot;>INVERTEBRATE</text>
           <!-- second level under vertebrate -->
-          <line class=&quot;draw&quot; x1=&quot;70&quot; y1=&quot;162&quot; x2=&quot;40&quot; y2=&quot;216&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/>
-          <line class=&quot;draw&quot; x1=&quot;110&quot; y1=&quot;162&quot; x2=&quot;150&quot; y2=&quot;216&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/>
-          <rect class=&quot;reveal d6&quot; x=&quot;0&quot; y=&quot;216&quot; width=&quot;86&quot; height=&quot;38&quot; rx=&quot;9&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#cdbfa8&quot; stroke-width=&quot;1.6&quot;/>
-          <text class=&quot;reveal d6&quot; x=&quot;43&quot; y=&quot;240&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; fill=&quot;#6F6155&quot;>feathers → bird</text>
-          <rect class=&quot;reveal d6&quot; x=&quot;112&quot; y=&quot;216&quot; width=&quot;96&quot; height=&quot;38&quot; rx=&quot;9&quot; fill=&quot;#FFFDF8&quot; stroke=&quot;#cdbfa8&quot; stroke-width=&quot;1.6&quot;/>
-          <text class=&quot;reveal d6&quot; x=&quot;160&quot; y=&quot;240&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; fill=&quot;#6F6155&quot;>fins → fish</text>
+          <line class=&quot;draw&quot; x1=&quot;70&quot; y1=&quot;162&quot; x2=&quot;40&quot; y2=&quot;216&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.2&quot;/>
+          <line class=&quot;draw&quot; x1=&quot;110&quot; y1=&quot;162&quot; x2=&quot;150&quot; y2=&quot;216&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.2&quot;/>
+          <rect class=&quot;reveal d6&quot; x=&quot;0&quot; y=&quot;216&quot; width=&quot;86&quot; height=&quot;38&quot; rx=&quot;9&quot; fill=&quot;#F8FBFC&quot; stroke=&quot;#B9CCD8&quot; stroke-width=&quot;1.6&quot;/>
+          <text class=&quot;reveal d6&quot; x=&quot;43&quot; y=&quot;240&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; fill=&quot;#5B7A90&quot;>feathers → bird</text>
+          <rect class=&quot;reveal d6&quot; x=&quot;112&quot; y=&quot;216&quot; width=&quot;96&quot; height=&quot;38&quot; rx=&quot;9&quot; fill=&quot;#F8FBFC&quot; stroke=&quot;#B9CCD8&quot; stroke-width=&quot;1.6&quot;/>
+          <text class=&quot;reveal d6&quot; x=&quot;160&quot; y=&quot;240&quot; text-anchor=&quot;middle&quot; font-family=&quot;Quicksand&quot; font-size=&quot;12&quot; font-weight=&quot;600&quot; fill=&quot;#5B7A90&quot;>fins → fish</text>
         </svg>
         <p class=&quot;keynote reveal d5&quot;>Each question splits the group in two. Keep asking until every animal has a name. <b>Notice we ask about structure - not what it looks like.</b></p>
       </div>
@@ -666,7 +688,7 @@ h1.slh{font-family:var(--display);font-weight:700;font-size:42px;line-height:1.0
       <h1 class=&quot;slh reveal d1&quot; style=&quot;font-size:30px&quot;>Sort the animals - your way in</h1>
       <div class=&quot;diffcols&quot;>
         <div class=&quot;dcol reveal d1&quot;><span class=&quot;band&quot; style=&quot;color:#5a9b96&quot;><span class=&quot;sw&quot; style=&quot;background:var(--support)&quot;></span>Support</span><p>Use the <b>picture key</b> to sort 4 animals into vertebrate or invertebrate.</p></div>
-        <div class=&quot;dcol reveal d2&quot;><span class=&quot;band&quot; style=&quot;color:#15706c&quot;><span class=&quot;sw&quot; style=&quot;background:var(--core)&quot;></span>Core</span><p>Sort 6 animals and <b>explain one choice</b> using the word <i>backbone</i>.</p></div>
+        <div class=&quot;dcol reveal d2&quot;><span class=&quot;band&quot; style=&quot;color:#1F5478&quot;><span class=&quot;sw&quot; style=&quot;background:var(--core)&quot;></span>Core</span><p>Sort 6 animals and <b>explain one choice</b> using the word <i>backbone</i>.</p></div>
         <div class=&quot;dcol reveal d3&quot;><span class=&quot;band&quot; style=&quot;color:var(--accent)&quot;><span class=&quot;sw&quot; style=&quot;background:var(--stretch)&quot;></span>Stretch</span><p><b>Build your own key</b> with two yes/no questions for 4 animals of your choice.</p></div>
       </div>
       <p class=&quot;teacheronly reveal d4&quot;>Differentiation is a teacher-only key - pupils see one shared task, entered at the right level.</p>
@@ -759,16 +781,16 @@ function loadVideo(){
 }
 // ---- inline SVG icons (dual coding) ----
 const I={
- fish:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M8 32c8-12 28-14 38-6 4 3 8 6 12 6-4 0-8 3-12 6-10 8-30 6-38-6z&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;22&quot; cy=&quot;29&quot; r=&quot;2.4&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M46 24v16&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot;/></svg>',
- bird:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M20 40c0-12 9-20 20-20l8-4-3 8c2 4 1 12-6 16-6 4-19 4-19 0z&quot; fill=&quot;#F3E2D6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;40&quot; cy=&quot;26&quot; r=&quot;2.2&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M20 40l-8 6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2.2&quot;/></svg>',
- beetle:'<svg width=&quot;54&quot; height=&quot;54&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><ellipse cx=&quot;32&quot; cy=&quot;36&quot; rx=&quot;14&quot; ry=&quot;18&quot; fill=&quot;#C9A24B&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/><line x1=&quot;32&quot; y1=&quot;20&quot; x2=&quot;32&quot; y2=&quot;54&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;32&quot; cy=&quot;16&quot; r=&quot;6&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M18 30l-8-4M46 30l8-4M18 42l-8 2M46 42l8 2&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2&quot;/></svg>',
- snail:'<svg width=&quot;56&quot; height=&quot;56&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M8 46h24&quot; stroke=&quot;#7FBDB9&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/><circle cx=&quot;36&quot; cy=&quot;34&quot; r=&quot;16&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;36&quot; cy=&quot;34&quot; r=&quot;8&quot; fill=&quot;none&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot;/><path d=&quot;M20 46c-4 0-6-4-2-8&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2.2&quot; fill=&quot;none&quot;/><path d=&quot;M14 40v-6M18 40v-8&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/></svg>',
- frog:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><circle cx=&quot;22&quot; cy=&quot;18&quot; r=&quot;7&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;42&quot; cy=&quot;18&quot; r=&quot;7&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;22&quot; cy=&quot;18&quot; r=&quot;2.4&quot; fill=&quot;#3A2E26&quot;/><circle cx=&quot;42&quot; cy=&quot;18&quot; r=&quot;2.4&quot; fill=&quot;#3A2E26&quot;/><path d=&quot;M14 40c0-12 36-12 36 0 0 8-6 12-18 12s-18-4-18-12z&quot; fill=&quot;#7FBDB9&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2.2&quot;/><path d=&quot;M14 50l-6 6M50 50l6 6&quot; stroke=&quot;#5C8A4A&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;/></svg>',
- snake:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M50 14c-10 0-10 10-20 10S12 14 12 24s18 10 18 18 12 10 20 4&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/><circle cx=&quot;51&quot; cy=&quot;14&quot; r=&quot;3&quot; fill=&quot;#3A2E26&quot;/></svg>',
- classify:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><rect x=&quot;8&quot; y=&quot;12&quot; width=&quot;20&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#1F8E8A&quot;/><rect x=&quot;36&quot; y=&quot;32&quot; width=&quot;20&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#C45F2E&quot;/><path d=&quot;M30 22h14M22 38h6&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;/><path d=&quot;M44 22l4 4-4 4M28 38l-4 4 4 4&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot;/></svg>',
- vert:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><line x1=&quot;32&quot; y1=&quot;8&quot; x2=&quot;32&quot; y2=&quot;56&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;3&quot;/><g fill=&quot;#1F8E8A&quot;><rect x=&quot;24&quot; y=&quot;12&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;22&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;32&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;42&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/></g></svg>',
- invert:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M10 40c6-10 14 0 20-8s12 2 20-6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/><path d=&quot;M14 30c0 4 4 4 4 0M30 22c0 4 4 4 4 0&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;/></svg>',
- key:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><rect x=&quot;24&quot; y=&quot;8&quot; width=&quot;16&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#C9A24B&quot;/><line x1=&quot;32&quot; y1=&quot;18&quot; x2=&quot;18&quot; y2=&quot;34&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.2&quot;/><line x1=&quot;32&quot; y1=&quot;18&quot; x2=&quot;46&quot; y2=&quot;34&quot; stroke=&quot;#3A2E26&quot; stroke-width=&quot;2.2&quot;/><rect x=&quot;8&quot; y=&quot;34&quot; width=&quot;20&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#CDE6E4&quot; stroke=&quot;#1F8E8A&quot; stroke-width=&quot;1.6&quot;/><rect x=&quot;36&quot; y=&quot;34&quot; width=&quot;20&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#F3E2D6&quot; stroke=&quot;#C45F2E&quot; stroke-width=&quot;1.6&quot;/></svg>'
+ fish:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M8 32c8-12 28-14 38-6 4 3 8 6 12 6-4 0-8 3-12 6-10 8-30 6-38-6z&quot; fill=&quot;#EAF2F8&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;22&quot; cy=&quot;29&quot; r=&quot;2.4&quot; fill=&quot;#12303F&quot;/><path d=&quot;M46 24v16&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2&quot;/></svg>',
+ bird:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M20 40c0-12 9-20 20-20l8-4-3 8c2 4 1 12-6 16-6 4-19 4-19 0z&quot; fill=&quot;#DDF0EB&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;40&quot; cy=&quot;26&quot; r=&quot;2.2&quot; fill=&quot;#12303F&quot;/><path d=&quot;M20 40l-8 6&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;2.2&quot;/></svg>',
+ beetle:'<svg width=&quot;54&quot; height=&quot;54&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><ellipse cx=&quot;32&quot; cy=&quot;36&quot; rx=&quot;14&quot; ry=&quot;18&quot; fill=&quot;#B8912F&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2&quot;/><line x1=&quot;32&quot; y1=&quot;20&quot; x2=&quot;32&quot; y2=&quot;54&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;32&quot; cy=&quot;16&quot; r=&quot;6&quot; fill=&quot;#12303F&quot;/><path d=&quot;M18 30l-8-4M46 30l8-4M18 42l-8 2M46 42l8 2&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2&quot;/></svg>',
+ snail:'<svg width=&quot;56&quot; height=&quot;56&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M8 46h24&quot; stroke=&quot;#7FB0C9&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;/><circle cx=&quot;36&quot; cy=&quot;34&quot; r=&quot;16&quot; fill=&quot;#EAF2F8&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.2&quot;/><circle cx=&quot;36&quot; cy=&quot;34&quot; r=&quot;8&quot; fill=&quot;none&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2&quot;/><path d=&quot;M20 46c-4 0-6-4-2-8&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2.2&quot; fill=&quot;none&quot;/><path d=&quot;M14 40v-6M18 40v-8&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/></svg>',
+ frog:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><circle cx=&quot;22&quot; cy=&quot;18&quot; r=&quot;7&quot; fill=&quot;#EAF2F8&quot; stroke=&quot;#2E7D5B&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;42&quot; cy=&quot;18&quot; r=&quot;7&quot; fill=&quot;#EAF2F8&quot; stroke=&quot;#2E7D5B&quot; stroke-width=&quot;2&quot;/><circle cx=&quot;22&quot; cy=&quot;18&quot; r=&quot;2.4&quot; fill=&quot;#12303F&quot;/><circle cx=&quot;42&quot; cy=&quot;18&quot; r=&quot;2.4&quot; fill=&quot;#12303F&quot;/><path d=&quot;M14 40c0-12 36-12 36 0 0 8-6 12-18 12s-18-4-18-12z&quot; fill=&quot;#7FB0C9&quot; stroke=&quot;#2E7D5B&quot; stroke-width=&quot;2.2&quot;/><path d=&quot;M14 50l-6 6M50 50l6 6&quot; stroke=&quot;#2E7D5B&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;/></svg>',
+ snake:'<svg width=&quot;58&quot; height=&quot;58&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M50 14c-10 0-10 10-20 10S12 14 12 24s18 10 18 18 12 10 20 4&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/><circle cx=&quot;51&quot; cy=&quot;14&quot; r=&quot;3&quot; fill=&quot;#12303F&quot;/></svg>',
+ classify:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><rect x=&quot;8&quot; y=&quot;12&quot; width=&quot;20&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#2C6E9B&quot;/><rect x=&quot;36&quot; y=&quot;32&quot; width=&quot;20&quot; height=&quot;20&quot; rx=&quot;4&quot; fill=&quot;#0A7A67&quot;/><path d=&quot;M30 22h14M22 38h6&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot;/><path d=&quot;M44 22l4 4-4 4M28 38l-4 4 4 4&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2.4&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot;/></svg>',
+ vert:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><line x1=&quot;32&quot; y1=&quot;8&quot; x2=&quot;32&quot; y2=&quot;56&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;3&quot;/><g fill=&quot;#2C6E9B&quot;><rect x=&quot;24&quot; y=&quot;12&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;22&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;32&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/><rect x=&quot;24&quot; y=&quot;42&quot; width=&quot;16&quot; height=&quot;7&quot; rx=&quot;3&quot;/></g></svg>',
+ invert:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><path d=&quot;M10 40c6-10 14 0 20-8s12 2 20-6&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/><path d=&quot;M14 30c0 4 4 4 4 0M30 22c0 4 4 4 4 0&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;2&quot; fill=&quot;none&quot;/></svg>',
+ key:'<svg width=&quot;42&quot; height=&quot;42&quot; viewBox=&quot;0 0 64 64&quot; fill=&quot;none&quot;><rect x=&quot;24&quot; y=&quot;8&quot; width=&quot;16&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#B8912F&quot;/><line x1=&quot;32&quot; y1=&quot;18&quot; x2=&quot;18&quot; y2=&quot;34&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2.2&quot;/><line x1=&quot;32&quot; y1=&quot;18&quot; x2=&quot;46&quot; y2=&quot;34&quot; stroke=&quot;#12303F&quot; stroke-width=&quot;2.2&quot;/><rect x=&quot;8&quot; y=&quot;34&quot; width=&quot;20&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#EAF2F8&quot; stroke=&quot;#2C6E9B&quot; stroke-width=&quot;1.6&quot;/><rect x=&quot;36&quot; y=&quot;34&quot; width=&quot;20&quot; height=&quot;10&quot; rx=&quot;3&quot; fill=&quot;#DDF0EB&quot; stroke=&quot;#0A7A67&quot; stroke-width=&quot;1.6&quot;/></svg>'
 };
 [['a-fish','fish'],['a-bird','bird'],['a-beetle','beetle'],['a-snail','snail'],['a-frog','frog'],['a-snake','snake'],
  ['a-frog2','frog'],['v-classify','classify'],['v-vert','vert'],['v-invert','invert'],['v-key','key'],
@@ -820,6 +842,39 @@ function tally(){const c={S:0,WT:0,GD:0};CLASS.forEach(k=>c[k[1]]++);
   var e;e=document.getElementById('s-sec');if(e)e.textContent=c.S;
   e=document.getElementById('s-wt');if(e)e.textContent=c.WT;
   e=document.getElementById('s-gd');if(e)e.textContent=c.GD;
-  e=document.getElementById('s-non');if(e)e.textContent=c.WT+c.GD;}
+  e=document.getElementById('s-non');if(e)e.textContent=c.WT+c.GD;
+  nextStep(c);}
+var PASS=1;
+function setPass(n,btn){PASS=n;
+  if(btn){var p=btn.parentNode.querySelectorAll('button');for(var i=0;i<p.length;i++){p[i].style.background='';p[i].style.color='';}
+    btn.style.background='var(--accent)';btn.style.color='#fff';}
+  tally();}
+function nextStep(c){
+  var fEl=document.getElementById('ns-finding'),mEl=document.getElementById('ns-move'),
+      wEl=document.getElementById('ns-who'),dEl=document.getElementById('ns-doors');
+  if(!fEl)return;
+  var total=CLASS.length,wt=c.WT,gd=c.GD,met=total-wt;
+  var names=CLASS.filter(function(k){return k[1]==='WT';}).map(function(k){return k[0];});
+  var gdNames=CLASS.filter(function(k){return k[1]==='GD';}).map(function(k){return k[0];});
+  var finding,move,who='',doors=true;
+  if(wt===0){
+    finding='All '+total+' met it.';
+    move='Move on to comparing fractions with different denominators. This objective comes back as a two minute retrieval question in about a fortnight, which is roughly where it starts to fade.';
+  } else if(PASS>=3){
+    finding='Third pass, and '+wt+' '+(wt===1?'child is':'children are')+' still working towards it.';
+    move='This needs a person, not another generated worksheet. The suggestion is to talk to your inclusion lead before the next lesson. SEQUENS keeps the record and stops suggesting.';
+    doors=false;
+  } else if(wt > total*0.25){
+    finding=(PASS===2?'Second pass. ':'')+'The lesson did not land for '+wt+' of '+total+'.';
+    move='That is more than a small group, so the suggestion is to teach it again differently rather than louder. A shorter text, the bar model kept on screen throughout, and the hinge moved earlier so you find out sooner.';
+  } else {
+    finding=(PASS===2?'Second pass. ':'')+wt+' '+(wt===1?'child is':'children are')+' working towards it. '+met+' met it.';
+    move='A ten minute guided starter on halves and quarters with the bar model shown, before the next lesson, for those '+wt+'. The other '+met+' move on. You do not re-teach the whole lesson to the '+met+' who understood it.';
+  }
+  if(wt>0){who='Working towards: '+names.join(', ')+'.';}
+  if(gd>0){who+=(who?' ':'')+gdNames.length+' went beyond ('+gdNames.join(', ')+'). A harder question waits for when they want it, offered to anyone, expected of no one.';}
+  fEl.textContent=finding;mEl.textContent=move;wEl.textContent=who;
+  dEl.style.display=doors?'flex':'none';
+}
 </script>
 </body></html>

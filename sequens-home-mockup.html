@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SEQUENS Home - home education mockup</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Andika:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F4ECDE;--card:#FBF7EF;--card2:#FFFDF8;--ink:#3A2E26;--ink-soft:#6F6155;--line:#E7DCC9;--line-soft:#F0E7D7;
-  --accent:#C45F2E;--accent-deep:#A94E22;--accent-soft:#E7B79E;--teal:#1F8E8A;--teal-soft:#CDE6E4;--good:#5C8A4A;--gold:#C9A24B;
-  --diff-support:#7FBDB9;--diff-core:#1F8E8A;--diff-secure:#C9A24B;--diff-stretch:#C45F2E;
+  --bg:#F2F7F9;--card:#FFFFFF;--card2:#F8FBFC;--ink:#12303F;--ink-soft:#5B7A90;--line:#D7E4EA;--line-soft:#E8F0F4;
+  --accent:#0A7A67;--accent-deep:#0A6B5C;--accent-soft:#CFEDE6;--teal:#2C6E9B;--teal-soft:#EAF2F8;--good:#2E7D5B;--gold:#B8912F;
+  --diff-support:#8FB8CE;--diff-core:#0A7A67;--diff-secure:#B8912F;--diff-stretch:#0A3D62;
   /* objective states */
-  --st-none:#EFE6D6;--st-intro:#CDE6E4;--st-practised:#5FB0AB;--st-secure:#1F8E8A;--st-retrieval:#C9A24B;
-  --display:'Quicksand',system-ui,sans-serif;--body:'Andika','Segoe UI',sans-serif;
-  --r:16px;--r-sm:11px;--r-pill:22px;--shadow:0 2px 14px rgba(58,46,38,.07);
+  --st-none:#E8F0F4;--st-intro:#CFE7F0;--st-practised:#4FA8C4;--st-secure:#0A7A67;--st-retrieval:#B8912F;
+  --display:'Schibsted Grotesk',Arial,sans-serif;--body:'Lexend','Segoe UI',sans-serif;
+  --r:16px;--r-sm:11px;--r-pill:22px;--shadow:0 2px 14px rgba(24,58,82,.07);
 }
 *{box-sizing:border-box}html,body{margin:0}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -23,7 +23,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .wrap{max-width:1180px;margin:0 auto;padding:0 26px}
 .hide{display:none!important}
 .eyebrow{font-family:var(--display);font-weight:600;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)}
-.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:12px;padding:4px 11px;border-radius:var(--r-pill);background:var(--teal-soft);color:#15706c}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-weight:600;font-size:12px;padding:4px 11px;border-radius:var(--r-pill);background:var(--teal-soft);color:#1F5478}
 .btn{font-weight:600;border-radius:var(--r-sm);padding:10px 17px;font-size:14.5px;transition:.15s}
 .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-deep)}
 .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -52,7 +52,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .doormock{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
 .doormock .dd{background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
 .doormock .dd .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;font-size:18px}
-.doormock .dd .ic.a{background:var(--accent-soft);color:#a94e22}.doormock .dd .ic.b{background:var(--teal-soft);color:#15706c}
+.doormock .dd .ic.a{background:var(--accent-soft);color:#0A6B5C}.doormock .dd .ic.b{background:var(--teal-soft);color:#1F5478}
 .doormock .dd b{font-family:var(--display);font-size:15px}
 .doormock .dd p{margin:2px 0 0;font-size:13px;color:var(--ink-soft)}
 
@@ -60,7 +60,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .section h2{font-size:32px;font-weight:700;margin:8px 0 6px}
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
 .feat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
-.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--teal-soft);display:grid;place-items:center;margin-bottom:12px;color:#15706c;font-size:18px}
+.feat .ic{width:40px;height:40px;border-radius:11px;background:var(--teal-soft);display:grid;place-items:center;margin-bottom:12px;color:#1F5478;font-size:18px}
 .feat h3{font-size:17px;margin:0 0 5px}.feat p{margin:0;font-size:14px;color:var(--ink-soft)}
 @media(max-width:880px){.hero-grid{grid-template-columns:1fr}.hero h1{font-size:36px}.feat-grid{grid-template-columns:1fr}}
 
@@ -74,7 +74,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .side button.nav.on{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
 .side .ico{width:18px;text-align:center;flex:0 0 auto}
 .kid{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fff,var(--card2));border:1px solid var(--line);border-radius:14px;padding:11px;margin-top:6px}
-.kid .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:#a94e22;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
+.kid .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:#0A6B5C;display:grid;place-items:center;font-family:var(--display);font-weight:700;flex:0 0 auto}
 .kid b{font-family:var(--display);font-size:14px}.kid p{margin:0;font-size:11.5px;color:var(--ink-soft)}
 .main{padding:30px 34px;overflow:auto}
 .phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
@@ -89,7 +89,7 @@ button{font-family:var(--display);cursor:pointer;border:none;background:none;col
 .door{border:1.5px solid var(--line);border-radius:var(--r);padding:22px;background:var(--card);cursor:pointer;transition:.15s}
 .door:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
 .door .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:12px}
-.door.a .ic{background:var(--accent-soft);color:#a94e22}.door.b .ic{background:var(--teal-soft);color:#15706c}
+.door.a .ic{background:var(--accent-soft);color:#0A6B5C}.door.b .ic{background:var(--teal-soft);color:#1F5478}
 .door h3{margin:0 0 5px;font-size:19px}.door p{margin:0;font-size:14px;color:var(--ink-soft)}
 
 /* inputs */
@@ -106,7 +106,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .tog .track{width:42px;height:24px;border-radius:14px;background:var(--line);position:relative;transition:.18s}
 .tog .track::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.18)}
 .tog.on .track{background:var(--teal)}.tog.on .track::after{left:20px}
-.note{font-size:12.5px;color:#15706c;background:var(--teal-soft);border-radius:10px;padding:9px 12px}
+.note{font-size:12.5px;color:#1F5478;background:var(--teal-soft);border-radius:10px;padding:9px 12px}
 
 /* opportunity cards */
 .opps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
@@ -114,7 +114,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .opp{background:var(--card2);border:1px solid var(--line);border-radius:13px;padding:14px;position:relative}
 .opp .subj{font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--teal)}
 .opp h4{margin:4px 0 4px;font-size:15px}.opp p{margin:0;font-size:12.5px;color:var(--ink-soft)}
-.opp .obj{margin-top:8px;font-size:11px;color:#15706c;background:var(--teal-soft);border-radius:8px;padding:4px 8px;display:inline-block}
+.opp .obj{margin-top:8px;font-size:11px;color:#1F5478;background:var(--teal-soft);border-radius:8px;padding:4px 8px;display:inline-block}
 .opp .chk{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--teal);background:var(--teal);color:#fff;display:grid;place-items:center;font-size:12px}
 
 /* coverage map */
@@ -126,7 +126,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .cov-head b{font-family:var(--display);font-size:15px}
 .cov-head .pct{font-family:var(--display);font-size:12.5px;color:var(--ink-soft)}
 .cov-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px}
-.cell{aspect-ratio:1;border-radius:7px;position:relative;cursor:pointer;border:1px solid rgba(58,46,38,.06)}
+.cell{aspect-ratio:1;border-radius:7px;position:relative;cursor:pointer;border:1px solid rgba(24,58,82,.06)}
 .cell.s0{background:var(--st-none)}.cell.s1{background:var(--st-intro)}.cell.s2{background:var(--st-practised)}.cell.s3{background:var(--st-secure)}
 .cell.due::after{content:"";position:absolute;inset:0;border-radius:7px;box-shadow:inset 0 0 0 2.5px var(--st-retrieval)}
 .barwrap{height:9px;background:var(--line-soft);border-radius:6px;overflow:hidden}
@@ -192,8 +192,8 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .cap-row .e{font-size:17px;line-height:1.2}
 
 .obj.enr{background:var(--line-soft);color:var(--ink-soft)}
-.nc-banner{background:var(--teal-soft);border-radius:10px;padding:9px 12px;font-size:12.5px;color:#15706c;margin-bottom:14px}
-.conf{position:fixed;left:12px;bottom:12px;z-index:55;background:rgba(58,46,38,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px;letter-spacing:.3px}
+.nc-banner{background:var(--teal-soft);border-radius:10px;padding:9px 12px;font-size:12.5px;color:#1F5478;margin-bottom:14px}
+.conf{position:fixed;left:12px;bottom:12px;z-index:55;background:rgba(24,58,82,.86);color:#fff;font-family:var(--display);font-size:11px;font-weight:600;padding:6px 11px;border-radius:20px;letter-spacing:.3px}
 
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
 .tabs button{padding:11px 16px;font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--ink-soft);border-bottom:2.5px solid transparent;margin-bottom:-1px;background:none}
@@ -206,7 +206,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .rubfb{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
 .rubfb .r{display:flex;gap:10px;padding:6px 0;font-size:14px}.rubfb .r .k{font-family:var(--display);font-weight:600;font-size:13px;white-space:nowrap}
 
-.paper{background:#fff;max-width:820px;margin:0 auto;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:46px 52px;color:#2a221c}
+.paper{background:#fff;max-width:820px;margin:0 auto;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:46px 52px;color:#0B2430}
 .paper .wm{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--accent);display:flex;align-items:center;gap:7px}
 .paper .wm .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
 .paper h1.dt{font-family:var(--display);font-size:27px;margin:14px 0 4px}
@@ -219,7 +219,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 .cvbar .track i{display:block;height:100%;background:var(--teal);border-radius:6px}
 .cvbar .v{font-family:var(--display);font-size:12.5px;color:var(--ink-soft);text-align:right}
 .paper ul.fl{margin:6px 0 0;padding-left:18px;font-size:14px;line-height:1.7}
-.paper .disc{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-size:11.5px;color:#6F6155;line-height:1.6}
+.paper .disc{margin-top:26px;border-top:1px solid var(--line);padding-top:14px;font-size:11.5px;color:#5B7A90;line-height:1.6}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 8px}
 .stat{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
 .stat b{font-family:var(--display);font-weight:700;font-size:24px;display:block;color:var(--accent);line-height:1.1}
@@ -269,7 +269,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
   <div class="onb-step on" data-step="0">
     <h2>First - who are we learning with?</h2>
     <p class="sub">Just a name and age to start. You can add more children any time.</p>
-    <div class="row3" style="grid-template-columns:2fr 1fr"><div><label class="fl" style="font-size:12px">Child's name</label><input class="inp" value="Leo"></div><div><label class="fl" style="font-size:12px">Age</label><input class="inp" value="8"></div></div>
+    <div class="row3" style="grid-template-columns:2fr 1fr"><div><label class="fl" style="font-size:12px">Child's name</label><input class="inp" value="Otis"></div><div><label class="fl" style="font-size:12px">Age</label><input class="inp" value="8"></div></div>
     <div class="onb-actions"><span></span><button class="btn btn-primary" onclick="onbGo(1)">Continue</button></div>
   </div>
 
@@ -299,8 +299,8 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
   <div class="onb-step" data-step="3">
     <h2>You're all set.</h2>
-    <p class="sub">We'll keep things flexible and quietly track coverage in the background - so you always know what's covered, and you're ready if anyone asks. Let's begin with Leo.</p>
-    <div class="card flat" style="display:flex;gap:13px;align-items:center"><div class="kid" style="margin:0;border:none;background:none;padding:0"><div class="av">L</div></div><div><b class="dfont">Leo · age 8</b><p class="muted" style="font-size:13px;margin:2px 0 0">A bit of both · tracking on</p></div></div>
+    <p class="sub">We'll keep things flexible and quietly track coverage in the background - so you always know what's covered, and you're ready if anyone asks. Let's begin with Otis.</p>
+    <div class="card flat" style="display:flex;gap:13px;align-items:center"><div class="kid" style="margin:0;border:none;background:none;padding:0"><div class="av">L</div></div><div><b class="dfont">Otis · age 8</b><p class="muted" style="font-size:13px;margin:2px 0 0">A bit of both · tracking on</p></div></div>
     <div class="onb-actions"><button class="skip" onclick="onbGo(2)">Back</button><button class="btn btn-primary" onclick="finishOnboarding()">Go to my dashboard →</button></div>
   </div>
 </div></div>
@@ -355,8 +355,8 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       <button class="nav" data-s="moment" onclick="show('moment',this)"><span class="ico">✺</span> Plan from a moment</button>
       <button class="nav" data-s="curriculum" onclick="show('curriculum',this)"><span class="ico">▤</span> Follow the curriculum</button>
       <button class="nav" data-s="units" onclick="show('units',this)"><span class="ico">❑</span> Ready-made units</button>
-      <button class="nav" data-s="session" onclick="show('session',this)"><span class="ico">▤</span> Leo's session · KS2</button>
-      <button class="nav" data-s="y9" onclick="show('y9',this)"><span class="ico">▤</span> Year 9 lesson · KS3</button>
+      <button class="nav" data-s="session" onclick="show('session',this)"><span class="ico">▤</span> Otis's session · KS2</button>
+      <button class="nav" data-s="y9" onclick="show('y9',this)"><span class="ico">▤</span> Year 8 lesson · KS3</button>
     </div>
     <div class="sgroup">
       <div class="slabel">Track</div>
@@ -369,17 +369,17 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       <button class="nav" data-s="child" onclick="show('child',this)"><span class="ico">♥</span> Children</button>
       <button class="nav" onclick="goSite()"><span class="ico">⤺</span> Back to site</button>
     </div>
-    <div class="kid"><div class="av">L</div><div><b>Leo · age 8</b><p>switch child ▾</p></div></div>
+    <div class="kid"><div class="av">L</div><div><b>Otis · age 8</b><p>switch child ▾</p></div></div>
   </aside>
 
   <main class="main">
 
     <!-- TODAY -->
     <section class="apage" data-ap="today">
-      <div class="phead"><div><h1>Morning! Here's Leo's week</h1><p>Pick a way to plan, or carry on where you left off.</p></div></div>
+      <div class="phead"><div><h1>Morning! Here's Otis's week</h1><p>Pick a way to plan, or carry on where you left off.</p></div></div>
       <div class="doorways" style="margin-bottom:20px">
         <div class="door a" onclick="show('moment',document.querySelector('[data-s=moment]'))"><div class="ic">✺</div><h3>Plan from a moment</h3><p>Tell us what's happening - a trip, a mood, an obsession - and we'll find the learning in it and build a package.</p></div>
-        <div class="door b" onclick="show('curriculum',document.querySelector('[data-s=curriculum]'))"><div class="ic">▤</div><h3>Follow the curriculum</h3><p>Build structured lessons and sequences toward the objectives Leo needs - tracked automatically.</p></div>
+        <div class="door b" onclick="show('curriculum',document.querySelector('[data-s=curriculum]'))"><div class="ic">▤</div><h3>Follow the curriculum</h3><p>Build structured lessons and sequences toward the objectives Otis needs - tracked automatically.</p></div>
       </div>
       <div class="grid3">
         <div class="card"><div class="muted" style="font-size:12px;font-family:var(--display);text-transform:uppercase;letter-spacing:1px">This week</div><div style="font-family:var(--display);font-weight:700;font-size:26px;margin-top:6px">9 hrs</div><p class="muted" style="font-size:13px;margin:2px 0 0">planned across 4 days</p></div>
@@ -392,14 +392,14 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
     <!-- PLAN FROM A MOMENT -->
     <section class="apage hide" data-ap="moment">
       <div class="phead"><div><h1>Plan from a moment</h1><p>What's happening this week? We'll find the learning in it.</p></div></div>
-      <div class="seg" style="margin-bottom:16px"><button class="on" onclick="momentChild('leo',this)">Leo · Year 3</button><button onclick="momentChild('sam',this)">Sam · Year 9</button></div>
+      <div class="seg" style="margin-bottom:16px"><button class="on" onclick="momentChild('otis',this)">Otis · Year 3</button><button onclick="momentChild('nell',this)">Nell · Year 8</button></div>
       <div class="nc-banner">Every activity shows its National Curriculum link - and says so plainly when something is enrichment beyond a set statement. No ambiguity.</div>
-      <div id="m-leo">
+      <div id="m-otis">
       <div class="card" style="max-width:840px;margin-bottom:18px">
         <label class="fl">Tell us what you're doing - in your own words</label>
         <input class="inp" value="We're going to the beach on Thursday">
         <div class="row3" style="margin-top:14px">
-          <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Leo · age 8</option><option>Maya · age 6</option></select></div>
+          <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Otis · age 8</option><option>Ivy · age 5</option></select></div>
           <div><label class="fl" style="font-size:12px">Roughly how long?</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Half a day</option><option selected>A full day</option><option>A few hours</option></select></div>
           <div><label class="fl" style="font-size:12px">Depth</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Light &amp; playful</option><option selected>Balanced</option><option>Stretch him</option></select></div>
         </div>
@@ -407,7 +407,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
-        <div><span class="eyebrow">Learning we found at the beach</span><div class="muted" style="font-size:13px;margin-top:3px">Tap any to keep it. Each is a proper SEQUENS session - and themed to Leo.</div></div>
+        <div><span class="eyebrow">Learning we found at the beach</span><div class="muted" style="font-size:13px;margin-top:3px">Tap any to keep it. Each is a proper SEQUENS session - and themed to Otis.</div></div>
         <span class="tag">4 link to the National Curriculum</span>
       </div>
       <div class="opps">
@@ -419,23 +419,23 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
         <div class="opp"><div class="subj">PSHE</div><h4>Water safety</h4><p>Flags, currents, and the one rule that matters most.</p><span class="obj enr">Wider learning - water safety (PSHE, non-statutory)</span></div>
       </div>
       <div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="note" style="margin:0">These 4 ticked activities will be logged to Leo's coverage map automatically - emergent learning that still counts.</div>
+        <div class="note" style="margin:0">These 4 ticked activities will be logged to Otis's coverage map automatically - emergent learning that still counts.</div>
         <button class="btn btn-primary" onclick="show('session',document.querySelector('[data-s=session]'))">Build the package</button>
       </div>
     </div>
-      <div id="m-sam" class="hide">
+      <div id="m-nell" class="hide">
         <div class="card" style="max-width:840px;margin-bottom:18px">
           <label class="fl">Tell us what you're doing - in your own words</label>
-          <input class="inp" value="Sam's cooking the family dinner tonight on a £15 budget">
+          <input class="inp" value="Nell's cooking the family dinner tonight on a £15 budget">
           <div class="row3" style="margin-top:14px">
-            <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Sam · age 14 (Year 9)</option></select></div>
+            <div><label class="fl" style="font-size:12px">Child</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Nell · age 12 (Year 8)</option></select></div>
             <div><label class="fl" style="font-size:12px">Roughly how long?</label><select class="inp" style="padding:11px 12px;font-size:14px"><option selected>An evening</option><option>An hour</option></select></div>
             <div><label class="fl" style="font-size:12px">Depth</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>Light</option><option selected>Balanced</option><option>GCSE-stretch</option></select></div>
           </div>
           <div style="margin-top:14px"><button class="btn btn-primary">Find the learning ✺</button></div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">
-          <div><span class="eyebrow">Learning we found in tonight's dinner</span><div class="muted" style="font-size:13px;margin-top:3px">Year 9 level · each links explicitly to the KS3 National Curriculum.</div></div>
+          <div><span class="eyebrow">Learning we found in tonight's dinner</span><div class="muted" style="font-size:13px;margin-top:3px">Year 8 level · each links explicitly to the KS3 National Curriculum.</div></div>
           <span class="tag">4 link to the National Curriculum</span>
         </div>
         <div class="opps">
@@ -447,7 +447,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
           <div class="opp"><div class="subj">Independence</div><h4>Cooking safely</h4><p>Knives, heat, hygiene - the life-skill running underneath it all.</p><span class="obj enr">Wider learning - kitchen safety &amp; independence</span></div>
         </div>
         <div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div class="note" style="margin:0">The 4 ticked activities log to Sam's coverage map against their KS3 National Curriculum statements.</div>
+          <div class="note" style="margin:0">The 4 ticked activities log to Nell's coverage map against their KS3 National Curriculum statements.</div>
           <button class="btn btn-primary" onclick="show('y9',document.querySelector('[data-s=y9]'))">Build the package</button>
         </div>
       </div>
@@ -455,7 +455,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
     <!-- FOLLOW THE CURRICULUM -->
     <section class="apage hide" data-ap="curriculum">
-      <div class="phead"><div><h1>Follow the curriculum</h1><p>Structured lessons and sequences - for the objectives Leo needs to secure.</p></div></div>
+      <div class="phead"><div><h1>Follow the curriculum</h1><p>Structured lessons and sequences - for the objectives Otis needs to secure.</p></div></div>
       <div class="card" style="max-width:840px;margin-bottom:18px">
         <div class="row3">
           <div><label class="fl" style="font-size:12px">Curriculum</label><select class="inp" style="padding:11px 12px;font-size:14px"><option>England NC</option><option>Scotland CfE</option><option>Wales</option><option>US - state standards</option><option>IB / International</option><option>Our own mix</option></select></div>
@@ -470,7 +470,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
       <div class="grid3" style="margin-top:12px">
         <div class="card flat"><b class="dfont">Long-term</b><p class="muted" style="font-size:13px;margin:6px 0 0">A year overview from your hours-per-week - terms and topics mapped out.</p></div>
         <div class="card flat"><b class="dfont">Medium-term</b><p class="muted" style="font-size:13px;margin:6px 0 0">Each topic broken into a unit of linked objectives.</p></div>
-        <div class="card flat"><b class="dfont">Sessions</b><p class="muted" style="font-size:13px;margin:6px 0 0">Each one a full SEQUENS lesson, themed to Leo, worksheet optional.</p></div>
+        <div class="card flat"><b class="dfont">Sessions</b><p class="muted" style="font-size:13px;margin:6px 0 0">Each one a full SEQUENS lesson, themed to Otis, worksheet optional.</p></div>
       </div>
     </section>
 
@@ -478,19 +478,19 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
     <section class="apage hide" data-ap="units">
       <div class="phead"><div><h1>Ready-made units</h1><p>Pre-built learning for the things home educators do - pull one and go, or use it as a starting point.</p></div></div>
       <div class="grid3">
-        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#cfe3df,#e7d3bf);color:#15706c">🏖</div><div class="m"><h4>A day at the beach</h4><div class="row"><span class="chipk">6 activities</span><span class="chipk">4 subjects</span></div></div></div>
-        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#d8e7cf,#eee2c8);color:#4f7340">🌲</div><div class="m"><h4>Nature walk</h4><div class="row"><span class="chipk">5 activities</span><span class="chipk">science</span></div></div></div>
-        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#f4d59b,#f1b59a);color:#a94e22">🧁</div><div class="m"><h4>Baking together</h4><div class="row"><span class="chipk">maths</span><span class="chipk">reading</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#DFEDE9,#D2E2EA);color:#1F5478">🏖</div><div class="m"><h4>A day at the beach</h4><div class="row"><span class="chipk">6 activities</span><span class="chipk">4 subjects</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#DDF0E6,#eee2c8);color:#4f7340">🌲</div><div class="m"><h4>Nature walk</h4><div class="row"><span class="chipk">5 activities</span><span class="chipk">science</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#EBD9A8,#CFE7F0);color:#0A6B5C">🧁</div><div class="m"><h4>Baking together</h4><div class="row"><span class="chipk">maths</span><span class="chipk">reading</span></div></div></div>
         <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#cfe0f0,#d6e8d6);color:#3a6ea5">🏛</div><div class="m"><h4>Museum visit</h4><div class="row"><span class="chipk">history</span><span class="chipk">writing</span></div></div></div>
-        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#e7d3bf,#d8c4e0);color:#7a5a8a">🧱</div><div class="m"><h4>Lego &amp; structures</h4><div class="row"><span class="chipk">D&amp;T</span><span class="chipk">maths</span></div></div></div>
-        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#d8e7cf,#cfe3df);color:#4f7340">🌱</div><div class="m"><h4>Growing things</h4><div class="row"><span class="chipk">science</span><span class="chipk">over weeks</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#D2E2EA,#d8c4e0);color:#7a5a8a">🧱</div><div class="m"><h4>Lego &amp; structures</h4><div class="row"><span class="chipk">D&amp;T</span><span class="chipk">maths</span></div></div></div>
+        <div class="ucard"><div class="th" style="background:linear-gradient(135deg,#DDF0E6,#DFEDE9);color:#4f7340">🌱</div><div class="m"><h4>Growing things</h4><div class="row"><span class="chipk">science</span><span class="chipk">over weeks</span></div></div></div>
       </div>
       <div class="note" style="margin-top:18px">Units are themed to your child and logged to the coverage map just like everything else. New units are added all the time.</div>
     </section>
 
     <!-- COVERAGE MAP -->
     <section class="apage hide" data-ap="coverage">
-      <div class="phead"><div><h1>Leo's coverage map</h1><p>Everything covered, and everything left - against the National Curriculum <i>or your own goals</i>, pulled from both structured lessons and real life. Gaps are normal - every family has them. This is a map for choosing what’s next, not a judgement.</p></div>
+      <div class="phead"><div><h1>Otis's coverage map</h1><p>Everything covered, and everything left - against the National Curriculum <i>or your own goals</i>, pulled from both structured lessons and real life. Gaps are normal - every family has them. This is a map for choosing what’s next, not a judgement.</p></div>
         <button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">Make a report ▦</button></div>
       <div class="legend">
         <span><i style="background:var(--st-none)"></i> Not started</span>
@@ -548,7 +548,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
           <p class="muted" style="font-size:12px;margin:12px 0 0">SEQUENS helps you evidence learning your way. It doesn't define what your local authority requires - that varies, and home education has no single rulebook.</p>
         </div>
         <div class="report">
-          <h3>Leo · Learning record</h3>
+          <h3>Otis · Learning record</h3>
           <div class="rsub">September 2025 – June 2026 · prepared 16 June 2026</div>
           <div class="rrow"><span>Approach</span><b>Mixed - structured &amp; experiential</b></div>
           <div class="rrow"><span>Mathematics</span><b>71% secure · on track</b></div>
@@ -563,85 +563,85 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
     <!-- CHILD PROFILE -->
     <section class="apage hide" data-ap="child">
-      <div class="phead"><div><h1>Leo</h1><p>The more SEQUENS knows about Leo, the more it builds around him.</p></div></div>
+      <div class="phead"><div><h1>Otis</h1><p>The more SEQUENS knows about Otis, the more it builds around him.</p></div></div>
       <div class="grid2">
         <div class="card">
-          <h3 style="margin:0 0 6px">About Leo</h3>
+          <h3 style="margin:0 0 6px">About Otis</h3>
           <div class="set-row" style="border-top:none;padding-top:6px"><div class="l"><b>Age</b><p>8 · working around Year 3</p></div><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px">Edit</button></div>
           <div class="set-row"><div class="l"><b>Reading level</b><p>Early fluent · we match every text to this</p></div><div class="seg teal"><button style="font-size:12px;padding:6px 10px">Phonics</button><button class="on" style="font-size:12px;padding:6px 10px">Early fluent</button><button style="font-size:12px;padding:6px 10px">Fluent</button></div></div>
           <div class="set-row"><div class="l"><b>Needs</b><p>Autistic · prefers predictable structure, one step at a time</p></div><button class="btn btn-ghost" style="font-size:13px;padding:7px 13px">Edit</button></div>
         </div>
         <div class="card">
-          <h3 style="margin:0 0 6px">What Leo loves</h3>
+          <h3 style="margin:0 0 6px">What Otis loves</h3>
           <p class="muted" style="font-size:13.5px;margin:0 0 12px">Interests become the doorway - reading material and scaffolds are themed to them.</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pupilchip">Sonic the Hedgehog <b>→ themed texts &amp; tasks</b></span><span class="pupilchip">dinosaurs</span><span class="pupilchip">building</span><button class="btn btn-ghost" style="font-size:12px;padding:6px 12px;border-style:dashed">+ Add</button></div>
-          <div class="note" style="margin-top:14px">Themed material is generated for Leo's private use. Anything you share or export uses motifs - a fast blue hero, collecting rings - not the character itself.</div>
+          <div class="note" style="margin-top:14px">Themed material is generated for Otis's private use. Anything you share or export uses motifs - a fast blue hero, collecting rings - not the character itself.</div>
         </div>
       </div>
       <div class="card" style="margin-top:16px;border-color:var(--accent-soft)">
-        <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Worksheets &amp; capture help</b><p>On - SEQUENS makes a worksheet where it helps, and shows you simple ways to record what Leo has learned.</p></div><span class="tog on"><span class="track"></span></span></div>
+        <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Worksheets &amp; capture help</b><p>On - SEQUENS makes a worksheet where it helps, and shows you simple ways to record what Otis has learned.</p></div><span class="tog on"><span class="track"></span></span></div>
       </div>
     </section>
 
     <!-- SESSION -->
     <section class="apage hide" data-ap="session">
-      <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Beach package · for Leo</span><h1>Beach diary</h1><p>Writing a recount · ~40 minutes · themed for Leo · logs to his coverage map</p></div>
+      <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Beach package · for Otis</span><h1>Beach diary</h1><p>Writing a recount · ~40 minutes · themed for Otis · logs to his coverage map</p></div>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost">Print</button><button class="btn btn-primary">Mark as done ✓</button></div></div>
       <div class="tabs"><button class="on" onclick="sesTab(this,0)">Lesson plan</button><button onclick="sesTab(this,1)">Slides</button><button onclick="sesTab(this,2)">Rubric</button></div>
       <div class="ltabp" data-lt="0">
       <div class="lessonwrap">
         <div>
-          <div class="sstep"><div class="se">First thing</div><h4>Talk it over</h4><p>Ask Leo about the best bit of the beach. What happened first? Just chat - you're warming up his memory.</p></div>
+          <div class="sstep"><div class="se">First thing</div><h4>Talk it over</h4><p>Ask Otis about the best bit of the beach. What happened first? Just chat - you're warming up his memory.</p></div>
           <div class="sstep"><div class="se">Show him how</div><h4>Model a recount</h4><p>Show how we tell things in order - "first… then… after that…". Do one sentence about your day as an example.</p></div>
           <div class="sstep"><div class="se">Do it together</div><h4>Tell the day aloud</h4><p>Say the beach trip together, in order, before any writing. Count it on your fingers - three or four big moments.</p></div>
-          <div class="sstep act"><div class="se">Quick check</div><h4>Right order?</h4><p>Mix up three moments and see if Leo can put them back in order. If yes, he's ready to write.</p></div>
-          <div class="sstep act"><div class="se">His turn</div><h4>Write the diary</h4><p>Leo writes his beach diary using the sheet. The "fastest find" challenge keeps his fast-blue-hero energy in it.</p></div>
+          <div class="sstep act"><div class="se">Quick check</div><h4>Right order?</h4><p>Mix up three moments and see if Otis can put them back in order. If yes, he's ready to write.</p></div>
+          <div class="sstep act"><div class="se">His turn</div><h4>Write the diary</h4><p>Otis writes his beach diary using the sheet. The "fastest find" challenge keeps his fast-blue-hero energy in it.</p></div>
           <div class="sstep"><div class="se">Last thing</div><h4>Read it back</h4><p>Read it together and celebrate one brilliant sentence. That's the bit he'll remember.</p></div>
         </div>
         <div>
-          <div class="aside"><h4>📖 Leo's reading <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">early fluent</span></h4>
-            <div class="readtext">The waves were fast - but Leo was faster. He dashed across the sand and grabbed a shiny shell before the sea could reach it. "Got it!" he cheered, holding it up like a gold ring.</div>
-            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Written to match Leo's reading level and his interests. Themed material is for Leo's private use; anything you share or export uses motifs (speed, rings), not the character.</p></div>
+          <div class="aside"><h4>📖 Otis's reading <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">early fluent</span></h4>
+            <div class="readtext">The waves were fast - but Otis was faster. He dashed across the sand and grabbed a shiny shell before the sea could reach it. "Got it!" he cheered, holding it up like a gold ring.</div>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Written to match Otis's reading level and his interests. Themed material is for Otis's private use; anything you share or export uses motifs (speed, rings), not the character.</p></div>
           <div class="aside"><h4>✎ Beach diary sheet <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">worksheet · on</span></h4>
             <div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12.5px;color:var(--ink-soft)">
               <div style="font-family:var(--display);font-weight:600;color:var(--ink);margin-bottom:6px">My day at the beach</div>
               First… ____________________<br>Then… ____________________<br>The best bit… ____________________<br>My fastest find… 🐚 ____________
             </div>
-            <p class="muted" style="font-size:11.5px;margin:9px 0 0">A gentle frame so Leo knows where to start. Turn off any time in his profile.</p></div>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">A gentle frame so Otis knows where to start. Turn off any time in his profile.</p></div>
           <div class="aside" style="border-color:var(--accent-soft)"><h4>📌 Capture today's learning</h4>
             <div class="cap-row"><span class="e">📷</span><span>Snap a photo of his finished diary.</span></div>
             <div class="cap-row"><span class="e">✏️</span><span>Jot one sentence: what surprised you about how he did?</span></div>
             <div class="cap-row"><span class="e">🎤</span><span>Record 20 seconds of him reading it aloud.</span></div>
-            <p class="muted" style="font-size:11.5px;margin:8px 0 0">Any one is plenty. We add it to Leo's record - that's your evidence, sorted.</p></div>
+            <p class="muted" style="font-size:11.5px;margin:8px 0 0">Any one is plenty. We add it to Otis's record - that's your evidence, sorted.</p></div>
           <div class="aside"><h4>◫ Covers</h4>
-            <span class="obj" style="font-size:12px;color:#15706c;background:var(--teal-soft);border-radius:8px;padding:5px 10px;display:inline-block">NC · KS2 English (LKS2) - compose a recount</span>
+            <span class="obj" style="font-size:12px;color:#1F5478;background:var(--teal-soft);border-radius:8px;padding:5px 10px;display:inline-block">NC · KS2 English (LKS2) - compose a recount</span>
             <p class="muted" style="font-size:11.5px;margin:9px 0 0">Marking this done moves it forward on the coverage map.</p></div>
         </div>
       </div>
 </div>
       <div class="ltabp hide" data-lt="1">
-        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>What happened at the beach?</h4></div></div><div class="sld"><div class="h" style="background:#2f9b96">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>How a recount works: first, then, after</h4></div></div><div class="sld"><div class="h" style="background:#3aa7a1">Build together</div><div class="c"><div class="n">Slide 3</div><h4>Tell the day in order</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Put these moments in order</h4></div></div><div class="sld"><div class="h" style="background:#cf6d3d">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Write your beach diary</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Read it back together</h4></div></div></div>
-        <p class="muted" style="margin-top:16px;font-size:13.5px">Present mode runs full-screen with arrow keys. The images and the reading slide are themed to Leo and matched to his reading level. Choose a calm or bright deck style in his profile.</p>
+        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>What happened at the beach?</h4></div></div><div class="sld"><div class="h" style="background:#3A7DA8">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>How a recount works: first, then, after</h4></div></div><div class="sld"><div class="h" style="background:#4A8CB5">Build together</div><div class="c"><div class="n">Slide 3</div><h4>Tell the day in order</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Put these moments in order</h4></div></div><div class="sld"><div class="h" style="background:#14A48C">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Write your beach diary</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Read it back together</h4></div></div></div>
+        <p class="muted" style="margin-top:16px;font-size:13.5px">Present mode runs full-screen with arrow keys. The images and the reading slide are themed to Otis and matched to his reading level. Choose a calm or bright deck style in his profile.</p>
       </div>
       <div class="ltabp hide" data-lt="2">
         <div class="card" style="max-width:720px">
-          <h3 style="margin:0 0 4px">How did Leo do?</h3>
-          <p class="muted" style="font-size:13.5px;margin:0 0 16px">Tap a level for each - the words write themselves, and it sets Leo's level on the coverage map. No typing.</p>
+          <h3 style="margin:0 0 4px">How did Otis do?</h3>
+          <p class="muted" style="font-size:13.5px;margin:0 0 16px">Tap a level for each - the words write themselves, and it sets Otis's level on the coverage map. No typing.</p>
           <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Events in the right order</b></div><div class="seg"><button>Just starting</button><button>Getting there</button><button class="on" style="border-color:var(--good);background:var(--good)">Secure</button><button>Going beyond</button></div></div>
           <div class="set-row"><div class="l"><b>Uses time words (first, then, after)</b></div><div class="seg"><button>Just starting</button><button class="on">Getting there</button><button>Secure</button><button>Going beyond</button></div></div>
           <div class="set-row"><div class="l"><b>Writes sentences a reader can follow</b></div><div class="seg"><button>Just starting</button><button class="on">Getting there</button><button>Secure</button><button>Going beyond</button></div></div>
           <div class="rubfb">
-            <div class="r"><span class="k" style="color:var(--good)">✓ Strength</span><span>Leo put his beach day in the right order and used "first" and "then" to guide the reader.</span></div>
+            <div class="r"><span class="k" style="color:var(--good)">✓ Strength</span><span>Otis put his beach day in the right order and used "first" and "then" to guide the reader.</span></div>
             <div class="r"><span class="k" style="color:var(--accent)">→ Next time</span><span>Add a closing sentence about the best bit · stretch a couple of sentences with "because".</span></div>
           </div>
-          <div class="note" style="margin-top:14px">This becomes part of Leo's record and nudges "write a recount" forward on his coverage map.</div>
+          <div class="note" style="margin-top:14px">This becomes part of Otis's record and nudges "write a recount" forward on his coverage map.</div>
         </div>
       </div>
     </section>
 
     <!-- YEAR 9 CURRICULUM LESSON -->
     <section class="apage hide" data-ap="y9">
-      <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Year 9 · History · for Sam</span><h1>Why did war break out in 1914?</h1><p>Causes of the First World War · ~60 min · a full curriculum lesson, themed for Sam</p></div>
+      <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Year 8 · History · for Nell</span><h1>Why did war break out in 1914?</h1><p>Causes of the First World War · ~60 min · a full curriculum lesson, themed for Nell</p></div>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost">Print</button><button class="btn btn-primary">Mark as done ✓</button></div></div>
       <div class="nc-banner" style="max-width:none"><b style="font-family:var(--display)">National Curriculum link:</b> KS3 History - <i>"the First World War and the Second World War"</i> (challenges for Britain, Europe and the wider world, 1901–present). Historical concept: <b>cause &amp; consequence</b>. <span class="muted">(2014 programmes of study - the current statutory curriculum.)</span></div>
       <div class="tabs"><button class="on" onclick="sesTab(this,0)">Lesson plan</button><button onclick="sesTab(this,1)">Slides</button><button onclick="sesTab(this,2)">Rubric</button></div>
@@ -652,110 +652,110 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
           <div class="sstep"><div class="se">Show him how</div><h4>Model the long-term causes - MAIN</h4><p>Militarism, Alliances, Imperialism, Nationalism. Build them on the Spokes Frame as the pressures that were already building before 1914.</p></div>
           <div class="sstep"><div class="se">Do it together</div><h4>Connect the spark to the system</h4><p>Use "so that…" chains: the alliance system meant a local crisis pulled in the great powers, so that within weeks six empires were at war.</p></div>
           <div class="sstep act"><div class="se">Quick check · hinge</div><h4>Catch the misconception</h4><p>"Which BEST explains why one assassination became a world war?" - A) it was simply a tragic murder · <b>B) the alliance system dragged the great powers in</b> · C) Germany alone wanted war · D) it was inevitable. Many choosing A or C → re-model the alliance web.</p></div>
-          <div class="sstep act"><div class="se">His turn</div><h4>Build an argument</h4><p>Sam writes a paragraph prioritising the most significant cause and justifying it - colour-coded support, from sentence stems to a counter-argument challenge.</p></div>
+          <div class="sstep act"><div class="se">His turn</div><h4>Build an argument</h4><p>Nell writes a paragraph prioritising the most significant cause and justifying it - colour-coded support, from sentence stems to a counter-argument challenge.</p></div>
           <div class="sstep"><div class="se">Last thing</div><h4>Rank &amp; justify</h4><p>Exit task: rank MAIN + the trigger, and finish - "The most significant cause was… because…". A GCSE-style judgement in miniature.</p></div>
         </div>
         <div>
           <div class="aside"><h4>◷ Frame · Spokes <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">blank - model it</span></h4>
             <div style="background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:12px;text-align:center">
               <svg viewBox="0 0 220 130" width="100%" style="max-width:240px">
-                <ellipse cx="110" cy="65" rx="38" ry="25" fill="#fff" stroke="#3A2E26" stroke-width="2"/>
-                <text x="110" y="69" text-anchor="middle" font-family="Quicksand" font-size="10" fill="#6F6155">Causes of WW1</text>
-                <g stroke="#cdbfa8" stroke-width="1.5"><line x1="78" y1="50" x2="42" y2="28"/><line x1="142" y1="50" x2="178" y2="28"/><line x1="78" y1="80" x2="42" y2="102"/><line x1="142" y1="80" x2="178" y2="102"/></g>
-                <g fill="#fff" stroke="#cdbfa8" stroke-width="1.5"><ellipse cx="40" cy="24" rx="30" ry="15"/><ellipse cx="180" cy="24" rx="30" ry="15"/><ellipse cx="40" cy="106" rx="30" ry="15"/><ellipse cx="180" cy="106" rx="30" ry="15"/></g>
-                <g font-family="Quicksand" font-size="9" fill="#6F6155" text-anchor="middle"><text x="40" y="27">Militarism</text><text x="180" y="27">Alliances</text><text x="40" y="109">Imperialism</text><text x="180" y="109">Nationalism</text></g>
+                <ellipse cx="110" cy="65" rx="38" ry="25" fill="#fff" stroke="#12303F" stroke-width="2"/>
+                <text x="110" y="69" text-anchor="middle" font-family="Schibsted Grotesk" font-size="10" fill="#5B7A90">Causes of WW1</text>
+                <g stroke="#B9CCD8" stroke-width="1.5"><line x1="78" y1="50" x2="42" y2="28"/><line x1="142" y1="50" x2="178" y2="28"/><line x1="78" y1="80" x2="42" y2="102"/><line x1="142" y1="80" x2="178" y2="102"/></g>
+                <g fill="#fff" stroke="#B9CCD8" stroke-width="1.5"><ellipse cx="40" cy="24" rx="30" ry="15"/><ellipse cx="180" cy="24" rx="30" ry="15"/><ellipse cx="40" cy="106" rx="30" ry="15"/><ellipse cx="180" cy="106" rx="30" ry="15"/></g>
+                <g font-family="Schibsted Grotesk" font-size="9" fill="#5B7A90" text-anchor="middle"><text x="40" y="27">Militarism</text><text x="180" y="27">Alliances</text><text x="40" y="109">Imperialism</text><text x="180" y="109">Nationalism</text></g>
               </svg>
-              <div class="muted" style="font-size:12px;margin-top:4px">Sam fills the branches with you</div>
+              <div class="muted" style="font-size:12px;margin-top:4px">Nell fills the branches with you</div>
             </div></div>
-          <div class="aside"><h4>📖 Sam's reading <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">Y9 · interest-themed</span></h4>
+          <div class="aside"><h4>📖 Nell's reading <span class="muted" style="font-weight:400;font-size:11px;margin-left:auto">Y9 · interest-themed</span></h4>
             <div class="readtext">Picture 1914 Europe as a strategy board where every power has locked into a web of treaties. Pull one thread - a shot in Sarajevo - and the whole board reacts: Austria moves, Russia counters, Germany commits, and within weeks the alliances drag six empires into a war almost no one chose.</div>
-            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Pitched to Sam's reading level and interest (strategy games). Private use; shared exports use neutral framing.</p></div>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Pitched to Nell's reading level and interest (strategy games). Private use; shared exports use neutral framing.</p></div>
           <div class="aside"><h4>◈ Differentiation key <span class="muted" style="font-weight:400;font-size:11px;margin-left:4px">teacher-only</span></h4>
             <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-support)"></span> Support - sentence stems</div>
             <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-core)"></span> Core - the paragraph</div>
             <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-secure)"></span> Secure - less scaffold</div>
             <div class="diff" style="display:flex;align-items:center;gap:9px;font-size:13px;padding:4px 0"><span style="width:14px;height:14px;border-radius:4px;background:var(--diff-stretch)"></span> Stretch - counter-argument</div></div>
           <div class="aside"><h4>◫ Covers</h4>
-            <span class="obj" style="font-size:12px;color:#15706c;background:var(--teal-soft);border-radius:8px;padding:5px 10px;display:inline-block">NC · KS3 History - the First World War</span>
-            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Marking this done logs it to Sam's coverage map.</p></div>
+            <span class="obj" style="font-size:12px;color:#1F5478;background:var(--teal-soft);border-radius:8px;padding:5px 10px;display:inline-block">NC · KS3 History - the First World War</span>
+            <p class="muted" style="font-size:11.5px;margin:9px 0 0">Marking this done logs it to Nell's coverage map.</p></div>
         </div>
       </div>
 </div>
       <div class="ltabp hide" data-lt="1">
-        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>June 1914 - the spark</h4></div></div><div class="sld"><div class="h" style="background:#2f9b96">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>MAIN: the long-term causes</h4></div></div><div class="sld"><div class="h" style="background:#3aa7a1">Build together</div><div class="c"><div class="n">Slide 3</div><h4>From spark to system</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Why did it become a world war?</h4></div></div><div class="sld"><div class="h" style="background:#cf6d3d">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Which cause mattered most?</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Rank & justify</h4></div></div></div>
+        <div class="sldgrid"><div class="sld"><div class="h" style="background:var(--teal)">First thing</div><div class="c"><div class="n">Slide 1</div><h4>June 1914 - the spark</h4></div></div><div class="sld"><div class="h" style="background:#3A7DA8">Show them how</div><div class="c"><div class="n">Slide 2</div><h4>MAIN: the long-term causes</h4></div></div><div class="sld"><div class="h" style="background:#4A8CB5">Build together</div><div class="c"><div class="n">Slide 3</div><h4>From spark to system</h4></div></div><div class="sld"><div class="h" style="background:var(--accent)">Quick check</div><div class="c"><div class="n">Slide 4</div><h4>Why did it become a world war?</h4></div></div><div class="sld"><div class="h" style="background:#14A48C">Their turn</div><div class="c"><div class="n">Slide 5</div><h4>Which cause mattered most?</h4></div></div><div class="sld"><div class="h" style="background:var(--ink)">Last thing</div><div class="c"><div class="n">Slide 6</div><h4>Rank & justify</h4></div></div></div>
         <p class="muted" style="margin-top:16px;font-size:13.5px">A projector-ready deck on the same six-part spine. The Spokes Frame slide builds live; the source/quote slides can carry a confirmed video. Present mode: full-screen, arrow keys, teacher-prompts toggle.</p>
       </div>
       <div class="ltabp hide" data-lt="2">
         <div class="card" style="max-width:720px">
           <h3 style="margin:0 0 4px">Rubric - cause &amp; consequence</h3>
-          <p class="muted" style="font-size:13.5px;margin:0 0 16px">Tap a level for each criterion; the feedback writes itself and logs to Sam's coverage map.</p>
+          <p class="muted" style="font-size:13.5px;margin:0 0 16px">Tap a level for each criterion; the feedback writes itself and logs to Nell's coverage map.</p>
           <div class="set-row" style="border-top:none;padding-top:0"><div class="l"><b>Identifies the causes (MAIN + trigger)</b></div><div class="seg"><button>Emerging</button><button>Developing</button><button class="on" style="border-color:var(--good);background:var(--good)">Secure</button><button>Greater depth</button></div></div>
           <div class="set-row"><div class="l"><b>Explains how the causes led to war</b></div><div class="seg"><button>Emerging</button><button class="on">Developing</button><button>Secure</button><button>Greater depth</button></div></div>
           <div class="set-row"><div class="l"><b>Prioritises &amp; justifies the key cause</b></div><div class="seg"><button>Emerging</button><button class="on">Developing</button><button>Secure</button><button>Greater depth</button></div></div>
           <div class="rubfb">
-            <div class="r"><span class="k" style="color:var(--good)">✓ Strength</span><span>Sam identified all four MAIN causes and linked the alliance system to how the war broke out.</span></div>
+            <div class="r"><span class="k" style="color:var(--good)">✓ Strength</span><span>Nell identified all four MAIN causes and linked the alliance system to how the war broke out.</span></div>
             <div class="r"><span class="k" style="color:var(--accent)">→ Next step</span><span>Push the judgement - weigh one cause directly against another and reach a supported conclusion (a GCSE "how far" skill).</span></div>
           </div>
-          <div class="note" style="margin-top:14px">Logs against KS3 History · the First World War on Sam's coverage map.</div>
+          <div class="note" style="margin-top:14px">Logs against KS3 History · the First World War on Nell's coverage map.</div>
         </div>
       </div>
     </section>
 
     <!-- REPORT DOCUMENT (LA / records) -->
     <section class="apage hide" data-ap="report-doc">
-      <div class="phead"><div><h1>Leo’s learning record</h1><p>Ready to print, save as PDF, or email to your local authority.</p></div>
+      <div class="phead"><div><h1>Otis’s learning record</h1><p>Ready to print, save as PDF, or email to your local authority.</p></div>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">← Options</button><button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button></div></div>
       <div class="paper">
         <div class="wm"><span class="dot"></span>SEQUENS HOME</div>
         <h1 class="dt">Home Education Learning Record</h1>
         <div class="meta">
-          <div><b>Child:</b> Leo Okonkwo</div><div><b>Age / stage:</b> 8 · working around Year 3 (England)</div>
+          <div><b>Child:</b> Otis Okonkwo</div><div><b>Age / stage:</b> 8 · working around Year 3 (England)</div>
           <div><b>Period:</b> September 2025 – June 2026</div><div><b>Prepared:</b> 16 June 2026, by Jordan Okonkwo</div>
           <div><b>Framework used:</b> England National Curriculum (2014)</div><div><b>Approach:</b> Structured &amp; experiential</div>
         </div>
-        <h3 class="sec">Our approach to Leo’s education</h3>
-        <p class="bd">Leo is educated at home through a blend of planned, structured lessons and interest-led, real-world learning. We use the England National Curriculum as a guide for coverage and progression, while allowing Leo’s curiosity to shape how and when topics are explored. Learning takes place through focused sessions, family trips and projects, daily reading, and everyday life - chosen to suit his age, ability and the way he learns best.</p>
+        <h3 class="sec">Our approach to Otis’s education</h3>
+        <p class="bd">Otis is educated at home through a blend of planned, structured lessons and interest-led, real-world learning. We use the England National Curriculum as a guide for coverage and progression, while allowing Otis’s curiosity to shape how and when topics are explored. Learning takes place through focused sessions, family trips and projects, daily reading, and everyday life - chosen to suit his age, ability and the way he learns best.</p>
         <h3 class="sec">Coverage this year</h3>
-        <p class="bd" style="margin-bottom:12px">Progress against the National Curriculum for Leo’s stage, drawn from both structured lessons and recorded real-world learning.</p>
+        <p class="bd" style="margin-bottom:12px">Progress against the National Curriculum for Otis’s stage, drawn from both structured lessons and recorded real-world learning.</p>
         <div class="cvbar"><span>English</span><span class="track"><i style="width:66%"></i></span><span class="v">66% secure</span></div>
         <div class="cvbar"><span>Mathematics</span><span class="track"><i style="width:71%"></i></span><span class="v">71% secure</span></div>
         <div class="cvbar"><span>Science</span><span class="track"><i style="width:58%"></i></span><span class="v">58% secure</span></div>
         <div class="cvbar"><span>Foundation subjects</span><span class="track"><i style="width:49%;background:var(--gold)"></i></span><span class="v">broad</span></div>
-        <h3 class="sec">What Leo has been learning</h3>
-        <p class="bd"><b>English.</b> Leo writes for different purposes - most recently a beach recount using time-order language - and reads fluently at an early-fluent level. He is building stamina in extended writing.</p>
+        <h3 class="sec">What Otis has been learning</h3>
+        <p class="bd"><b>English.</b> Otis writes for different purposes - most recently a beach recount using time-order language - and reads fluently at an early-fluent level. He is building stamina in extended writing.</p>
         <p class="bd"><b>Mathematics.</b> Number and place value, measurement (length, mass, time), and an introduction to equivalent fractions, much of it applied practically through measuring, cooking and telling the time.</p>
         <p class="bd"><b>Science.</b> Living things and their habitats (grouping and classification, explored at rock pools), the parts and life cycle of plants, and how we see light - hands-on and enquiry-led.</p>
         <p class="bd"><b>Foundation subjects.</b> History, geography, art and PSHE covered broadly through projects and trips - local history, coasts and the water cycle, and personal safety.</p>
         <h3 class="sec">Learning beyond the curriculum</h3>
-        <p class="bd">This year Leo completed 12 cross-curricular real-world projects, including a full day’s study at the beach, a nature classification walk, baking (following a method and measuring accurately), and a local museum visit. These develop curiosity, independence and the ability to apply learning in context - strengths of a home education.</p>
-        <h3 class="sec">How we record Leo’s learning</h3>
-        <p class="bd">We keep an ongoing portfolio: photographs of finished work, written pieces, and short voice recordings of Leo reading aloud and explaining his thinking. A representative sample is available on request.</p>
+        <p class="bd">This year Otis completed 12 cross-curricular real-world projects, including a full day’s study at the beach, a nature classification walk, baking (following a method and measuring accurately), and a local museum visit. These develop curiosity, independence and the ability to apply learning in context - strengths of a home education.</p>
+        <h3 class="sec">How we record Otis’s learning</h3>
+        <p class="bd">We keep an ongoing portfolio: photographs of finished work, written pieces, and short voice recordings of Otis reading aloud and explaining his thinking. A representative sample is available on request.</p>
         <h3 class="sec">Focus for the year ahead</h3>
         <ul class="fl"><li>Extend written pieces with more detail and a wider range of connectives.</li><li>Secure equivalent fractions and progress to comparing and ordering fractions.</li><li>Continue building scientific vocabulary through hands-on enquiry.</li></ul>
-        <p class="disc">This record was prepared by Leo’s parent to evidence his education. SEQUENS Home helps families organise and present their child’s learning; it does not determine what any local authority requires, which varies by area and circumstance, and it is not legal advice. Coverage percentages reflect learning logged by the family against their chosen framework (England National Curriculum, 2014) and are an aid to reflection, not a formal assessment.</p>
+        <p class="disc">This record was prepared by Otis’s parent to evidence his education. SEQUENS Home helps families organise and present their child’s learning; it does not determine what any local authority requires, which varies by area and circumstance, and it is not legal advice. Coverage percentages reflect learning logged by the family against their chosen framework (England National Curriculum, 2014) and are an aid to reflection, not a formal assessment.</p>
       </div>
     </section>
 
     <!-- END OF YEAR REPORT -->
     <section class="apage hide" data-ap="report-eoy">
-      <div class="phead"><div><h1>Leo’s year in review</h1><p>A warm summary of the whole year - to keep, to print, or to share.</p></div>
+      <div class="phead"><div><h1>Otis’s year in review</h1><p>A warm summary of the whole year - to keep, to print, or to share.</p></div>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="show('reports',document.querySelector('[data-s=reports]'))">← Options</button><button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button></div></div>
       <div class="paper">
         <div class="wm"><span class="dot"></span>SEQUENS HOME</div>
-        <h1 class="dt">Leo’s Year in Review</h1>
+        <h1 class="dt">Otis’s Year in Review</h1>
         <p class="bd" style="font-size:15px;color:var(--ink-soft);margin-top:2px">2025–2026 · a year of learning at home</p>
-        <p class="bd" style="margin-top:18px">What a year, Leo. You went from writing single sentences to filling a beach diary; from counting to sharing fractions; from naming animals to grouping them like a scientist. Here’s the whole of it in one place.</p>
+        <p class="bd" style="margin-top:18px">What a year, Otis. You went from writing single sentences to filling a beach diary; from counting to sharing fractions; from naming animals to grouping them like a scientist. Here’s the whole of it in one place.</p>
         <div class="stats"><div class="stat"><b>128</b><span>lessons &amp; sessions</span></div><div class="stat"><b>12</b><span>real-world projects</span></div><div class="stat"><b>24</b><span>books finished</span></div><div class="stat"><b>9</b><span>subjects explored</span></div></div>
-        <h3 class="sec">How Leo grew this year</h3>
+        <h3 class="sec">How Otis grew this year</h3>
         <div class="growrow"><b>English</b><span>From single sentences → a full recount with time-order language and growing stamina.</span></div>
         <div class="growrow"><b>Maths</b><span>From secure counting and measurement → understanding equivalent fractions.</span></div>
         <div class="growrow"><b>Science</b><span>From naming living things → grouping and classifying them with keys.</span></div>
         <div class="growrow"><b>Wider world</b><span>History, geography and art explored through trips, projects and a lot of curiosity.</span></div>
         <h3 class="sec">Proudest moments</h3>
         <div class="hilites">
-          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#cfe3df,#e7d3bf)">🏖</div><div class="cap"><b>A day at the beach</b>Six subjects in one brilliant day out.</div></div>
-          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#f4d59b,#f1b59a)">📖</div><div class="cap"><b>First chapter book</b>Read cover to cover, by himself.</div></div>
-          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#d8e7cf,#cfe3df)">🧁</div><div class="cap"><b>Baking week</b>Measured, mixed, nailed the maths.</div></div>
+          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#DFEDE9,#D2E2EA)">🏖</div><div class="cap"><b>A day at the beach</b>Six subjects in one brilliant day out.</div></div>
+          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#EBD9A8,#CFE7F0)">📖</div><div class="cap"><b>First chapter book</b>Read cover to cover, by himself.</div></div>
+          <div class="hil"><div class="ph" style="background:linear-gradient(135deg,#DDF0E6,#DFEDE9)">🧁</div><div class="cap"><b>Baking week</b>Measured, mixed, nailed the maths.</div></div>
         </div>
         <p class="bd" style="font-size:12px;color:var(--ink-soft);margin-top:8px">Add your own photos before printing - the spaces above are ready for them.</p>
         <h3 class="sec">Coverage this year</h3>
@@ -764,8 +764,8 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
         <div class="cvbar"><span>Science</span><span class="track"><i style="width:58%"></i></span><span class="v">58% secure</span></div>
         <div class="cvbar"><span>Foundation</span><span class="track"><i style="width:49%;background:var(--gold)"></i></span><span class="v">broad</span></div>
         <h3 class="sec">The year ahead</h3>
-        <p class="bd">Next year we’ll build longer pieces of writing, secure fractions and start comparing them, and keep following Leo’s questions wherever they lead. Onward.</p>
-        <p class="disc">A keepsake summary prepared by Leo’s family with SEQUENS Home. Coverage figures reflect learning logged against the family’s chosen framework (England National Curriculum, 2014) and are an aid to reflection, not a formal assessment. SEQUENS Home does not determine local-authority requirements, which vary; this is not legal advice.</p>
+        <p class="bd">Next year we’ll build longer pieces of writing, secure fractions and start comparing them, and keep following Otis’s questions wherever they lead. Onward.</p>
+        <p class="disc">A keepsake summary prepared by Otis’s family with SEQUENS Home. Coverage figures reflect learning logged against the family’s chosen framework (England National Curriculum, 2014) and are an aid to reflection, not a formal assessment. SEQUENS Home does not determine local-authority requirements, which vary; this is not legal advice.</p>
       </div>
     </section>
 
@@ -776,7 +776,7 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 
 var reportKind="la";function setReport(k){reportKind=k;}function openReport(){show(reportKind==="eoy"?"report-eoy":"report-doc",null);}
 function sesTab(btn,idx){var ap=btn.closest(".apage");ap.querySelectorAll(".tabs button").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");ap.querySelectorAll(".ltabp").forEach(function(p){p.classList.toggle("hide",+p.dataset.lt!==idx)});}
-function momentChild(c,btn){document.getElementById("m-leo").classList.toggle("hide",c!=="leo");document.getElementById("m-sam").classList.toggle("hide",c!=="sam");btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));btn.classList.add("on");}
+function momentChild(c,btn){document.getElementById("m-otis").classList.toggle("hide",c!=="otis");document.getElementById("m-nell").classList.toggle("hide",c!=="nell");btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));btn.classList.add("on");}
 function startOnboarding(){document.getElementById('site').classList.add('hide');document.querySelector('.top').classList.add('hide');document.getElementById('onb').classList.remove('hide');onbGo(0);window.scrollTo(0,0);}
 function onbGo(n){document.querySelectorAll('.onb-step').forEach(st=>st.classList.toggle('on',+st.dataset.step===n));document.querySelectorAll('.onb-dots i').forEach((d,i)=>d.classList.toggle('on',i<=n));}
 function onbPick(b){b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
@@ -810,5 +810,7 @@ document.addEventListener('click',e=>{
   const opp=e.target.closest('.opp'); if(opp&&!opp.querySelector('.chk')){const c=document.createElement('div');c.className='chk';c.textContent='✓';opp.appendChild(c);} else if(opp&&e.target.closest('.chk')){e.target.closest('.chk').remove();}
 });
 </script>
+
+<div style="background:#0A3D62;padding:.9rem 1.3rem;text-align:center;font-size:.78rem;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;"><a href="privacy.html" style="color:#9FB6C6;text-decoration:underline">Privacy and data</a></div>
 </body>
 </html>
