@@ -251,6 +251,26 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
     .onb-actions{flex-direction:column; align-items:stretch;}
     .onb-actions .btn{width:100%;}
   }
+
+.whobar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 4px;padding:10px 14px;background:var(--card2);border:1px solid var(--line);border-radius:12px}
+.whobar .wl{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft)}
+.whobtns{display:flex;gap:6px;flex-wrap:wrap}
+.whobtns button{font-family:var(--body);font-size:13px;font-weight:600;padding:5px 12px;border-radius:9px;border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);cursor:pointer}
+.whobtns button:hover{border-color:var(--accent);color:var(--accent)}
+.whobtns button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.whobar .wn{font-size:12.5px;color:var(--ink-soft);margin-left:auto}
+.kidexp{margin:12px 0 4px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px}
+.kidexp.hide{display:none}
+.kx-h{font-family:var(--display);font-weight:700;font-size:16px;color:var(--ink);margin-bottom:4px}
+.kx-l{font-size:13.5px;color:var(--ink-soft);margin:0 0 12px;line-height:1.6;max-width:70ch}
+.kx-rows{display:grid;gap:10px}
+.kxr{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.kxr .who{font-family:var(--display);font-weight:700;color:var(--accent);font-size:14px}
+.kxr .who small{display:block;font-family:var(--body);font-weight:400;color:var(--ink-soft);font-size:11.5px}
+.kxr .doing{display:block;font-size:14px;color:var(--ink);margin-bottom:5px}
+.kxr .look{display:block;font-size:12.5px;color:var(--ink-soft)}
+.kxr .look b{color:var(--ink)}
+@media (max-width:620px){.kxr{grid-template-columns:1fr;gap:4px}.whobar .wn{margin-left:0;width:100%}}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -587,6 +607,23 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
     <section class="apage hide" data-ap="session">
       <div class="phead"><div><span class="muted" style="font-family:var(--display);font-size:12px;letter-spacing:1px;text-transform:uppercase">Beach package · for Otis</span><h1>Beach diary</h1><p>Writing a recount · ~40 minutes · themed for Otis · logs to his coverage map</p></div>
         <div style="display:flex;gap:8px"><button class="btn btn-ghost">Print</button><button class="btn btn-primary">Mark as done ✓</button></div></div>
+      <div class="whobar">
+        <span class="wl">Who is doing this?</span>
+        <div class="whobtns">
+          <button class="on" onclick="whoSet(this,1)">Otis on his own</button>
+          <button onclick="whoSet(this,2)">Otis and Nell</button>
+          <button onclick="whoSet(this,3)">All three</button>
+        </div>
+        <span class="wn" id="whoNote">One activity. One set of expectations.</span>
+      </div>
+
+      <div class="kidexp hide" id="kidExp">
+        <div class="kx-h">The same activity, <span id="kxCount">two</span> expectations</div>
+        <p class="kx-l">Nobody is doing a different afternoon. They are all writing about the same beach. What changes is what you expect back, and no child is told which one is theirs.</p>
+        <div class="kx-rows" id="kxRows"></div>
+        <div class="note" style="margin-top:12px"><b>You run one activity, not three.</b> You are not managing three lessons at the kitchen table. You are running one afternoon, and SEQUENS holds the different expectations behind it so you do not have to.</div>
+      </div>
+
       <div class="tabs"><button class="on" onclick="sesTab(this,0)">Lesson plan</button><button onclick="sesTab(this,1)">Slides</button><button onclick="sesTab(this,2)">Rubric</button></div>
       <div class="ltabp" data-lt="0">
       <div class="lessonwrap">
@@ -775,6 +812,35 @@ label.fl{font-family:var(--display);font-weight:600;font-size:13px;display:block
 <script>
 
 var reportKind="la";function setReport(k){reportKind=k;}function openReport(){show(reportKind==="eoy"?"report-eoy":"report-doc",null);}
+
+var KIDEXP={
+ ivy:{n:"Ivy",a:"age 5",
+   doing:"Tells the day back out loud, in order. Three big moments, counted on fingers. No writing needed.",
+   look:"<b>Looking for:</b> the order holds without you prompting it, and she uses a time word of her own."},
+ otis:{n:"Otis",a:"age 8",
+   doing:"Writes the recount in order, four or five sentences, using time words to join them.",
+   look:"<b>Looking for:</b> the sequence is right, and at least two joins do real work rather than repeating one word."},
+ nell:{n:"Nell",a:"age 12",
+   doing:"Writes it with a reason in it, not only a sequence. Why the tide mattered, not just what happened next.",
+   look:"<b>Looking for:</b> a because rather than a then, and a detail she noticed rather than one she remembered."}
+};
+function whoSet(btn,n){
+  var bar=btn.parentNode;
+  var bs=bar.querySelectorAll("button");
+  for(var i=0;i<bs.length;i++){bs[i].classList.remove("on");}
+  btn.classList.add("on");
+  var box=document.getElementById("kidExp"), rows=document.getElementById("kxRows"),
+      note=document.getElementById("whoNote"), cnt=document.getElementById("kxCount");
+  if(!box)return;
+  if(n===1){ box.classList.add("hide"); note.textContent="One activity. One set of expectations."; return; }
+  var order=(n===2)?["otis","nell"]:["ivy","otis","nell"];
+  cnt.textContent=(n===2)?"two":"three";
+  note.textContent="One activity. "+(n===2?"Two":"Three")+" expectations, held behind it.";
+  rows.innerHTML=order.map(function(k){var d=KIDEXP[k];
+    return '<div class="kxr"><span class="who">'+d.n+'<small>'+d.a+'</small></span>'+
+           '<span><span class="doing">'+d.doing+'</span><span class="look">'+d.look+'</span></span></div>';}).join("");
+  box.classList.remove("hide");
+}
 function sesTab(btn,idx){var ap=btn.closest(".apage");ap.querySelectorAll(".tabs button").forEach(function(b){b.classList.remove("on")});btn.classList.add("on");ap.querySelectorAll(".ltabp").forEach(function(p){p.classList.toggle("hide",+p.dataset.lt!==idx)});}
 function momentChild(c,btn){document.getElementById("m-otis").classList.toggle("hide",c!=="otis");document.getElementById("m-nell").classList.toggle("hide",c!=="nell");btn.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("on"));btn.classList.add("on");}
 function startOnboarding(){document.getElementById('site').classList.add('hide');document.querySelector('.top').classList.add('hide');document.getElementById('onb').classList.remove('hide');onbGo(0);window.scrollTo(0,0);}
