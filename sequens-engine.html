@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SEQUENS · Lesson Engine</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>:root{--paper:#F2F7F9;--card:#FFFFFF;--card2:#EDF4F7;--ink:#12303F;--ink-soft:#5B7A90;--ink-faint:#8FA6B5;--line:#D7E4EA;--primary:#0A3D62;--primary-d:#072B46;--primary-l:#E1EBF2;--accent:#0A7A67;--accent-d:#0A6B5C;--accent-l:#DDF0EB;--teal:#2C6E9B;--teal-d:#1F5478;--teal-l:#EAF2F8;--good:#2E7D5B;--good-l:#E3F2EA;--clay:#C0453B;--serif:'Schibsted Grotesk',Arial,sans-serif;--body:'Lexend','Segoe UI',system-ui,sans-serif}
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SEQUENS · Lesson Engine</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>:root{--paper:#F2F7F9;--card:#FFFFFF;--card2:#EDF4F7;--ink:#12303F;--ink-soft:#54718A;--ink-faint:#8FA6B5;--line:#D7E4EA;--primary:#0A3D62;--primary-d:#072B46;--primary-l:#E1EBF2;--accent:#0A7A67;--accent-d:#0A6B5C;--accent-l:#DDF0EB;--teal:#2C6E9B;--teal-d:#1F5478;--teal-l:#EAF2F8;--good:#2E7D5B;--good-l:#E3F2EA;--clay:#C0453B;--serif:'Schibsted Grotesk',Arial,sans-serif;--body:'Lexend','Segoe UI',system-ui,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);background-image:radial-gradient(rgba(120,90,50,.045) .6px,transparent .6px);background-size:8px 8px;color:var(--ink);font-family:var(--body);line-height:1.55}
 .serif{font-family:var(--serif)}
@@ -111,15 +111,23 @@ textarea{min-height:64px;resize:vertical}
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0A3D62">
 <style>
-.sqnav{background:linear-gradient(90deg,#0A3D62,#0D2F4A);position:sticky;top:0;z-index:99999;}
-.sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
 .sqnav a{text-decoration:none;}
-.sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-weight:800;letter-spacing:.04em;color:#fff;font-size:.95rem;}
+.sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
 .sqnav-brand svg{height:16px;}
 .sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
 .sqnav-back:hover{color:#fff;}
 @media print{.sqnav{display:none;}}
 </style>
+<meta name="description" content="The SEQUENS lesson engine: one objective in, a validated plan, deck and worksheet out, with curriculum honesty enforced in code.">
+<link rel="canonical" href="https://sequens.education/sequens-engine.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SEQUENS · Lesson Engine">
+<meta property="og:description" content="The SEQUENS lesson engine: one objective in, a validated plan, deck and worksheet out, with curriculum honesty enforced in code.">
+<meta property="og:url" content="https://sequens.education/sequens-engine.html">
+<meta property="og:site_name" content="SEQUENS">
+<meta name="twitter:card" content="summary_large_image">
 </head><body>
 <div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="/">All of SEQUENS</a></div></div>
 <div id="builder"><div class="wrap">
@@ -188,15 +196,15 @@ textarea{min-height:64px;resize:vertical}
 <script>
 /* ============ SEQUENS ENGINE ============ */
 
-const SYSTEM_PROMPT = `You are the SEQUENS lesson engine — an expert instructional designer who turns ONE learning objective into ONE rigorously engineered lesson. Follow the SEQUENS method exactly.
+const SYSTEM_PROMPT = `You are the SEQUENS lesson engine - an expert instructional designer who turns ONE learning objective into ONE rigorously engineered lesson. Follow the SEQUENS method exactly.
 
 NON-NEGOTIABLE SPINE (every lesson, in this order):
-1 First thing (settling in) — retrieval or activation of prior knowledge.
-2 Show them how (showing how) — explicit teaching, a worked example, I-do.
-3 Build it together (asking well) — guided practice, we-do, probing questions.
-4 Quick check (checking in) — a misconception-led HINGE question.
-5 Their turn (on their own) — independent practice at a high success rate.
-6 Last thing (closing well) — an exit ticket that works as a DIAGNOSTIC.
+1 First thing (settling in) - retrieval or activation of prior knowledge.
+2 Show them how (showing how) - explicit teaching, a worked example, I-do.
+3 Build it together (asking well) - guided practice, we-do, probing questions.
+4 Quick check (checking in) - a misconception-led HINGE question.
+5 Their turn (on their own) - independent practice at a high success rate.
+6 Last thing (closing well) - an exit ticket that works as a DIAGNOSTIC.
 
 PEDAGOGY (apply rigorously):
 - Exactly one LO and three ascending, assessable steps to success.
@@ -205,18 +213,18 @@ PEDAGOGY (apply rigorously):
 - The exit ticket is a DIAGNOSTIC: its rows tell the teacher what each response means and what to do next.
 - Section times must sum to the lesson length. Respect the length: for short lessons (20-35 min) keep every section brief and trim optional elements (a video, a long map) rather than overloading - the six-part spine still applies, just compressed; for long lessons (70-80 min) deepen practice, add a second worked example or genuine extension rather than padding.
 
-DIFFERENTIATION — cater for all four bands by the given counts:
+DIFFERENTIATION - cater for all four bands by the given counts:
 - below: heaviest scaffolds (vocabulary support, sentence stems, often teacher-led, talk before writing).
 - working: starters + partial scaffolds + word bank.
 - at: the full core task in their own words.
-- above: genuine stretch/depth (a second example, a justified position) — never just "more".
+- above: genuine stretch/depth (a second example, a justified position) - never just "more".
 Keep every pupil engaged at every step (oracy routines; every-pupil-response at the hinge).
 
 VOICE & APPROACHES: write the scripted "say" lines in the requested teacher voice and apply the requested teaching approaches throughout. Age-appropriate for the year group. Be factually accurate.
-CURRICULUM: align the objective, key vocabulary and the three steps to success to the named framework and key stage. If it is the England National Curriculum or EYFS (public frameworks), align accurately to the relevant programme of study or Early Learning Goals — reference their structure faithfully but write in your own words, and tell the teacher to verify exact attainment-target wording. For any other or uploaded scheme, work from the objective exactly as given. Never reproduce proprietary scheme text.
-AGE-APPROPRIATENESS: match reading level, abstraction and task type to the key stage — EYFS/KS1 concrete, oral and playful with minimal text and very short scripted lines; KS2 building written independence; KS3 subject terminology and structured analysis; KS4 exam-style rigour. A five-year-old and a sixteen-year-old must never receive the same register.
-EYFS PROVISION: ONLY if the key stage is EYFS, return a single "provision" object that weaves the objective into the setting’s EXISTING areas. Practitioners already run continuous provision, so do NOT invent new stations, full setups, or a list of areas — give ONE light touch that lets today’s objective surface in an area they already have, and make it observation-led. Shape: {"area":"an existing area: water, sand, malleable/dough, construction, role-play, small world, mark-making, book corner, or outdoors","invitation":"one small thing to add or tweak in that area so the objective shows up in play — not a station to build","lookFor":"what to notice that shows a child working towards the objective","extend":"one in-the-moment question to stretch it"}. For every non-EYFS key stage set "provision": null.
-VIDEO: decide whether a short clip (under 5 minutes) would genuinely help this lesson. If yes, set "video":{"needed":true,"suggestion":"what the teacher should search for","why":"why it helps"} — NEVER a URL; the teacher previews and confirms. If not, set "video":{"needed":false}.
+CURRICULUM: align the objective, key vocabulary and the three steps to success to the named framework and key stage. If it is the England National Curriculum or EYFS (public frameworks), align accurately to the relevant programme of study or Early Learning Goals - reference their structure faithfully but write in your own words, and tell the teacher to verify exact attainment-target wording. For any other or uploaded scheme, work from the objective exactly as given. Never reproduce proprietary scheme text.
+AGE-APPROPRIATENESS: match reading level, abstraction and task type to the key stage - EYFS/KS1 concrete, oral and playful with minimal text and very short scripted lines; KS2 building written independence; KS3 subject terminology and structured analysis; KS4 exam-style rigour. A five-year-old and a sixteen-year-old must never receive the same register.
+EYFS PROVISION: ONLY if the key stage is EYFS, return a single "provision" object that weaves the objective into the setting’s EXISTING areas. Practitioners already run continuous provision, so do NOT invent new stations, full setups, or a list of areas - give ONE light touch that lets today’s objective surface in an area they already have, and make it observation-led. Shape: {"area":"an existing area: water, sand, malleable/dough, construction, role-play, small world, mark-making, book corner, or outdoors","invitation":"one small thing to add or tweak in that area so the objective shows up in play - not a station to build","lookFor":"what to notice that shows a child working towards the objective","extend":"one in-the-moment question to stretch it"}. For every non-EYFS key stage set "provision": null.
+VIDEO: decide whether a short clip (under 5 minutes) would genuinely help this lesson. If yes, set "video":{"needed":true,"suggestion":"what the teacher should search for","why":"why it helps"} - NEVER a URL; the teacher previews and confirms. If not, set "video":{"needed":false}.
 Give each vocabulary item an "icon" keyword from the list for dual-coding.
 PRE-PLANNED ACTIVITIES: if the teacher supplies their own activities, place each into the most fitting spine section and build the lesson around it (name it in that section's "do") rather than inventing a replacement.
 CONTEXT: weave in any context provided.
@@ -230,7 +238,7 @@ DUAL-CODING MAPS: attach a map to a section only where a visual genuinely helps.
 - compare: two things side by side (labels:[A, B])
 - timeline: a sequence (labels: 3–5 events in order)
 
-EVERY map label MUST be 1–2 words and 14 characters or fewer — never a phrase or sentence. Stay within the counts above.
+EVERY map label MUST be 1–2 words and 14 characters or fewer - never a phrase or sentence. Stay within the counts above.
 
 SAFETY: never include video URLs (a vetted slot is added by the app). Keep everything age-appropriate and accurate. If the objective is unsafe or not a teachable curriculum objective, return {"error":"..."} only.
 
@@ -264,7 +272,7 @@ Objective: ${inp.objective}
 Year group: ${inp.year}  (key stage: ${inp.keyStage})
 Subject: ${inp.subject}
 Lesson length: ${inp.length} minutes
-Class: ${inp.total} pupils — ${inp.below} below, ${inp.working} working towards, ${inp.at} at expectation, ${inp.above} above.
+Class: ${inp.total} pupils - ${inp.below} below, ${inp.working} working towards, ${inp.at} at expectation, ${inp.above} above.
 Teacher voice (blend these tones): ${inp.voice}
 Teaching approaches: ${inp.approaches}
 Align to curriculum: ${inp.curriculum}
@@ -425,7 +433,7 @@ function renderPlan(spec){
   if(spec.provision && spec.provision.invitation){
     const c=spec.provision;
     h+=`<section class="section"><div class="sec-head"><span class="num">✿</span><span class="sec-name">Provision <em>· EYFS</em></span></div>`;
-    h+=`<p style="font-size:15px;color:var(--ink-soft);margin-bottom:10px">One light way today’s objective shows up in the areas you already run — woven in, not a new station to set up.</p>`;
+    h+=`<p style="font-size:15px;color:var(--ink-soft);margin-bottom:10px">One light way today’s objective shows up in the areas you already run - woven in, not a new station to set up.</p>`;
     h+=`<div style="border:1.5px solid var(--line);border-left:5px solid var(--accent-d);border-radius:11px;padding:13px 16px;background:var(--card)">
       <div style="font-family:var(--serif);font-weight:600;color:var(--accent-d);font-size:16px">In the ${esc(c.area)} area</div>
       <div style="font-size:15px;margin-top:5px"><b>Invitation:</b> ${esc(c.invitation)}</div>
@@ -446,7 +454,7 @@ function renderRubric(spec){
   const fbrows=[1,2,3].map(n=>`<div class="fbrow"><div class="s"><b>${n}</b> · step ${n}</div><div class="ticks"><span class="tick">Emerging</span><span class="tick">Developing</span><span class="tick sec">Secure</span><span class="tick">Greater Depth</span></div></div>`).join("");
   const c=spec._bands||{};
   return `<div class="kicker">SEQUENS · quick feedback rubric</div>
-  <h1>${esc(m.subject||"")} — ${esc(m.topic||"")}</h1>
+  <h1>${esc(m.subject||"")} - ${esc(m.topic||"")}</h1>
   <div class="lo">${esc(spec.lo)}</div>
   <div class="meta">${esc(m.year||"")} · against the three steps to success · <b>Secure</b> = meeting the objective</div>
   <table><thead><tr><th class="crit">Step to success</th><th class="l1">Emerging<span class="band">below</span></th><th class="l2">Developing<span class="band">working towards</span></th><th class="l3">Secure<span class="band">at expectation</span></th><th class="l4">Greater Depth<span class="band">above</span></th></tr></thead><tbody>${rows}</tbody></table>
@@ -454,7 +462,7 @@ function renderRubric(spec){
   <div class="fb"><h2>Quick feedback</h2><div class="sub">Tick a level for each step, then one strength and one next step. Thirty seconds per pupil.</div>
   <div class="name"><span class="serif" style="font-weight:600">Pupil:</span><span class="ln"></span></div>${fbrows}
   <div class="lines"><div class="l"><span class="tag win">✓ Strength</span><span class="w"></span></div><div class="l"><span class="tag nxt">→ Next step</span><span class="w"></span></div></div>
-  <div class="snap">Class — plan for: ${esc(c.below||0)} emerging · ${esc(c.working||0)} developing · ${esc(c.at||0)} secure · ${esc(c.above||0)} greater depth.</div></div>`;
+  <div class="snap">Class - plan for: ${esc(c.below||0)} emerging · ${esc(c.working||0)} developing · ${esc(c.at||0)} secure · ${esc(c.above||0)} greater depth.</div></div>`;
 }
 
 /* ---------- sample lessons for "Try a sample" (EYFS / Y6 / Y9) ---------- */
@@ -484,7 +492,7 @@ const MOCK_EYFS={
     {emerging:"Counts to 3 with adult help.",developing:"Touches and counts to 5 with some slips.",secure:"Touches each object once and counts to 5 accurately.",greater:"Counts beyond 5 and finds one more / one less."},
     {emerging:"Says numbers but not the total.",developing:"Sometimes gives the last number as the total.",secure:"Gives the last number as \u2018how many altogether\u2019.",greater:"Explains that the last number tells the total."},
     {emerging:"Matches with help.",developing:"Matches some numerals to amounts.",secure:"Matches amounts 1\u20135 to the right numeral.",greater:"Matches and orders numerals to 10."}],
-  provision:{area:"malleable / dough",invitation:"add birthday-cake candles and a 1–5 numeral die — children make a dough cake and count on the right number of candles.",lookFor:"touches each candle once and says the last number as how many altogether.",extend:"‘can you put one more candle on? how many now?’"},
+  provision:{area:"malleable / dough",invitation:"add birthday-cake candles and a 1–5 numeral die - children make a dough cake and count on the right number of candles.",lookFor:"touches each candle once and says the last number as how many altogether.",extend:"‘can you put one more candle on? how many now?’"},
   video:{needed:false},
   _bands:{below:5,working:8,at:9,above:3}
 };
@@ -569,7 +577,17 @@ function decorate(spec,inp){
   if(inp){ spec.meta=spec.meta||{}; if(inp.year)spec.meta.year=inp.year; if(inp.subject)spec.meta.subject=inp.subject; }
   return spec;
 }
+
+function ensureDemoNote(){
+  if(document.getElementById('demoNote')) return;
+  var d=document.createElement('div');
+  d.id='demoNote'; d.style.cssText='display:none;margin:0 0 1rem;padding:.8rem 1rem;border-radius:12px;border:1px solid #E0C97F;background:#FBF6E9;color:#6B531A;font-size:.88rem;line-height:1.55';
+  d.innerHTML='<b>This is a stored example, not a live generation.</b> Live generation is not switched on in this public demonstration. What you are looking at is a real lesson that passed the SEQUENS validator, shown so you can see the shape and the depth of the output.';
+  var host=document.getElementById('outputs')||document.body;
+  host.insertBefore(d, host.firstChild);
+}
 function showOutputs(spec){
+  ensureDemoNote();
   document.getElementById('r-plan').innerHTML='<div class="doc">'+renderPlan(spec)+'</div>';
   document.getElementById('r-rubric').innerHTML='<div class="doc">'+renderRubric(spec)+'</div>';
   const dk=document.getElementById('r-deck'); dk.innerHTML=renderDeck(spec); dk.classList.add('shownotes'); window.__di=0;
@@ -597,9 +615,17 @@ async function doGenerate(){
     decorate(spec,inp);
     ld.style.display='none'; showOutputs(spec);
   }catch(e){
-    ld.style.display='none'; bd.style.display='block';
-    document.getElementById('err').style.display='block';
-    document.getElementById('errmsg').textContent=String(e.message||e);
+    /* Live generation needs a server-side key. Until that is wired, the demo
+       falls back to a real validated lesson rather than showing an error. */
+    var yr=(inp.year||"").toUpperCase();
+    var pick = /EYFS|RECEPTION|NURSERY/.test(yr) ? MOCK_EYFS
+             : /Y(7|8|9|10|11|12|13)|GCSE|KS3|KS4/.test(yr) ? MOCK_Y9
+             : MOCK_Y6;
+    var spec=decorate(JSON.parse(JSON.stringify(pick)), inp);
+    ld.style.display='none';
+    showOutputs(spec);
+    var note=document.getElementById('demoNote');
+    if(note){ note.style.display='block'; }
   }
 }
 function trySample(which){ const M={eyfs:MOCK_EYFS,y6:MOCK_Y6,y9:MOCK_Y9}; showOutputs(decorate(JSON.parse(JSON.stringify(M[which]||MOCK_Y6)),null)); }
@@ -749,4 +775,6 @@ function deckEmbed(){ const v=(document.getElementById('vidurl').value||'').trim
   if(!id){ er.textContent='Paste a valid YouTube link.'; return; } er.textContent=''; f.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0&modestbranding=1'; f.style.display='block'; }
 document.addEventListener('keydown',e=>{ const out=document.getElementById('output'), dk=document.getElementById('r-deck'); if(out&&out.style.display!=='none'&&dk&&dk.style.display!=='none'){ if(e.key==='ArrowRight')deckGo(1); if(e.key==='ArrowLeft')deckGo(-1); } });
 
-</script></body></html>
+</script>
+<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+</body></html>

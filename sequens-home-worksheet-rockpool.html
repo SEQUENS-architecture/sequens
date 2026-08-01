@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEQUENS Home - one afternoon at the rock pools</title>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0A7A67;--paper:#F2F7F9;
+--card:#FFF;--rule:#D7E4EA;--muted:#54718A;--dim:#566F82;--steel:#2C6E9B;--steel-soft:#EAF2F8;
+--gold:#B8912F;--gold-deep:#8A6A18;--green-soft:#EAF3EE;--success-deep:#0A6B5C;--sea:#356B79;--sea-soft:#E8F1F2;
+--font:'Lexend',sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
+*{box-sizing:border-box}
+html,body{overflow-x:clip;max-width:100%}
+body{margin:0;background:#8A97A3;font-family:var(--font);color:var(--ink);padding:1.6rem 1rem 4rem}
+.bar{max-width:860px;margin:0 auto 1.1rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.bar .t{color:#fff;font-family:var(--head);font-weight:700;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;margin-right:.3rem}
+.bar button{border:1.5px solid rgba(255,255,255,.42);background:rgba(255,255,255,.16);color:#fff;
+border-radius:9px;padding:.48rem .9rem;font-family:var(--font);font-weight:600;font-size:.86rem;cursor:pointer}
+.bar button.on{background:#fff;color:var(--navy);border-color:#fff}
+
+.sheet{max-width:860px;margin:0 auto;background:#fff;padding:2rem 2.2rem;box-shadow:0 8px 30px rgba(0,0,0,.22)}
+body.rs .sheet{background:#FDFBF6}
+body.rs .sheet,body.rs p,body.rs .row,body.rs .qs{letter-spacing:.055em;word-spacing:.17em;line-height:1.85}
+
+.head{display:flex;align-items:flex-start;gap:1rem;border-bottom:2px solid var(--navy);padding-bottom:.8rem;margin-bottom:1rem;flex-wrap:wrap}
+.head .mk{display:flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:800;color:var(--navy);font-size:1.05rem}
+.head .mk svg{height:17px}
+.head .nm{margin-left:auto;font-size:.83rem;color:var(--muted)}
+.head .nm span{display:inline-block;border-bottom:1.5px solid var(--rule);min-width:118px;margin-left:.4rem}
+
+.intro{background:var(--sea-soft);border-left:4px solid var(--sea);border-radius:0 9px 9px 0;padding:.75rem 1rem;margin-bottom:1.1rem;font-size:.95rem;color:#1F4A55}
+.intro b{color:var(--navy)}
+
+/* one block per curriculum thread */
+.thread{border:1.5px solid var(--rule);border-radius:12px;margin-bottom:.85rem;overflow:hidden}
+.th-h{background:var(--paper);padding:.6rem .95rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.th-h .s{font-family:var(--head);font-weight:800;font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;color:var(--sea)}
+.th-h .q{font-family:var(--head);font-weight:800;font-size:1rem;color:var(--navy)}
+.th-b{padding:.85rem .95rem}
+.qs{font-size:.9rem;color:var(--muted);margin:0 0 .6rem}
+.lines{border-bottom:1.5px solid var(--rule);height:1.8rem}
+body.rs .lines{height:2.2rem}
+.draw{border:1.5px dashed var(--rule);border-radius:9px;height:118px;background:#FCFDFE;margin-bottom:.5rem;
+display:flex;align-items:flex-start;justify-content:flex-end;padding:.4rem .6rem}
+body.rs .draw{height:140px}
+.draw span{font-size:.72rem;color:var(--dim);font-style:italic}
+.boxes{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.5rem}
+@media (max-width:540px){.boxes{grid-template-columns:1fr}}
+.bx{border:1.5px solid var(--rule);border-radius:9px;overflow:hidden}
+.bx .bh{background:var(--steel-soft);padding:.35rem .6rem;display:flex;gap:.4rem;align-items:center}
+.bx .bh .n{width:17px;height:17px;border-radius:50%;background:var(--sea);color:#fff;font-size:.62rem;
+font-weight:800;font-family:var(--head);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bx .bh input{flex:1;border:none;border-bottom:1px solid var(--rule);background:transparent;
+font-family:inherit;font-size:.78rem;color:var(--navy);padding:.06rem .15rem;min-width:0}
+.bx .bb{height:80px;background:repeating-linear-gradient(transparent,transparent 21px,var(--rule) 21px,var(--rule) 22px)}
+.tbl{width:100%;border-collapse:collapse;margin-bottom:.5rem}
+.tbl th{background:var(--steel-soft);font-family:var(--head);font-weight:700;font-size:.72rem;color:var(--navy);
+padding:.4rem .55rem;text-align:left;border:1px solid var(--rule)}
+.tbl td{border:1px solid var(--rule);height:1.9rem;padding:.25rem .5rem}
+body.rs .tbl td{height:2.3rem}
+.stem{background:var(--green-soft);border:1px solid #BEDFD0;border-radius:8px;padding:.5rem .75rem;
+font-size:.85rem;color:var(--success-deep);margin-bottom:.5rem}
+.stem b{display:block;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.18rem}
+.hint{font-size:.77rem;color:var(--dim);font-style:italic;margin-top:.3rem}
+
+.gf{background:#FBF6E9;border:2px solid var(--gold)}
+.gf .th-h{background:#F8EFD9;border-bottom-color:#E0C97F}
+.gf .th-h .s,.gf .th-h .q{color:var(--gold-deep)}
+
+.links{border-top:2px solid var(--navy);margin-top:1.2rem;padding-top:.8rem}
+.links .l{font-family:var(--head);font-weight:700;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem}
+.lk{font-size:.79rem;color:var(--muted);padding:.28rem 0;border-bottom:1px solid var(--rule);display:flex;gap:.6rem}
+.lk:last-child{border-bottom:none}
+.lk .sub{font-weight:700;color:var(--sea);min-width:62px;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em}
+.lk .en{color:var(--gold-deep);font-weight:600}
+
+.note{max-width:860px;margin:1.2rem auto 0;background:rgba(255,255,255,.15);border-radius:12px;
+padding:1.1rem 1.3rem;color:#fff;font-size:.89rem;line-height:1.6}
+.note b{color:#fff}
+.note p{margin:0 0 .7rem}.note p:last-child{margin:0}
+@media print{body{background:#fff;padding:0}.bar,.note{display:none}.sheet{box-shadow:none;max-width:100%;padding:1.3rem}}
+</style><link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A3D62">
+<style>
+.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
+.sqnav a{text-decoration:none;}
+.sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
+.sqnav-brand svg{height:16px;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back:hover{color:#fff;}
+@media print{.sqnav{display:none;}}
+</style>
+<meta name="description" content="One rockpooling afternoon, five threads, one sheet that serves a whole family without a label on it.">
+<link rel="canonical" href="https://sequens.education/sequens-home-worksheet-rockpool.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SEQUENS Home - one afternoon at the rock pools">
+<meta property="og:description" content="One rockpooling afternoon, five threads, one sheet that serves a whole family without a label on it.">
+<meta property="og:url" content="https://sequens.education/sequens-home-worksheet-rockpool.html">
+<meta property="og:site_name" content="SEQUENS">
+<meta name="twitter:card" content="summary_large_image">
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style></head><body>
+<h1 class="sr-only">One rockpooling afternoon: one sheet for the whole family</h1>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="sequens-home.html">Back to the moment engine</a></div></div>
+
+
+<div class="bar">
+  <span class="t">One afternoon</span>
+  <button onclick="rs(this)">Aa Reading support</button>
+  <button onclick="window.print()">Print</button>
+</div>
+
+<div class="sheet">
+  <div class="head">
+    <span class="mk"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg>An afternoon at the rock pools</span>
+    <span class="nm">Name<span></span> &nbsp; Date<span style="min-width:80px"></span></span>
+  </div>
+
+  <div class="intro">One afternoon, <b>five different things to think about</b>. Do them in any order. Draw, write, measure or tell somebody, whatever suits the question and suits you.</div>
+
+  <div class="thread">
+    <div class="th-h"><span class="s">Science</span><span class="q">What did you find, and what goes with what?</span></div>
+    <div class="th-b">
+      <p class="qs">Sort your finds into groups. Name each group yourself. Two good groups beat four muddled ones.</p>
+      <div class="boxes">
+        <div class="bx"><div class="bh"><span class="n">1</span><input placeholder="name this group"></div><div class="bb"></div></div>
+        <div class="bx"><div class="bh"><span class="n">2</span><input placeholder="name this group"></div><div class="bb"></div></div>
+        <div class="bx"><div class="bh"><span class="n">3</span><input placeholder="name this group"></div><div class="bb"></div></div>
+        <div class="bx"><div class="bh"><span class="n">4</span><input placeholder="name this group"></div><div class="bb"></div></div>
+      </div>
+      <div class="stem"><b>Then say why</b>They all go together because&hellip; &nbsp;&middot;&nbsp; Every one of them has&hellip; &nbsp;&middot;&nbsp; None of them&hellip;</div>
+      <div class="lines"></div><div class="lines"></div>
+      <p class="hint">Find one more creature. Which group does it go in? If it does not fit, your rule needs one more question in it.</p>
+    </div>
+  </div>
+
+  <div class="thread">
+    <div class="th-h"><span class="s">Maths</span><span class="q">How many, how big, how far?</span></div>
+    <div class="th-b">
+      <p class="qs">Count them, measure them, or compare them. Whichever you can do.</p>
+      <table class="tbl">
+        <tr><th style="width:34%">What</th><th style="width:22%">How many</th><th>How big, or how far</th></tr>
+        <tr><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td></tr>
+      </table>
+      <div class="stem"><b>Compare two of them</b>The biggest was&hellip; &nbsp;&middot;&nbsp; There were more&hellip; than&hellip; &nbsp;&middot;&nbsp; It moved &hellip; in &hellip; minutes</div>
+      <div class="lines"></div>
+    </div>
+  </div>
+
+  <div class="thread">
+    <div class="th-h"><span class="s">English</span><span class="q">Tell the afternoon back.</span></div>
+    <div class="th-b">
+      <p class="qs">What happened, in the order it happened. Say it out loud first if that helps. Somebody can write it for you.</p>
+      <div class="stem"><b>Words that hold it in order</b>First&hellip; &nbsp;&middot;&nbsp; Then&hellip; &nbsp;&middot;&nbsp; After that&hellip; &nbsp;&middot;&nbsp; In the end&hellip;</div>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div><div class="lines"></div>
+    </div>
+  </div>
+
+  <div class="thread">
+    <div class="th-h"><span class="s">Geography</span><span class="q">Why is this place like this?</span></div>
+    <div class="th-b">
+      <p class="qs">Draw the pool, or the beach, or the cliff. Label what you can. Then have a go at why.</p>
+      <div class="draw"><span>draw here</span></div>
+      <div class="stem"><b>Have a go at why</b>The pools are there because&hellip; &nbsp;&middot;&nbsp; When the tide goes out&hellip; &nbsp;&middot;&nbsp; The rock is that shape because&hellip;</div>
+      <div class="lines"></div><div class="lines"></div>
+    </div>
+  </div>
+
+  <div class="thread gf">
+    <div class="th-h"><span class="s">Going further</span><span class="q">Pick one creature. Why does it suit this pool?</span></div>
+    <div class="th-b">
+      <p class="qs">That shell, that claw, that colour. Why is it any use here? Use what you actually saw, not what you already knew.</p>
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div>
+    </div>
+  </div>
+
+  <div class="links">
+    <div class="l">What this afternoon covered</div>
+    <div class="lk"><span class="sub">Science</span><span>Grouping living things by observable features; using a classification key</span></div>
+    <div class="lk"><span class="sub">Maths</span><span>Counting, measuring and comparing length and quantity</span></div>
+    <div class="lk"><span class="sub">English</span><span>Composing and organising a recount in time order</span></div>
+    <div class="lk"><span class="sub">Geography</span><span>Physical processes at the coast <span class="en">- enrichment, not a set objective</span></span></div>
+    <div class="lk"><span class="sub">Science</span><span>How living things are suited to where they live</span></div>
+  </div>
+</div>
+
+<div class="note">
+  <p><b>One afternoon, five threads.</b> That is the promise on the front of SEQUENS and this is what it looks like on paper. A sheet that only did the sorting would have thrown away the maths, the writing and the geography that were all standing in the same rock pool.</p>
+  <p><b>Every child does every section.</b> There is no age on this sheet and no version of it. A five year old draws three shells, counts them, and tells you the pools fill up when the sea comes back. A twelve year old measures how far the tide moved in an hour, writes the recount with reasoning in it, and argues the adaptation. <b>Same five questions. Their own answer to each.</b></p>
+  <p><b>Every question is open at both ends.</b> "How many, how big, how far" works if you can count to five and it works if you can calculate a rate. That is what lets one sheet serve a whole family without labelling anybody.</p>
+  <p><b>And the coverage is honest.</b> The geography is marked as enrichment rather than a set objective, because it is, and it stays marked that way however good the afternoon was.</p>
+</div>
+
+<script>
+"use strict";
+function rs(btn){ var on=document.body.classList.toggle("rs"); btn.classList.toggle("on",on); }
+</script>
+<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+</body></html>

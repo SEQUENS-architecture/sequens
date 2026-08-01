@@ -12,7 +12,7 @@
   html,body{overflow-x:clip;max-width:100%;}
   :root{
     --bg:#08101B; --bg2:#0B1826;
-    --white:#F2F6FA; --grey:#9AACBC; --dim:#647A8C;
+    --white:#F2F6FA; --grey:#9AACBC; --dim:#566F82;
     --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16);
     --panel:rgba(255,255,255,.03);
     --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --accent-deep:#0A7A67; --navy:#0A3D62;
@@ -97,7 +97,7 @@
 
   /* depth strata - the white band */
   #depth{background:#F4F8FA;}
-  #depth .slabel{color:#5B7A90;}
+  #depth .slabel{color:#54718A;}
   #depth .r1 .slabel{color:var(--accent-deep);}
   #depth .onebar{box-shadow:0 0 12px rgba(20,168,140,.30);}
   #depth .r2 .bar{background:#8FB3CC;}
@@ -155,7 +155,7 @@
   @media (max-width:560px){.ci{width:40px;}.cb{padding-left:.2rem;}}
 .reliable{margin:1.1rem 0 0;font-weight:600;font-size:clamp(1.1rem,2.2vw,1.4rem);color:var(--white);}
   section.light{background:linear-gradient(180deg,#FFFFFF 0%,#EDF5F7 100%);color:#3D5A6E;}
-  .light h2.sec{color:var(--navy);} .light .pcap span{color:#5B7A90;}
+  .light h2.sec{color:var(--navy);} .light .pcap span{color:#54718A;}
   .light .pane{background:#fff;border:1px solid rgba(10,61,98,.16);margin-top:1.7rem;}
   .light .chrome{border-bottom:1px solid rgba(10,61,98,.12);} .light .chrome i{background:rgba(10,61,98,.18);}
   .light .ev-lead{color:#3D5A6E;}
@@ -167,7 +167,7 @@
   .light .does{border-left-color:rgba(12,143,121,.55);color:#3D5A6E;}
   .light .does b{color:var(--accent-deep);}
   .light .src{color:#7A93A6;} .light .honest b{color:var(--navy);}
-  .light .phases h3{color:var(--navy);} .light .phases p{color:#5B7A90;}
+  .light .phases h3{color:var(--navy);} .light .phases p{color:#54718A;}
   .light .pn{border-color:var(--accent-deep);color:var(--accent-deep);}
   .archlead{max-width:66ch;font-size:1.12rem;margin:0 0 1.2rem;} .archlead b{color:var(--navy);}
   .archgrid{display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;margin-top:1.4rem;}
@@ -178,7 +178,7 @@
   .dnum{font-weight:700;color:var(--accent-deep);font-size:.85rem;min-width:1.2rem;}
   .dname{color:var(--navy);font-weight:600;}
   .dcount{color:#7A93A6;font-size:.8rem;font-weight:600;margin-left:.35rem;}
-  .ddesc{display:block;color:#5B7A90;font-size:.95rem;line-height:1.45;}
+  .ddesc{display:block;color:#54718A;font-size:.95rem;line-height:1.45;}
   .wallp{max-width:60ch;font-size:1.14rem;color:var(--grey);margin:0;}
   .ctanote{margin:1rem 0 0;font-size:.92rem;color:var(--dim);}
   .coachdef{color:var(--grey);}
@@ -192,7 +192,7 @@
   .cico{width:46px;flex-shrink:0;}
   .light .cstep h3{font-family:var(--font);font-weight:600;color:var(--navy);font-size:1.02rem;margin:0 0 .2rem;letter-spacing:0;}
   .pn2{color:var(--accent-deep);font-weight:700;margin-right:.5rem;font-size:.85rem;}
-  .cstep p{margin:0;font-size:.95rem;color:#5B7A90;line-height:1.5;}
+  .cstep p{margin:0;font-size:.95rem;color:#54718A;line-height:1.5;}
 
   /* cta + footer */
   .cta h2{font-size:clamp(1.9rem,4.4vw,3rem);max-width:18ch;margin-bottom:.9rem;}
@@ -313,7 +313,7 @@
     <li><a href="#what" data-close>About</a></li>
     <li><a href="#architecture" data-close>For school leaders</a></li>
     <li><a href="#evidence" data-close>Evidence base</a></li>
-    <li><a href="/articles/" style="color:inherit;">Articles</a>&ensp;&middot;&ensp;<a href="privacy.html" target="_blank" rel="noopener">Legal &amp; privacy</a></li>
+    <li><a href="/articles/" style="color:inherit;">Articles</a>&ensp;&middot;&ensp;<a href="/privacy.html">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html">Cookies</a></li>
     <li><a href="#talk" data-close>Contact</a></li>
   </ul>
   <div class="d-sec">Preferences</div>
@@ -364,6 +364,9 @@
 <section id="evidence" class="light"><div class="wrap">
   <h2 class="sec">What the research is clear about.</h2>
   <p class="ev-lead">SEQUENS is designed and engineered on this research. Each finding below is built into the architecture.</p>
+  
+  <p class="reassure" style="margin-top:1rem;"><b>Who built this.</b> SEQUENS is built by one person: a qualified teacher and senior leader who started out designing learning resources for children with SEND in mainstream schools, ran an alternative provision for young people out of education, taught primary through to leading teaching and learning internationally, and returned to the UK as an instructional coaching lead. It is built alongside a teaching timetable, which is why it is designed around the week a teacher actually has rather than the one a planning template assumes.</p>
+  <p class="reassure" style="margin-top:1.1rem;"><b>SEQUENS suggests. A human confirms.</b> Every observation, every next move, every record is proposed and then agreed by the people involved. Nothing is generated, logged or acted on until somebody says so, and the reasoning is always shown so the decision is an informed one.</p>
   <details class="claim">
     <summary><span class="ci"><svg viewBox="0 0 150 110"><circle cx="55" cy="36" r="10" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M33 80 a22 18 0 0 1 44 0" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="95" cy="36" r="10" fill="none" stroke="#0A7A67" stroke-width="4"/><path d="M73 80 a22 18 0 0 1 44 0" fill="none" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Coaching is the professional development that actually works.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Across 60 causal studies, instructional coaching moved teaching practice by 0.49 standard deviations. That is a large effect in education research. The same meta-analysis found something else, and it is the reason SEQUENS exists: as coaching programmes scale up, their effects shrink to a fraction of what the small trials showed. Coaching works. Keeping it working across a whole staff is the unsolved problem.</p><div class="does">SEQUENS architecture is coaching, not courses: a coach, a real classroom, a fortnightly cycle.</div><span class="src">Kraft, Blazar &amp; Hogan (2018), Review of Educational Research 88(4), 60 causal studies · EEF effective-PD reviews</span></div>
@@ -387,6 +390,26 @@
   <details class="claim">
     <summary><span class="ci"><svg viewBox="0 0 150 110"><rect x="12" y="38" width="126" height="34" rx="17" fill="none" stroke="#0A7A67" stroke-width="3.5"/><g fill="#7FA0B5"><circle cx="30" cy="55" r="6"/><circle cx="52.5" cy="55" r="6"/><circle cx="75" cy="55" r="6"/><circle cx="97.5" cy="55" r="6"/><circle cx="120" cy="55" r="6"/></g></svg></span><span class="ct">Inclusion is a foundation, not a feature.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Every one of the 367 behaviours carries its own SEND and EAL guidance, a note inside each move about the learners most easily left behind.</p><div class="does">SEQUENS architecture is inclusive by design: reaching every child is the condition on all of it, not a feature beside it.</div><span class="src">SEND &amp; EAL guidance embedded across all 367 behaviours</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 55h50"/><path d="M68 55l46-19"/><path d="M68 55l46 19"/></g><circle cx="68" cy="55" r="7" fill="#0A7A67"/></svg></span><span class="ct">Teaching that responds in the moment beats deciding in advance.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Adapting to what a pupil actually does, during the lesson, achieves more than allocating tasks by group beforehand. A group decided in advance becomes a ceiling; a teacher reading the room does not.</p><div class="does">Every SEQUENS move is defined by what you would see and what you would do about it, so a coaching conversation is about responding rather than about planning harder. Support and challenge live inside the lesson, never in a separate plan.</div><span class="src">DfE ITT Core Content Framework, adaptive teaching &middot; Black &amp; Wiliam &middot; EEF feedback guidance</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><path d="M75 22 L108 55 L75 88 L42 55 Z" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linejoin="round"/><path d="M75 44v18" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="70" r="3.5" fill="#0A7A67"/></svg></span><span class="ct">Checking understanding beats assuming it.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>A question whose wrong answer tells you which misconception a pupil holds is worth more than any amount of reviewing at the end. Without one, a lesson is taught blind.</p><div class="does">The moves include a mid-lesson checkpoint, and a coaching cycle can take it as its single focus. What is coached is whether the teacher finds out in time, not whether the lesson looked good.</div><span class="src">Black &amp; Wiliam, formative assessment &middot; Wiliam, hinge-point questioning &middot; Nuthall</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="26" y="30" width="46" height="34" rx="4" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M36 42h26M36 52h16" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="104" cy="40" r="6" fill="#0A7A67"/><path d="M92 78a12 12 0 0124 0" fill="none" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Novices learn from worked examples and clear modelling.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Learners with little prior knowledge gain far more from a worked example with the thinking made audible than from being left to work it out. Guidance early, independence later.</p><div class="does">Modelling is one of the observable moves in the framework, sequenced early because it is the one that carries the most for the least experienced teachers and the least experienced pupils alike.</div><span class="src">Sweller &amp; Cooper, worked examples &middot; Kirschner, Sweller &amp; Clark &middot; Rosenshine</span></div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><circle cx="45" cy="55" r="22" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M45 40 V55 L57 63" fill="none" stroke="#0A7A67" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M85 55 h40 M112 42 l14 13 -14 13" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ct">Memory is strengthened by retrieval, not re-reading.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Recalling knowledge changes it. Retrieval practice produces more durable learning than reviewing the same material again, and spacing those retrievals multiplies the effect.</p><div class="does">Retrieval is an observable move in the framework, so it is coached as a practised habit rather than mentioned once in training and forgotten by half term.</div><span class="src">Roediger &amp; Karpicke &middot; Dunlosky et al. &middot; Cepeda et al., spacing</span></div>
   </details>
 </div></section>
 
@@ -417,8 +440,8 @@
       <path d="M268.4 124.4 A200 200 0 1 1 161.4 186.2" fill="none" stroke="#8FB3CC" stroke-width="2.5"/>
       <path d="M161.4 186.2 A200 200 0 0 1 268.4 124.4" fill="none" stroke="#0A7A67" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 9"/>
       <path d="M282.1 121.5 L265.9 132.1 L263 118.4 Z" fill="#0A7A67"/>
-      <text x="140" y="113" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="600" font-size="13" fill="#5B7A90">THE GATE</text>
-      <text x="140" y="132" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="600" font-size="13" fill="#5B7A90">THE NEXT MOVE BEGINS</text>
+      <text x="140" y="113" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="600" font-size="13" fill="#54718A">THE GATE</text>
+      <text x="140" y="132" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="600" font-size="13" fill="#54718A">THE NEXT MOVE BEGINS</text>
       <g font-family="Lexend,sans-serif" font-weight="700" font-size="12.5" text-anchor="middle">
         <circle cx="310" cy="120" r="15" fill="#F4F8FA" stroke="#0A7A67" stroke-width="2"/><text x="310" y="124.5" fill="#0A7A67">1</text>
         <circle cx="483" cy="220" r="15" fill="#F4F8FA" stroke="#0A7A67" stroke-width="2"/><text x="483" y="224.5" fill="#0A7A67">2</text>
@@ -427,7 +450,7 @@
         <circle cx="137" cy="420" r="15" fill="#F4F8FA" stroke="#0A7A67" stroke-width="2"/><text x="137" y="424.5" fill="#0A7A67">5</text>
         <circle cx="137" cy="220" r="15" fill="#F4F8FA" stroke="#0A7A67" stroke-width="2"/><text x="137" y="224.5" fill="#0A7A67">6</text>
       </g>
-      <g font-family="Lexend,sans-serif" font-weight="600" font-size="12" letter-spacing="2" fill="#5B7A90">
+      <g font-family="Lexend,sans-serif" font-weight="600" font-size="12" letter-spacing="2" fill="#54718A">
         <text x="310" y="88" text-anchor="middle">DIAGNOSE</text>
         <text x="508" y="224" text-anchor="start">SELECT</text>
         <text x="508" y="424" text-anchor="start">REHEARSE</text>

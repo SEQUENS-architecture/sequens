@@ -10,7 +10,7 @@
 <style>
   :root{
     --paper:#F2F7F9; --paper-2:#E9F1F5; --surface:#F8FBFC; --card:#FFFFFF;
-    --ink:#0A3D62; --ink-soft:#3D5A6E; --muted:#5B7A90;
+    --ink:#0A3D62; --ink-soft:#3D5A6E; --muted:#54718A;
     --terra:#0A7A67; --terra-deep:#0A7563; --terra-soft:#BFE5DC;
     --teal:#2C6E9B; --teal-soft:#D8E8F1; --teal-deep:#1F4F73;
     --gold:#B8912F; --gold-soft:#F3ECD2; --gold-deep:#7A6118;
@@ -209,6 +209,19 @@
   .capline{font-size:.82rem;color:var(--ink-soft);margin-top:.2rem;}
   .capline b{font-family:var(--display);color:var(--ink);}
   .capline .over{color:var(--terra-deep);font-weight:700;}
+
+  .newto{margin:.9rem 0 .2rem;border:1px solid var(--line);border-radius:11px;background:var(--paper);}
+  .newto summary{cursor:pointer;list-style:none;padding:.6rem .9rem;font-weight:700;font-size:.87rem;color:var(--accent-deep);}
+  .newto summary::-webkit-details-marker{display:none}
+  .newto[open] summary{border-bottom:1px solid var(--line);}
+  .ntb{padding:.7rem .95rem .9rem;}
+  .ntb p{font-size:.87rem;line-height:1.65;color:var(--ink-soft);margin:0 0 .6rem;max-width:72ch;}
+  .ntb p:last-child{margin:0}
+  .ntb b{color:var(--ink)}
+  .rs-toggle{margin-left:auto;font-family:inherit;font-size:.74rem;font-weight:600;border:1px solid var(--line);background:transparent;color:var(--ink-soft);border-radius:20px;padding:.32rem .8rem;cursor:pointer;}
+  .rs-toggle:hover{border-color:var(--accent-deep);color:var(--accent-deep);}
+  html.rs{font-size:112%}
+  html.rs body{line-height:1.85;letter-spacing:.012em}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -217,6 +230,14 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0A3D62">
+<meta name="description" content="A working demonstration of the SEQUENS coaching platform: the fortnightly move, the shared record, and the wall between coaching and appraisal.">
+<link rel="canonical" href="https://sequens.education/coaching-mockup.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SEQUENS - coaching">
+<meta property="og:description" content="A working demonstration of the SEQUENS coaching platform: the fortnightly move, the shared record, and the wall between coaching and appraisal.">
+<meta property="og:url" content="https://sequens.education/coaching-mockup.html">
+<meta property="og:site_name" content="SEQUENS">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -234,7 +255,7 @@
 <div id="app">
   <div class="topbar"><div class="topbar-in">
     <a class="brand" href="/"><svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg>SEQUENS</a>
-    <div class="role-seg" id="roleSeg"></div>
+    <div class="role-seg" id="roleSeg"><button class="rs-toggle" onclick="document.documentElement.classList.toggle('rs')" title="Larger, more spaced text">Aa&ensp;Reading support</button></div>
     <div class="who"><span id="whoName"></span><span class="logout" id="logout">Log out</span></div>
   </div></div>
   <div class="page" id="dash"></div>
@@ -322,7 +343,7 @@ function ticker(name, editable){
    TEACHER
    ============================================================ */
 function teacherView(){
-  // TODO: replace with real data — this teacher's own 360 answers + shared cycle record
+  // TODO: replace with real data - this teacher's own 360 answers + shared cycle record
   const scores = [3.1, 3.3, 2.4, 2.8];
   const focusIdx = scores.indexOf(Math.min(...scores));
   const focus = AREAS[focusIdx];
@@ -330,37 +351,37 @@ function teacherView(){
   const r = CYCLE[TEACHER_KEY];
   return `
   <div class="dash-top"><div><div class="mono">Teacher · your dashboard</div><h1>Good morning, Sara</h1></div><span class="role-pill">Teacher</span></div>
-  <div class="banner">You're two weeks in — we're keeping it light on purpose. <b>One small move at a time</b>, inside the time you already have.</div>
+  <div class="banner">You're two weeks in - we're keeping it light on purpose. <b>One small move at a time</b>, inside the time you already have.</div>
 
   <div class="panel"><h3>Your move this fortnight</h3>
-    <div class="sub">Agreed with your coach. This is the shared record — you both see exactly this.</div>
+    <div class="sub">Agreed with your coach. This is the shared record - you both see exactly this.</div>\n    <details class="newto"><summary>New to being coached? Read this first</summary><div class="ntb"><p><b>One move at a time is the whole method.</b> You are not being asked to change your teaching. You are practising one small, specific thing until it is automatic, and then moving on. If it feels too small to matter, it is the right size.</p><p><b>Nobody is judging you.</b> This record is shared with your coach and with nobody else. It never reaches appraisal, and that separation is deliberate, because a record you cannot be honest in is worth nothing to either of you.</p><p><b>What a look-in actually is.</b> Your coach watches for the one agreed move, for a few minutes, and nothing else. They are not forming a view of the lesson.</p><p><b>If the move did not work, say so.</b> That is the most useful thing you can write here. A move that did not land tells your coach more than one that did.</p></div></details>
     <div class="readrow"><div class="rk">The move</div><div class="rv">${r.move}</div></div>
     ${ticker(TEACHER_KEY, false)}
     <div class="readrow"><div class="rk">What you agreed</div><div class="rv">${r.agreed}</div></div>
     <div class="readrow"><div class="rk">Where it goes next</div><div class="rv">${r.next}</div></div>
     <div class="field"><label>Your commitment <span class="tag shared">Your coach sees this</span></label>
-      <textarea data-field="commitment" data-name="${TEACHER_KEY}" placeholder="In your own words — what you'll do.">${r.commitment}</textarea>
+      <textarea data-field="commitment" data-name="${TEACHER_KEY}" placeholder="In your own words - what you'll do.">${r.commitment}</textarea>
       <button class="btn logbtn" data-save="1">Save</button><span class="saved" data-saved>Saved</span></div>
-    <div class="note" style="margin-top:.9rem;">Your coach keeps private notes to plan your coaching. <b>Those stay between the two of you</b> — you never have to perform.</div>
+    <div class="note" style="margin-top:.9rem;">Your coach keeps private notes to plan your coaching. <b>Those stay between the two of you</b> - you never have to perform.</div>
   </div>
 
   <div class="grid2">
     <div>
       <div class="focus-card"><div class="mono">Your first focus</div>
         <h3>${focus.friendly}</h3>
-        <p>Where your picture is thinnest right now — a good place to start. For our classes, that often means the move that helps your EAL learners most.</p></div>
+        <p>Where your picture is thinnest right now - a good place to start. For our classes, that often means the move that helps your EAL learners most.</p></div>
       <div class="panel" style="margin-top:1.3rem;"><h3>Your picture</h3>
-        <div class="sub">Across the four classroom areas of the eight-domain architecture — a quiet snapshot, not a score.</div>
+        <div class="sub">Across the four classroom areas of the eight-domain architecture - a quiet snapshot, not a score.</div>
         <div class="bars2">${bars}</div></div>
     </div>
     <div>
       <div class="panel"><h3>Your rhythm</h3>
-        <div class="sub">Fortnightly, on the protected Monday window — ring-fenced and never moved.</div>
-        <div class="next-row"><span class="when">Next</span><div><b>${r.nextDate}</b> — a look-in on your move<br><span class="note">your coach decides the moment and length — often about five minutes</span></div></div>
+        <div class="sub">Fortnightly, on the protected Monday window - ring-fenced and never moved.</div>
+        <div class="next-row"><span class="when">Next</span><div><b>${r.nextDate}</b> - a look-in on your move<br><span class="note">your coach decides the moment and length - often about five minutes</span></div></div>
         <div class="next-row"><span class="when">Then</span><div>You and your coach agree the next small move</div></div>
-        <div class="next-row"><span class="when">Always</span><div>Private to you and your coach — <b>never appraisal</b></div></div></div>
+        <div class="next-row"><span class="when">Always</span><div>Private to you and your coach - <b>never appraisal</b></div></div></div>
       <div class="panel"><h3>Lesson builder <span class="freetag">Free</span></h3>
-        <div class="sub">Type an objective, get a full lesson — plan, slides and rubric. AI-assisted · you review before use.</div>
+        <div class="sub">Type an objective, get a full lesson - plan, slides and rubric. AI-assisted · you review before use.</div>
         <a class="btn" href="sequens-engine.html" target="_blank" rel="noopener">Build a lesson →</a></div>
     </div>
   </div>`;
@@ -399,14 +420,14 @@ function coachView(){
     <div class="st"><div class="v">3</div><div class="l">This Monday</div></div>
     <div class="st due"><div class="v">1</div><div class="l">Near embedded</div></div>
   </div>
-  <div class="banner">Look-ins run on the <b>protected Monday window</b>. The five-minute look-in is a tool, not a rule — <b>you decide the moment and the length</b> for each teacher. Log a rehearsal each time they practise the move.</div>
+  <div class="banner">Look-ins run on the <b>protected Monday window</b>. The five-minute look-in is a tool, not a rule - <b>you decide the moment and the length</b> for each teacher. Log a rehearsal each time they practise the move.</div>
 
-  <div class="panel"><h3>This Monday — your look-ins</h3>
+  <div class="panel"><h3>This Monday - your look-ins</h3>
     <div class="sub">Everything for a look-in is here: log the practice, keep a private note, agree the shared record. Prompts are there while you're new to coaching.</div>
     ${names.map(card).join("")}</div>
 
   <div class="panel"><h3>Where your six are, on average</h3>
-    <div class="sub">A quiet read for spotting a shared need — never passed upward as individuals.</div>
+    <div class="sub">A quiet read for spotting a shared need - never passed upward as individuals.</div>
     <div class="bars2">${AREAS.map((a,i)=>bar(a,cohort[i],true)).join("")}</div></div>`;
 }
 
@@ -414,18 +435,18 @@ function coachView(){
    LEAD COACH  (holds the coaching team)
    ============================================================ */
 function leadView(){
-  // TODO: replace with real data — the coaches this lead holds + their load & cadence
+  // TODO: replace with real data - the coaches this lead holds + their load & cadence
   const coaches = [
     { n:"Yusuf Demir",  teachers:6, held:11, due:12, note:"Steady cadence; calibration in line with the team.", status:"ok",      label:"On track" },
-    { n:"Tom Bright",   teachers:5, held:4,  due:5,  note:"New this term — using full guidance; paired with Yusuf. His sixth teacher joins next fortnight.", status:"support", label:"Needs support" },
-    { n:"Nadia Roshdy", teachers:6, held:9,  due:12, note:"Two look-ins slipped last fortnight — worth a quiet word.", status:"nudge", label:"Needs a nudge" }
+    { n:"Tom Bright",   teachers:5, held:4,  due:5,  note:"New this term - using full guidance; paired with Yusuf. His sixth teacher joins next fortnight.", status:"support", label:"Needs support" },
+    { n:"Nadia Roshdy", teachers:6, held:9,  due:12, note:"Two look-ins slipped last fortnight - worth a quiet word.", status:"nudge", label:"Needs a nudge" }
   ];
   const row = c=>`<div class="coachrow"><div class="av">${c.n[0]}</div>
     <div class="cinfo"><div class="cn">${c.n}</div>
       <div class="cmeta"><b>${c.teachers}</b> teachers · <b>${c.held}/${c.due}</b> look-ins held · ${c.note}</div></div>
     <span class="cstat ${c.status}">${c.label}</span></div>`;
 
-  // teacher → coach assignment — the lead coach owns this mapping
+  // teacher → coach assignment - the lead coach owns this mapping
   const counts = {"Yusuf Demir":3,"Tom Bright":4,"Nadia Roshdy":4}; // base load: teachers not shown in this demo list
   Object.values(ASSIGN).forEach(c=>{ if(counts[c]!==undefined) counts[c]++; });
   const capLine = COACHES.map(c=>`<b>${c.split(" ")[0]}</b> ${counts[c]}/6${counts[c]>6?' <span class="over">over cap</span>':''}`).join(" · ");
@@ -439,29 +460,29 @@ function leadView(){
     <div class="st"><div class="v">17<span style="font-size:1rem;color:var(--muted);"> / 18</span></div><div class="l">Teachers assigned</div></div>
     <div class="st due"><div class="v">1</div><div class="l">Coach needs support</div></div>
   </div>
-  <div class="banner">You assure the coaching itself — cadence, load, calibration. <b>You never see the content of a coach's conversations; the wall holds here too.</b></div>
+  <div class="banner">You assure the coaching itself - cadence, load, calibration. <b>You never see the content of a coach's conversations; the wall holds here too.</b></div>
 
   <div class="panel"><h3>Your coaching team</h3>
     <div class="sub">Load is capped at six teachers per coach, staggered across the fortnight so no one faces every observation in one week.</div>
     ${coaches.map(row).join("")}</div>
 
   <div class="panel"><h3>Assign teachers to coaches</h3>
-    <div class="sub">You own this mapping — capped at six per coach, staggered across the fortnight.</div>
+    <div class="sub">You own this mapping - capped at six per coach, staggered across the fortnight.</div>
     ${Object.keys(ASSIGN).map(assignRow).join("")}
     <div class="capline">Load: ${capLine} <span style="color:var(--muted);">· includes teachers not listed here</span></div></div>
 
   <div class="grid2">
     <div class="panel"><h3>Calibration</h3>
       <div class="sub">Keeping coaches judging the same thing the same way.</div>
-      <div class="next-row"><span class="when">Next</span><div><b>Mon 8 Sep</b> — team watches one clip together and aligns the read</div></div>
+      <div class="next-row"><span class="when">Next</span><div><b>Mon 8 Sep</b> - team watches one clip together and aligns the read</div></div>
       <div class="next-row"><span class="when">Now</span><div>Tom paired with Yusuf for his first two cycles</div></div>
-      <div class="next-row"><span class="when">Watch</span><div>Nadia's slipped cadence — protect her release time this fortnight</div></div></div>
+      <div class="next-row"><span class="when">Watch</span><div>Nadia's slipped cadence - protect her release time this fortnight</div></div></div>
 
     <div class="panel"><h3>Drift watch</h3>
       <div class="sub">Early signals that the model is bending under load.</div>
       <div class="crit"><span class="cdot g"></span><span class="ctext">Cycles completing on the Monday window</span><span class="cval">28/33</span></div>
       <div class="crit"><span class="cdot a"></span><span class="ctext">One coach's cadence slipping</span><span class="cval">Nadia</span></div>
-      <div class="crit"><span class="cdot g"></span><span class="ctext">Teacher-reported load — not rising</span><span class="cval">Steady</span></div></div>
+      <div class="crit"><span class="cdot g"></span><span class="ctext">Teacher-reported load - not rising</span><span class="cval">Steady</span></div></div>
   </div>`;
 }
 
@@ -469,28 +490,28 @@ function leadView(){
    SENIOR LEADER (SLT)
    ============================================================ */
 function sltView(){
-  // TODO: replace with real data — anonymised cohort aggregate + agreed success criteria
+  // TODO: replace with real data - anonymised cohort aggregate + agreed success criteria
   const cohort = [2.7,3.0,2.5,2.8];
   return `
   <div class="dash-top"><div><div class="mono">Senior leader · your dashboard</div><h1>Good morning, Dana</h1></div><span class="role-pill">Teaching &amp; learning</span></div>
 
   <div class="panel"><h3>Cohort picture</h3>
-    <div class="sub">Eighteen teachers, averaged and anonymous. You see movement — never an individual's coaching notes.</div>
+    <div class="sub">Eighteen teachers, averaged and anonymous. You see movement - never an individual's coaching notes.</div>
     <div class="bars2">${AREAS.map((a,i)=>bar(a,cohort[i],false)).join("")}</div></div>
 
   <div class="grid2">
-    <div class="panel"><h3>Is it working? — the agreed measures</h3>
+    <div class="panel"><h3>Is it working? - the agreed measures</h3>
       <div class="sub">Set with SLT before launch, so \u201Cthe pilot worked\u201D means something.</div>
       <div class="crit"><span class="cdot g"></span><span class="ctext">Fortnightly cycles completed <span class="note">(target ≥80%)</span></span><span class="cval">85%</span></div>
       <div class="crit"><span class="cdot g"></span><span class="ctext">Teacher-reported usefulness <span class="note">(target ≥4/5)</span></span><span class="cval">4.3</span></div>
       <div class="crit"><span class="cdot a"></span><span class="ctext">Observable movement on focus moves</span><span class="cval">Building</span></div>
-      <div class="crit"><span class="cdot g"></span><span class="ctext">Reported workload — no rise</span><span class="cval">Steady</span></div></div>
+      <div class="crit"><span class="cdot g"></span><span class="ctext">Reported workload - no rise</span><span class="cval">Steady</span></div></div>
 
     <div class="panel"><h3>The protected window</h3>
-      <div class="sub">The Monday coaching window is sacred — the pilot lives or dies here.</div>
+      <div class="sub">The Monday coaching window is sacred - the pilot lives or dies here.</div>
       <div class="crit"><span class="cdot g"></span><span class="ctext">Monday windows protected this term</span><span class="cval">6/6</span></div>
-      <div class="crit"><span class="cdot g"></span><span class="ctext">SLT modelling it — a leader is coached too</span><span class="cval">Yes</span></div>
-      <div class="note" style="margin-top:.7rem;">If a window is ever borrowed, it shows here first — so slippage is visible, not silent.</div></div>
+      <div class="crit"><span class="cdot g"></span><span class="ctext">SLT modelling it - a leader is coached too</span><span class="cval">Yes</span></div>
+      <div class="note" style="margin-top:.7rem;">If a window is ever borrowed, it shows here first - so slippage is visible, not silent.</div></div>
   </div>
 
   <div class="grid2">
@@ -499,35 +520,35 @@ function sltView(){
       <div class="next-row"><span class="when">52</span><div>look-ins held this term</div></div>
       <div class="next-row"><span class="when">3</span><div>coaches, led by one lead coach</div></div></div>
     <div class="focus-card"><div class="mono">The wall</div><h3>What you can't see</h3>
-      <p>Individual coaching conversations and notes are private to each teacher and their coach. This is by design — it's what makes coaching safe, and it's a wellbeing safeguard you can point to.</p></div>
+      <p>Individual coaching conversations and notes are private to each teacher and their coach. This is by design - it's what makes coaching safe, and it's a wellbeing safeguard you can point to.</p></div>
   </div>
 
-  <div class="panel"><h3>What you can show — governors &amp; inspection</h3>
+  <div class="panel"><h3>What you can show - governors &amp; inspection</h3>
     <div class="sub">A defensible account (BSO · Ofsted quality of education), without breaching the wall.</div>
-    <div class="maprow"><div class="mk">Movement</div><div class="mv">Cohort progress across the four classroom areas, term on term — evidenced, not asserted.</div></div>
+    <div class="maprow"><div class="mk">Movement</div><div class="mv">Cohort progress across the four classroom areas, term on term - evidenced, not asserted.</div></div>
     <div class="maprow"><div class="mk">Reach</div><div class="mv">Every teacher in sustained, fortnightly development inside protected time.</div></div>
-    <div class="maprow"><div class="mk">Integrity</div><div class="mv">Coaching separated from appraisal by design — a wellbeing and trust safeguard.</div></div>
+    <div class="maprow"><div class="mk">Integrity</div><div class="mv">Coaching separated from appraisal by design - a wellbeing and trust safeguard.</div></div>
     <div class="maprow"><div class="mk">Inclusion</div><div class="mv">EAL and SEND carried inside every coaching move, not bolted on.</div></div>
-    <div class="note" style="margin-top:.9rem;">We make no \u201CCPD-accredited\u201D or \u201Cinspection-ready\u201D claim until it's earned — records are kept accreditation-ready for when it is.</div></div>`;
+    <div class="note" style="margin-top:.9rem;">We make no \u201CCPD-accredited\u201D or \u201Cinspection-ready\u201D claim until it's earned - records are kept accreditation-ready for when it is.</div></div>`;
 }
 
 /* ============================================================
-   SCHOOL ADMIN — the school sets up its own people (they own the data)
-   TODO: replace with real data — writes to the school's private DB;
+   SCHOOL ADMIN - the school sets up its own people (they own the data)
+   TODO: replace with real data - writes to the school's private DB;
    invites send a real secure email; role changes hit the profiles table.
    ============================================================ */
 const PEOPLE = [
-  { name:"Dana Farouk",   email:"dana.farouk@elalsson.edu.eg",   role:"slt",        status:"active"  },
-  { name:"Heba Mansour",  email:"heba.mansour@elalsson.edu.eg",  role:"lead_coach", status:"active"  },
-  { name:"Yusuf Demir",   email:"yusuf.demir@elalsson.edu.eg",   role:"coach",      status:"active"  },
-  { name:"Nadia Roshdy",  email:"nadia.roshdy@elalsson.edu.eg",  role:"coach",      status:"active"  },
-  { name:"Tom Bright",    email:"tom.bright@elalsson.edu.eg",    role:"coach",      status:"invited" },
-  { name:"Sara Adel",     email:"sara.adel@elalsson.edu.eg",     role:"teacher",    status:"active"  },
-  { name:"Mostafa Said",  email:"mostafa.said@elalsson.edu.eg",  role:"teacher",    status:"active"  },
-  { name:"Lara Okonkwo",  email:"lara.okonkwo@elalsson.edu.eg",  role:"teacher",    status:"invited" },
-  { name:"Amira Hassan",  email:"amira.hassan@elalsson.edu.eg",  role:"teacher",    status:"invited" },
-  { name:"Karim Fouad",   email:"karim.fouad@elalsson.edu.eg",   role:"teacher",    status:"invited" },
-  { name:"Leila Saad",    email:"leila.saad@elalsson.edu.eg",    role:"teacher",    status:"invited" }
+  { name:"Dana Farouk",   email:"dana.farouk@school.com",   role:"slt",        status:"active"  },
+  { name:"Heba Mansour",  email:"heba.mansour@school.com",  role:"lead_coach", status:"active"  },
+  { name:"Yusuf Demir",   email:"yusuf.demir@school.com",   role:"coach",      status:"active"  },
+  { name:"Nadia Roshdy",  email:"nadia.roshdy@school.com",  role:"coach",      status:"active"  },
+  { name:"Tom Bright",    email:"tom.bright@school.com",    role:"coach",      status:"invited" },
+  { name:"Sara Adel",     email:"sara.adel@school.com",     role:"teacher",    status:"active"  },
+  { name:"Mostafa Said",  email:"mostafa.said@school.com",  role:"teacher",    status:"active"  },
+  { name:"Lara Okonkwo",  email:"lara.okonkwo@school.com",  role:"teacher",    status:"invited" },
+  { name:"Amira Hassan",  email:"amira.hassan@school.com",  role:"teacher",    status:"invited" },
+  { name:"Karim Fouad",   email:"karim.fouad@school.com",   role:"teacher",    status:"invited" },
+  { name:"Leila Saad",    email:"leila.saad@school.com",    role:"teacher",    status:"invited" }
 ];
 const COACHES = ["Yusuf Demir","Nadia Roshdy","Tom Bright"];
 const ASSIGN = { "Sara Adel":"Yusuf Demir","Mostafa Said":"Yusuf Demir","Amira Hassan":"Yusuf Demir",
@@ -544,23 +565,23 @@ function adminView(){
     </tr>`).join("");
   return `
   <div class="dash-top"><div><div class="mono">School admin · setup</div><h1>Good morning, James</h1></div><span class="role-pill">School admin</span></div>
-  <div class="banner">Schools set up and own their own people. You add staff, set a role, and send invites — <b>the data stays yours</b>. In the live product this writes to your school's private database and emails each person a secure sign-in link.</div>
+  <div class="banner">Schools set up and own their own people. You add staff, set a role, and send invites - <b>the data stays yours</b>. In the live product this writes to your school's private database and emails each person a secure sign-in link.</div>
 
   <div class="grid2">
     <div class="panel"><h3>Your school</h3>
-      <div class="field"><label>School name</label><input value="El Alsson British &amp; American International School"></div>
+      <div class="field"><label>School name</label><input value="Demo Primary School"></div>
       <div class="field"><label>Protected coaching window <span class="tag shared">sacred</span></label><input value="Monday afternoon"></div>
       <div class="field"><label>Timezone</label><input value="Africa/Cairo (Sun–Thu week)"></div>
     </div>
     <div class="panel"><h3>Add people quickly</h3>
-      <div class="sub">Paste from your staff list — one per line: <b>name, email, role</b>.</div>
-      <textarea class="csv" id="csv" placeholder="Sara Adel, sara.adel@elalsson.edu.eg, teacher&#10;Yusuf Demir, yusuf.demir@elalsson.edu.eg, coach"></textarea>
+      <div class="sub">Paste from your staff list - one per line: <b>name, email, role</b>.</div>
+      <textarea class="csv" id="csv" placeholder="Sara Adel, sara.adel@school.com, teacher&#10;Yusuf Demir, yusuf.demir@school.com, coach"></textarea>
       <div style="margin-top:.6rem;display:flex;gap:.5rem;"><button class="btn" data-import>Import rows</button><button class="btn ghost" data-sample>Load a sample</button></div>
     </div>
   </div>
 
   <div class="panel"><h3>Your people <span class="freetag">${PEOPLE.length}</span></h3>
-    <div class="sub">Set each person's role. The <b>lead coach</b> maps teachers to coaches — not you.</div>
+    <div class="sub">Set each person's role. The <b>lead coach</b> maps teachers to coaches - not you.</div>
     <table class="people"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead>
       <tbody>${rows}</tbody></table>
     <div style="margin-top:.9rem;"><button class="btn" data-invite-all>Send all pending invites</button><span class="saved" data-saved>Invites sent</span></div>
@@ -631,7 +652,7 @@ dash.addEventListener("click", e=>{
   }
   if(e.target.closest("[data-sample]")){
     const ta=document.getElementById("csv");
-    if(ta) ta.value="Nour Ismail, nour.ismail@elalsson.edu.eg, teacher\nOmar Farag, omar.farag@elalsson.edu.eg, teacher\nHala Adib, hala.adib@elalsson.edu.eg, coach";
+    if(ta) ta.value="Nour Ismail, nour.ismail@school.com, teacher\nOmar Farag, omar.farag@school.com, teacher\nHala Adib, hala.adib@school.com, coach";
     return;
   }
   const inv = e.target.closest("[data-invite]");
@@ -654,5 +675,7 @@ dash.addEventListener("change", e=>{
   if(asn){ ASSIGN[asn.dataset.assign] = e.target.value; rerender(); return; }
 });
 </script>
+
+<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
 </body>
 </html>
