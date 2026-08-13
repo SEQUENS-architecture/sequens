@@ -108,12 +108,15 @@ async function loadContextAndRoute(){
   if(error){ return renderShell('', `<div class="err">${esc(error.message)}</div>`); }
   if(!me){ return renderShell('', `<div class="card"><h3>Account not linked yet</h3><p class="muted">You're signed in, but there's no staff record tied to this login. Someone with admin access needs to add you in the people table.</p></div>`); }
   state.me = me;
-  const [{ data:people }, { data:areas }] = await Promise.all([
+  const [{ data:people }, { data:areas }, { data:moves }] = await Promise.all([
     sb.from('people').select('id,full_name,role'),
-    sb.from('areas').select('id,friendly,domain,position').order('position')
+    sb.from('areas').select('id,friendly,domain,position').order('position'),
+    sb.from('moves').select('id,area_id,position,statement').order('position')
   ]);
   (people||[]).forEach(p=> state.peopleById[p.id]=p);
   state.areas = areas||[]; (areas||[]).forEach(a=> state.areasById[a.id]=a);
+  state.movesById={}; state.movesByArea={};
+  (moves||[]).forEach(m=>{ state.movesById[m.id]=m; (state.movesByArea[m.area_id]=state.movesByArea[m.area_id]||[]).push(m); });
   route();
 }
 
@@ -245,7 +248,10 @@ function coachCard(p, c){
     `:`
       <div class="field"><label>Open a cycle: which area?</label>
         <select class="narea">${state.areas.map(a=>`<option value="${a.id}">${esc(a.friendly)}</option>`).join('')}</select></div>
-      <div class="field"><label>The move</label><input class="nmove" placeholder="The one thing to practise"></div>
+      <div class="field"><label>Which move?</label>
+        <select class="nmovesel"></select></div>
+      <div class="field nmoveother" style="display:none"><label>Write the move</label>
+        <input class="nmovetext" placeholder="The one precise adjustment"></div>
       <div class="msg"></div>
       <button class="btn small opencycle">Open cycle</button>
     `}
@@ -255,11 +261,23 @@ function wireCoachCard(p, c){
   const el=document.querySelector(`[data-pair="${p.id}"]`); if(!el) return;
   const msg=el.querySelector('.msg');
   if(!c){
+    const narea=el.querySelector('.narea'), msel=el.querySelector('.nmovesel'), other=el.querySelector('.nmoveother');
+    const fill=()=>{
+      const ms=state.movesByArea[narea.value]||[];
+      msel.innerHTML = ms.map(m=>`<option value="${m.id}">${esc(m.statement)}</option>`).join('')
+                     + '<option value="__other">Other (write your own)</option>';
+      other.style.display = msel.value==='__other' ? 'block':'none';
+    };
+    narea.onchange=fill;
+    msel.onchange=()=>{ other.style.display = msel.value==='__other' ? 'block':'none'; };
+    fill();
     el.querySelector('.opencycle').onclick=async(e)=>{
-      const area_id=el.querySelector('.narea').value, move_text=el.querySelector('.nmove').value.trim();
-      if(!move_text){ msg.innerHTML='<div class="err">Name the move first.</div>'; return; }
+      const area_id=narea.value; let move_id=null, move_text='';
+      if(msel.value==='__other'){ move_text=el.querySelector('.nmovetext').value.trim(); }
+      else { const m=state.movesById[msel.value]; if(m){ move_id=m.id; move_text=m.statement; } }
+      if(!move_text){ msg.innerHTML='<div class="err">Choose a move or write one.</div>'; return; }
       e.target.disabled=true;
-      const { error } = await sb.from('cycles').insert({ school_id:state.me.school_id, pairing_id:p.id, area_id, move_text });
+      const { error } = await sb.from('cycles').insert({ school_id:state.me.school_id, pairing_id:p.id, area_id, move_id, move_text });
       if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; }
       else renderCoach();
     };
