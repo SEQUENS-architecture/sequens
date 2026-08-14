@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F7F9; --surface:#F8FBFC; --card:#FFFFFF;
+  --ink:#12303f; --ink-soft:#54718A; --muted:#54718A;
+  --terra:#0A7A67; --terra-deep:#0A7563; --terra-soft:#D9F2EC;
+  --teal:#2C6E9B; --teal-soft:#EAF2F8; --teal-deep:#1F4F73;
+  --gold:#B8912F; --gold-soft:#F3ECD2; --gold-deep:#8A6A18;
+  --green:#3F8F6B; --green-soft:#EAF3EE; --green-deep:#2C6B4F;
+  --red:#C0453B; --red-soft:#F7E9E7; --rule:#D7E4EA; --rule-2:#C2D6DF;
+  --display:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
+  --body:'Lexend','Segoe UI',system-ui,sans-serif;
+  --shadow:0 2px 16px rgba(10,61,98,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);margin:0}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+.topbar{background:var(--card);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-txt{font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:.02em;color:var(--ink);line-height:1}
+.brand-txt small{display:block;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);font-weight:600;margin-top:2px}
+.logo{height:26px;width:26px;border-radius:6px;display:block;flex:none}
+.logo-lg{height:48px;width:48px;margin:0 auto 16px;border-radius:11px}
+.who{display:flex;align-items:center;gap:14px;font-size:.85rem;color:var(--ink-soft)}
+.who button{background:none;border:0;color:var(--muted);text-decoration:underline;font-family:var(--body);font-size:.82rem;cursor:pointer;padding:0}
+.who button:hover{color:var(--ink)}
+main{padding:26px 0 64px}
+.kicker{font-family:var(--display);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:5px}
+.page-h{font-family:var(--display);font-size:1.6rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.page-sub{color:var(--muted);font-size:.94rem;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:18px;box-shadow:var(--shadow);padding:20px;margin-bottom:14px}
+.card h3{font-size:1.08rem;color:var(--ink);font-weight:600}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.muted{color:var(--muted)} .small{font-size:.85rem}
+.tag{display:inline-block;font-family:var(--display);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:.28rem .62rem;border-radius:999px}
+.tag.area{background:var(--terra-soft);color:var(--terra-deep)}
+.tag.role{background:var(--teal-soft);color:var(--teal-deep)}
+.field{display:block;margin:12px 0}
+.field label{display:block;font-family:var(--display);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:6px}
+input,textarea,select{width:100%;font-family:var(--body);font-size:1rem;color:var(--ink);background:#fff;border:1px solid var(--rule);border-radius:11px;padding:11px 13px}
+textarea{min-height:80px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--terra);box-shadow:0 0 0 3px rgba(10,122,103,.13)}
+.btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-weight:600;font-size:.92rem;border:0;border-radius:11px;padding:.6rem 1.1rem;cursor:pointer;background:var(--terra);color:#fff;transition:background .15s}
+.btn:hover{background:var(--terra-deep)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--rule)}
+.btn.ghost:hover{background:var(--paper)}
+.btn.small{padding:.45rem .82rem;font-size:.82rem}
+.btn:disabled{opacity:.5;cursor:default}
+.reps{display:flex;gap:5px;align-items:center;margin-top:4px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--rule)}
+.dot.on{background:var(--terra)}
+.dash{border-top:1px solid var(--rule);margin:15px 0}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.pill{font-family:var(--display);border:1px solid var(--rule);border-radius:999px;padding:7px 14px;font-size:.83rem;cursor:pointer;background:#fff;color:var(--ink)}
+.pill.sel{background:var(--terra);color:#fff;border-color:var(--terra)}
+.wall-note{background:var(--gold-soft);border-left:4px solid var(--gold-deep);border-radius:0 11px 11px 0;padding:12px 15px;color:var(--gold-deep);font-size:.9rem;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);font-size:.9rem}
+th{font-family:var(--display);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper);font-weight:600}
+tr:last-child td{border-bottom:0}
+.center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.signin{background:var(--card);border:1px solid var(--rule);border-radius:22px;box-shadow:var(--shadow);width:100%;max-width:440px;padding:2.6rem 2.2rem;text-align:center}
+.signin .field{text-align:left}
+.err{background:var(--red-soft);color:var(--red);border-radius:10px;padding:9px 12px;font-size:.86rem;margin:10px 0}
+.ok{background:var(--green-soft);color:var(--green-deep);border-radius:10px;padding:9px 12px;font-size:.86rem;margin:10px 0}
+.empty{text-align:center;color:var(--muted);padding:34px 10px}
+</style>
+</head>
+<body>
+<div id="app"><div class="center muted">Loading...</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ===================== CONFIG (safe to be public) =====================
+const SUPABASE_URL = 'https://ezilsbplvmuomdrkzdsh.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_i4Mc6yA4b3a-e6TYRWd-xQ__7pA2A8x';
+// ======================================================================
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const app = document.getElementById('app');
+const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LOGO = `<svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="92" fill="#0A3D62"/><rect x="87.04" y="91.37" width="51.99" height="25.99" rx="13" fill="#2DE1C2"/><rect x="87.04" y="134.70" width="95.31" height="25.99" rx="13" fill="#2DE1C2"/><rect x="87.04" y="178.02" width="138.63" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="221.34" width="181.96" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="264.66" width="225.28" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="307.99" width="268.60" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="351.31" width="303.26" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="394.63" width="337.92" height="25.99" rx="13" fill="#DEE7EF"/></svg>`;
+const state = { me:null, peopleById:{}, areasById:{} };
+
+// ---- boot ----
+init();
+async function init(){
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session){ renderSignIn(); return; }
+  await loadContextAndRoute();
+}
+sb.auth.onAuthStateChange((_e,session)=>{ if(!session) renderSignIn(); });
+
+async function loadContextAndRoute(){
+  app.innerHTML = '<div class="center muted">Loading your coaching...</div>';
+  const { data:{ user } } = await sb.auth.getUser();
+  const { data:me, error } = await sb.from('people').select('*').eq('user_id', user.id).maybeSingle();
+  if(error){ return renderShell('', `<div class="err">${esc(error.message)}</div>`); }
+  if(!me){ return renderShell('', `<div class="card"><h3>Account not linked yet</h3><p class="muted">You're signed in, but there's no staff record tied to this login. Someone with admin access needs to add you in the people table.</p></div>`); }
+  state.me = me;
+  const [{ data:people }, { data:areas }, { data:moves }] = await Promise.all([
+    sb.from('people').select('id,full_name,role'),
+    sb.from('areas').select('id,friendly,domain,position').order('position'),
+    sb.from('moves').select('id,area_id,position,statement').order('position')
+  ]);
+  (people||[]).forEach(p=> state.peopleById[p.id]=p);
+  state.areas = areas||[]; (areas||[]).forEach(a=> state.areasById[a.id]=a);
+  state.movesById={}; state.movesByArea={};
+  (moves||[]).forEach(m=>{ state.movesById[m.id]=m; (state.movesByArea[m.area_id]=state.movesByArea[m.area_id]||[]).push(m); });
+  route();
+}
+
+function route(){
+  const r = state.me.role;
+  if(r==='teacher') return renderTeacher();
+  if(r==='coach') return renderCoach();
+  if(r==='lead_coach') return renderLead();
+  if(r==='slt'||r==='admin') return renderSLT();
+  renderShell('', `<div class="card">No screen for role "${esc(r)}" yet.</div>`);
+}
+
+// ---- shell ----
+function renderShell(inner){
+  const roleName = {teacher:'Teacher',coach:'Coach',lead_coach:'Lead coach',slt:'Senior leader',admin:'Admin'}[state.me?.role]||'';
+  app.innerHTML = `
+   <div class="topbar"><div class="wrap">
+     <div class="brand">${LOGO}<span class="brand-txt">SEQUENS<small>Coaching</small></span></div>
+     <div class="who">${state.me?`<span>${esc(state.me.full_name)} · ${roleName}</span><button id="out">Sign out</button>`:''}</div>
+   </div></div>
+   <main><div class="wrap">${inner}</div></main>`;
+  const out = document.getElementById('out');
+  if(out) out.onclick = async()=>{ await sb.auth.signOut(); };
+}
+
+function repsDots(reps,gate){
+  let d=''; for(let i=0;i<gate;i++) d+=`<span class="dot ${i<reps?'on':''}"></span>`;
+  return `<div class="reps">${d}<span class="small muted" style="margin-left:8px">${reps} of ${gate}</span></div>`;
+}
+const fmtDate = d => d ? new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : 'not set';
+
+// ===================== SIGN IN =====================
+function renderSignIn(){
+  state.me=null;
+  app.innerHTML = `
+   <div class="center"><div class="signin">
+     <div class="logo-lg">${LOGO}</div>
+     <div class="brand-txt" style="font-size:1.35rem">SEQUENS</div>
+     <div class="kicker" style="margin-top:2px">Coaching</div>
+     <h2 class="page-h" style="margin:8px 0 16px">Sign in</h2>
+     <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="you@school"></div>
+     <div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="Your password"></div>
+     <div id="msg"></div>
+     <button class="btn" id="go" style="width:100%;justify-content:center;margin-top:6px">Sign in</button>
+     <p class="small muted" style="margin-top:14px">Signing in is for schools and families already using SEQUENS.<br>Not set up yet? <a href="/demo/" style="color:var(--terra-deep)">See the demonstration</a>.</p>
+   </div></div>`;
+  const go=document.getElementById('go'), msg=document.getElementById('msg');
+  const submit=async()=>{
+    const email=document.getElementById('email').value.trim();
+    const password=document.getElementById('pw').value;
+    if(!email||!password){ msg.innerHTML='<div class="err">Enter your email and password.</div>'; return; }
+    go.disabled=true; go.textContent='Signing in...';
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; go.disabled=false; go.textContent='Sign in'; return; }
+    await loadContextAndRoute();
+  };
+  go.onclick=submit;
+  document.getElementById('pw').addEventListener('keydown',e=>{ if(e.key==='Enter') submit(); });
+}
+
+// ===================== TEACHER =====================
+async function renderTeacher(){
+  renderShell(`<div class="kicker">Your coaching</div><div class="page-h">This fortnight's focus</div><div class="page-sub">One move, practised until it sticks.</div><div id="body"><div class="muted">Loading...</div></div>`);
+  const { data:cycles, error } = await sb.from('cycles').select('*').is('closed_at',null).order('opened_at',{ascending:false});
+  const body=document.getElementById('body');
+  if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
+  const c = (cycles||[])[0];
+  if(!c){ body.innerHTML=`<div class="card"><div class="empty">No active focus yet.<br><span class="small">Your coach will open one with you.</span></div></div>`; return; }
+  const area = state.areasById[c.area_id];
+  body.innerHTML = `
+   <div class="card">
+     ${area?`<span class="tag area">${esc(area.friendly)}</span>`:''}
+     <h3 style="margin:10px 0 4px">${esc(c.move_text)}</h3>
+     ${moveDetail(state.movesById[c.move_id])}
+     ${c.agreed?`<p class="muted small" style="margin:2px 0 0">What we agreed: ${esc(c.agreed)}</p>`:''}
+     <div class="dash"></div>
+     <div class="field"><label>Your commitment (only you can edit this)</label>
+       <textarea id="commit" placeholder="What will you try before the next look-in?">${esc(c.commitment||'')}</textarea></div>
+     <div id="cmsg"></div>
+     <button class="btn small" id="savec">Save my commitment</button>
+     <div class="dash"></div>
+     <div class="small muted">Progress toward embedding</div>
+     ${repsDots(c.reps,c.gate)}
+     <p class="small muted" style="margin-top:12px">Next look-in: <strong>${fmtDate(c.next_lookin)}</strong></p>
+   </div>`;
+  document.getElementById('savec').onclick=async(e)=>{
+    e.target.disabled=true; e.target.textContent='Saving...';
+    const commitment=document.getElementById('commit').value;
+    const { error } = await sb.from('cycles').update({ commitment }).eq('id',c.id);
+    const m=document.getElementById('cmsg');
+    if(error){ m.innerHTML=`<div class="err">${esc(error.message)}</div>`; }
+    else { m.innerHTML='<div class="ok">Saved.</div>'; }
+    e.target.disabled=false; e.target.textContent='Save my commitment';
+  };
+}
+
+// ===================== COACH =====================
+function dpState(r,g){ return r>=g?'done': r>=Math.ceil(g/2)?'emb':'prac'; }
+function dpLabel(s){ return s==='done'?'Embedded': s==='emb'?'Embedding':'Practising'; }
+function seqMoves(areaId){ return (state.movesByArea[areaId]||[]).slice().sort((a,b)=>a.position-b.position); }
+function nextInArea(areaId,pos){ return seqMoves(areaId).find(m=>m.position>pos)||null; }
+function suggestNext(pairId,areaId){
+  const ms=seqMoves(areaId); if(!ms.length) return null;
+  const done=(state._coach.closed[pairId+'|'+areaId]||[]);
+  const donePos=new Set(done.map(c=>(state.movesById[c.move_id]||{}).position).filter(x=>x!=null));
+  return ms.find(m=>!donePos.has(m.position))||ms[ms.length-1];
+}
+function moveDetail(m){
+  if(!m) return '';
+  return `${m.do_this?`<p class="small" style="margin:6px 0 2px">${esc(m.do_this)}</p>`:''}${m.see_this?`<p class="small muted" style="margin:2px 0"><b>You'd see:</b> ${esc(m.see_this)}</p>`:''}`;
+}
+async function renderCoach(){
+  renderShell(`<div class="kicker">Your teachers</div><div class="page-h">Coaching</div><div class="page-sub">One move each, practised until it embeds.</div><div id="body"><div class="muted">Loading...</div></div>`);
+  const body=document.getElementById('body');
+  const { data:pairings, error } = await sb.from('pairings').select('*').is('ended_on',null);
+  if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
+  const mine=(pairings||[]).filter(p=>p.coach_id===state.me.id);
+  if(!mine.length){ body.innerHTML=`<div class="card"><div class="empty">No teachers paired to you yet.</div></div>`; return; }
+  const { data:cycles } = await sb.from('cycles').select('*');
+  (cycles||[]).sort((a,b)=> new Date(a.opened_at)-new Date(b.opened_at));
+  const live={}, closed={}, lastArea={};
+  (cycles||[]).forEach(c=>{ lastArea[c.pairing_id]=c.area_id;
+    if(!c.closed_at) live[c.pairing_id]=c; else { const k=c.pairing_id+'|'+c.area_id; (closed[k]=closed[k]||[]).push(c); } });
+  state._coach={live,closed,lastArea};
+  body.innerHTML = mine.map(coachCard).join('');
+  mine.forEach(wireCoachCard);
+}
+function coachCard(p){ const t=state.peopleById[p.teacher_id]||{}; const c=state._coach.live[p.id]; return c?activeCard(p,c,t):startCard(p,t); }
+function activeCard(p,c,t){
+  const area=state.areasById[c.area_id]||{}; const s=dpState(c.reps,c.gate);
+  const m=state.movesById[c.move_id]; const nm=m?nextInArea(c.area_id,m.position):null; const embedded=c.reps>=c.gate;
+  return `<div class="card" data-pair="${p.id}">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(t.full_name||'Teacher')}</h3><span class="tag area">${esc(area.friendly||'')}</span></div>
+    <p style="margin:10px 0 0"><strong>${esc(c.move_text)}</strong></p>${moveDetail(m)}
+    <div class="field"><label>Coach note (private, leaders cannot see this)</label><textarea class="cnote">${esc(c.coach_note||'')}</textarea></div>
+    <div class="msg"></div><div class="row"><button class="btn small ghost savenote">Save note</button></div>
+    <div class="dash"></div><div class="small muted">Deliberate practice · <b>${dpLabel(s)}</b></div>${repsDots(c.reps,c.gate)}
+    <div class="row" style="margin-top:12px">
+      ${!embedded?`<button class="btn small logrep">Log a rehearsal</button><button class="btn small ghost logbtn">Log a look-in</button>`:`<button class="btn small gatebtn">Embedded. Gate to next move</button>`}
+      <button class="btn small ghost wtbtn">Walkthrough</button>
+    </div>
+    ${nm?`<p class="small muted" style="margin-top:10px">Next in sequence: ${esc(nm.statement)}</p>`:''}
+    <div class="lookin" style="display:none"></div></div>`;
+}
+function startCard(p,t){
+  const areaId=state._coach.lastArea[p.id]||(state.areas[0]&&state.areas[0].id);
+  return `<div class="card" data-pair="${p.id}">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(t.full_name||'Teacher')}</h3><span class="tag role">no active move</span></div>
+    <div class="field"><label>Focus area</label><select class="narea">${state.areas.map(a=>`<option value="${a.id}"${a.id===areaId?' selected':''}>${esc(a.friendly)}</option>`).join('')}</select></div>
+    <div class="suggest"></div><div style="margin-top:12px"><button class="btn small ghost wtbtn">Walkthrough this teacher</button></div></div>`;
+}
+function renderSuggest(p){
+  const el=document.querySelector(`[data-pair="${p.id}"]`); if(!el) return;
+  const areaId=el.querySelector('.narea').value; const sug=suggestNext(p.id,areaId); const box=el.querySelector('.suggest');
+  if(!sug){ box.innerHTML='<p class="muted small">No moves in this area.</p>'; return; }
+  box.innerHTML=`<div style="background:var(--terra-soft);border-radius:12px;padding:12px 14px;margin-bottom:12px">
+      <div class="kicker" style="color:var(--terra-deep)">SEQUENS suggests</div>
+      <p style="margin:2px 0 0"><strong>${esc(sug.statement)}</strong></p>${moveDetail(sug)}</div>
+    <div class="row"><button class="btn small usesug">Start this move</button><button class="btn small ghost browse">Choose another</button></div>
+    <div class="browsebox" style="display:none"></div><div class="msg"></div>`;
+  el.querySelector('.usesug').onclick=()=>startCycle(p,areaId,sug);
+  el.querySelector('.browse').onclick=()=>{ const bb=el.querySelector('.browsebox'); const ms=seqMoves(areaId); bb.style.display='block';
+    bb.innerHTML=`<div class="field"><label>All moves in this area, in sequence</label><select class="msel">${ms.map(m=>`<option value="${m.id}">${esc(m.statement)}</option>`).join('')}</select></div><button class="btn small usepick">Start chosen move</button>`;
+    bb.querySelector('.usepick').onclick=()=> startCycle(p,areaId,state.movesById[bb.querySelector('.msel').value]); };
+}
+async function startCycle(p,areaId,m){
+  const { error } = await sb.from('cycles').insert({ school_id:state.me.school_id, pairing_id:p.id, area_id:areaId, move_id:m.id, move_text:m.statement });
+  const el=document.querySelector(`[data-pair="${p.id}"]`);
+  if(error){ if(el) el.querySelector('.msg').innerHTML=`<div class="err">${esc(error.message)}</div>`; } else renderCoach();
+}
+function wireCoachCard(p){
+  const el=document.querySelector(`[data-pair="${p.id}"]`); if(!el) return;
+  const wt=el.querySelector('.wtbtn'); if(wt) wt.onclick=()=>renderWalkthrough(p);
+  const c=state._coach.live[p.id];
+  if(!c){ el.querySelector('.narea').onchange=()=>renderSuggest(p); renderSuggest(p); return; }
+  const msg=el.querySelector('.msg');
+  el.querySelector('.savenote').onclick=async(e)=>{ e.target.disabled=true; e.target.textContent='Saving...';
+    const { error } = await sb.from('cycles').update({ coach_note:el.querySelector('.cnote').value }).eq('id',c.id);
+    msg.innerHTML = error?`<div class="err">${esc(error.message)}</div>`:'<div class="ok">Note saved.</div>'; e.target.disabled=false; e.target.textContent='Save note'; };
+  const rep=el.querySelector('.logrep'); if(rep) rep.onclick=async()=>{ const { error }=await sb.from('cycles').update({ reps:Math.min(c.reps+1,c.gate) }).eq('id',c.id); if(!error) renderCoach(); else msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; };
+  const gate=el.querySelector('.gatebtn'); if(gate) gate.onclick=async()=>{ const { error }=await sb.from('cycles').update({ closed_at:new Date().toISOString() }).eq('id',c.id); if(!error) renderCoach(); else msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; };
+  const log=el.querySelector('.logbtn'); const box=el.querySelector('.lookin');
+  if(log) log.onclick=()=>{ box.style.display='block';
+    box.innerHTML=`<div class="dash"></div><div class="field"><label>What did you see?</label><div class="pill-row"><span class="pill" data-o="embedded">Embedded</span><span class="pill" data-o="landing">Landing</span><span class="pill" data-o="not_yet">Not yet</span></div></div><div class="field"><label>Minutes</label><input class="lmin" type="number" value="10" min="1" max="60"></div><div class="field"><label>Note (optional)</label><textarea class="lnote"></textarea></div><div class="lmsg"></div><button class="btn small savelook" disabled>Save look-in</button>`;
+    let outcome=null; box.querySelectorAll('.pill').forEach(pill=> pill.onclick=()=>{ box.querySelectorAll('.pill').forEach(x=>x.classList.remove('sel')); pill.classList.add('sel'); outcome=pill.dataset.o; box.querySelector('.savelook').disabled=false; });
+    box.querySelector('.savelook').onclick=async(e)=>{ e.target.disabled=true; const minutes=parseInt(box.querySelector('.lmin').value)||10, note=box.querySelector('.lnote').value;
+      const { error }=await sb.from('lookins').insert({ school_id:state.me.school_id, cycle_id:c.id, minutes, outcome, note, created_by:state.me.id }); if(error){ box.querySelector('.lmsg').innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; } else renderCoach(); }; };
+}
+
+
+// ===================== WALKTHROUGH (Tool 05) =====================
+function priorityAreas(){ return state.areas.filter(a=>a.position<4).sort((a,b)=>a.position-b.position); }
+async function renderWalkthrough(p){
+  const tt=state.peopleById[p.teacher_id]||{};
+  renderShell(`<button class="btn small ghost" id="back">Back</button>
+    <div class="kicker" style="margin-top:14px">Walkthrough calibration record</div>
+    <div class="page-h">${esc(tt.full_name||'Teacher')}</div>
+    <div class="page-sub">Mark what you saw against the shared indicators. Where "not yet" clusters is where the next step lives, in whatever domain that is.</div>
+    <div class="row"><div class="field" style="flex:1;min-width:130px"><label>Date</label><input id="wdate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field" style="flex:2;min-width:160px"><label>Class or lesson</label><input id="wclass" placeholder="e.g. 6D, period 3"></div></div>
+    <div id="doms"></div><div id="wmsg"></div>
+    <button class="btn" id="savewt">Save walkthrough</button>`);
+  document.getElementById('back').onclick=renderCoach;
+  const doms=document.getElementById('doms'); const marks={};
+  doms.innerHTML=priorityAreas().map(a=>{ const ms=seqMoves(a.id);
+    return `<div class="card"><div class="row" style="justify-content:space-between;align-items:center;cursor:pointer" data-acc="${a.id}">
+        <h3>${esc(a.friendly)}</h3><span class="small muted">${ms.length} indicators</span></div>
+      <div data-body="${a.id}" style="display:none;margin-top:6px">
+        ${ms.map(m=>`<div class="wrow" style="border-top:1px solid var(--rule);padding:9px 0">
+          <div class="small"><strong>${esc(m.statement)}</strong></div>
+          ${m.see_this?`<div class="small muted" style="margin:2px 0 6px">${esc(m.see_this)}</div>`:''}
+          <div class="pill-row"><span class="pill" data-v="met" data-m="${m.id}">Met</span><span class="pill" data-v="not_yet" data-m="${m.id}">Not yet</span></div>
+        </div>`).join('')}
+      </div></div>`; }).join('');
+  doms.querySelectorAll('[data-acc]').forEach(h=> h.onclick=()=>{ const b=doms.querySelector(`[data-body="${h.dataset.acc}"]`); b.style.display=b.style.display==='none'?'block':'none'; });
+  doms.querySelectorAll('.pill[data-v]').forEach(pill=> pill.onclick=()=>{ const row=pill.closest('.wrow'); row.querySelectorAll('.pill').forEach(x=>x.classList.remove('sel')); pill.classList.add('sel'); marks[pill.dataset.m]=pill.dataset.v; });
+  document.getElementById('savewt').onclick=async(e)=>{
+    const keys=Object.keys(marks); const msg=document.getElementById('wmsg');
+    if(!keys.length){ msg.innerHTML='<div class="err">Mark at least one indicator.</div>'; return; }
+    e.target.disabled=true; e.target.textContent='Saving...';
+    const { data:w, error } = await sb.from('walkthroughs').insert({ school_id:state.me.school_id, teacher_id:p.teacher_id, observer_id:state.me.id, observed_on:document.getElementById('wdate').value||null, class_label:document.getElementById('wclass').value }).select().single();
+    if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; e.target.textContent='Save walkthrough'; return; }
+    const rows=keys.map(mid=>({ walkthrough_id:w.id, move_id:mid, verdict:marks[mid] }));
+    const { error:e2 } = await sb.from('walkthrough_marks').insert(rows);
+    if(e2){ msg.innerHTML=`<div class="err">${esc(e2.message)}</div>`; e.target.disabled=false; e.target.textContent='Save walkthrough'; return; }
+    showWalkProfile(p, marks);
+  };
+}
+function showWalkProfile(p, marks){
+  const per=priorityAreas().map(a=>{ let met=0,not=0; seqMoves(a.id).forEach(m=>{ if(marks[m.id]==='met')met++; else if(marks[m.id]==='not_yet')not++; }); return {a,met,not}; });
+  per.sort((x,y)=> y.not-x.not); const top=per[0];
+  const nextMove = (top && top.not>0) ? seqMoves(top.a.id).find(m=>marks[m.id]==='not_yet') : null;
+  renderShell(`<div class="kicker">Walkthrough saved</div><div class="page-h">Where the need is</div>
+    <div class="page-sub">Across the four priority domains, this is where the indicators are not yet holding.</div>
+    <div class="card"><table><thead><tr><th>Domain</th><th>Met</th><th>Not yet</th></tr></thead><tbody>
+      ${per.map(r=>`<tr><td>${esc(r.a.friendly)}</td><td>${r.met}</td><td><strong>${r.not}</strong></td></tr>`).join('')}</tbody></table></div>
+    ${nextMove?`<div class="card"><div class="kicker" style="color:var(--terra-deep)">SEQUENS suggests the next step</div>
+      <p style="margin:4px 0 0"><strong>${esc(top.a.friendly)}</strong></p>
+      <p style="margin:4px 0 0"><strong>${esc(nextMove.statement)}</strong></p>${moveDetail(nextMove)}
+      <div class="row" style="margin-top:10px"><button class="btn small" id="startfromwt">Open a cycle on this</button><button class="btn small ghost" id="backc">Back to teachers</button></div></div>`
+      :`<div class="card"><div class="empty">Everything you observed is holding. Nothing flagged.</div><div style="text-align:center"><button class="btn small ghost" id="backc">Back to teachers</button></div></div>`}`);
+  const bc=document.getElementById('backc'); if(bc) bc.onclick=renderCoach;
+  const sf=document.getElementById('startfromwt'); if(sf) sf.onclick=async()=>{ await startCycle(p, top.a.id, nextMove); };
+}
+
+// ===================== LEAD COACH =====================
+async function renderLead(){
+  renderShell(`<div class="kicker">Calibration</div><div class="page-h">Coaching across the school</div><div class="page-sub">Every live cycle, so coaching stays consistent.</div><div id="body"><div class="muted">Loading...</div></div>`);
+  const body=document.getElementById('body');
+  const { data:cycles, error } = await sb.from('cycles').select('*').is('closed_at',null);
+  if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
+  const { data:pairings } = await sb.from('pairings').select('*').is('ended_on',null);
+  const pairById={}; (pairings||[]).forEach(p=> pairById[p.id]=p);
+  if(!cycles || !cycles.length){ body.innerHTML=`<div class="card"><div class="empty">No live cycles yet.</div></div>`; return; }
+  body.innerHTML = `<table><thead><tr><th>Teacher</th><th>Coach</th><th>Area</th><th>Move</th><th>Reps</th></tr></thead><tbody>${
+    cycles.map(c=>{ const p=pairById[c.pairing_id]||{}; const t=state.peopleById[p.teacher_id]||{}; const co=state.peopleById[p.coach_id]||{}; const a=state.areasById[c.area_id]||{};
+      return `<tr><td>${esc(t.full_name||'')}</td><td>${esc(co.full_name||'')}</td><td>${esc(a.friendly||'')}</td><td>${esc(c.move_text)}</td><td>${c.reps}/${c.gate}</td></tr>`;
+    }).join('')
+  }</tbody></table>`;
+}
+
+// ===================== SENIOR LEADER (the wall view) =====================
+async function renderSLT(){
+  renderShell(`<div class="kicker">Leadership</div><div class="page-h">Coaching participation</div><div class="page-sub">Is coaching happening, and how often.</div>
+    <div class="wall-note">This view shows that coaching is taking place. It never shows what was said in a cycle. That is by design, and it is enforced by the database, not this page.</div>
+    <div id="body"><div class="muted">Loading...</div></div>`);
+  const body=document.getElementById('body');
+  const { data, error } = await sb.from('coaching_participation').select('*');
+  if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
+  if(!data || !data.length){ body.innerHTML=`<div class="card"><div class="empty">No coaching recorded yet.</div></div>`; return; }
+  body.innerHTML = `<table><thead><tr><th>Teacher</th><th>Cycles</th><th>Look-ins</th><th>Last look-in</th></tr></thead><tbody>${
+    data.map(r=>{ const t=state.peopleById[r.teacher_id]||{};
+      return `<tr><td>${esc(t.full_name||'Teacher')}</td><td>${r.cycles_opened}</td><td>${r.lookins_held}</td><td>${r.last_lookin_on?fmtDate(r.last_lookin_on):'-'}</td></tr>`;
+    }).join('')
+  }</tbody></table>`;
+}
+</script>
+</body>
+</html>
