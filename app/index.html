@@ -74,6 +74,16 @@ tr:last-child td{border-bottom:0}
 .err{background:var(--red-soft);color:var(--red);border-radius:10px;padding:9px 12px;font-size:.86rem;margin:10px 0}
 .ok{background:var(--green-soft);color:var(--green-deep);border-radius:10px;padding:9px 12px;font-size:.86rem;margin:10px 0}
 .empty{text-align:center;color:var(--muted);padding:34px 10px}
+.rd{border:1px solid var(--rule);border-radius:11px;padding:0 14px;margin:12px 0;background:var(--surface)}
+.rd summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:.9rem;color:var(--navy);padding:11px 0;list-style:none}
+.rd summary::-webkit-details-marker{display:none}
+.rd summary::before{content:'\25B8  ';color:var(--terra)}
+.rd[open] summary::before{content:'\25BE  '}
+.rd-body{padding:0 0 12px}
+.rd-body p{font-size:.9rem;color:var(--ink-soft);margin:8px 0}
+.rd-body p b{color:var(--ink)}
+.rd.why{background:var(--gold-soft)}
+.rd.why summary::before{color:var(--gold-deep)}
 </style>
 </head>
 <body>
@@ -91,6 +101,18 @@ const app = document.getElementById('app');
 const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const LOGO = `<svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="92" fill="#0A3D62"/><rect x="87.04" y="91.37" width="51.99" height="25.99" rx="13" fill="#2DE1C2"/><rect x="87.04" y="134.70" width="95.31" height="25.99" rx="13" fill="#2DE1C2"/><rect x="87.04" y="178.02" width="138.63" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="221.34" width="181.96" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="264.66" width="225.28" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="307.99" width="268.60" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="351.31" width="303.26" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="394.63" width="337.92" height="25.99" rx="13" fill="#DEE7EF"/></svg>`;
 const state = { me:null, peopleById:{}, areasById:{} };
+
+const REASSURE = `<details class="rd"><summary>New to being coached? Read this first</summary><div class="rd-body">
+<p><b>One move at a time is the whole method.</b> You are not being asked to change your teaching. You are practising one small, specific thing until it is automatic, and then moving on. If it feels too small to matter, it is the right size.</p>
+<p><b>Nobody is judging you.</b> This record is shared with your coach and with nobody else. It never reaches appraisal, and that separation is deliberate, because a record you cannot be honest in is worth nothing to either of you.</p>
+<p><b>What a look-in actually is.</b> Your coach watches for the one agreed move, for a few minutes, and nothing else. They are not forming a view of the lesson.</p>
+<p><b>If the move did not work, say so.</b> That is the most useful thing you can write here. A move that did not land tells your coach more than one that did.</p>
+</div></details>`;
+function whyToggle(){ return `<details class="rd why"><summary>Why this move</summary><div class="rd-body">
+<p>Working memory holds only a little new information at once. Ask a teacher to change several things together and it overloads, so nothing embeds. One move at a time is why this works.</p>
+<p>Skill becomes automatic through targeted, repeated practice of one sub-skill with immediate feedback. That is what the rehearsals and look-ins are for.</p>
+<p>Practice spaced over time is retained far longer than practice crammed in at once, which is why a move is revisited until it holds.</p>
+</div></details>`; }
 
 // ---- boot ----
 init();
@@ -161,7 +183,7 @@ function renderSignIn(){
      <div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="Your password"></div>
      <div id="msg"></div>
      <button class="btn" id="go" style="width:100%;justify-content:center;margin-top:6px">Sign in</button>
-     <p class="small muted" style="margin-top:14px">Signing in is for schools and families already using SEQUENS.<br>Not set up yet? <a href="/demo/" style="color:var(--terra-deep)">See the demonstration</a>.</p>
+     <p class="small muted" style="margin-top:14px">Real teachers will sign in with a one-time email code. Password is for setup and testing.</p>
    </div></div>`;
   const go=document.getElementById('go'), msg=document.getElementById('msg');
   const submit=async()=>{
@@ -188,9 +210,15 @@ async function renderTeacher(){
   const area = state.areasById[c.area_id];
   body.innerHTML = `
    <div class="card">
+     <h3 style="margin:0 0 2px">Your move this fortnight</h3>
+     <p class="small muted" style="margin:0 0 12px">Agreed with your coach. This is the shared record, you both see exactly this.</p>
+     ${REASSURE}
+     <div class="dash"></div>
+     <div class="kicker">The move</div>
      ${area?`<span class="tag area">${esc(area.friendly)}</span>`:''}
-     <h3 style="margin:10px 0 4px">${esc(c.move_text)}</h3>
+     <p style="font-size:1.08rem;margin:6px 0 0"><strong>${esc(c.move_text)}</strong></p>
      ${moveDetail(state.movesById[c.move_id])}
+     ${whyToggle()}
      ${c.agreed?`<p class="muted small" style="margin:2px 0 0">What we agreed: ${esc(c.agreed)}</p>`:''}
      <div class="dash"></div>
      <div class="field"><label>Your commitment (only you can edit this)</label>
@@ -250,7 +278,7 @@ function activeCard(p,c,t){
   const m=state.movesById[c.move_id]; const nm=m?nextInArea(c.area_id,m.position):null; const embedded=c.reps>=c.gate;
   return `<div class="card" data-pair="${p.id}">
     <div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(t.full_name||'Teacher')}</h3><span class="tag area">${esc(area.friendly||'')}</span></div>
-    <p style="margin:10px 0 0"><strong>${esc(c.move_text)}</strong></p>${moveDetail(m)}
+    <p style="margin:10px 0 0"><strong>${esc(c.move_text)}</strong></p>${moveDetail(m)}${whyToggle()}
     <div class="field"><label>Coach note (private, leaders cannot see this)</label><textarea class="cnote">${esc(c.coach_note||'')}</textarea></div>
     <div class="msg"></div><div class="row"><button class="btn small ghost savenote">Save note</button></div>
     <div class="dash"></div><div class="small muted">Deliberate practice · <b>${dpLabel(s)}</b></div>${repsDots(c.reps,c.gate)}
