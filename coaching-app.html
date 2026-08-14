@@ -190,6 +190,7 @@ async function renderTeacher(){
    <div class="card">
      ${area?`<span class="tag area">${esc(area.friendly)}</span>`:''}
      <h3 style="margin:10px 0 4px">${esc(c.move_text)}</h3>
+     ${moveDetail(state.movesById[c.move_id])}
      ${c.agreed?`<p class="muted small" style="margin:2px 0 0">What we agreed: ${esc(c.agreed)}</p>`:''}
      <div class="dash"></div>
      <div class="field"><label>Your commitment (only you can edit this)</label>
@@ -213,115 +214,152 @@ async function renderTeacher(){
 }
 
 // ===================== COACH =====================
+function dpState(r,g){ return r>=g?'done': r>=Math.ceil(g/2)?'emb':'prac'; }
+function dpLabel(s){ return s==='done'?'Embedded': s==='emb'?'Embedding':'Practising'; }
+function seqMoves(areaId){ return (state.movesByArea[areaId]||[]).slice().sort((a,b)=>a.position-b.position); }
+function nextInArea(areaId,pos){ return seqMoves(areaId).find(m=>m.position>pos)||null; }
+function suggestNext(pairId,areaId){
+  const ms=seqMoves(areaId); if(!ms.length) return null;
+  const done=(state._coach.closed[pairId+'|'+areaId]||[]);
+  const donePos=new Set(done.map(c=>(state.movesById[c.move_id]||{}).position).filter(x=>x!=null));
+  return ms.find(m=>!donePos.has(m.position))||ms[ms.length-1];
+}
+function moveDetail(m){
+  if(!m) return '';
+  return `${m.do_this?`<p class="small" style="margin:6px 0 2px">${esc(m.do_this)}</p>`:''}${m.see_this?`<p class="small muted" style="margin:2px 0"><b>You'd see:</b> ${esc(m.see_this)}</p>`:''}`;
+}
 async function renderCoach(){
-  renderShell(`<div class="kicker">Your teachers</div><div class="page-h">Coaching</div><div class="page-sub">Up to six teachers, one focus each.</div><div id="body"><div class="muted">Loading...</div></div>`);
+  renderShell(`<div class="kicker">Your teachers</div><div class="page-h">Coaching</div><div class="page-sub">One move each, practised until it embeds.</div><div id="body"><div class="muted">Loading...</div></div>`);
   const body=document.getElementById('body');
   const { data:pairings, error } = await sb.from('pairings').select('*').is('ended_on',null);
   if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
   const mine=(pairings||[]).filter(p=>p.coach_id===state.me.id);
   if(!mine.length){ body.innerHTML=`<div class="card"><div class="empty">No teachers paired to you yet.</div></div>`; return; }
-  const { data:cycles } = await sb.from('cycles').select('*').is('closed_at',null);
-  const byPairing={}; (cycles||[]).forEach(c=> byPairing[c.pairing_id]=c);
-  body.innerHTML = mine.map(p=>coachCard(p, byPairing[p.id])).join('');
-  mine.forEach(p=> wireCoachCard(p, byPairing[p.id]));
+  const { data:cycles } = await sb.from('cycles').select('*');
+  (cycles||[]).sort((a,b)=> new Date(a.opened_at)-new Date(b.opened_at));
+  const live={}, closed={}, lastArea={};
+  (cycles||[]).forEach(c=>{ lastArea[c.pairing_id]=c.area_id;
+    if(!c.closed_at) live[c.pairing_id]=c; else { const k=c.pairing_id+'|'+c.area_id; (closed[k]=closed[k]||[]).push(c); } });
+  state._coach={live,closed,lastArea};
+  body.innerHTML = mine.map(coachCard).join('');
+  mine.forEach(wireCoachCard);
 }
-function coachCard(p, c){
-  const t=state.peopleById[p.teacher_id];
-  const area=c?state.areasById[c.area_id]:null;
+function coachCard(p){ const t=state.peopleById[p.teacher_id]||{}; const c=state._coach.live[p.id]; return c?activeCard(p,c,t):startCard(p,t); }
+function activeCard(p,c,t){
+  const area=state.areasById[c.area_id]||{}; const s=dpState(c.reps,c.gate);
+  const m=state.movesById[c.move_id]; const nm=m?nextInArea(c.area_id,m.position):null; const embedded=c.reps>=c.gate;
   return `<div class="card" data-pair="${p.id}">
-    <div class="row" style="justify-content:space-between;align-items:center">
-      <h3>${esc(t?t.full_name:'Teacher')}</h3>
-      ${c?`<span class="tag area">${esc(area?area.friendly:'')}</span>`:'<span class="tag role">no active cycle</span>'}
+    <div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(t.full_name||'Teacher')}</h3><span class="tag area">${esc(area.friendly||'')}</span></div>
+    <p style="margin:10px 0 0"><strong>${esc(c.move_text)}</strong></p>${moveDetail(m)}
+    <div class="field"><label>Coach note (private, leaders cannot see this)</label><textarea class="cnote">${esc(c.coach_note||'')}</textarea></div>
+    <div class="msg"></div><div class="row"><button class="btn small ghost savenote">Save note</button></div>
+    <div class="dash"></div><div class="small muted">Deliberate practice · <b>${dpLabel(s)}</b></div>${repsDots(c.reps,c.gate)}
+    <div class="row" style="margin-top:12px">
+      ${!embedded?`<button class="btn small logrep">Log a rehearsal</button><button class="btn small ghost logbtn">Log a look-in</button>`:`<button class="btn small gatebtn">Embedded. Gate to next move</button>`}
+      <button class="btn small ghost wtbtn">Walkthrough</button>
     </div>
-    ${c?`
-      <p style="margin:10px 0 2px"><strong>${esc(c.move_text)}</strong></p>
-      ${repsDots(c.reps,c.gate)}
-      <div class="field"><label>Coach note (the teacher and you can see this; leaders cannot)</label>
-        <textarea class="cnote" placeholder="Your working note for this cycle">${esc(c.coach_note||'')}</textarea></div>
-      <div class="msg"></div>
-      <div class="row">
-        <button class="btn small savenote">Save note</button>
-        <button class="btn small ghost logbtn">Log a look-in</button>
-        <button class="btn small ghost repbtn">Mark a rep (${c.reps}/${c.gate})</button>
-      </div>
-      <div class="lookin" style="display:none"></div>
-    `:`
-      <div class="field"><label>Open a cycle: which area?</label>
-        <select class="narea">${state.areas.map(a=>`<option value="${a.id}">${esc(a.friendly)}</option>`).join('')}</select></div>
-      <div class="field"><label>Which move?</label>
-        <select class="nmovesel"></select></div>
-      <div class="field nmoveother" style="display:none"><label>Write the move</label>
-        <input class="nmovetext" placeholder="The one precise adjustment"></div>
-      <div class="msg"></div>
-      <button class="btn small opencycle">Open cycle</button>
-    `}
-  </div>`;
+    ${nm?`<p class="small muted" style="margin-top:10px">Next in sequence: ${esc(nm.statement)}</p>`:''}
+    <div class="lookin" style="display:none"></div></div>`;
 }
-function wireCoachCard(p, c){
+function startCard(p,t){
+  const areaId=state._coach.lastArea[p.id]||(state.areas[0]&&state.areas[0].id);
+  return `<div class="card" data-pair="${p.id}">
+    <div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(t.full_name||'Teacher')}</h3><span class="tag role">no active move</span></div>
+    <div class="field"><label>Focus area</label><select class="narea">${state.areas.map(a=>`<option value="${a.id}"${a.id===areaId?' selected':''}>${esc(a.friendly)}</option>`).join('')}</select></div>
+    <div class="suggest"></div><div style="margin-top:12px"><button class="btn small ghost wtbtn">Walkthrough this teacher</button></div></div>`;
+}
+function renderSuggest(p){
   const el=document.querySelector(`[data-pair="${p.id}"]`); if(!el) return;
+  const areaId=el.querySelector('.narea').value; const sug=suggestNext(p.id,areaId); const box=el.querySelector('.suggest');
+  if(!sug){ box.innerHTML='<p class="muted small">No moves in this area.</p>'; return; }
+  box.innerHTML=`<div style="background:var(--terra-soft);border-radius:12px;padding:12px 14px;margin-bottom:12px">
+      <div class="kicker" style="color:var(--terra-deep)">SEQUENS suggests</div>
+      <p style="margin:2px 0 0"><strong>${esc(sug.statement)}</strong></p>${moveDetail(sug)}</div>
+    <div class="row"><button class="btn small usesug">Start this move</button><button class="btn small ghost browse">Choose another</button></div>
+    <div class="browsebox" style="display:none"></div><div class="msg"></div>`;
+  el.querySelector('.usesug').onclick=()=>startCycle(p,areaId,sug);
+  el.querySelector('.browse').onclick=()=>{ const bb=el.querySelector('.browsebox'); const ms=seqMoves(areaId); bb.style.display='block';
+    bb.innerHTML=`<div class="field"><label>All moves in this area, in sequence</label><select class="msel">${ms.map(m=>`<option value="${m.id}">${esc(m.statement)}</option>`).join('')}</select></div><button class="btn small usepick">Start chosen move</button>`;
+    bb.querySelector('.usepick').onclick=()=> startCycle(p,areaId,state.movesById[bb.querySelector('.msel').value]); };
+}
+async function startCycle(p,areaId,m){
+  const { error } = await sb.from('cycles').insert({ school_id:state.me.school_id, pairing_id:p.id, area_id:areaId, move_id:m.id, move_text:m.statement });
+  const el=document.querySelector(`[data-pair="${p.id}"]`);
+  if(error){ if(el) el.querySelector('.msg').innerHTML=`<div class="err">${esc(error.message)}</div>`; } else renderCoach();
+}
+function wireCoachCard(p){
+  const el=document.querySelector(`[data-pair="${p.id}"]`); if(!el) return;
+  const wt=el.querySelector('.wtbtn'); if(wt) wt.onclick=()=>renderWalkthrough(p);
+  const c=state._coach.live[p.id];
+  if(!c){ el.querySelector('.narea').onchange=()=>renderSuggest(p); renderSuggest(p); return; }
   const msg=el.querySelector('.msg');
-  if(!c){
-    const narea=el.querySelector('.narea'), msel=el.querySelector('.nmovesel'), other=el.querySelector('.nmoveother');
-    const fill=()=>{
-      const ms=state.movesByArea[narea.value]||[];
-      msel.innerHTML = ms.map(m=>`<option value="${m.id}">${esc(m.statement)}</option>`).join('')
-                     + '<option value="__other">Other (write your own)</option>';
-      other.style.display = msel.value==='__other' ? 'block':'none';
-    };
-    narea.onchange=fill;
-    msel.onchange=()=>{ other.style.display = msel.value==='__other' ? 'block':'none'; };
-    fill();
-    el.querySelector('.opencycle').onclick=async(e)=>{
-      const area_id=narea.value; let move_id=null, move_text='';
-      if(msel.value==='__other'){ move_text=el.querySelector('.nmovetext').value.trim(); }
-      else { const m=state.movesById[msel.value]; if(m){ move_id=m.id; move_text=m.statement; } }
-      if(!move_text){ msg.innerHTML='<div class="err">Choose a move or write one.</div>'; return; }
-      e.target.disabled=true;
-      const { error } = await sb.from('cycles').insert({ school_id:state.me.school_id, pairing_id:p.id, area_id, move_id, move_text });
-      if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; }
-      else renderCoach();
-    };
-    return;
-  }
-  el.querySelector('.savenote').onclick=async(e)=>{
+  el.querySelector('.savenote').onclick=async(e)=>{ e.target.disabled=true; e.target.textContent='Saving...';
+    const { error } = await sb.from('cycles').update({ coach_note:el.querySelector('.cnote').value }).eq('id',c.id);
+    msg.innerHTML = error?`<div class="err">${esc(error.message)}</div>`:'<div class="ok">Note saved.</div>'; e.target.disabled=false; e.target.textContent='Save note'; };
+  const rep=el.querySelector('.logrep'); if(rep) rep.onclick=async()=>{ const { error }=await sb.from('cycles').update({ reps:Math.min(c.reps+1,c.gate) }).eq('id',c.id); if(!error) renderCoach(); else msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; };
+  const gate=el.querySelector('.gatebtn'); if(gate) gate.onclick=async()=>{ const { error }=await sb.from('cycles').update({ closed_at:new Date().toISOString() }).eq('id',c.id); if(!error) renderCoach(); else msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; };
+  const log=el.querySelector('.logbtn'); const box=el.querySelector('.lookin');
+  if(log) log.onclick=()=>{ box.style.display='block';
+    box.innerHTML=`<div class="dash"></div><div class="field"><label>What did you see?</label><div class="pill-row"><span class="pill" data-o="embedded">Embedded</span><span class="pill" data-o="landing">Landing</span><span class="pill" data-o="not_yet">Not yet</span></div></div><div class="field"><label>Minutes</label><input class="lmin" type="number" value="10" min="1" max="60"></div><div class="field"><label>Note (optional)</label><textarea class="lnote"></textarea></div><div class="lmsg"></div><button class="btn small savelook" disabled>Save look-in</button>`;
+    let outcome=null; box.querySelectorAll('.pill').forEach(pill=> pill.onclick=()=>{ box.querySelectorAll('.pill').forEach(x=>x.classList.remove('sel')); pill.classList.add('sel'); outcome=pill.dataset.o; box.querySelector('.savelook').disabled=false; });
+    box.querySelector('.savelook').onclick=async(e)=>{ e.target.disabled=true; const minutes=parseInt(box.querySelector('.lmin').value)||10, note=box.querySelector('.lnote').value;
+      const { error }=await sb.from('lookins').insert({ school_id:state.me.school_id, cycle_id:c.id, minutes, outcome, note, created_by:state.me.id }); if(error){ box.querySelector('.lmsg').innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; } else renderCoach(); }; };
+}
+
+
+// ===================== WALKTHROUGH (Tool 05) =====================
+function priorityAreas(){ return state.areas.filter(a=>a.position<4).sort((a,b)=>a.position-b.position); }
+async function renderWalkthrough(p){
+  const tt=state.peopleById[p.teacher_id]||{};
+  renderShell(`<button class="btn small ghost" id="back">Back</button>
+    <div class="kicker" style="margin-top:14px">Walkthrough calibration record</div>
+    <div class="page-h">${esc(tt.full_name||'Teacher')}</div>
+    <div class="page-sub">Mark what you saw against the shared indicators. Where "not yet" clusters is where the next step lives, in whatever domain that is.</div>
+    <div class="row"><div class="field" style="flex:1;min-width:130px"><label>Date</label><input id="wdate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field" style="flex:2;min-width:160px"><label>Class or lesson</label><input id="wclass" placeholder="e.g. 6D, period 3"></div></div>
+    <div id="doms"></div><div id="wmsg"></div>
+    <button class="btn" id="savewt">Save walkthrough</button>`);
+  document.getElementById('back').onclick=renderCoach;
+  const doms=document.getElementById('doms'); const marks={};
+  doms.innerHTML=priorityAreas().map(a=>{ const ms=seqMoves(a.id);
+    return `<div class="card"><div class="row" style="justify-content:space-between;align-items:center;cursor:pointer" data-acc="${a.id}">
+        <h3>${esc(a.friendly)}</h3><span class="small muted">${ms.length} indicators</span></div>
+      <div data-body="${a.id}" style="display:none;margin-top:6px">
+        ${ms.map(m=>`<div class="wrow" style="border-top:1px solid var(--rule);padding:9px 0">
+          <div class="small"><strong>${esc(m.statement)}</strong></div>
+          ${m.see_this?`<div class="small muted" style="margin:2px 0 6px">${esc(m.see_this)}</div>`:''}
+          <div class="pill-row"><span class="pill" data-v="met" data-m="${m.id}">Met</span><span class="pill" data-v="not_yet" data-m="${m.id}">Not yet</span></div>
+        </div>`).join('')}
+      </div></div>`; }).join('');
+  doms.querySelectorAll('[data-acc]').forEach(h=> h.onclick=()=>{ const b=doms.querySelector(`[data-body="${h.dataset.acc}"]`); b.style.display=b.style.display==='none'?'block':'none'; });
+  doms.querySelectorAll('.pill[data-v]').forEach(pill=> pill.onclick=()=>{ const row=pill.closest('.wrow'); row.querySelectorAll('.pill').forEach(x=>x.classList.remove('sel')); pill.classList.add('sel'); marks[pill.dataset.m]=pill.dataset.v; });
+  document.getElementById('savewt').onclick=async(e)=>{
+    const keys=Object.keys(marks); const msg=document.getElementById('wmsg');
+    if(!keys.length){ msg.innerHTML='<div class="err">Mark at least one indicator.</div>'; return; }
     e.target.disabled=true; e.target.textContent='Saving...';
-    const coach_note=el.querySelector('.cnote').value;
-    const { error } = await sb.from('cycles').update({ coach_note }).eq('id',c.id);
-    msg.innerHTML = error?`<div class="err">${esc(error.message)}</div>`:'<div class="ok">Note saved.</div>';
-    e.target.disabled=false; e.target.textContent='Save note';
+    const { data:w, error } = await sb.from('walkthroughs').insert({ school_id:state.me.school_id, teacher_id:p.teacher_id, observer_id:state.me.id, observed_on:document.getElementById('wdate').value||null, class_label:document.getElementById('wclass').value }).select().single();
+    if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; e.target.textContent='Save walkthrough'; return; }
+    const rows=keys.map(mid=>({ walkthrough_id:w.id, move_id:mid, verdict:marks[mid] }));
+    const { error:e2 } = await sb.from('walkthrough_marks').insert(rows);
+    if(e2){ msg.innerHTML=`<div class="err">${esc(e2.message)}</div>`; e.target.disabled=false; e.target.textContent='Save walkthrough'; return; }
+    showWalkProfile(p, marks);
   };
-  el.querySelector('.repbtn').onclick=async(e)=>{
-    const reps=Math.min(c.reps+1,c.gate);
-    const { error } = await sb.from('cycles').update({ reps }).eq('id',c.id);
-    if(!error) renderCoach(); else msg.innerHTML=`<div class="err">${esc(error.message)}</div>`;
-  };
-  const box=el.querySelector('.lookin');
-  el.querySelector('.logbtn').onclick=()=>{
-    box.style.display='block';
-    box.innerHTML=`<div class="dash"></div>
-      <div class="field"><label>What did you see?</label>
-        <div class="pill-row">
-          <span class="pill" data-o="embedded">Embedded</span>
-          <span class="pill" data-o="landing">Landing</span>
-          <span class="pill" data-o="not_yet">Not yet</span>
-        </div></div>
-      <div class="field"><label>Minutes</label><input class="lmin" type="number" value="10" min="1" max="60"></div>
-      <div class="field"><label>Note (optional)</label><textarea class="lnote"></textarea></div>
-      <div class="lmsg"></div>
-      <button class="btn small savelook" disabled>Save look-in</button>`;
-    let outcome=null;
-    box.querySelectorAll('.pill').forEach(pill=> pill.onclick=()=>{
-      box.querySelectorAll('.pill').forEach(x=>x.classList.remove('sel'));
-      pill.classList.add('sel'); outcome=pill.dataset.o; box.querySelector('.savelook').disabled=false;
-    });
-    box.querySelector('.savelook').onclick=async(e)=>{
-      e.target.disabled=true;
-      const minutes=parseInt(box.querySelector('.lmin').value)||10, note=box.querySelector('.lnote').value;
-      const { error } = await sb.from('lookins').insert({ school_id:state.me.school_id, cycle_id:c.id, minutes, outcome, note, created_by:state.me.id });
-      if(error){ box.querySelector('.lmsg').innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; }
-      else renderCoach();
-    };
-  };
+}
+function showWalkProfile(p, marks){
+  const per=priorityAreas().map(a=>{ let met=0,not=0; seqMoves(a.id).forEach(m=>{ if(marks[m.id]==='met')met++; else if(marks[m.id]==='not_yet')not++; }); return {a,met,not}; });
+  per.sort((x,y)=> y.not-x.not); const top=per[0];
+  const nextMove = (top && top.not>0) ? seqMoves(top.a.id).find(m=>marks[m.id]==='not_yet') : null;
+  renderShell(`<div class="kicker">Walkthrough saved</div><div class="page-h">Where the need is</div>
+    <div class="page-sub">Across the four priority domains, this is where the indicators are not yet holding.</div>
+    <div class="card"><table><thead><tr><th>Domain</th><th>Met</th><th>Not yet</th></tr></thead><tbody>
+      ${per.map(r=>`<tr><td>${esc(r.a.friendly)}</td><td>${r.met}</td><td><strong>${r.not}</strong></td></tr>`).join('')}</tbody></table></div>
+    ${nextMove?`<div class="card"><div class="kicker" style="color:var(--terra-deep)">SEQUENS suggests the next step</div>
+      <p style="margin:4px 0 0"><strong>${esc(top.a.friendly)}</strong></p>
+      <p style="margin:4px 0 0"><strong>${esc(nextMove.statement)}</strong></p>${moveDetail(nextMove)}
+      <div class="row" style="margin-top:10px"><button class="btn small" id="startfromwt">Open a cycle on this</button><button class="btn small ghost" id="backc">Back to teachers</button></div></div>`
+      :`<div class="card"><div class="empty">Everything you observed is holding. Nothing flagged.</div><div style="text-align:center"><button class="btn small ghost" id="backc">Back to teachers</button></div></div>`}`);
+  const bc=document.getElementById('backc'); if(bc) bc.onclick=renderCoach;
+  const sf=document.getElementById('startfromwt'); if(sf) sf.onclick=async()=>{ await startCycle(p, top.a.id, nextMove); };
 }
 
 // ===================== LEAD COACH =====================
