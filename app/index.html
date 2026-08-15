@@ -108,10 +108,9 @@ const REASSURE = `<details class="rd"><summary>New to being coached? Read this f
 <p><b>What a look-in actually is.</b> Your coach watches for the one agreed move, for a few minutes, and nothing else. They are not forming a view of the lesson.</p>
 <p><b>If the move did not work, say so.</b> That is the most useful thing you can write here. A move that did not land tells your coach more than one that did.</p>
 </div></details>`;
-function whyToggle(){ return `<details class="rd why"><summary>Why this move</summary><div class="rd-body">
-<p>Working memory holds only a little new information at once. Ask a teacher to change several things together and it overloads, so nothing embeds. One move at a time is why this works.</p>
-<p>Skill becomes automatic through targeted, repeated practice of one sub-skill with immediate feedback. That is what the rehearsals and look-ins are for.</p>
-<p>Practice spaced over time is retained far longer than practice crammed in at once, which is why a move is revisited until it holds.</p>
+function whyToggle(m){ const w = (m&&m.why)?`<p><b>Why this move.</b> ${esc(m.why)}</p>`:''; return `<details class="rd why"><summary>Why this move</summary><div class="rd-body">
+${w}
+<p><b>And why this way.</b> Working memory holds only a little new information at once, so changing several things together overloads it and nothing embeds. Skill becomes automatic through repeated practice of one sub-skill with feedback, and practice spaced over time holds far longer than practice crammed in at once. That is why it is one move, rehearsed, until it sticks.</p>
 </div></details>`; }
 
 // ---- boot ----
@@ -133,7 +132,7 @@ async function loadContextAndRoute(){
   const [{ data:people }, { data:areas }, { data:moves }] = await Promise.all([
     sb.from('people').select('id,full_name,role'),
     sb.from('areas').select('id,friendly,domain,position').order('position'),
-    sb.from('moves').select('id,area_id,position,statement').order('position')
+    sb.from('moves').select('id,area_id,position,statement,see_this,do_this,why').order('position')
   ]);
   (people||[]).forEach(p=> state.peopleById[p.id]=p);
   state.areas = areas||[]; (areas||[]).forEach(a=> state.areasById[a.id]=a);
@@ -218,7 +217,7 @@ async function renderTeacher(){
      ${area?`<span class="tag area">${esc(area.friendly)}</span>`:''}
      <p style="font-size:1.08rem;margin:6px 0 0"><strong>${esc(c.move_text)}</strong></p>
      ${moveDetail(state.movesById[c.move_id])}
-     ${whyToggle()}
+     ${whyToggle(state.movesById[c.move_id])}
      ${c.agreed?`<p class="muted small" style="margin:2px 0 0">What we agreed: ${esc(c.agreed)}</p>`:''}
      <div class="dash"></div>
      <div class="field"><label>Your commitment (only you can edit this)</label>
@@ -278,7 +277,7 @@ function activeCard(p,c,t){
   const m=state.movesById[c.move_id]; const nm=m?nextInArea(c.area_id,m.position):null; const embedded=c.reps>=c.gate;
   return `<div class="card" data-pair="${p.id}">
     <div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(t.full_name||'Teacher')}</h3><span class="tag area">${esc(area.friendly||'')}</span></div>
-    <p style="margin:10px 0 0"><strong>${esc(c.move_text)}</strong></p>${moveDetail(m)}${whyToggle()}
+    <p style="margin:10px 0 0"><strong>${esc(c.move_text)}</strong></p>${moveDetail(m)}${whyToggle(m)}
     <div class="field"><label>Coach note (private, leaders cannot see this)</label><textarea class="cnote">${esc(c.coach_note||'')}</textarea></div>
     <div class="msg"></div><div class="row"><button class="btn small ghost savenote">Save note</button></div>
     <div class="dash"></div><div class="small muted">Deliberate practice · <b>${dpLabel(s)}</b></div>${repsDots(c.reps,c.gate)}
