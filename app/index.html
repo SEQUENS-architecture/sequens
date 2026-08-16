@@ -100,13 +100,13 @@ tr:last-child td{border-bottom:0}
 // ===================== YEAR 6 TRACKER =====================
 const Y6_SOURCES=['cat4','ngrt','pte','ptm','wr_maths','wr_science','arithmetic','spelling','bugclub'];
 async function loadTracker(){
-  const [cl,pu,ob,ba,as]=await Promise.all([
-    sb.from('y6_classes').select('*').order('name'),
-    sb.from('pupils').select('*').order('full_name'),
-    sb.from('objectives').select('*').order('subject'),
-    sb.from('banding').select('*'),
-    sb.from('assessments').select('*').order('taken_on',{ascending:false})]);
-  state.tracker={classes:cl.data||[],pupils:pu.data||[],objectives:ob.data||[],banding:ba.data||[],assessments:as.data||[]};
+  state.tracker={classes:[],pupils:[],objectives:[],banding:[],assessments:[]}; state.trackerErr='';
+  const q=async(tbl,ord,asc)=>{ try{ let r=sb.from(tbl).select('*'); if(ord)r=r.order(ord,asc===undefined?{}:{ascending:asc}); const {data,error}=await r; if(error){ state.trackerErr+=tbl+': '+error.message+'. '; } return data||[]; }catch(e){ state.trackerErr+=tbl+': '+((e&&e.message)||e)+'. '; return []; } };
+  state.tracker.classes=await q('y6_classes','name');
+  state.tracker.pupils=await q('pupils','full_name');
+  state.tracker.objectives=await q('objectives','subject');
+  state.tracker.banding=await q('banding');
+  state.tracker.assessments=await q('assessments','taken_on',false);
 }
 function classById(id){return state.tracker.classes.find(c=>c.id===id);}
 function objById(id){return state.tracker.objectives.find(o=>o.id===id);}
@@ -115,9 +115,11 @@ function bandFor(src,raw){ if(raw==null||raw==='')return null; const r=parseFloa
 function dpJ(j){return j==='met'?'Met':j==='working_towards'?'Working towards':'Not yet';}
 async function renderTracker(tab){
   tab=tab||state._ttab||'year'; state._ttab=tab; const lead=state.me.is_y6_lead;
+  if(!state.tracker) state.tracker={classes:[],pupils:[],objectives:[],banding:[],assessments:[]};
   const tabs=[['year','Year view'],['enter','Enter'],['classes','Classes'],['objectives','Objectives'],['banding','Banding']];
   renderShell(`<div class="kicker">Year 6</div><div class="page-h">Assessment tracker</div>
     <div class="page-sub">${lead?'All four classes.':'Your class.'}</div>
+    ${state.trackerErr?`<div class="err">Tracker had trouble loading. ${esc(state.trackerErr)}</div>`:''}
     <div class="ttabs">${tabs.map(([k,l])=>`<button class="ttab ${k===tab?'on':''}" data-tab="${k}">${l}</button>`).join('')}</div>
     <div id="tb"><div class="muted">Loading...</div></div>`);
   document.querySelectorAll('.ttab').forEach(b=> b.onclick=()=>renderTracker(b.dataset.tab));
