@@ -124,7 +124,8 @@ async function renderTracker(tab){
     <div id="tb"><div class="muted">Loading...</div></div>`);
   document.querySelectorAll('.ttab').forEach(b=> b.onclick=()=>renderTracker(b.dataset.tab));
   const body=document.getElementById('tb');
-  ({classes:tClasses,objectives:tObjectives,banding:tBanding,enter:tEnter,year:tYear}[tab]||tYear)(body);
+  try { ({classes:tClasses,objectives:tObjectives,banding:tBanding,enter:tEnter,year:tYear}[tab]||tYear)(body); }
+  catch(e){ console.error('tracker view error', e); body.innerHTML=`<div class="err">This tab hit an error: ${esc((e&&e.message)||e)}</div>`; }
 }
 function tClasses(body){
   body.innerHTML=`<div class="card"><h3>Add a class</h3><div class="row"><input id="ncn" placeholder="Class name, e.g. 6D" style="flex:1"><button class="btn small" id="ac">Add</button></div><div id="cm"></div></div>`+
@@ -289,7 +290,7 @@ function renderShell(inner){
      <button class="abtn ${state.area==='tracker'?'on':''}" data-area="tracker">Tracker</button>
    </div></div>`:''}
    <main><div class="wrap">${inner}</div></main>`;
-  document.querySelectorAll('.abtn').forEach(b=> b.onclick=()=>{ state.area=b.dataset.area; route(); });
+  document.querySelectorAll('.abtn').forEach(b=> b.onclick=()=>{ try{ state.area=b.dataset.area; route(); }catch(e){ console.error('area switch error', e); app.innerHTML=`<div class="center"><div class="err">${esc((e&&e.message)||e)}</div></div>`; } });
   const out = document.getElementById('out');
   if(out) out.onclick = async()=>{ await sb.auth.signOut(); };
 }
