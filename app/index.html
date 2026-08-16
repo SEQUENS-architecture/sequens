@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SEQUENS Coaching</title>
+<title>SEQUENS Architecture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -237,26 +237,31 @@ async function init(){
 sb.auth.onAuthStateChange((_e,session)=>{ if(!session) renderSignIn(); });
 
 async function loadContextAndRoute(){
-  app.innerHTML = '<div class="center muted">Loading your coaching...</div>';
-  const { data:{ user } } = await sb.auth.getUser();
-  const { data:me, error } = await sb.from('people').select('*').eq('user_id', user.id).maybeSingle();
-  if(error){ return renderShell('', `<div class="err">${esc(error.message)}</div>`); }
-  if(!me){ return renderShell('', `<div class="card"><h3>Account not linked yet</h3><p class="muted">You're signed in, but there's no staff record tied to this login. Someone with admin access needs to add you in the people table.</p></div>`); }
-  state.me = me;
-  const [{ data:people }, { data:areas }, { data:moves }] = await Promise.all([
-    sb.from('people').select('id,full_name,role'),
-    sb.from('areas').select('id,friendly,domain,position').order('position'),
-    sb.from('moves').select('id,area_id,position,statement,see_this,do_this,why').order('position')
-  ]);
-  (people||[]).forEach(p=> state.peopleById[p.id]=p);
-  state.areas = areas||[]; (areas||[]).forEach(a=> state.areasById[a.id]=a);
-  state.movesById={}; state.movesByArea={};
-  (moves||[]).forEach(m=>{ state.movesById[m.id]=m; (state.movesByArea[m.area_id]=state.movesByArea[m.area_id]||[]).push(m); });
-  state.area = state.area || 'coaching';
-  state.trackerAccess = !!state.me.is_y6_lead;
-  if(!state.trackerAccess){ const { data:tc } = await sb.from('y6_classes').select('id').limit(1); if((tc||[]).length) state.trackerAccess=true; }
-  if(state.trackerAccess) await loadTracker();
-  route();
+  app.innerHTML = '<div class="center muted">Loading...</div>';
+  try {
+    const { data:{ user } } = await sb.auth.getUser();
+    if(!user){ return renderSignIn(); }
+    const { data:me, error } = await sb.from('people').select('*').eq('user_id', user.id).maybeSingle();
+    if(error){ return renderShell(`<div class="err">${esc(error.message)}</div>`); }
+    if(!me){ return renderShell(`<div class="card"><h3>Account not linked yet</h3><p class="muted">You're signed in, but there is no staff record tied to this login yet.</p></div>`); }
+    state.me = me;
+    const [{ data:people }, { data:areas }, { data:moves }] = await Promise.all([
+      sb.from('people').select('id,full_name,role'),
+      sb.from('areas').select('id,friendly,domain,position').order('position'),
+      sb.from('moves').select('id,area_id,position,statement,see_this,do_this,why').order('position')
+    ]);
+    (people||[]).forEach(p=> state.peopleById[p.id]=p);
+    state.areas = areas||[]; (areas||[]).forEach(a=> state.areasById[a.id]=a);
+    state.movesById={}; state.movesByArea={};
+    (moves||[]).forEach(m=>{ state.movesById[m.id]=m; (state.movesByArea[m.area_id]=state.movesByArea[m.area_id]||[]).push(m); });
+    state.area = state.area || 'coaching';
+    state.trackerAccess = !!state.me.is_y6_lead;
+    try {
+      if(!state.trackerAccess){ const { data:tc } = await sb.from('y6_classes').select('id').limit(1); if((tc||[]).length) state.trackerAccess=true; }
+      if(state.trackerAccess){ await Promise.race([ loadTracker(), new Promise((_,r)=>setTimeout(()=>r(new Error('tracker timeout')),8000)) ]); }
+    } catch(te){ console.error('tracker load failed', te); state.tracker=state.tracker||{classes:[],pupils:[],objectives:[],banding:[],assessments:[]}; }
+    route();
+  } catch(e){ console.error(e); renderShell(`<div class="err">Could not load: ${esc(e.message||String(e))}. Try refreshing.</div>`); }
 }
 
 function route(){
@@ -266,7 +271,7 @@ function route(){
   if(r==='coach') return renderCoach();
   if(r==='lead_coach') return renderLead();
   if(r==='slt'||r==='admin') return renderSLT();
-  renderShell('', `<div class="card">No screen for role "${esc(r)}" yet.</div>`);
+  renderShell(`<div class="card">No screen for role "${esc(r)}" yet.</div>`);
 }
 
 // ---- shell ----
@@ -274,7 +279,7 @@ function renderShell(inner){
   const roleName = {teacher:'Teacher',coach:'Coach',lead_coach:'Lead coach',slt:'Senior leader',admin:'Admin'}[state.me?.role]||'';
   app.innerHTML = `
    <div class="topbar"><div class="wrap">
-     <div class="brand">${LOGO}<span class="brand-txt">SEQUENS<small>Coaching</small></span></div>
+     <div class="brand">${LOGO}<span class="brand-txt">SEQUENS<small>Architecture</small></span></div>
      <div class="who">${state.me?`<span>${esc(state.me.full_name)} · ${roleName}</span><button id="out">Sign out</button>`:''}</div>
    </div></div>
    ${state.trackerAccess?`<div class="areabar"><div class="wrap">
@@ -300,7 +305,7 @@ function renderSignIn(){
    <div class="center"><div class="signin">
      <div class="logo-lg">${LOGO}</div>
      <div class="brand-txt" style="font-size:1.35rem">SEQUENS</div>
-     <div class="kicker" style="margin-top:2px">Coaching</div>
+     <div class="kicker" style="margin-top:2px">Architecture</div>
      <h2 class="page-h" style="margin:8px 0 16px">Sign in</h2>
      <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="you@school"></div>
      <div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="Your password"></div>
