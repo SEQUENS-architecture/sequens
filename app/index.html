@@ -84,12 +84,126 @@ tr:last-child td{border-bottom:0}
 .rd-body p b{color:var(--ink)}
 .rd.why{background:var(--gold-soft)}
 .rd.why summary::before{color:var(--gold-deep)}
+.areabar{background:var(--card);border-bottom:1px solid var(--rule)}
+.areabar .wrap{display:flex;gap:6px;padding:8px 18px}
+.abtn{font-family:var(--display);font-weight:600;font-size:.85rem;padding:.4rem .9rem;border-radius:8px;border:0;background:transparent;color:var(--ink-soft);cursor:pointer}
+.abtn.on{background:var(--terra-soft);color:var(--terra-deep)}
+.ttabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.ttab{font-family:var(--display);font-weight:600;font-size:.85rem;padding:.5rem .9rem;border-radius:9px;border:1px solid var(--rule);background:#fff;color:var(--ink-soft);cursor:pointer}
+.ttab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 </style>
 </head>
 <body>
 <div id="app"><div class="center muted">Loading...</div></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+// ===================== YEAR 6 TRACKER =====================
+const Y6_SOURCES=['cat4','ngrt','pte','ptm','wr_maths','wr_science','arithmetic','spelling','bugclub'];
+async function loadTracker(){
+  const [cl,pu,ob,ba,as]=await Promise.all([
+    sb.from('y6_classes').select('*').order('name'),
+    sb.from('pupils').select('*').order('full_name'),
+    sb.from('objectives').select('*').order('subject'),
+    sb.from('banding').select('*'),
+    sb.from('assessments').select('*').order('taken_on',{ascending:false})]);
+  state.tracker={classes:cl.data||[],pupils:pu.data||[],objectives:ob.data||[],banding:ba.data||[],assessments:as.data||[]};
+}
+function classById(id){return state.tracker.classes.find(c=>c.id===id);}
+function objById(id){return state.tracker.objectives.find(o=>o.id===id);}
+function pupilsOf(cid){return state.tracker.pupils.filter(p=>p.class_id===cid);}
+function bandFor(src,raw){ if(raw==null||raw==='')return null; const r=parseFloat(raw); const b=state.tracker.banding.find(x=>x.source===src&&r>=x.low&&r<x.high); return b?b.band:null; }
+function dpJ(j){return j==='met'?'Met':j==='working_towards'?'Working towards':'Not yet';}
+async function renderTracker(tab){
+  tab=tab||state._ttab||'year'; state._ttab=tab; const lead=state.me.is_y6_lead;
+  const tabs=[['year','Year view'],['enter','Enter'],['classes','Classes'],['objectives','Objectives'],['banding','Banding']];
+  renderShell(`<div class="kicker">Year 6</div><div class="page-h">Assessment tracker</div>
+    <div class="page-sub">${lead?'All four classes.':'Your class.'}</div>
+    <div class="ttabs">${tabs.map(([k,l])=>`<button class="ttab ${k===tab?'on':''}" data-tab="${k}">${l}</button>`).join('')}</div>
+    <div id="tb"><div class="muted">Loading...</div></div>`);
+  document.querySelectorAll('.ttab').forEach(b=> b.onclick=()=>renderTracker(b.dataset.tab));
+  const body=document.getElementById('tb');
+  ({classes:tClasses,objectives:tObjectives,banding:tBanding,enter:tEnter,year:tYear}[tab]||tYear)(body);
+}
+function tClasses(body){
+  body.innerHTML=`<div class="card"><h3>Add a class</h3><div class="row"><input id="ncn" placeholder="Class name, e.g. 6D" style="flex:1"><button class="btn small" id="ac">Add</button></div><div id="cm"></div></div>`+
+   state.tracker.classes.map(c=>`<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><h3>${esc(c.name)}</h3><span class="small muted">${pupilsOf(c.id).length} pupils</span></div>
+    <div>${pupilsOf(c.id).map(p=>`<span class="tag role" style="margin:2px 3px 2px 0">${esc(p.full_name)}</span>`).join('')||'<span class="muted small">No pupils yet</span>'}</div>
+    <div class="field"><label>Add pupils, one name per line</label><textarea class="bk" data-c="${c.id}"></textarea></div>
+    <button class="btn small ghost ap" data-c="${c.id}">Add pupils</button></div>`).join('');
+  document.getElementById('ac').onclick=async()=>{const n=document.getElementById('ncn').value.trim();if(!n)return;const{error}=await sb.from('y6_classes').insert({school_id:state.me.school_id,name:n});if(error){document.getElementById('cm').innerHTML=`<div class="err">${esc(error.message)}</div>`;return;}await loadTracker();renderTracker('classes');};
+  body.querySelectorAll('.ap').forEach(b=>b.onclick=async()=>{const cid=b.dataset.c;const names=body.querySelector(`.bk[data-c="${cid}"]`).value.split('\n').map(s=>s.trim()).filter(Boolean);if(!names.length)return;const{error}=await sb.from('pupils').insert(names.map(n=>({school_id:state.me.school_id,class_id:cid,full_name:n})));if(error){alert(error.message);return;}await loadTracker();renderTracker('classes');});
+}
+function tObjectives(body){
+  body.innerHTML=`<div class="card"><h3>Add an objective</h3>
+    <div class="field"><label>Subject</label><input id="osj" placeholder="English Writing"></div>
+    <div class="field"><label>Objective</label><input id="ost" placeholder="Use fronted adverbials accurately"></div>
+    <div class="field"><label>Next step for the book (objective based, no pupil work)</label><input id="onx" placeholder="Vary how you open sentences"></div>
+    <div id="om"></div><button class="btn small" id="ao">Add</button></div>`+
+   state.tracker.objectives.map(o=>`<div class="card"><span class="tag area">${esc(o.subject)}</span><p style="margin:6px 0 2px"><strong>${esc(o.statement)}</strong></p>${o.next_step?`<p class="small muted">Next step: ${esc(o.next_step)}</p>`:''}</div>`).join('');
+  document.getElementById('ao').onclick=async()=>{const rec={school_id:state.me.school_id,subject:document.getElementById('osj').value.trim(),statement:document.getElementById('ost').value.trim(),next_step:document.getElementById('onx').value.trim()||null};if(!rec.subject||!rec.statement)return;const{error}=await sb.from('objectives').insert(rec);if(error){document.getElementById('om').innerHTML=`<div class="err">${esc(error.message)}</div>`;return;}await loadTracker();renderTracker('objectives');};
+}
+function tBanding(body){
+  body.innerHTML=`<div class="card"><h3>Add a band</h3><div class="page-sub">Set the raw-score ranges that map to your 1 to 5. Do it once per source.</div>
+    <div class="row"><select id="bs">${Y6_SOURCES.map(s=>`<option>${s}</option>`).join('')}</select>
+     <input id="bb" type="number" min="1" max="5" placeholder="Band 1-5" style="width:100px">
+     <input id="bl" type="number" placeholder="From >=" style="width:100px">
+     <input id="bh" type="number" placeholder="Below <" style="width:100px">
+     <input id="bla" placeholder="Label (optional)" style="flex:1"><button class="btn small" id="ab">Add</button></div><div id="bm"></div></div>`+
+   Y6_SOURCES.map(s=>{const rows=state.tracker.banding.filter(x=>x.source===s).sort((a,b)=>a.band-b.band);return rows.length?`<div class="card"><h3>${s}</h3><table><thead><tr><th>Band</th><th>From</th><th>Below</th><th>Label</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.band}</td><td>${r.low}</td><td>${r.high}</td><td>${esc(r.label||'')}</td></tr>`).join('')}</tbody></table></div>`:'';}).join('');
+  document.getElementById('ab').onclick=async()=>{const rec={school_id:state.me.school_id,source:document.getElementById('bs').value,band:parseInt(document.getElementById('bb').value),low:parseFloat(document.getElementById('bl').value),high:parseFloat(document.getElementById('bh').value),label:document.getElementById('bla').value||null};if(!rec.band||isNaN(rec.low)||isNaN(rec.high)){document.getElementById('bm').innerHTML='<div class="err">Band, from and below are required.</div>';return;}const{error}=await sb.from('banding').insert(rec);if(error){document.getElementById('bm').innerHTML=`<div class="err">${esc(error.message)}</div>`;return;}await loadTracker();renderTracker('banding');};
+}
+function tEnter(body){
+  const kinds=['baseline','termly','unit','weekly','daily']; const srcs=Y6_SOURCES.concat(['objective']); let judgement=null;
+  body.innerHTML=`<div class="card">
+    <div class="field"><label>Class</label><select id="ec">${state.tracker.classes.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
+    <div class="field"><label>Pupil</label><select id="ep"></select></div>
+    <div class="row"><div class="field" style="flex:1"><label>What</label><select id="es">${srcs.map(s=>`<option>${s}</option>`).join('')}</select></div>
+     <div class="field" style="flex:1"><label>Kind</label><select id="ek">${kinds.map(k=>`<option>${k}</option>`).join('')}</select></div></div>
+    <div class="field"><label>Date</label><input id="ed" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+    <div id="sc" class="field"><label>Raw score (SAS or mark)</label><input id="er" type="number"> <span id="ev" class="small muted"></span></div>
+    <div id="ob" class="field" style="display:none"><label>Objective</label><select id="eo">${state.tracker.objectives.map(o=>`<option value="${o.id}">${esc(o.subject)}: ${esc(o.statement)}</option>`).join('')}</select>
+      <div class="pill-row" style="margin-top:6px"><span class="pill" data-j="met">Met</span><span class="pill" data-j="working_towards">Working towards</span><span class="pill" data-j="not_yet">Not yet</span></div></div>
+    <div class="field"><label>Note (optional)</label><input id="en"></div><div id="em"></div><button class="btn" id="sa">Save</button></div>`;
+  const fill=()=>{const cid=document.getElementById('ec').value;document.getElementById('ep').innerHTML=pupilsOf(cid).map(p=>`<option value="${p.id}">${esc(p.full_name)}</option>`).join('');};
+  document.getElementById('ec').onchange=fill; fill();
+  const onS=()=>{const isO=document.getElementById('es').value==='objective';document.getElementById('sc').style.display=isO?'none':'block';document.getElementById('ob').style.display=isO?'block':'none';if(isO)document.getElementById('ek').value='daily';};
+  document.getElementById('es').onchange=onS; onS();
+  document.getElementById('er').oninput=()=>{const b=bandFor(document.getElementById('es').value,document.getElementById('er').value);document.getElementById('ev').textContent=b?`Band ${b}`:'no band rule for this score';};
+  body.querySelectorAll('#ob .pill').forEach(p=>p.onclick=()=>{body.querySelectorAll('#ob .pill').forEach(x=>x.classList.remove('sel'));p.classList.add('sel');judgement=p.dataset.j;});
+  document.getElementById('sa').onclick=async()=>{const s=document.getElementById('es').value;const isO=s==='objective';
+    const rec={school_id:state.me.school_id,pupil_id:document.getElementById('ep').value,source:s,kind:document.getElementById('ek').value,taken_on:document.getElementById('ed').value||null,note:document.getElementById('en').value||null,entered_by:state.me.id};
+    if(isO){rec.objective_id=document.getElementById('eo').value;rec.judgement=judgement;if(!judgement){document.getElementById('em').innerHTML='<div class="err">Choose met, working towards or not yet.</div>';return;}}
+    else{const rv=document.getElementById('er').value;rec.raw_score=rv===''?null:parseFloat(rv);rec.band=bandFor(s,rv);}
+    const{error}=await sb.from('assessments').insert(rec);if(error){document.getElementById('em').innerHTML=`<div class="err">${esc(error.message)}</div>`;return;}
+    await loadTracker();document.getElementById('em').innerHTML='<div class="ok">Saved.</div>';};
+}
+function tYear(body){
+  const sel=state._ysrc||'cat4';
+  body.innerHTML=`<div class="card"><div class="field"><label>Show</label><select id="ys">${Y6_SOURCES.map(s=>`<option ${s===sel?'selected':''}>${s}</option>`).join('')}</select></div>
+    <table><thead><tr><th>Pupil</th><th>Class</th><th>Latest</th><th>Band</th></tr></thead><tbody>
+    ${state.tracker.pupils.map(p=>{const a=state.tracker.assessments.filter(x=>x.pupil_id===p.id&&x.source===sel)[0];const c=classById(p.class_id);
+      return `<tr class="pr" data-p="${p.id}" style="cursor:pointer"><td>${esc(p.full_name)}</td><td>${esc(c?c.name:'')}</td><td>${a?(a.raw_score??'-'):'-'}</td><td>${a&&a.band?`<span class="tag area">Band ${a.band}</span>`:'-'}</td></tr>`;}).join('')||'<tr><td colspan="4" class="muted">No pupils yet. Add classes and pupils first.</td></tr>'}
+    </tbody></table></div>`;
+  document.getElementById('ys').onchange=e=>{state._ysrc=e.target.value;renderTracker('year');};
+  body.querySelectorAll('.pr').forEach(r=>r.onclick=()=>tPupil(r.dataset.p));
+}
+function tPupil(pid){
+  const p=state.tracker.pupils.find(x=>x.id===pid);const c=classById(p.class_id);
+  const mine=state.tracker.assessments.filter(a=>a.pupil_id===pid);
+  const objA=mine.filter(a=>a.source==='objective'&&a.objective_id);
+  const met=objA.filter(a=>a.judgement==='met').map(a=>objById(a.objective_id)).filter(Boolean);
+  const work=objA.filter(a=>a.judgement&&a.judgement!=='met').map(a=>objById(a.objective_id)).filter(Boolean);
+  const fb=(met.length?`Secure: ${[...new Set(met.slice(0,3).map(o=>o.statement))].join('; ')}. `:'')+(work.length?`Next step: ${work[0].next_step||work[0].statement}`:'');
+  renderShell(`<button class="btn small ghost" id="bk">Back</button>
+    <div class="kicker" style="margin-top:12px">${esc(c?c.name:'')}</div><div class="page-h">${esc(p.full_name)}</div>
+    <div class="card"><div class="kicker">For the book</div><p style="margin:4px 0 0">${esc(fb)||'No objective outcomes recorded yet.'}</p></div>
+    <div class="card"><h3>Record</h3><table><thead><tr><th>Date</th><th>What</th><th>Result</th></tr></thead><tbody>
+    ${mine.map(a=>`<tr><td>${fmtDate(a.taken_on)}</td><td>${a.source}${a.source==='objective'&&a.objective_id?': '+esc((objById(a.objective_id)||{}).statement||''):''}</td><td>${a.judgement?dpJ(a.judgement):(a.band?'Band '+a.band:(a.raw_score??''))}</td></tr>`).join('')||'<tr><td colspan="3" class="muted">Nothing recorded.</td></tr>'}
+    </tbody></table></div>`);
+  document.getElementById('bk').onclick=()=>renderTracker('year');
+}
+
+</script>
 <script>
 // ===================== CONFIG (safe to be public) =====================
 const SUPABASE_URL = 'https://ezilsbplvmuomdrkzdsh.supabase.co';
@@ -138,10 +252,15 @@ async function loadContextAndRoute(){
   state.areas = areas||[]; (areas||[]).forEach(a=> state.areasById[a.id]=a);
   state.movesById={}; state.movesByArea={};
   (moves||[]).forEach(m=>{ state.movesById[m.id]=m; (state.movesByArea[m.area_id]=state.movesByArea[m.area_id]||[]).push(m); });
+  state.area = state.area || 'coaching';
+  state.trackerAccess = !!state.me.is_y6_lead;
+  if(!state.trackerAccess){ const { data:tc } = await sb.from('y6_classes').select('id').limit(1); if((tc||[]).length) state.trackerAccess=true; }
+  if(state.trackerAccess) await loadTracker();
   route();
 }
 
 function route(){
+  if(state.area==='tracker' && state.trackerAccess) return renderTracker();
   const r = state.me.role;
   if(r==='teacher') return renderTeacher();
   if(r==='coach') return renderCoach();
@@ -158,7 +277,12 @@ function renderShell(inner){
      <div class="brand">${LOGO}<span class="brand-txt">SEQUENS<small>Coaching</small></span></div>
      <div class="who">${state.me?`<span>${esc(state.me.full_name)} · ${roleName}</span><button id="out">Sign out</button>`:''}</div>
    </div></div>
+   ${state.trackerAccess?`<div class="areabar"><div class="wrap">
+     <button class="abtn ${state.area!=='tracker'?'on':''}" data-area="coaching">Coaching</button>
+     <button class="abtn ${state.area==='tracker'?'on':''}" data-area="tracker">Tracker</button>
+   </div></div>`:''}
    <main><div class="wrap">${inner}</div></main>`;
+  document.querySelectorAll('.abtn').forEach(b=> b.onclick=()=>{ state.area=b.dataset.area; route(); });
   const out = document.getElementById('out');
   if(out) out.onclick = async()=>{ await sb.auth.signOut(); };
 }
