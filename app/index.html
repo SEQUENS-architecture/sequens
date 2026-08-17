@@ -559,24 +559,29 @@ if(window.pdfjsLib){ try{ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.js
 function tImport(body){
   const srcs=Y6_SOURCES.concat(['objective']); const kinds=['baseline','termly','unit','weekly','daily'];
   body.innerHTML=`<div class="card">
-    <div class="page-sub">Upload an export. It is read on your device and nothing is sent anywhere. Check the preview, then import. This replaces typing scores in by hand.</div>
+    <div class="page-sub">Upload one file or several at once. GL PDFs (PTE, NGRT) are recognised automatically. For spreadsheets, set What to the assessment they hold. Everything is read on your device, checked by you, then imported together. No typing.</div>
     <div class="row">
       <div class="field" style="flex:1;min-width:120px"><label>Class</label><select id="imc">${state.tracker.classes.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
-      <div class="field" style="flex:1;min-width:120px"><label>What</label><select id="ims">${srcs.map(s=>`<option>${s}</option>`).join('')}</select></div>
-      <div class="field" style="flex:1;min-width:120px"><label>Kind</label><select id="imk">${kinds.map(k=>`<option ${k==='baseline'?'selected':''}>${k}</option>`).join('')}</select></div>
-      <div class="field" style="flex:1;min-width:120px"><label>Date</label><input id="imd" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field" style="flex:1;min-width:130px"><label>What (spreadsheets)</label><select id="ims">${srcs.map(s=>`<option>${s}</option>`).join('')}</select></div>
+      <div class="field" style="flex:1;min-width:110px"><label>Kind</label><select id="imk">${kinds.map(k=>`<option ${k==='baseline'?'selected':''}>${k}</option>`).join('')}</select></div>
+      <div class="field" style="flex:1;min-width:130px"><label>Date</label><input id="imd" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
     </div>
-    <div class="field"><label>File (Excel, CSV, or a GL PDF such as PTE or NGRT)</label><input id="imf" type="file" accept=".xlsx,.xls,.csv,.pdf"></div>
+    <div class="field"><label>Files (Excel, CSV, or GL PDFs, several at once)</label><input id="imf" type="file" accept=".xlsx,.xls,.csv,.pdf" multiple></div>
     <div id="imprev"></div></div>`;
   document.getElementById('imf').onchange=async(e)=>{
-    const file=e.target.files[0]; if(!file) return; const prev=document.getElementById('imprev');
+    const files=[...e.target.files]; if(!files.length) return; const prev=document.getElementById('imprev');
     prev.innerHTML='<div class="muted">Reading on your device...</div>';
-    try{ const nm=file.name.toLowerCase(); let parsed;
-      if(nm.endsWith('.pdf')) parsed=await parsePDFscores(file);
-      else if(nm.endsWith('.csv')) parsed=await parseCSVgrid(file);
-      else parsed=await parseSheetGrid(file);
-      importPreview(parsed);
-    }catch(err){ prev.innerHTML=`<div class="err">Could not read that file: ${esc((err&&err.message)||err)}</div>`; }
+    try{ let all=[];
+      for(const file of files){ const nm=file.name.toLowerCase(); let parsed;
+        if(nm.endsWith('.pdf')) parsed=await parsePDFscores(file);
+        else if(nm.endsWith('.csv')) parsed=await parseCSVgrid(file);
+        else parsed=await parseSheetGrid(file);
+        const rows = parsed.rows || autoGridRows(parsed.grid);
+        const src = parsed.src || document.getElementById('ims').value;
+        rows.forEach(r=>all.push({source:src, name:r.name, score:r.score, file:file.name}));
+      }
+      renderCombined(all);
+    }catch(err){ prev.innerHTML=`<div class="err">Could not read a file: ${esc((err&&err.message)||err)}</div>`; }
   };
 }
 async function parseSheetGrid(file){ const buf=await file.arrayBuffer(); const wb=XLSX.read(buf,{type:'array'});
@@ -605,46 +610,40 @@ function parseNGRT(lines){ const out=[],seen=new Set();
     if(m){ const name=m[1].trim(), end=+m[4]; if(name.split(' ').length>=2 && !seen.has(name) && end>=40 && end<=160){ seen.add(name); out.push({name,score:end}); } } }
   return out;
 }
-function importPreview(parsed){ const prev=document.getElementById('imprev');
-  if(parsed.rows){ if(parsed.src) document.getElementById('ims').value=parsed.src; return renderImportRows(parsed.rows, prev, parsed.src); }
-  const grid=(parsed.grid||[]).filter(r=>r.some(c=>String(c).trim()!==''));
-  if(!grid.length){ prev.innerHTML='<div class="err">That file looks empty.</div>'; return; }
+function autoGridRows(grid){ grid=(grid||[]).filter(r=>r.some(c=>String(c).trim()!=='')); if(!grid.length) return [];
   let hr=grid.findIndex(r=>r.some(c=>/name|forename|pupil/i.test(String(c)))); if(hr<0) hr=0;
-  const headers=grid[hr].map((c,i)=>({i,label:String(c||('Col '+(i+1)))}));
-  const g=(re,fb)=>headers.find(h=>re.test(h.label))||fb;
-  const gn=g(/forename|^name$|pupil name|student name/i, g(/name/i, headers[0]));
-  const gs=g(/surname|last name/i, null);
-  const gsc=g(/^sas$|score|mark|standard age/i, headers[headers.length-1]);
-  const mk=cur=>headers.map(h=>`<option value="${h.i}" ${h.i===cur?'selected':''}>${esc(h.label)}</option>`).join('');
-  prev.innerHTML=`<div class="dash"></div><div class="row">
-    <div class="field" style="flex:1;min-width:120px"><label>Name column</label><select id="mcn">${mk(gn.i)}</select></div>
-    <div class="field" style="flex:1;min-width:120px"><label>Surname column</label><select id="mcs"><option value="-1">none</option>${mk(gs?gs.i:-1)}</select></div>
-    <div class="field" style="flex:1;min-width:120px"><label>Score column</label><select id="mcsc">${mk(gsc.i)}</select></div>
-  </div><div id="mapprev"></div>`;
-  const build=()=>{ const nc=+document.getElementById('mcn').value, sc=+document.getElementById('mcs').value, scc=+document.getElementById('mcsc').value; const rows=[];
-    for(let r=hr+1;r<grid.length;r++){ let name=String(grid[r][nc]||'').trim(); if(sc>=0 && grid[r][sc]) name=(name+' '+String(grid[r][sc]).trim()).trim(); const raw=grid[r][scc];
-      if(name && !/average/i.test(name) && raw!=='' && raw!=null && !isNaN(parseFloat(raw))) rows.push({name,score:parseFloat(raw)}); }
-    renderImportRows(rows, document.getElementById('mapprev')); };
-  ['mcn','mcs','mcsc'].forEach(id=>document.getElementById(id).onchange=build); build();
+  const H=grid[hr].map(c=>String(c||''));
+  let nc=H.findIndex(h=>/forename|^name$|pupil name|student name/i.test(h)); if(nc<0) nc=H.findIndex(h=>/name/i.test(h)); if(nc<0) nc=0;
+  let sur=H.findIndex(h=>/surname|last name/i.test(h));
+  let scc=H.findIndex(h=>/^sas$|score|mark|standard age/i.test(h)); if(scc<0) scc=H.length-1;
+  const rows=[]; for(let r=hr+1;r<grid.length;r++){ let name=String(grid[r][nc]||'').trim(); if(sur>=0&&grid[r][sur]) name=(name+' '+String(grid[r][sur]).trim()).trim(); const raw=grid[r][scc];
+    if(name && !/average/i.test(name) && raw!=='' && raw!=null && !isNaN(parseFloat(raw))) rows.push({name,score:parseFloat(raw)}); }
+  return rows;
 }
-function renderImportRows(rows, container, forceSrc){
-  const cid=document.getElementById('imc').value; const pupils=pupilsOf(cid);
-  const norm=s=>String(s||'').toLowerCase().replace(/[^a-z]/g,'');
-  const matchP=name=>{ const n=norm(name); return pupils.find(p=>norm(p.full_name)===n)||pupils.find(p=>{const q=norm(p.full_name);return q&&(q.includes(n)||n.includes(q));}); };
-  const src=forceSrc||document.getElementById('ims').value;
-  if(!rows||!rows.length){ container.innerHTML='<div class="err">No rows found. If this is a spreadsheet, check the column pickers above.</div>'; return; }
-  container.innerHTML=`<div class="dash"></div><p class="small muted">${rows.length} parsed for <b>${esc(src)}</b>. Check the pupil matches, then import. Nothing is written until you press Import.</p>
-    <table><thead><tr><th>From file</th><th>Pupil</th><th>Score</th><th>Band</th></tr></thead><tbody>
-    ${rows.map((r,i)=>{ const p=matchP(r.name); const band=bandFor(src,r.score);
-      return `<tr><td>${esc(r.name)}</td><td><select class="mp" data-i="${i}"><option value="">skip</option>${pupils.map(pp=>`<option value="${pp.id}" ${p&&p.id===pp.id?'selected':''}>${esc(pp.full_name)}</option>`).join('')}<option value="__new">add "${esc(r.name)}"</option></select></td><td>${r.score}</td><td>${band?'Band '+band:'-'}</td></tr>`; }).join('')}
+const _norm=s=>String(s||'').toLowerCase().replace(/[^a-z]/g,'');
+function renderCombined(all){ const prev=document.getElementById('imprev'); const cid=document.getElementById('imc').value; const pupils=pupilsOf(cid);
+  const matchP=name=>{ const n=_norm(name); return pupils.find(p=>_norm(p.full_name)===n)||pupils.find(p=>{const q=_norm(p.full_name);return q&&(q.includes(n)||n.includes(q));}); };
+  if(!all.length){ prev.innerHTML='<div class="err">No rows found in those files. If it is a spreadsheet, check it has a name column and a score column.</div>'; return; }
+  const fileCount=new Set(all.map(r=>r.file)).size;
+  prev.innerHTML=`<div class="dash"></div>
+    <p class="small muted">${all.length} rows from ${fileCount} file(s). On a first import, "Add all as new" creates the pupils. Nothing is written until you press Import.</p>
+    <div class="row" style="margin-bottom:10px"><button class="btn small ghost" id="allmatch">Match all where found</button><button class="btn small ghost" id="allnew">Add all as new pupils</button><button class="btn small ghost" id="allskip">Skip all</button></div>
+    <table><thead><tr><th>What</th><th>From file</th><th>Pupil</th><th>Score</th><th>Band</th></tr></thead><tbody>
+    ${all.map((r,i)=>{ const p=matchP(r.name); const band=bandFor(r.source,r.score);
+      return `<tr><td class="small">${esc(r.source)}</td><td>${esc(r.name)}</td><td><select class="mp" data-i="${i}"><option value="">skip</option>${pupils.map(pp=>`<option value="${pp.id}" ${p&&p.id===pp.id?'selected':''}>${esc(pp.full_name)}</option>`).join('')}<option value="__new" ${!p?'selected':''}>add "${esc(r.name)}"</option></select></td><td>${r.score}</td><td>${band?'Band '+band:'-'}</td></tr>`; }).join('')}
     </tbody></table><div id="imm"></div><button class="btn" id="doimport">Import</button>`;
+  const sels=()=>[...prev.querySelectorAll('.mp')];
+  const setAll=mode=>{ sels().forEach((s,i)=>{ if(mode==='match'){ const p=matchP(all[i].name); s.value=p?p.id:'__new'; } else if(mode==='new'){ s.value='__new'; } else { s.value=''; } }); };
+  document.getElementById('allmatch').onclick=()=>setAll('match');
+  document.getElementById('allnew').onclick=()=>setAll('new');
+  document.getElementById('allskip').onclick=()=>setAll('skip');
   document.getElementById('doimport').onclick=async(e)=>{ e.target.disabled=true; e.target.textContent='Importing...';
-    const kind=document.getElementById('imk').value, date=document.getElementById('imd').value||null; const sels=[...container.querySelectorAll('.mp')]; const inserts=[];
-    for(let i=0;i<rows.length;i++){ const v=sels[i].value; if(!v) continue; let pid=v;
-      if(v==='__new'){ const {data,error}=await sb.from('pupils').insert({school_id:state.me.school_id,class_id:cid,full_name:rows[i].name}).select().single(); if(error) continue; pid=data.id; }
-      inserts.push({school_id:state.me.school_id,pupil_id:pid,source:src,kind,taken_on:date,raw_score:rows[i].score,band:bandFor(src,rows[i].score),entered_by:state.me.id}); }
+    const kind=document.getElementById('imk').value, date=document.getElementById('imd').value||null; const S=sels(); const newCache={}; const inserts=[];
+    for(let i=0;i<all.length;i++){ const v=S[i].value; if(!v) continue; let pid=v;
+      if(v==='__new'){ const key=_norm(all[i].name); if(newCache[key]) pid=newCache[key]; else { const {data,error}=await sb.from('pupils').insert({school_id:state.me.school_id,class_id:cid,full_name:all[i].name}).select().single(); if(error) continue; pid=data.id; newCache[key]=pid; } }
+      inserts.push({school_id:state.me.school_id,pupil_id:pid,source:all[i].source,kind,taken_on:date,raw_score:all[i].score,band:bandFor(all[i].source,all[i].score),entered_by:state.me.id}); }
     if(inserts.length){ const {error}=await sb.from('assessments').insert(inserts); if(error){ document.getElementById('imm').innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; e.target.textContent='Import'; return; } }
-    await loadTracker(); document.getElementById('imm').innerHTML=`<div class="ok">Imported ${inserts.length} results into the tracker.</div>`; e.target.textContent='Imported'; };
+    await loadTracker(); document.getElementById('imm').innerHTML=`<div class="ok">Imported ${inserts.length} results, pupils created where needed. Check the Year view.</div>`; e.target.textContent='Imported'; };
 }
 
 </script>
