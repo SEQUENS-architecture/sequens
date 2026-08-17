@@ -92,6 +92,9 @@ tr:last-child td{border-bottom:0}
 .ttab{font-family:var(--display);font-weight:600;font-size:.85rem;padding:.5rem .9rem;border-radius:9px;border:1px solid var(--rule);background:#fff;color:var(--ink-soft);cursor:pointer}
 .ttab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 </head>
 <body>
 <div id="app"><div class="center muted">Loading...</div></div>
@@ -461,7 +464,7 @@ function dpJ(j){return j==='met'?'Met':j==='working_towards'?'Working towards':'
 async function renderTracker(tab){
   tab=tab||state._ttab||'year'; state._ttab=tab; const lead=state.me.is_y6_lead;
   if(!state.tracker) state.tracker={classes:[],pupils:[],objectives:[],banding:[],assessments:[]};
-  const tabs=[['year','Year view'],['enter','Enter'],['classes','Classes'],['objectives','Objectives'],['banding','Banding']];
+  const tabs=[['year','Year view'],['import','Import'],['enter','Enter'],['classes','Classes'],['objectives','Objectives'],['banding','Banding']];
   renderShell(`<div class="kicker">Year 6</div><div class="page-h">Assessment tracker</div>
     <div class="page-sub">${lead?'All four classes.':'Your class.'}</div>
     ${state.trackerErr?`<div class="err">Tracker had trouble loading. ${esc(state.trackerErr)}</div>`:''}
@@ -469,7 +472,7 @@ async function renderTracker(tab){
     <div id="tb"><div class="muted">Loading...</div></div>`);
   document.querySelectorAll('.ttab').forEach(b=> b.onclick=()=>renderTracker(b.dataset.tab));
   const body=document.getElementById('tb');
-  try { ({classes:tClasses,objectives:tObjectives,banding:tBanding,enter:tEnter,year:tYear}[tab]||tYear)(body); }
+  try { ({classes:tClasses,objectives:tObjectives,banding:tBanding,enter:tEnter,year:tYear,import:tImport}[tab]||tYear)(body); }
   catch(e){ console.error('tracker view error', e); body.innerHTML=`<div class="err">This tab hit an error: ${esc((e&&e.message)||e)}</div>`; }
 }
 function tClasses(body){
@@ -550,6 +553,100 @@ function tPupil(pid){
     </tbody></table></div>`);
   document.getElementById('bk').onclick=()=>renderTracker('year');
 }
+
+// ===================== TRACKER IMPORT (all parsing local, nothing sent anywhere) =====================
+if(window.pdfjsLib){ try{ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js'; }catch(e){} }
+function tImport(body){
+  const srcs=Y6_SOURCES.concat(['objective']); const kinds=['baseline','termly','unit','weekly','daily'];
+  body.innerHTML=`<div class="card">
+    <div class="page-sub">Upload an export. It is read on your device and nothing is sent anywhere. Check the preview, then import. This replaces typing scores in by hand.</div>
+    <div class="row">
+      <div class="field" style="flex:1;min-width:120px"><label>Class</label><select id="imc">${state.tracker.classes.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
+      <div class="field" style="flex:1;min-width:120px"><label>What</label><select id="ims">${srcs.map(s=>`<option>${s}</option>`).join('')}</select></div>
+      <div class="field" style="flex:1;min-width:120px"><label>Kind</label><select id="imk">${kinds.map(k=>`<option ${k==='baseline'?'selected':''}>${k}</option>`).join('')}</select></div>
+      <div class="field" style="flex:1;min-width:120px"><label>Date</label><input id="imd" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+    </div>
+    <div class="field"><label>File (Excel, CSV, or a GL PDF such as PTE or NGRT)</label><input id="imf" type="file" accept=".xlsx,.xls,.csv,.pdf"></div>
+    <div id="imprev"></div></div>`;
+  document.getElementById('imf').onchange=async(e)=>{
+    const file=e.target.files[0]; if(!file) return; const prev=document.getElementById('imprev');
+    prev.innerHTML='<div class="muted">Reading on your device...</div>';
+    try{ const nm=file.name.toLowerCase(); let parsed;
+      if(nm.endsWith('.pdf')) parsed=await parsePDFscores(file);
+      else if(nm.endsWith('.csv')) parsed=await parseCSVgrid(file);
+      else parsed=await parseSheetGrid(file);
+      importPreview(parsed);
+    }catch(err){ prev.innerHTML=`<div class="err">Could not read that file: ${esc((err&&err.message)||err)}</div>`; }
+  };
+}
+async function parseSheetGrid(file){ const buf=await file.arrayBuffer(); const wb=XLSX.read(buf,{type:'array'});
+  let best=wb.SheetNames[0];
+  for(const sn of wb.SheetNames){ const g=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:''}); if(g.some(r=>r.some(c=>/name|forename|surname|pupil/i.test(String(c))))){ best=sn; break; } }
+  return {grid:XLSX.utils.sheet_to_json(wb.Sheets[best],{header:1,defval:''})};
+}
+async function parseCSVgrid(file){ const text=await file.text(); const out=Papa.parse(text,{skipEmptyLines:true}); return {grid:out.data}; }
+async function parsePDFscores(file){ const buf=await file.arrayBuffer(); const pdf=await pdfjsLib.getDocument({data:buf}).promise; const lines=[];
+  for(let i=1;i<=pdf.numPages;i++){ const pg=await pdf.getPage(i); const tc=await pg.getTextContent(); const byY={};
+    tc.items.forEach(it=>{ const y=Math.round(it.transform[5]); (byY[y]=byY[y]||[]).push([it.transform[4],it.str]); });
+    Object.keys(byY).map(Number).sort((a,b)=>b-a).forEach(y=>{ const line=byY[y].sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join(' ').replace(/\s+/g,' ').trim(); if(line) lines.push(line); }); }
+  const text=lines.join('\n');
+  if(/NGRT/i.test(text)) return {rows:parseNGRT(lines), src:'ngrt'};
+  if(/Progress Test in English|PTE/i.test(text)) return {rows:parsePTE(lines), src:'pte'};
+  return {rows:[]};
+}
+function parsePTE(lines){ const out=[],seen=new Set();
+  for(const l of lines){ if(/\d{2}\/\d{2}\/\d{4}/.test(l)) continue;
+    const m=l.match(/^([A-Za-z][A-Za-z'’.\- ]+?)\s+\d{1,2}:\d{2}\s+\d+\s+(\d{2,3})\b/);
+    if(m){ const name=m[1].trim(), sas=+m[2]; if(name.split(' ').length>=2 && !seen.has(name) && sas>=40 && sas<=160){ seen.add(name); out.push({name,score:sas}); } } }
+  return out;
+}
+function parseNGRT(lines){ const out=[],seen=new Set();
+  for(const l of lines){ const m=l.match(/^([A-Za-z][A-Za-z'’.\- ]+?)\s+(\d{2,3})\s+(\d{2,3})\s*\([^)]*\)\s+(\d{2,3})\s*\(/);
+    if(m){ const name=m[1].trim(), end=+m[4]; if(name.split(' ').length>=2 && !seen.has(name) && end>=40 && end<=160){ seen.add(name); out.push({name,score:end}); } } }
+  return out;
+}
+function importPreview(parsed){ const prev=document.getElementById('imprev');
+  if(parsed.rows){ if(parsed.src) document.getElementById('ims').value=parsed.src; return renderImportRows(parsed.rows, prev, parsed.src); }
+  const grid=(parsed.grid||[]).filter(r=>r.some(c=>String(c).trim()!==''));
+  if(!grid.length){ prev.innerHTML='<div class="err">That file looks empty.</div>'; return; }
+  let hr=grid.findIndex(r=>r.some(c=>/name|forename|pupil/i.test(String(c)))); if(hr<0) hr=0;
+  const headers=grid[hr].map((c,i)=>({i,label:String(c||('Col '+(i+1)))}));
+  const g=(re,fb)=>headers.find(h=>re.test(h.label))||fb;
+  const gn=g(/forename|^name$|pupil name|student name/i, g(/name/i, headers[0]));
+  const gs=g(/surname|last name/i, null);
+  const gsc=g(/^sas$|score|mark|standard age/i, headers[headers.length-1]);
+  const mk=cur=>headers.map(h=>`<option value="${h.i}" ${h.i===cur?'selected':''}>${esc(h.label)}</option>`).join('');
+  prev.innerHTML=`<div class="dash"></div><div class="row">
+    <div class="field" style="flex:1;min-width:120px"><label>Name column</label><select id="mcn">${mk(gn.i)}</select></div>
+    <div class="field" style="flex:1;min-width:120px"><label>Surname column</label><select id="mcs"><option value="-1">none</option>${mk(gs?gs.i:-1)}</select></div>
+    <div class="field" style="flex:1;min-width:120px"><label>Score column</label><select id="mcsc">${mk(gsc.i)}</select></div>
+  </div><div id="mapprev"></div>`;
+  const build=()=>{ const nc=+document.getElementById('mcn').value, sc=+document.getElementById('mcs').value, scc=+document.getElementById('mcsc').value; const rows=[];
+    for(let r=hr+1;r<grid.length;r++){ let name=String(grid[r][nc]||'').trim(); if(sc>=0 && grid[r][sc]) name=(name+' '+String(grid[r][sc]).trim()).trim(); const raw=grid[r][scc];
+      if(name && !/average/i.test(name) && raw!=='' && raw!=null && !isNaN(parseFloat(raw))) rows.push({name,score:parseFloat(raw)}); }
+    renderImportRows(rows, document.getElementById('mapprev')); };
+  ['mcn','mcs','mcsc'].forEach(id=>document.getElementById(id).onchange=build); build();
+}
+function renderImportRows(rows, container, forceSrc){
+  const cid=document.getElementById('imc').value; const pupils=pupilsOf(cid);
+  const norm=s=>String(s||'').toLowerCase().replace(/[^a-z]/g,'');
+  const matchP=name=>{ const n=norm(name); return pupils.find(p=>norm(p.full_name)===n)||pupils.find(p=>{const q=norm(p.full_name);return q&&(q.includes(n)||n.includes(q));}); };
+  const src=forceSrc||document.getElementById('ims').value;
+  if(!rows||!rows.length){ container.innerHTML='<div class="err">No rows found. If this is a spreadsheet, check the column pickers above.</div>'; return; }
+  container.innerHTML=`<div class="dash"></div><p class="small muted">${rows.length} parsed for <b>${esc(src)}</b>. Check the pupil matches, then import. Nothing is written until you press Import.</p>
+    <table><thead><tr><th>From file</th><th>Pupil</th><th>Score</th><th>Band</th></tr></thead><tbody>
+    ${rows.map((r,i)=>{ const p=matchP(r.name); const band=bandFor(src,r.score);
+      return `<tr><td>${esc(r.name)}</td><td><select class="mp" data-i="${i}"><option value="">skip</option>${pupils.map(pp=>`<option value="${pp.id}" ${p&&p.id===pp.id?'selected':''}>${esc(pp.full_name)}</option>`).join('')}<option value="__new">add "${esc(r.name)}"</option></select></td><td>${r.score}</td><td>${band?'Band '+band:'-'}</td></tr>`; }).join('')}
+    </tbody></table><div id="imm"></div><button class="btn" id="doimport">Import</button>`;
+  document.getElementById('doimport').onclick=async(e)=>{ e.target.disabled=true; e.target.textContent='Importing...';
+    const kind=document.getElementById('imk').value, date=document.getElementById('imd').value||null; const sels=[...container.querySelectorAll('.mp')]; const inserts=[];
+    for(let i=0;i<rows.length;i++){ const v=sels[i].value; if(!v) continue; let pid=v;
+      if(v==='__new'){ const {data,error}=await sb.from('pupils').insert({school_id:state.me.school_id,class_id:cid,full_name:rows[i].name}).select().single(); if(error) continue; pid=data.id; }
+      inserts.push({school_id:state.me.school_id,pupil_id:pid,source:src,kind,taken_on:date,raw_score:rows[i].score,band:bandFor(src,rows[i].score),entered_by:state.me.id}); }
+    if(inserts.length){ const {error}=await sb.from('assessments').insert(inserts); if(error){ document.getElementById('imm').innerHTML=`<div class="err">${esc(error.message)}</div>`; e.target.disabled=false; e.target.textContent='Import'; return; } }
+    await loadTracker(); document.getElementById('imm').innerHTML=`<div class="ok">Imported ${inserts.length} results into the tracker.</div>`; e.target.textContent='Imported'; };
+}
+
 </script>
 </body>
 </html>
