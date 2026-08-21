@@ -91,6 +91,12 @@ tr:last-child td{border-bottom:0}
 .ttabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .ttab{font-family:var(--display);font-weight:600;font-size:.85rem;padding:.5rem .9rem;border-radius:9px;border:1px solid var(--rule);background:#fff;color:var(--ink-soft);cursor:pointer}
 .ttab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.matrix{width:100%;border-collapse:collapse}
+.matrix th,.matrix td{white-space:nowrap;text-align:center;padding:9px 10px;border-bottom:1px solid var(--rule);font-size:.86rem}
+.matrix th{font-family:var(--display);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper)}
+.matrix td:first-child,.matrix th:first-child{text-align:left}
+.bandcell{font-weight:600}
+.b1{background:#F7E0DC;color:#B23A2E}.b2{background:#F5EAD2;color:#8A6A18}.b3{background:#EAF2F8;color:#2C6E9B}.b4{background:#E4F0E8;color:#2C6B4F}.b5{background:#CDE8D6;color:#1C5A3E}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -181,6 +187,7 @@ function renderShell(inner){
    ${state.trackerAccess?`<div class="areabar"><div class="wrap">
      <button class="abtn ${state.area!=='tracker'?'on':''}" data-area="coaching">Coaching</button>
      <button class="abtn ${state.area==='tracker'?'on':''}" data-area="tracker">Tracker</button>
+     <a class="abtn" href="/app/lesson-engine.html" style="text-decoration:none;display:inline-flex;align-items:center">Lesson Engine</a>
    </div></div>`:''}
    <main><div class="wrap">${inner}</div></main>`;
   document.querySelectorAll('.abtn').forEach(b=> b.onclick=()=>{ try{ state.area=b.dataset.area; route(); }catch(e){ console.error('area switch error', e); app.innerHTML=`<div class="center"><div class="err">${esc((e&&e.message)||e)}</div></div>`; } });
@@ -196,31 +203,45 @@ const fmtDate = d => d ? new Date(d).toLocaleDateString('en-GB',{day:'numeric',m
 
 // ===================== SIGN IN =====================
 function renderSignIn(){
-  state.me=null;
-  app.innerHTML = `
-   <div class="center"><div class="signin">
-     <div class="logo-lg">${LOGO}</div>
-     <div class="brand-txt" style="font-size:1.35rem">SEQUENS</div>
-     <div class="kicker" style="margin-top:2px">Architecture</div>
-     <h2 class="page-h" style="margin:8px 0 16px">Sign in</h2>
-     <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="you@school"></div>
-     <div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="Your password"></div>
-     <div id="msg"></div>
-     <button class="btn" id="go" style="width:100%;justify-content:center;margin-top:6px">Sign in</button>
-     <p class="small muted" style="margin-top:14px">Real teachers will sign in with a one-time email code. Password is for setup and testing.</p>
-   </div></div>`;
-  const go=document.getElementById('go'), msg=document.getElementById('msg');
-  const submit=async()=>{
-    const email=document.getElementById('email').value.trim();
-    const password=document.getElementById('pw').value;
-    if(!email||!password){ msg.innerHTML='<div class="err">Enter your email and password.</div>'; return; }
-    go.disabled=true; go.textContent='Signing in...';
-    const { error } = await sb.auth.signInWithPassword({ email, password });
-    if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; go.disabled=false; go.textContent='Sign in'; return; }
-    await loadContextAndRoute();
+  state.me=null; let mode='code', sent=false, keepEmail='';
+  const draw=()=>{
+    app.innerHTML = `
+     <div class="center"><div class="signin">
+       <div class="logo-lg">${LOGO}</div>
+       <div class="brand-txt" style="font-size:1.35rem">SEQUENS</div>
+       <div class="kicker" style="margin-top:2px">Architecture</div>
+       <h2 class="page-h" style="margin:8px 0 16px">Sign in</h2>
+       <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="you@school"></div>
+       ${mode==='pw'?`<div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password"></div>`:''}
+       ${mode==='code'&&sent?`<div class="field"><label>6-digit code (check your email)</label><input id="code" inputmode="numeric" autocomplete="one-time-code" placeholder="123456"></div>`:''}
+       <div id="msg"></div>
+       <button class="btn" id="go" style="width:100%;justify-content:center;margin-top:6px">${mode==='pw'?'Sign in':(sent?'Sign in':'Email me a code')}</button>
+       <p class="small muted" style="margin-top:12px"><a id="toggle" href="#" style="color:var(--terra-deep)">${mode==='pw'?'Use an email code instead':'Use a password instead'}</a></p>
+       <p class="small muted">Not set up yet? <a href="/demo/" style="color:var(--terra-deep)">See the demonstration</a>.</p>
+     </div></div>`;
+    const em=document.getElementById('email'); em.value=keepEmail;
+    const go=document.getElementById('go'), msg=document.getElementById('msg');
+    document.getElementById('toggle').onclick=(e)=>{ e.preventDefault(); keepEmail=em.value.trim(); mode=(mode==='pw'?'code':'pw'); sent=false; draw(); };
+    go.onclick=async()=>{
+      keepEmail=em.value.trim();
+      if(!keepEmail){ msg.innerHTML='<div class="err">Enter your email.</div>'; return; }
+      go.disabled=true;
+      if(mode==='pw'){ go.textContent='Signing in...';
+        const { error } = await sb.auth.signInWithPassword({ email:keepEmail, password:document.getElementById('pw').value });
+        if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; go.disabled=false; go.textContent='Sign in'; return; }
+        return loadContextAndRoute(); }
+      if(!sent){ go.textContent='Sending...';
+        const { error } = await sb.auth.signInWithOtp({ email:keepEmail, options:{ shouldCreateUser:false } });
+        if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; go.disabled=false; go.textContent='Email me a code'; return; }
+        sent=true; draw(); document.getElementById('msg').innerHTML='<div class="ok">Code sent. Check your email, then enter it above.</div>'; return; }
+      go.textContent='Signing in...';
+      const { error } = await sb.auth.verifyOtp({ email:keepEmail, token:document.getElementById('code').value.trim(), type:'email' });
+      if(error){ msg.innerHTML=`<div class="err">${esc(error.message)}</div>`; go.disabled=false; go.textContent='Sign in'; return; }
+      return loadContextAndRoute();
+    };
+    app.querySelectorAll('input').forEach(inp=> inp.addEventListener('keydown',e=>{ if(e.key==='Enter') go.click(); }));
   };
-  go.onclick=submit;
-  document.getElementById('pw').addEventListener('keydown',e=>{ if(e.key==='Enter') submit(); });
+  draw();
 }
 
 // ===================== TEACHER =====================
@@ -230,7 +251,7 @@ async function renderTeacher(){
   const body=document.getElementById('body');
   if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
   const c = (cycles||[])[0];
-  if(!c){ body.innerHTML=`<div class="card"><div class="empty">No active focus yet.<br><span class="small">Your coach will open one with you.</span></div></div>`; return; }
+  if(!c){ body.innerHTML=`<div class="card"><div class="empty">No active focus yet.<br><span class="small">Your coach opens one with you, in person. Nothing to do here until then.</span></div></div>`; return; }
   const area = state.areasById[c.area_id];
   body.innerHTML = `
    <div class="card">
@@ -286,7 +307,7 @@ async function renderCoach(){
   const { data:pairings, error } = await sb.from('pairings').select('*').is('ended_on',null);
   if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
   const mine=(pairings||[]).filter(p=>p.coach_id===state.me.id);
-  if(!mine.length){ body.innerHTML=`<div class="card"><div class="empty">No teachers paired to you yet.</div></div>`; return; }
+  if(!mine.length){ body.innerHTML=`<div class="card"><div class="empty">No teachers paired to you yet.<br><span class="small">Your lead coach links teachers to you, then each one appears here with their current move.</span></div></div>`; return; }
   const { data:cycles } = await sb.from('cycles').select('*');
   (cycles||[]).sort((a,b)=> new Date(a.opened_at)-new Date(b.opened_at));
   const live={}, closed={}, lastArea={};
@@ -416,18 +437,31 @@ function showWalkProfile(p, marks){
 
 // ===================== LEAD COACH =====================
 async function renderLead(){
-  renderShell(`<div class="kicker">Calibration</div><div class="page-h">Coaching across the school</div><div class="page-sub">Every live cycle, so coaching stays consistent.</div><div id="body"><div class="muted">Loading...</div></div>`);
+  renderShell(`<div class="kicker">Lead coach</div><div class="page-h">Coaching across the school</div><div class="page-sub">Pair your teachers, then keep an eye on consistency.</div><div id="body"><div class="muted">Loading...</div></div>`);
   const body=document.getElementById('body');
-  const { data:cycles, error } = await sb.from('cycles').select('*').is('closed_at',null);
-  if(error){ body.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
+  const { data:cycles } = await sb.from('cycles').select('*').is('closed_at',null);
   const { data:pairings } = await sb.from('pairings').select('*').is('ended_on',null);
   const pairById={}; (pairings||[]).forEach(p=> pairById[p.id]=p);
-  if(!cycles || !cycles.length){ body.innerHTML=`<div class="card"><div class="empty">No live cycles yet.</div></div>`; return; }
-  body.innerHTML = `<table><thead><tr><th>Teacher</th><th>Coach</th><th>Area</th><th>Move</th><th>Reps</th></tr></thead><tbody>${
-    cycles.map(c=>{ const p=pairById[c.pairing_id]||{}; const t=state.peopleById[p.teacher_id]||{}; const co=state.peopleById[p.coach_id]||{}; const a=state.areasById[c.area_id]||{};
-      return `<tr><td>${esc(t.full_name||'')}</td><td>${esc(co.full_name||'')}</td><td>${esc(a.friendly||'')}</td><td>${esc(c.move_text)}</td><td>${c.reps}/${c.gate}</td></tr>`;
-    }).join('')
-  }</tbody></table>`;
+  const teachers=Object.values(state.peopleById).filter(p=>p.role==='teacher');
+  const coaches=Object.values(state.peopleById).filter(p=>p.role==='coach'||p.role==='lead_coach');
+  const paired=new Set((pairings||[]).map(p=>p.teacher_id));
+  body.innerHTML = `
+    <div class="card"><h3>Pair a teacher with a coach</h3>
+      <div class="row">
+        <div class="field" style="flex:1;min-width:150px"><label>Teacher</label><select id="pt">${teachers.map(x=>`<option value="${x.id}" ${paired.has(x.id)?'disabled':''}>${esc(x.full_name)}${paired.has(x.id)?' (paired)':''}</option>`).join('')||'<option value="">no teachers yet</option>'}</select></div>
+        <div class="field" style="flex:1;min-width:150px"><label>Coach</label><select id="pc">${coaches.map(x=>`<option value="${x.id}">${esc(x.full_name)}</option>`).join('')||'<option value="">no coaches yet</option>'}</select></div>
+      </div><div id="pmsg"></div><button class="btn small" id="pair">Create pairing</button></div>
+    <div class="card"><h3>Current pairings</h3>${(pairings||[]).length?`<table><thead><tr><th>Teacher</th><th>Coach</th><th></th></tr></thead><tbody>${(pairings||[]).map(p=>`<tr><td>${esc((state.peopleById[p.teacher_id]||{}).full_name||'')}</td><td>${esc((state.peopleById[p.coach_id]||{}).full_name||'')}</td><td><a href="#" class="endp" data-id="${p.id}" style="color:var(--red)">end</a></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No pairings yet. Create one above.</div>'}</div>
+    <div class="card"><h3>Live coaching</h3>${(cycles&&cycles.length)?`<table><thead><tr><th>Teacher</th><th>Coach</th><th>Area</th><th>Move</th><th>Reps</th></tr></thead><tbody>${cycles.map(c=>{const p=pairById[c.pairing_id]||{};const tt=state.peopleById[p.teacher_id]||{};const co=state.peopleById[p.coach_id]||{};const a=state.areasById[c.area_id]||{};return `<tr><td>${esc(tt.full_name||'')}</td><td>${esc(co.full_name||'')}</td><td>${esc(a.friendly||'')}</td><td>${esc(c.move_text)}</td><td>${c.reps}/${c.gate}</td></tr>`;}).join('')}</tbody></table>`:'<div class="empty">No live cycles yet.</div>'}</div>`;
+  document.getElementById('pair').onclick=async()=>{
+    const tid=document.getElementById('pt').value, cid=document.getElementById('pc').value; const m=document.getElementById('pmsg');
+    if(!tid||!cid){ m.innerHTML='<div class="err">Pick a teacher and a coach.</div>'; return; }
+    if(tid===cid){ m.innerHTML='<div class="err">Teacher and coach must be different people.</div>'; return; }
+    const { error }=await sb.from('pairings').insert({ school_id:state.me.school_id, teacher_id:tid, coach_id:cid });
+    if(error){ m.innerHTML=`<div class="err">${esc(error.message)}</div>`; return; }
+    renderLead();
+  };
+  body.querySelectorAll('.endp').forEach(a=> a.onclick=async(e)=>{ e.preventDefault(); const { error }=await sb.from('pairings').update({ ended_on:new Date().toISOString().slice(0,10) }).eq('id',a.dataset.id); if(!error) renderLead(); });
 }
 
 // ===================== SENIOR LEADER (the wall view) =====================
@@ -467,6 +501,7 @@ async function renderTracker(tab){
   const tabs=[['year','Year view'],['import','Import'],['enter','Enter'],['classes','Classes'],['objectives','Objectives'],['banding','Banding']];
   renderShell(`<div class="kicker">Year 6</div><div class="page-h">Assessment tracker</div>
     <div class="page-sub">${lead?'All four classes.':'Your class.'}</div>
+    <p class="small muted" style="margin:-14px 0 16px">Pupil data stays in your school's database (UK region). Files are read on your device. Nothing is sent to any AI.</p>
     ${state.trackerErr?`<div class="err">Tracker had trouble loading. ${esc(state.trackerErr)}</div>`:''}
     <div class="ttabs">${tabs.map(([k,l])=>`<button class="ttab ${k===tab?'on':''}" data-tab="${k}">${l}</button>`).join('')}</div>
     <div id="tb"><div class="muted">Loading...</div></div>`);
@@ -528,14 +563,20 @@ function tEnter(body){
     const{error}=await sb.from('assessments').insert(rec);if(error){document.getElementById('em').innerHTML=`<div class="err">${esc(error.message)}</div>`;return;}
     await loadTracker();document.getElementById('em').innerHTML='<div class="ok">Saved.</div>';};
 }
+function bandCell(b){ return b==null?'<td class="bandcell">-</td>':`<td class="bandcell b${Math.round(b)}">${Number.isInteger(b)?b:b.toFixed(1)}</td>`; }
+function latestBand(pid,src){ const a=state.tracker.assessments.filter(x=>x.pupil_id===pid&&x.source===src&&x.band!=null); return a.length?a[0].band:null; }
 function tYear(body){
-  const sel=state._ysrc||'cat4';
-  body.innerHTML=`<div class="card"><div class="field"><label>Show</label><select id="ys">${Y6_SOURCES.map(s=>`<option ${s===sel?'selected':''}>${s}</option>`).join('')}</select></div>
-    <table><thead><tr><th>Pupil</th><th>Class</th><th>Latest</th><th>Band</th></tr></thead><tbody>
-    ${state.tracker.pupils.map(p=>{const a=state.tracker.assessments.filter(x=>x.pupil_id===p.id&&x.source===sel)[0];const c=classById(p.class_id);
-      return `<tr class="pr" data-p="${p.id}" style="cursor:pointer"><td>${esc(p.full_name)}</td><td>${esc(c?c.name:'')}</td><td>${a?(a.raw_score??'-'):'-'}</td><td>${a&&a.band?`<span class="tag area">Band ${a.band}</span>`:'-'}</td></tr>`;}).join('')||'<tr><td colspan="4" class="muted">No pupils yet. Add classes and pupils first.</td></tr>'}
-    </tbody></table></div>`;
-  document.getElementById('ys').onchange=e=>{state._ysrc=e.target.value;renderTracker('year');};
+  const pupils=state.tracker.pupils;
+  const cols=Y6_SOURCES.filter(s=>state.tracker.assessments.some(a=>a.source===s&&a.band!=null));
+  const use=cols.length?cols:Y6_SOURCES.slice(0,4);
+  const overall=pid=>{ const bs=use.map(s=>latestBand(pid,s)).filter(b=>b!=null); return bs.length?bs.reduce((a,b)=>a+b,0)/bs.length:null; };
+  body.innerHTML=`<div class="card">
+    <div class="page-sub">Every child across every assessment, all on your 1 to 5. Different scoring systems sit side by side, and Overall is the mean of what each child has, a fair picture from the whole lot.</div>
+    <div style="overflow-x:auto"><table class="matrix"><thead><tr><th>Pupil</th><th>Class</th>${use.map(s=>`<th>${s}</th>`).join('')}<th>Overall</th></tr></thead><tbody>
+    ${pupils.map(p=>{ const c=classById(p.class_id);
+      return `<tr class="pr" data-p="${p.id}" style="cursor:pointer"><td>${esc(p.full_name)}</td><td class="small">${esc(c?c.name:'')}</td>${use.map(s=>bandCell(latestBand(p.id,s))).join('')}${bandCell(overall(p.id))}</tr>`; }).join('')||`<tr><td colspan="${use.length+3}" class="muted">No pupils yet. Go to Import and drop your assessment files in.</td></tr>`}
+    </tbody></table></div>
+    <p class="small muted" style="margin-top:10px">A dash means no banded result for that assessment yet. Bands only appear once you have set the ranges for that source under Banding.</p></div>`;
   body.querySelectorAll('.pr').forEach(r=>r.onclick=()=>tPupil(r.dataset.p));
 }
 function tPupil(pid){
