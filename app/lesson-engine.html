@@ -132,7 +132,7 @@ select{font-family:var(--body);font-size:.88rem;padding:9px 11px;border:1px soli
 .guar{background:var(--terra-soft);border-left:4px solid var(--terra);border-radius:0 12px 12px 0;padding:11px 14px;font-size:.85rem;color:var(--terra-deep);margin-bottom:16px}.guar b{font-family:var(--display)}
 table{border-collapse:collapse;width:100%;font-size:.82rem;margin-top:6px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}th{font-family:var(--display);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
 .hide{display:none}.tablewrap{overflow-x:auto}
-@media(max-width:820px){.app{grid-template-columns:1fr}.side{position:static;height:auto}.days{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{position:sticky;top:0;z-index:30;height:auto;flex-direction:column;padding:9px 10px;border-right:0;border-bottom:1px solid var(--rule);box-shadow:0 2px 8px rgba(10,61,98,.05)}.rolehint{display:none}.roleswitch{margin:6px 4px}.nav{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:3px;-webkit-overflow-scrolling:touch}.nav a{flex:0 0 auto;white-space:nowrap;padding:8px 12px;font-size:.82rem}.nav a.sel::before{display:none}.nav a .dot{margin-left:5px}.grid{grid-template-columns:1fr}.days{grid-template-columns:1fr 1fr}.pg-head{gap:14px}.controls{flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -247,13 +247,30 @@ function dash(){
 
 // ---------- OBJECTIVE MAP ----------
 let mapCur="english";
+
+function copyText(t,msgId){try{var ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);if(msgId&&document.getElementById(msgId))document.getElementById(msgId).textContent="copied to clipboard";}catch(e){if(msgId&&document.getElementById(msgId))document.getElementById(msgId).textContent="select and copy manually";}}
+function mapText(k){
+  var s=DATA.subjects[k]; if(!s) return "";
+  var t=s.subject+" - "+s.source+"\n";
+  function line(lo,success,hinge,sug){var x="  "+lo+"\n";if(success&&success.length)x+="    Steps to success"+(sug?" (suggested)":"")+": "+success.join("; ")+"\n";if(hinge)x+="    Misconception"+(sug?" (suggested)":"")+": "+hinge+"\n";return x;}
+  var w,wk;
+  if(k==="english"){for(w=1;w<=7;w++){wk=s.weeks[w];if(!wk)continue;t+="\nWeek "+w+(wk.strand?" - "+wk.strand:"")+"\n";wk.objectives.forEach(function(o){t+=line(o.objective,o.success,o.hinge,true);});}}
+  else if(k==="reading"){for(w=1;w<=7;w++){wk=s.weeks[w];if(!wk)continue;t+="\nWeek "+w+(wk.text?" - "+wk.text:"")+"\n";wk.lessons.forEach(function(l){t+=line((l.vipers?l.vipers+": ":"")+l.objective,l.success,l.hinge,true);});}}
+  else if(k==="ipc"){for(w=1;w<=7;w++){wk=s.weeks[w];if(!wk)continue;t+="\nWeek "+w+"\n";wk.lessons.forEach(function(l){t+=line(l.objective,l.success,l.hinge,true);});}}
+  else if(k==="science"){t+="\n";s.steps.forEach(function(st,i){t+=line("Step "+(i+1)+": "+st.title,st.success,(typeof SHINGE!=="undefined"?SHINGE[st.step]:null),false);if(st.practical&&st.practical.objective)t+="    Practical: "+st.practical.objective+"\n";});}
+  else if(k==="maths"){t+="\n";s.steps.forEach(function(st,i){t+=line("Step "+(i+1)+": "+st.title,st.success,(typeof MHINGE!=="undefined"?MHINGE[st.step]:null),false);});}
+  return t;
+}
+
 function mapP(){
   return '<div class="kicker">Objective map</div><div class="h">Objectives from your plans</div>'+
     '<div class="sub">Transcribed verbatim from the MTPs and White Rose schemes. SEQUENS suggests; you confirm.</div>'+
-    '<div class="tabs" id="mtabs"></div><div id="mpanel"></div>';
+    '<div class="controls"><button class="btn" id="mcopy">Copy this subject</button><button class="btn" id="mcopyall">Copy whole map</button><span class="meta" id="mcopymsg">for your meeting minutes</span></div>'+'<div class="tabs" id="mtabs"></div><div id="mpanel"></div>';
 }
 function wireDash(){document.querySelectorAll(".card.clickable").forEach(function(c){var go=function(){mapCur=c.dataset.subj;route="map";render();};c.onclick=go;c.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};});}
 function wireMap(){
+  var mc=document.getElementById("mcopy");if(mc){mc.onclick=function(){copyText(mapText(mapCur),"mcopymsg");};}
+  var mca=document.getElementById("mcopyall");if(mca){mca.onclick=function(){copyText(["english","reading","ipc","science","maths"].map(mapText).join("\n\n"),"mcopymsg");};}
   const tabs=document.getElementById("mtabs");tabs.innerHTML="";
   [["english","Writing"],["reading","Reading"],["ipc","IPC"],["science","Science"],["maths","Maths"]].forEach(([k,l])=>{
     const b=document.createElement("button");b.className="tab"+(k===mapCur?" sel":"");b.textContent=l;b.onclick=()=>{mapCur=k;wireMap();};tabs.appendChild(b);});
