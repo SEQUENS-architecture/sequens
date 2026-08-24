@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEQUENS · Lesson Engine · Y6D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F7F9; --card:#FFFFFF; --ink:#12303f; --ink-soft:#54718A; --muted:#54718A;
+  --terra:#0A7A67; --terra-deep:#0A7563; --terra-soft:#D9F2EC;
+  --teal:#2C6E9B; --teal-soft:#EAF2F8; --teal-deep:#1F4F73;
+  --gold:#B8912F; --gold-soft:#F3ECD2; --gold-deep:#7C5D13;
+  --green:#3F8F6B; --green-soft:#EAF3EE; --green-deep:#2C6B4F;
+  --red:#C0453B; --red-soft:#F7E9E7; --amber-soft:#FbeED6; --amber:#C98A2B;
+  --rule:#D7E4EA;
+  --display:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
+  --body:'Lexend','Segoe UI',system-ui,sans-serif;
+  --shadow:0 2px 16px rgba(10,61,98,.08);
+}
+*{box-sizing:border-box}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:9px}
+.nav a:focus-visible{outline-offset:-2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.5}
+h1,h2,h3{font-family:var(--display);margin:0}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:var(--card);border-right:1px solid var(--rule);padding:24px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:.08em;line-height:1;padding:2px 12px 0;color:var(--ink)}
+.brand small{display:block;font-size:.54rem;letter-spacing:.24em;text-transform:uppercase;color:var(--terra);font-weight:600;margin-top:7px}
+.who{font-size:.72rem;line-height:1.6;color:var(--muted);padding:15px 12px 20px;letter-spacing:.01em}.who div+div{color:var(--ink-soft)}
+.roleswitch{display:flex;gap:2px;background:var(--paper);border-radius:10px;padding:3px;margin:16px 8px 6px}.roleswitch button{flex:1;font-family:var(--display);font-weight:600;font-size:.7rem;letter-spacing:.01em;border:0;background:transparent;color:var(--ink-soft);padding:8px 5px;border-radius:8px;cursor:pointer;transition:background .12s,color .12s}.roleswitch button.sel{background:var(--card);color:var(--terra-deep);box-shadow:var(--shadow)}.roleswitch button:not(.sel):hover{color:var(--ink)}.rolehint{font-size:.66rem;line-height:1.5;color:var(--muted);padding:0 12px 4px;letter-spacing:.01em}.nav{display:flex;flex-direction:column;gap:1px}
+.nav a{position:relative;font-family:var(--display);font-weight:500;font-size:.875rem;letter-spacing:.005em;color:var(--ink-soft);text-decoration:none;padding:10px 12px;border-radius:9px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .12s,color .12s}
+.nav a:hover{background:var(--paper);color:var(--ink)}
+.nav a.sel{background:var(--terra-soft);color:var(--terra-deep);font-weight:600}.nav a.sel::before{content:"";position:absolute;left:4px;top:50%;transform:translateY(-50%);width:3px;height:15px;border-radius:2px;background:var(--terra)}
+.nav a .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:0 0 auto;margin-right:2px}
+.main{padding:34px 40px 84px;max-width:980px}
+.kicker{font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:7px}
+.h{font-family:var(--display);font-size:1.7rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.sub{color:var(--muted);font-size:.94rem;line-height:1.55;margin-bottom:30px;max-width:70ch}
+.navsec{font-family:var(--display);font-weight:700;font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:12px 12px 3px}
+.navsec.foot{margin-top:12px;border-top:1px solid var(--rule);padding-top:11px}
+.homegroup{font-family:var(--display);font-weight:700;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-deep);margin:18px 0 7px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:11px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:13px 15px;cursor:pointer;transition:box-shadow .12s,border-color .12s}
+.tile:hover,.tile:focus-visible{border-color:var(--terra);box-shadow:var(--shadow);outline:none}
+.tile h4{font-family:var(--display);font-weight:700;font-size:.92rem;margin:0 0 3px;display:flex;align-items:center;gap:6px}
+.tile p{font-size:.77rem;color:var(--muted);margin:0;line-height:1.4}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:15px;box-shadow:var(--shadow);padding:17px 18px}
+.card h3{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:8px}
+.card .big{font-family:var(--display);font-weight:700;font-size:1.7rem;color:var(--ink);line-height:1}
+.card .lil{font-size:.8rem;color:var(--muted);margin-top:3px}.card.clickable{cursor:pointer;transition:box-shadow .12s,transform .12s}.card.clickable:hover{box-shadow:0 5px 22px rgba(10,61,98,.12);transform:translateY(-1px)}.card.clickable::after{content:"View \2192";display:block;margin-top:9px;font-size:.7rem;font-family:var(--display);font-weight:600;color:var(--terra);letter-spacing:.02em}.openbtn{margin-top:8px;font-family:var(--display);font-weight:600;font-size:.72rem;color:var(--terra-deep);background:var(--terra-soft);border:0;border-radius:8px;padding:6px 11px;cursor:pointer}.openbtn:hover{background:#c8ebe1}
+.status{display:inline-block;font-family:var(--display);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;font-weight:700;padding:.2rem .5rem;border-radius:999px;margin-top:8px}
+.ok{background:var(--green-soft);color:var(--green-deep)} .pend{background:var(--gold-soft);color:var(--gold-deep)} .prov{background:var(--amber-soft);color:var(--amber)}
+.checklist{margin-top:32px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--rule)}
+.check:last-child{border-bottom:0}
+.dot{flex:0 0 auto;width:20px;height:20px;border-radius:6px;font-family:var(--display);font-weight:700;font-size:.7rem;display:flex;align-items:center;justify-content:center;color:#fff}
+.dot.g{background:var(--green)} .dot.a{background:var(--gold)} .dot.r{background:var(--red)}
+.check .t{font-size:.88rem}.check .t b{font-family:var(--display)}
+.check .t span{color:var(--muted)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{font-family:var(--display);font-weight:600;font-size:.84rem;border:1px solid var(--rule);border-radius:999px;padding:7px 15px;cursor:pointer;background:#fff;color:var(--ink)}
+.tab.sel{background:var(--terra);color:#fff;border-color:var(--terra)}
+.note{background:var(--teal-soft);border-radius:11px;padding:12px 15px;font-size:.85rem;line-height:1.5;color:var(--teal-deep);margin:0 0 20px}
+.wk{background:var(--card);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow);padding:17px 19px;margin-bottom:14px}
+.wk-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:7px}
+.wk-h .n{font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--terra-deep)}
+.wk-h .dt{font-size:.78rem;color:var(--muted)}
+.st{font-family:var(--display);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;font-weight:600;padding:.22rem .55rem;border-radius:999px;background:var(--teal-soft);color:var(--teal-deep)}
+.st.flag{background:var(--gold-soft);color:var(--gold-deep)}
+ol.objs{margin:8px 0 0;padding-left:19px}ol.objs li{font-size:.88rem;margin:5px 0}
+.meta{font-size:.8rem;color:var(--muted);margin-top:9px}.meta b{color:var(--ink-soft)}
+.step{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--rule)}.step:last-child{border-bottom:0}
+.step .num{flex:0 0 auto;font-family:var(--display);font-weight:700;font-size:.72rem;color:#fff;background:var(--terra);border-radius:7px;padding:3px 8px;height:fit-content}
+.step .ttl{font-family:var(--display);font-weight:600;font-size:.92rem}.step .nc{font-size:.83rem;color:var(--ink-soft)}
+.step .hinge{font-size:.8rem;color:var(--gold-deep);margin-top:8px;background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:6px 10px}.step .hinge b{font-family:var(--display);font-weight:700;font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;display:block;color:var(--gold-deep)}.challenge{font-size:.8rem;color:var(--terra-deep);margin-top:8px;background:var(--terra-soft);border-left:3px solid var(--terra);border-radius:0 8px 8px 0;padding:6px 10px}.challenge b{font-family:var(--display);font-weight:700;font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;display:block;color:var(--terra-deep)}.step .meta b{color:var(--ink-soft)}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.day{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:10px;min-height:104px;cursor:pointer;position:relative}
+.day .dow{font-family:var(--display);font-weight:700;font-size:.66rem;text-transform:uppercase;color:var(--ink-soft)}
+.day .date{font-size:.7rem;color:var(--muted);margin-bottom:6px}
+.day .sn{display:inline-block;font-family:var(--display);font-weight:700;font-size:.62rem;color:#fff;background:var(--terra);border-radius:6px;padding:2px 6px;margin-bottom:4px}
+.day .ti{font-size:.78rem;line-height:1.3}
+.day.pending .sn{background:var(--gold-deep)}.day.pending .ti{color:var(--gold-deep)}
+.day.closed{background:var(--red-soft);border-color:#eecfcb}
+.day.closed .body{display:none}
+.day.closed::after{content:'Closed';font-family:var(--display);font-weight:700;font-size:.78rem;color:var(--red);position:absolute;top:50%;left:0;right:0;text-align:center;transform:translateY(-2px)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.btn{font-family:var(--display);font-weight:600;font-size:.82rem;border:1px solid var(--rule);border-radius:999px;padding:8px 14px;cursor:pointer;background:#fff;color:var(--ink)}
+.btn.on{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+.btn.primary{background:var(--terra);color:#fff;border-color:var(--terra)}
+.btn.primary:disabled{background:#a9cfc7;border-color:#a9cfc7;cursor:not-allowed}
+.btn.ghost{color:var(--ink-soft)}
+.stat-inline{margin-left:auto;font-size:.82rem;color:var(--ink-soft)}.stat-inline b{color:var(--ink);font-family:var(--display)}
+.row-d{background:var(--card);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+.rh{display:flex;gap:11px;padding:13px 15px;cursor:pointer;align-items:flex-start}
+.rh .dd{flex:0 0 auto;text-align:center;min-width:46px}.rh .dd .d{font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--terra-deep);line-height:1}.rh .dd .m{font-size:.62rem;text-transform:uppercase;color:var(--muted)}
+.rh .mm{flex:1 1 auto;min-width:0}.rh .cc{font-family:var(--display);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+.rh .oo{font-size:.88rem}.rh .hh{margin-top:6px;font-size:.8rem;color:var(--gold-deep);background:var(--gold-soft);border-radius:8px;padding:5px 9px;display:inline-block}
+.rh .hh b{font-family:var(--display);font-weight:700;font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;display:block}
+.conf{font-family:var(--display);font-weight:600;font-size:.72rem;border:1px solid var(--rule);border-radius:999px;padding:5px 10px;cursor:pointer;background:#fff;color:var(--ink-soft);white-space:nowrap}
+.conf.done{background:var(--green-soft);color:var(--green-deep);border-color:#bfe0cd}
+.bd{border-top:1px solid var(--rule);padding:13px 15px;display:none;background:#FbFdFe}.bd.open{display:block}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:6px;margin-top:8px}
+.chip{font-family:var(--display);font-weight:600;font-size:.7rem;text-align:center;border:1px solid var(--rule);border-radius:8px;padding:6px 3px;cursor:pointer;background:#fff;color:var(--ink-soft)}
+.chip[data-band="1"]{background:var(--red-soft);color:var(--red);border-color:#eecfcb}
+.chip[data-band="2"]{background:#f7ede0;color:#b5661f;border-color:#eed9c2}
+.chip[data-band="3"]{background:var(--amber-soft);color:var(--amber);border-color:#efd6a8}
+.chip[data-band="4"]{background:var(--green-soft);color:var(--green-deep);border-color:#bfe0cd}
+.chip[data-band="5"]{background:#d4ede1;color:var(--green-deep);border-color:#a9d9c1;font-weight:700}
+.wsheet{border:1.5px solid #12303f;border-radius:10px;padding:14px 16px;margin:0 0 14px;background:#fff}
+.wshead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:10px}
+.wskick{font-family:var(--display);font-weight:700;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-deep)}
+.bookimg{width:52px;height:auto;border-radius:4px;border:1px solid var(--rule)}
+.bookph{width:52px;height:70px;border:1px dashed var(--rule);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.52rem;color:var(--muted);text-align:center;padding:3px}
+.wslo{margin:8px 0;font-size:.98rem;font-weight:500}
+.wss2s,.wsbox{margin:8px 0}
+.wslo>span,.wss2s>span,.wsbox>span{display:block;font-family:var(--display);font-weight:700;font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.wss2s ol{margin:2px 0 0 18px;padding:0}.wss2s li{margin:3px 0}
+.wsblank{height:30px;border-bottom:1px dashed var(--rule)}
+.wsnote{font-size:.6rem;color:var(--muted);font-style:italic}
+.bandpill{display:inline-block;font-family:var(--display);font-weight:700;font-size:.66rem;min-width:16px;text-align:center;border-radius:5px;padding:1px 5px;margin-left:5px}
+.bandpill.b1{background:var(--red-soft);color:var(--red)}.bandpill.b2{background:#f7ede0;color:#b5661f}.bandpill.b3{background:var(--amber-soft);color:var(--amber)}.bandpill.b4{background:var(--green-soft);color:var(--green-deep)}.bandpill.b5{background:#d4ede1;color:var(--green-deep)}
+.chipfill{font-family:var(--display);font-weight:600;font-size:.72rem;border:1px solid var(--rule);border-radius:8px;padding:5px 10px;background:#fff;color:var(--ink-soft);cursor:pointer;margin-right:6px}
+.scalekey{display:flex;gap:10px;flex-wrap:wrap;font-size:.72rem;color:var(--ink-soft);margin:0 0 14px}
+.scalekey b{font-family:var(--display);font-weight:700}
+.nextmove{margin-top:12px;font-size:.82rem;font-family:var(--display);font-weight:600;border-radius:9px;padding:9px 12px;line-height:1.4}.nextmove.ok{background:var(--green-soft);color:var(--green-deep)}.nextmove.wt{background:var(--amber-soft);color:var(--amber)}.nextmove.ny{background:var(--red-soft);color:var(--red)}.assure{background:var(--teal-soft);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;padding:13px 16px;font-size:.86rem;color:var(--teal-deep);margin-bottom:16px}.assure b{font-family:var(--display)}.sheet{background:var(--card);border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);padding:22px 24px}.sheet-h{border-bottom:2px solid var(--terra);padding-bottom:11px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}.sheet-h .t{font-family:var(--display);font-weight:700;font-size:1.15rem;color:var(--ink)}.sheet-h .d{font-size:.82rem;color:var(--muted)}.mrow{padding:13px 0;border-bottom:1px solid var(--rule)}.mrow:last-child{border-bottom:0}.mrow .subj{font-family:var(--display);font-weight:700;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--terra-deep);margin-bottom:4px}.mrow .focus{font-size:.9rem;color:var(--ink);margin-bottom:6px}.mrow .watch{font-size:.82rem;color:var(--gold-deep);background:var(--gold-soft);border-radius:8px;padding:5px 10px;margin:0 0 6px;display:inline-block}.mrow .dir{font-size:.84rem;color:var(--ink-soft)}.mrow .dir b{color:var(--terra-deep);font-family:var(--display);font-weight:600}.weekpick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}.weekpick button{font-family:var(--display);font-weight:600;font-size:.8rem;border:1px solid var(--rule);border-radius:9px;padding:7px 12px;cursor:pointer;background:#fff;color:var(--ink)}.weekpick button.sel{background:var(--terra);color:#fff;border-color:var(--terra)}.pg-head{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end;margin-bottom:6px}.pg-stat .n{font-family:var(--display);font-weight:700;font-size:1.7rem;line-height:1}.pg-stat .l{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}.legend{display:flex;gap:14px;font-size:.76rem;color:var(--ink-soft);margin:8px 0 2px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}.pgrow{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--rule)}.pgrow:last-child{border-bottom:0}.pgrow .lab{font-family:var(--display);font-weight:600;font-size:.86rem}.pgrow .fig{font-size:.78rem;color:var(--muted);white-space:nowrap}.focusrow{padding:11px 0;border-bottom:1px solid var(--rule)}.focusrow:last-child{border-bottom:0}.focusrow .t{font-size:.88rem}.focusrow .t b{font-family:var(--display)}.focusrow .mv{font-family:var(--display);font-weight:600;font-size:.8rem;margin-top:4px;border-radius:8px;padding:6px 10px;display:inline-block}.gate{background:var(--gold-soft);border-left:4px solid var(--gold-deep);border-radius:0 12px 12px 0;padding:13px 16px;font-size:.87rem;color:var(--gold-deep);margin-bottom:16px}
+.gate b{font-family:var(--display)}
+.pickwrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+select{font-family:var(--body);font-size:.88rem;padding:9px 11px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink);max-width:100%}
+.artefacts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px}
+.art{border:1px dashed var(--rule);border-radius:12px;padding:13px;text-align:center;color:var(--muted);font-size:.82rem}
+.art .ic{font-family:var(--display);font-weight:700;font-size:1.3rem;color:var(--ink-soft);margin-bottom:4px}
+.foot{font-size:.79rem;color:var(--muted);margin-top:24px;border-top:1px solid var(--rule);padding-top:13px}
+.drop{border:2px dashed var(--rule);border-radius:13px;padding:22px;text-align:center;color:var(--muted);cursor:pointer}
+.drop.hot{border-color:var(--terra);background:var(--terra-soft)}.drop b{font-family:var(--display);color:var(--ink)}
+.guar{background:var(--terra-soft);border-left:4px solid var(--terra);border-radius:0 12px 12px 0;padding:11px 14px;font-size:.85rem;color:var(--terra-deep);margin-bottom:16px}.guar b{font-family:var(--display)}
+table{border-collapse:collapse;width:100%;font-size:.82rem;margin-top:6px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}th{font-family:var(--display);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+.hide{display:none}.tablewrap{overflow-x:auto}
+@media(max-width:820px){.app{grid-template-columns:1fr}.side{position:sticky;top:0;z-index:30;height:auto;flex-direction:column;padding:9px 10px;border-right:0;border-bottom:1px solid var(--rule);box-shadow:0 2px 8px rgba(10,61,98,.05)}.rolehint{display:none}.roleswitch{margin:6px 4px}.nav{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:3px;-webkit-overflow-scrolling:touch}.nav a{flex:0 0 auto;white-space:nowrap;padding:8px 12px;font-size:.82rem}.nav a.sel::before{display:none}.navsec{display:none}.nav a .dot{margin-left:5px}.grid{grid-template-columns:1fr}.days{grid-template-columns:1fr 1fr}.pg-head{gap:14px}.controls{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">SEQUENS<small>Lesson Engine</small></div>
+    <div class="roleswitch" id="roleswitch"></div>
+    <div class="rolehint" id="rolehint"></div>
+    <div class="who" id="who"></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+<script>
+const DATA = {"meta": {"class": "Y6D", "school": "El Alsson", "term": "Autumn 1", "year": "2026-2027", "note": "SEQUENS objective map seed. Objectives transcribed verbatim from James's plans and the supplied White Rose schemes. SEQUENS suggests; a human confirms.", "house_style": "Each objective carries three steps to success (child-friendly, I can) and one challenge. Maths and Science done from White Rose. English and IPC follow once the house style is confirmed; the engine produces the same three plus challenge on every generated lesson.", "suggested_note": "Steps to success and misconceptions for Writing, Reading and IPC are SEQUENS-suggested, not from a scheme. Maths and Science come from White Rose. The engine confirms the real hinge at generation; you confirm the rest."}, "calendar": {"term": "Autumn 1", "year": "2026-2027", "school_week": "Sunday to Thursday", "first_teaching_day": "2026-09-06", "half_term_week_begins": "2026-10-25", "weeks": [{"w": 1, "begins": "2026-09-06", "ends": "2026-09-10", "days": 5, "note": ""}, {"w": 2, "begins": "2026-09-13", "ends": "2026-09-17", "days": 4, "note": ""}, {"w": 3, "begins": "2026-09-20", "ends": "2026-09-24", "days": 5, "note": ""}, {"w": 4, "begins": "2026-09-27", "ends": "2026-10-01", "days": 5, "note": ""}, {"w": 5, "begins": "2026-10-04", "ends": "2026-10-08", "days": 5, "note": ""}, {"w": 6, "begins": "2026-10-11", "ends": "2026-10-15", "days": 5, "note": ""}, {"w": 7, "begins": "2026-10-18", "ends": "2026-10-22", "days": 5, "note": ""}], "closure_policy": "Egyptian public holidays are often confirmed ad hoc and late. Pacing treats closures as a movable layer over a stable objective order. Setting or moving a closure recomputes the downstream teaching days. It never edits the objective map.", "closures": [{"status": "unresolved", "window": "Week 2 (13 to 17 Sep)", "reason": "English plan marks a 4-day week; the lost day is not on the calendar.", "action": "set the exact day when known"}, {"status": "unresolved", "window": "Week 5, around 6 Oct (4 to 8 Oct)", "reason": "Armed Forces Day / 6 Oct observance. Ad hoc, likely the Thursday of that week or the Sunday before.", "action": "set the exact day when known"}]}, "subjects": {"english": {"subject": "English", "source": "Wonder unit MTP (school)", "unit": "Wonder: narrative then non-fiction", "eua": "End of Unit Assessment: Writing independently (narrative). The year is 2055; you are a space scientist on Mars stranded on a probe with your partner Auggie. Tell the story of the day, describe the Mars landscape, how you get stuck, the dialogue that reveals who Auggie is and how it makes you feel, and the rescue. Sits at Week 7 Lesson 5.", "weeks": {"1": {"strand": "Narrative", "objectives": [{"objective": "To analyze how an author uses language choices to create a tense atmospheric narrative opening.", "success": ["I can keep a consistent tense.", "I can use the perfect and progressive forms.", "I can check my tense across paragraphs."], "hinge": "Slips between tenses within the piece.", "suggested": true}, {"objective": "To use precise expanded noun phrases to describe the physical details of a setting.", "success": ["I can build a noun phrase that adds detail.", "I can choose words that carry meaning, not just decoration.", "I can check the phrase helps the reader picture it."], "hinge": "Piles on adjectives without the phrase adding real information.", "suggested": true}, {"objective": "To use fronted adverbials to establish context, time, and place in a setting description.", "success": ["I can start a sentence with an adverbial.", "I can put the comma in the right place.", "I can vary where I place it for effect."], "hinge": "Forgets the comma after the fronted adverbial.", "suggested": true}, {"objective": "To select and apply figurative language devices (similes and metaphors) to enhance narrative imagery.", "success": ["I can write a simile or metaphor.", "I can make it fit the mood of the writing.", "I can check it adds to the image, not just decorates."], "hinge": "Writes a simile that decorates but does not deepen the image.", "suggested": true}, {"objective": "To construct a cohesive narrative opening paragraph that establishes an immersive setting.", "success": ["I can link ideas across sentences.", "I can vary my cohesive devices.", "I can keep the writing flowing across paragraphs."], "hinge": "Repeats the same connective instead of varying the cohesion.", "suggested": true}], "gps": "Parts of speech and rules of punctuation revision.", "spelling": "Spelling list 1"}, "2": {"strand": "Narrative (4-day week)", "objectives": [{"objective": "To analyze how a character is introduced through a unique, controlled narrative perspective.", "success": ["I can write in a consistent voice.", "I can keep the perspective steady.", "I can make the voice sound authentic."], "hinge": "Loses the character's voice partway through.", "suggested": true}, {"objective": "To develop and maintain a consistent, authentic first-person narrative voice.", "success": ["I can write in a consistent voice.", "I can keep the perspective steady.", "I can make the voice sound authentic."], "hinge": "Loses the character's voice partway through.", "suggested": true}, {"objective": "To show character traits and feelings through internal thoughts and physical actions rather than telling.", "success": ["I can understand what the task asks.", "I can write to meet it.", "I can check my writing against the criteria."], "hinge": "Writes to the task without checking it against the success criteria.", "suggested": true}, {"objective": "To use relative clauses (who, which, whose, that) to add depth and precision when describing secondary characters.", "success": ["I can add a relative clause with who, which, whose or that.", "I can punctuate it correctly.", "I can use it to add useful detail."], "hinge": "Drops or misplaces the commas, or uses the wrong relative pronoun.", "suggested": true}], "gps": "Revision of types of sentences (simple, compound and complex).", "spelling": "Spelling list 2"}, "3": {"strand": "Narrative", "objectives": [{"objective": "To identify key plot milestones in a novel and explore how an author builds internal conflict.", "success": ["I can understand what the task asks.", "I can write to meet it.", "I can check my writing against the criteria."], "hinge": "Writes to the task without checking it against the success criteria.", "suggested": true}, {"objective": "To draft a structured character-focused paragraph introducing a key protagonist.", "success": ["I can organise my writing into paragraphs.", "I can start a new one when the focus shifts.", "I can link paragraphs together."], "hinge": "Starts a new paragraph in the wrong place.", "suggested": true}, {"objective": "To punctuate direct speech accurately to create realistic dialogue between characters.", "success": ["I can punctuate direct speech correctly.", "I can start a new line for a new speaker.", "I can use dialogue to show character."], "hinge": "Puts the comma or full stop outside the speech marks.", "suggested": true}, {"objective": "To integrate dialogue within a scene to reveal character betrayals and shift relationships.", "success": ["I can punctuate direct speech correctly.", "I can start a new line for a new speaker.", "I can use dialogue to show character."], "hinge": "Puts the comma or full stop outside the speech marks.", "suggested": true}, {"objective": "To use active and passive voice deliberately to alter emphasis during a high-stakes conflict scene.", "success": ["I can tell active from passive voice.", "I can choose the one that suits my emphasis.", "I can explain why I chose it."], "hinge": "Shifts between active and passive without a purpose.", "suggested": true}], "gps": "Creating atmosphere, and integrating dialogue (revision of punctuation) to convey character and advance action and engage audience in writing.", "spelling": "Spelling list 3"}, "4": {"strand": "Narrative", "objectives": [{"objective": "To vary sentence lengths and clause structures to control pacing and escalate dramatic tension.", "success": ["I can vary my sentence lengths.", "I can use short sentences for tension.", "I can control the pace of the scene."], "hinge": "Uses only long sentences, so tension is flat.", "suggested": true}, {"objective": "To analyze structural narrative endings and draft a resolution where characters learn a lesson about empathy.", "success": ["I can organise my writing into paragraphs.", "I can start a new one when the focus shifts.", "I can link paragraphs together."], "hinge": "Starts a new paragraph in the wrong place.", "suggested": true}, {"objective": "To use advanced punctuation (colons, semi-colons, dashes, and brackets) to add parenthesis or mark boundaries between independent clauses.", "success": ["I can use a colon, semicolon or brackets.", "I can put them where they belong.", "I can check they make the meaning clearer."], "hinge": "Uses advanced punctuation in the wrong place.", "suggested": true}, {"objective": "To apply conjunctive adverbials and structural cohesive devices to link ideas smoothly across narrative paragraphs.", "success": ["I can link ideas across sentences.", "I can vary my cohesive devices.", "I can keep the writing flowing across paragraphs."], "hinge": "Repeats the same connective instead of varying the cohesion.", "suggested": true}, {"objective": "To evaluate, refine, edit, and proofread a narrative scene draft for sentence fluency and grammatical accuracy.", "success": ["I can reread for meaning.", "I can edit for flow and accuracy.", "I can proofread for punctuation and spelling."], "hinge": "Only fixes spelling and misses meaning and flow.", "suggested": true}], "gps": "Using a range of cohesive devices, including adverbials, within and across sentences and paragraphs.", "spelling": "Spelling list 4"}, "5": {"strand": "Non-fiction: recount", "objectives": [{"objective": "To identify the audience, purpose, and layout features of a formal recount text or diary shift.", "success": ["I can write in a formal register.", "I can avoid casual words.", "I can match the tone to the purpose."], "hinge": "Mixes formal and informal language.", "suggested": true}, {"objective": "To compare formal and informal registers, transforming casual spoken dialogue into a formal written record.", "success": ["I can punctuate direct speech correctly.", "I can start a new line for a new speaker.", "I can use dialogue to show character."], "hinge": "Puts the comma or full stop outside the speech marks.", "suggested": true}, {"objective": "To maintain absolute past tense consistency (simple, progressive, and perfect forms) across a multi-paragraph recount.", "success": ["I can keep a consistent tense.", "I can use the perfect and progressive forms.", "I can check my tense across paragraphs."], "hinge": "Slips between tenses within the piece.", "suggested": true}, {"objective": "To plan and draft a structured formal recount from an alternative character's viewpoint.", "success": ["I can plan the shape of my writing.", "I can order my ideas.", "I can note the key features to include."], "hinge": "Plans as a list of events with no shape.", "suggested": true}], "gps": "Focus on coordinating conjunctions and compound sentences.", "spelling": "Spelling list 5"}, "6": {"strand": "Non-fiction: explanation", "objectives": [{"objective": "To analyze the structural features and rhetorical techniques used in formal explanation texts.", "success": ["I can plan the shape of my writing.", "I can order my ideas.", "I can note the key features to include."], "hinge": "Plans as a list of events with no shape.", "suggested": true}, {"objective": "To use the passive voice to create an objective, matter-of-fact tone when explaining an incident or policy.", "success": ["I can tell active from passive voice.", "I can choose the one that suits my emphasis.", "I can explain why I chose it."], "hinge": "Shifts between active and passive without a purpose.", "suggested": true}, {"objective": "To use bullet points and colons correctly to introduce a formal list of rules or precepts.", "success": ["I can use a colon, semicolon or brackets.", "I can put them where they belong.", "I can check they make the meaning clearer."], "hinge": "Uses advanced punctuation in the wrong place.", "suggested": true}, {"objective": "To plan an explanation text breaking down the deeper moral meaning behind a formal precept.", "success": ["I can plan the shape of my writing.", "I can order my ideas.", "I can note the key features to include."], "hinge": "Plans as a list of events with no shape.", "suggested": true}, {"objective": "To draft a formal explanation text using cohesive devices to link ideas smoothly across distinct paragraph blocks.", "success": ["I can link ideas across sentences.", "I can vary my cohesive devices.", "I can keep the writing flowing across paragraphs."], "hinge": "Repeats the same connective instead of varying the cohesion.", "suggested": true}], "gps": "Focus on subordinating conjunctions and complex sentences.", "spelling": "Spelling list 6"}, "7": {"strand": "Non-fiction: persuasive argument / EUA", "objectives": [{"objective": "To identify the key features and persuasive techniques used to champion a social cause.", "success": ["I can state a clear viewpoint.", "I can support it with reasons.", "I can use persuasive techniques."], "hinge": "States an opinion without evidence to back it.", "suggested": true}, {"objective": "To use modal verbs and adverbs of possibility to strengthen the authority of a written argument advocating for inclusion and kindness.", "success": ["I can use modal verbs and adverbs of possibility.", "I can pick ones that add authority.", "I can match the strength to my point."], "hinge": "Uses a modal verb but not to strengthen the argument.", "suggested": true}, {"objective": "To write persuasive paragraphs using formal language to address the importance of standing up for others.", "success": ["I can write in a formal register.", "I can avoid casual words.", "I can match the tone to the purpose."], "hinge": "Mixes formal and informal language.", "suggested": true}, {"objective": "To use cohesive devices to link evidence and sustain a clear, logical viewpoint against isolation and bullying.", "success": ["I can link ideas across sentences.", "I can vary my cohesive devices.", "I can keep the writing flowing across paragraphs."], "hinge": "Repeats the same connective instead of varying the cohesion.", "suggested": true}, {"objective": "To edit writing for clarity, proofread for structural cohesion, and publish a final persuasive text / End of Unit Assessment.", "success": ["I can link ideas across sentences.", "I can vary my cohesive devices.", "I can keep the writing flowing across paragraphs."], "hinge": "Repeats the same connective instead of varying the cohesion.", "suggested": true}], "gps": "Focus on relative pronouns and relative clauses.", "spelling": "Spelling list 7"}}}, "ipc": {"subject": "IPC", "source": "IPC MTP (school), Milepost 3", "unit": "900 CE: The Mayan Civilisation, Civilisation of West Africa", "exit_point": "Execute a comparative civilisation synthesis block, presenting ancient regional outcomes.", "weeks": {"1": {"lessons": [{"objective": "Lesson A: Entry Point & Timeline: Construct a regional timeline focusing on global civilisations around 900 CE.", "success": ["I can place events in time order.", "I can compare when things happened.", "I can avoid judging the past as primitive."], "hinge": "Thinks older civilisations were simpler or less advanced.", "suggested": true}, {"objective": "Lesson B: Knowledge Harvest: Gauge baseline student vocabulary regarding ancient history, archaeology, and chronology.", "success": ["I can place events in time order.", "I can compare when things happened.", "I can avoid judging the past as primitive."], "hinge": "Thinks older civilisations were simpler or less advanced.", "suggested": true}]}, "2": {"lessons": [{"objective": "Lesson A: History (3.01): Formulate inquiry questions related to different geographic perspectives of Mesoamerica around 900 CE.", "success": ["I can ask a geographical question.", "I can look at more than one source.", "I can weigh what each tells me."], "hinge": "Treats one map or source as the whole truth.", "suggested": true}, {"objective": "Lesson B: History (3.05): Identify the geographical features, infrastructure, and city-state layouts of the Maya civilization.", "success": ["I can describe the features of a Maya city.", "I can explain how it was organised.", "I can use evidence for my description."], "hinge": "Assumes ancient cities had no planning or scale.", "suggested": true}]}, "3": {"lessons": [{"objective": "Lesson A: History (3.04): Understand how historians build inferences about daily Mayan life based on archaeological artifacts.", "success": ["I can describe an artefact.", "I can infer what it suggests about daily life.", "I can say how sure I am and why."], "hinge": "Treats an artefact as proof rather than evidence to interpret.", "suggested": true}, {"objective": "Lesson B: History (3.05): Analyse social hierarchies, trade routes, and the roles of rulers vs. artisans within Maya society.", "success": ["I can describe different roles in Maya society.", "I can explain how they depended on each other.", "I can use evidence for my ideas."], "hinge": "Assumes everyone in the past lived the same way.", "suggested": true}]}, "4": {"lessons": [{"objective": "Lesson A: History (3.10): Evaluate how ancient Mayan ideas, agricultural methods, and beliefs have influenced modern societies.", "success": ["I can find a Maya idea that lasted.", "I can trace it to today.", "I can explain the link."], "hinge": "Thinks nothing from 900 CE still matters today.", "suggested": true}, {"objective": "Lesson B: Cultural Myths: Explore Mayan polytheism, ritual practices, and sacred mythology (e.g., the Popul Vuh).", "success": ["I can retell a Maya myth.", "I can explain what it meant to them.", "I can tell belief apart from fact."], "hinge": "Confuses myth and belief with historical fact.", "suggested": true}]}, "5": {"lessons": [{"objective": "Lesson A: History (3.11): Examine Mayan technological developments, tracking their sophisticated logographic writing system and codices.", "success": ["I can describe the Maya writing system.", "I can explain what it was used for.", "I can compare it with writing today."], "hinge": "Assumes ancient people had no science or learning.", "suggested": true}, {"objective": "Lesson B: Mathematical Advancements: Study the structural development of the Mayan base-20 numbering system and solar calendars.", "success": ["I can read a Maya number.", "I can explain the base-20 idea.", "I can compare it with our system."], "hinge": "Thinks base-20 is just a wrong version of base-10.", "suggested": true}]}, "6": {"lessons": [{"objective": "Lesson A: History (3.02 & 3.12): Analyse theories behind the Classic Maya collapse, evaluating how multiple causes contribute to changes in society.", "success": ["I can name possible causes of the collapse.", "I can explain how they interacted.", "I can weigh which mattered most."], "hinge": "Looks for one single cause instead of several interacting ones.", "suggested": true}, {"objective": "Exit point prep.", "success": ["I can compare two civilisations.", "I can use evidence for each.", "I can present a fair conclusion."], "hinge": "Judges one civilisation as better rather than comparing fairly.", "suggested": true}]}, "7": {"lessons": [{"objective": "Lesson B: Exit Point: Execute a comparative civilisation synthesis block, presenting ancient regional outcomes.", "success": ["I can compare two civilisations.", "I can use evidence for each.", "I can present a fair conclusion."], "hinge": "Judges one civilisation as better rather than comparing fairly.", "suggested": true}]}}, "status": "provisional", "note": "Weekly lessons are Maya-focused. West Africa is named in the unit title and appears only in the Exit Point comparative synthesis. The plan may be incomplete; left exactly as supplied, nothing invented."}, "science": {"subject": "Science", "source": "White Rose Science, Year 6 Autumn Block 1", "unit": "Living things and their habitats", "enquiry_question": "How can animals, plants and microorganisms be identified, grouped and classified?", "pacing_note": "White Rose Science is written for content, not time. Mapped 1 small step per week (default). Confirm lessons per week.", "steps": [{"step": 1, "title": "Conditions for life", "nc": "Describe how living things are classified into broad groups according to common observable characteristics and based on similarities and differences, including microorganisms, plants and animals.", "ws": "Identifying scientific evidence that has been used to support or refute ideas or arguments.", "success": ["I can name what living things need to survive.", "I can explain why something is living or non-living.", "I can sort things into living and non-living and say why."], "challenge": "A plant does not run around like an animal. Is it living or non-living? Explain your answer using what a plant can do.", "practical": {"objective": "Collect living and non-living examples in the school grounds and justify each grouping.", "ws": "Identifying scientific evidence used to support or refute ideas.", "lab": "School grounds", "success": ["I can collect a range of living and non-living things.", "I can group them and give a reason for each.", "I can use evidence to defend a tricky case."], "challenge": "Find one thing that is hard to call living or non-living, and argue both sides."}}, {"step": 2, "title": "Group organisms", "nc": "Describe how living things are classified into broad groups according to common observable characteristics and based on similarities and differences, including microorganisms, plants and animals.", "ws": "Use and develop keys and other information records to identify, classify and describe living things (non-statutory).", "success": ["I can name the five vertebrate groups.", "I can tell a flowering plant from a non-flowering plant.", "I can group organisms in more than one way and explain my groups."], "challenge": "A whale lives in the sea. Is it a fish? Explain how you know.", "practical": {"objective": "Sort images of plants and animals in more than one way and explain each grouping.", "ws": "Use and develop keys and other records to identify and classify.", "lab": "Science lab", "success": ["I can group organisms by a feature I choose.", "I can regroup them a different way.", "I can explain what each group has in common."], "challenge": "Set a grouping puzzle for a partner and see if they can find your rule."}}, {"step": 3, "title": "Classify animals", "nc": "Give reasons for classifying plants and animals based on specific characteristics.", "ws": "Use and develop keys and other information records to identify, classify and describe living things and materials, and identify patterns that might be found in the natural environment (non-statutory).", "success": ["I can say what a classification key is and why we use it.", "I can use yes and no questions to sort animals.", "I can make my own classification key for a set of animals."], "challenge": "Write three yes/no questions that would separate a spider, a snail and a beetle.", "practical": {"objective": "Build and test a classification key for a set of animals using yes and no questions.", "ws": "Use and develop keys to identify, classify and describe living things.", "lab": "Science lab", "success": ["I can write yes and no questions about features.", "I can order them into a key.", "I can test my key on a new animal."], "challenge": "Trade keys with a group and find an animal that breaks theirs."}}, {"step": 4, "title": "Classify plants", "nc": "Give reasons for classifying plants and animals based on specific characteristics.", "ws": "Use and develop keys and other information records to identify, classify and describe living things and materials and identify patterns that might be found in the natural environment (non-statutory).", "success": ["I can name features that help me classify plants.", "I know what deciduous, evergreen and coniferous mean.", "I can make a key to sort flowering and non-flowering plants."], "challenge": "Someone says a mushroom is a plant because it has a stem. Are they right? Explain your answer.", "practical": {"objective": "Create and compare classification keys for real plants and leaves.", "ws": "Use and develop keys and identify patterns in the natural environment.", "lab": "Science lab", "success": ["I can look closely at a plant's features.", "I can build a key that separates the plants.", "I can compare my key with another group's."], "challenge": "Add a coniferous example and adjust your key to include it."}}, {"step": 5, "title": "Microorganisms", "nc": "Describe how living things are classified into broad groups according to common observable characteristics and based on similarities and differences, including microorganisms, plants and animals.", "ws": "Identifying scientific evidence that has been used to support or refute ideas or arguments.", "success": ["I can name the three types of microorganism.", "I can give an example of a helpful and a harmful microorganism.", "I can explain why we need a microscope to see them."], "challenge": "'All bacteria are harmful.' Is this always, sometimes or never true? Explain.", "practical": {"objective": "Set up the mould-growth observation over time, a dry and a damp slice in sealed bags, and record the changes.", "ws": "Observation over time; taking and recording measurements.", "lab": "Science lab", "success": ["I can set up a dry and a damp sample fairly.", "I can keep the bags sealed and safe.", "I can record the mould changes over time."], "challenge": "Predict which bag will change fastest and say why."}}, {"step": 6, "title": "Classify organisms", "nc": "Describe how living things are classified into broad groups according to common observable characteristics and based on similarities and differences, including microorganisms, plants and animals.", "ws": "Reporting and presenting findings from enquiries, including conclusions, causal relationships and explanations of and a degree of trust in results, in oral and written forms such as displays and other presentations.", "success": ["I can explain that microorganisms can be classified by their features.", "I can describe the shape of bacteria, viruses and fungi in simple words.", "I can make a key to sort microorganisms."], "challenge": "Play 'which microorganism am I?' Write the three yes/no questions you would ask to work it out.", "practical": {"objective": "Play 'which microorganism am I?' and build a key to sort bacteria, viruses and fungi.", "ws": "Reporting and presenting findings from enquiries.", "lab": "Science lab", "success": ["I can ask yes and no questions about shape and features.", "I can sort the three types with a key.", "I can present how I classified them."], "challenge": "Explain why a virus is the hardest of the three to place, using its features."}}, {"step": 7, "title": "Carl Linnaeus", "nc": "Describe how living things are classified into broad groups according to common observable characteristics and based on similarities and differences, including microorganisms, plants and animals.", "ws": "Use relevant scientific language and illustrations to discuss, communicate and justify their ideas and should talk about how scientific ideas have developed over time (non-statutory).", "success": ["I can say who Carl Linnaeus was and what he did.", "I can explain why his system was not fully accurate.", "I can describe how classification has changed since his time."], "challenge": "Linnaeus did not know about microorganisms. How has science let us classify them since his time?", "practical": {"objective": "Research Linnaeus and produce a timeline and a short science-journalist article.", "ws": "Talk about how scientific ideas have developed over time.", "lab": "Classroom, research based", "success": ["I can find key facts about Linnaeus and his system.", "I can place them on a timeline.", "I can explain why his system was not fully accurate."], "challenge": "Explain how one modern discovery would have changed how Linnaeus grouped things."}}], "lessons_per_week": 2, "model": "Two 40-minute lessons a week: one White Rose small step and one practical in the science lab. Content coverage is one step a week; the practical carries the working-scientifically and enquiry strands."}, "maths": {"subject": "Maths", "source": "White Rose Maths, Year 6 Autumn Block 1", "unit": "Place value, then Addition, subtraction, multiplication and division", "pacing_note": "Autumn 1 runs Place value (this block, 8 steps) then Addition, subtraction, multiplication and division. The second block's SOL was not supplied, so its steps are not mapped. Send the White Rose Year 6 Autumn Block 2 SOL and it will be mapped verbatim. Also set maths lessons per week so both blocks pace onto the teaching days.", "steps": [{"step": 1, "title": "Numbers to 1,000,000", "nc": "Read, write, order and compare numbers up to 10,000,000 and determine the value of each digit. Solve number and practical problems that involve the above.", "success": ["I can say what each digit is worth in a number up to 1,000,000.", "I can build and partition a number in more than one way.", "I can add or take away 10, 100, 1,000 or 10,000 and say which column changes."], "challenge": "Annie has 4 ten-thousands, 12 thousands, 8 hundreds, 3 tens and 25 ones counters. What is the greatest number she can make?"}, {"step": 2, "title": "Numbers to 10,000,000", "nc": "Read, write, order and compare numbers up to 10,000,000 and determine the value of each digit. Solve number and practical problems that involve the above.", "success": ["I can read a 7-digit number and say what each digit is worth.", "I can put the commas in the right places in a 7-digit number.", "I can show a number up to 10,000,000 on a place value chart."], "challenge": "Jack has counters worth 1,000,000, 10,000 and 1. Using only four counters, what different numbers greater than 1,000,000 can he make?"}, {"step": 3, "title": "Read and write numbers to 10,000,000", "nc": "Read, write, order and compare numbers up to 10,000,000 and determine the value of each digit. Solve number and practical problems that involve the above.", "success": ["I can write a large number in words.", "I can write a large number in numerals when I am given the words.", "I can use the commas to break a big number into parts to read it."], "challenge": "Write 'three and a half million' in numerals. Then write 5,208,001 in words."}, {"step": 4, "title": "Powers of 10", "nc": "Read, write, order and compare numbers up to 10,000,000 and determine the value of each digit. Solve number and practical problems that involve the above.", "success": ["I can multiply and divide a number by 10, 100 and 1,000.", "I can say how many times bigger or smaller one number is than another.", "I know that multiplying by 10 twice is the same as multiplying by 100."], "challenge": "Huan thinks a number a thousand times the size of 2,500 is two and a half million. Is Huan right? Explain how you know."}, {"step": 5, "title": "Number line to 10,000,000", "nc": "Read, write, order and compare numbers up to 10,000,000 and determine the value of each digit. Solve number and practical problems that involve the above.", "success": ["I can work out what each interval on a number line is worth.", "I can find where a number belongs on a number line to 10,000,000.", "I can find the midpoint between two numbers on the line."], "challenge": "Tiny says the arrow points to 3,050,000 but it is halfway between 3 and 4 million. Explain the mistake Tiny has made."}, {"step": 6, "title": "Compare and order any integers", "nc": "Read, write, order and compare numbers up to 10,000,000 and determine the value of each digit. Solve number and practical problems that involve the above.", "success": ["I can compare two numbers using the place value of their digits.", "I can use the <, > and = signs correctly.", "I can order a set of numbers from smallest to largest and back again."], "challenge": "Explain why 56,700 is not greater than 201,000, even though 5 is greater than 2."}, {"step": 7, "title": "Round any integer", "nc": "Round any whole number to a required degree of accuracy. Solve number and practical problems that involve the above.", "success": ["I can find the two multiples a number sits between.", "I can round a number to the nearest 10, 100, 1,000, 10,000, 100,000 and million.", "I can choose the most sensible way to round a number."], "challenge": "My number rounds to 38,000 to the nearest thousand. What is the greatest it could be, and the smallest?"}, {"step": 8, "title": "Negative numbers", "nc": "Use negative numbers in context, and calculate intervals across zero. Solve number and practical problems that involve the above.", "success": ["I can read a temperature above and below zero.", "I can count forwards and backwards through zero.", "I can find the difference between a positive and a negative number."], "challenge": "Harlow is -3 degrees and Southampton is 4 degrees. Find the difference. Then Bradford drops 6 degrees from 2 degrees. What is its new temperature?"}], "pending_blocks": [{"block": "Addition, subtraction, multiplication and division", "source": "White Rose Maths, Year 6 Autumn Block 2", "status": "awaiting SOL"}], "lessons_per_week": 5, "lesson_length": "1 hour"}, "reading": {"subject": "English Reading", "source": "SEQUENS synthesis: VIPERS, Year 6 age-related expectations (reading domains 2a to 2h). Texts original and adjacent to Wonder.", "unit": "VIPERS reading, adjacent to Wonder", "status": "synthesised", "note": "Not from a school scheme. Synthesised around VIPERS and the Year 6 reading content domains, with original texts written to sit alongside Wonder. Five lessons a week. Confirm or cut; nothing here is presented as El Alsson's curriculum.", "lessons_per_week": 5, "weeks": {"1": {"text": "The New Kid", "text_type": "Fiction, narrative", "theme": "starting somewhere new", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To work out the meaning of unfamiliar words in \"The New Kid\" using clues from the surrounding text.", "success": ["I can find a word I do not know in the text.", "I can use the words around it to work out what it means.", "I can check my meaning makes sense in the sentence."], "challenge": "Find a word the writer could have used instead, and say how it would change the feeling of the sentence.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Retrieve", "domain": "2b: retrieve and record", "objective": "To retrieve and record key details from \"The New Kid\" and find the evidence that supports them.", "success": ["I can find the answer to a question in the text.", "I can point to the exact words that prove it.", "I can write my answer in a full sentence."], "challenge": "Find a detail that is hinted at but not stated directly, and show the words that hint at it.", "step": 2, "hinge": "Answers from memory rather than finding the exact words in the text.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer how a character feels in \"The New Kid\" and justify it with evidence.", "success": ["I can say how a character is feeling.", "I can find words or actions that show it.", "I can explain how the evidence proves my idea."], "challenge": "Find two moments where the same character feels differently, and explain what changed.", "step": 3, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}, {"vipers": "Predict / Explain", "domain": "2e and 2g: predict, explain word choice", "objective": "To predict what a character might do next in \"The New Kid\" and explain the word choices that point to it.", "success": ["I can say what I think will happen next.", "I can use clues from the text to back up my idea.", "I can explain how a word or phrase points to what is coming."], "challenge": "Write two different predictions and say which one the text makes more likely, and why.", "step": 4, "hinge": "Predicts from imagination rather than from clues in the text.", "suggested": true}, {"vipers": "Summarise", "domain": "2c: summarise main ideas", "objective": "To summarise the main events of \"The New Kid\" in order and in my own words.", "success": ["I can pick out the most important events.", "I can put them in the right order.", "I can retell the text in a few sentences of my own."], "challenge": "Summarise the text in exactly twenty words, keeping only what matters most.", "step": 5, "hinge": "Retells everything instead of choosing the main points.", "suggested": true}]}, "2": {"text": "Behind the Mask", "text_type": "Fiction, narrative", "theme": "living with a visible difference", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To work out the meaning of unfamiliar words in \"Behind the Mask\" using clues from the surrounding text.", "success": ["I can find a word I do not know in the text.", "I can use the words around it to work out what it means.", "I can check my meaning makes sense in the sentence."], "challenge": "Find a word the writer could have used instead, and say how it would change the feeling of the sentence.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Retrieve", "domain": "2b: retrieve and record", "objective": "To retrieve and record key details from \"Behind the Mask\" and find the evidence that supports them.", "success": ["I can find the answer to a question in the text.", "I can point to the exact words that prove it.", "I can write my answer in a full sentence."], "challenge": "Find a detail that is hinted at but not stated directly, and show the words that hint at it.", "step": 2, "hinge": "Answers from memory rather than finding the exact words in the text.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer how a character feels in \"Behind the Mask\" and justify it with evidence.", "success": ["I can say how a character is feeling.", "I can find words or actions that show it.", "I can explain how the evidence proves my idea."], "challenge": "Find two moments where the same character feels differently, and explain what changed.", "step": 3, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}, {"vipers": "Predict / Explain", "domain": "2e and 2g: predict, explain word choice", "objective": "To predict what a character might do next in \"Behind the Mask\" and explain the word choices that point to it.", "success": ["I can say what I think will happen next.", "I can use clues from the text to back up my idea.", "I can explain how a word or phrase points to what is coming."], "challenge": "Write two different predictions and say which one the text makes more likely, and why.", "step": 4, "hinge": "Predicts from imagination rather than from clues in the text.", "suggested": true}, {"vipers": "Summarise", "domain": "2c: summarise main ideas", "objective": "To summarise the main events of \"Behind the Mask\" in order and in my own words.", "success": ["I can pick out the most important events.", "I can put them in the right order.", "I can retell the text in a few sentences of my own."], "challenge": "Summarise the text in exactly twenty words, keeping only what matters most.", "step": 5, "hinge": "Retells everything instead of choosing the main points.", "suggested": true}]}, "3": {"text": "The Lunch Table", "text_type": "Fiction, narrative", "theme": "friendships that shift", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To work out the meaning of unfamiliar words in \"The Lunch Table\" using clues from the surrounding text.", "success": ["I can find a word I do not know in the text.", "I can use the words around it to work out what it means.", "I can check my meaning makes sense in the sentence."], "challenge": "Find a word the writer could have used instead, and say how it would change the feeling of the sentence.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Retrieve", "domain": "2b: retrieve and record", "objective": "To retrieve and record key details from \"The Lunch Table\" and find the evidence that supports them.", "success": ["I can find the answer to a question in the text.", "I can point to the exact words that prove it.", "I can write my answer in a full sentence."], "challenge": "Find a detail that is hinted at but not stated directly, and show the words that hint at it.", "step": 2, "hinge": "Answers from memory rather than finding the exact words in the text.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer how a character feels in \"The Lunch Table\" and justify it with evidence.", "success": ["I can say how a character is feeling.", "I can find words or actions that show it.", "I can explain how the evidence proves my idea."], "challenge": "Find two moments where the same character feels differently, and explain what changed.", "step": 3, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}, {"vipers": "Predict / Explain", "domain": "2e and 2g: predict, explain word choice", "objective": "To predict what a character might do next in \"The Lunch Table\" and explain the word choices that point to it.", "success": ["I can say what I think will happen next.", "I can use clues from the text to back up my idea.", "I can explain how a word or phrase points to what is coming."], "challenge": "Write two different predictions and say which one the text makes more likely, and why.", "step": 4, "hinge": "Predicts from imagination rather than from clues in the text.", "suggested": true}, {"vipers": "Summarise", "domain": "2c: summarise main ideas", "objective": "To summarise the main events of \"The Lunch Table\" in order and in my own words.", "success": ["I can pick out the most important events.", "I can put them in the right order.", "I can retell the text in a few sentences of my own."], "challenge": "Summarise the text in exactly twenty words, keeping only what matters most.", "step": 5, "hinge": "Retells everything instead of choosing the main points.", "suggested": true}]}, "4": {"text": "Standing Alone", "text_type": "Fiction, narrative", "theme": "the bystander's choice", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To work out the meaning of unfamiliar words in \"Standing Alone\" using clues from the surrounding text.", "success": ["I can find a word I do not know in the text.", "I can use the words around it to work out what it means.", "I can check my meaning makes sense in the sentence."], "challenge": "Find a word the writer could have used instead, and say how it would change the feeling of the sentence.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Retrieve", "domain": "2b: retrieve and record", "objective": "To retrieve and record key details from \"Standing Alone\" and find the evidence that supports them.", "success": ["I can find the answer to a question in the text.", "I can point to the exact words that prove it.", "I can write my answer in a full sentence."], "challenge": "Find a detail that is hinted at but not stated directly, and show the words that hint at it.", "step": 2, "hinge": "Answers from memory rather than finding the exact words in the text.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer how a character feels in \"Standing Alone\" and justify it with evidence.", "success": ["I can say how a character is feeling.", "I can find words or actions that show it.", "I can explain how the evidence proves my idea."], "challenge": "Find two moments where the same character feels differently, and explain what changed.", "step": 3, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}, {"vipers": "Predict / Explain", "domain": "2e and 2g: predict, explain word choice", "objective": "To predict what a character might do next in \"Standing Alone\" and explain the word choices that point to it.", "success": ["I can say what I think will happen next.", "I can use clues from the text to back up my idea.", "I can explain how a word or phrase points to what is coming."], "challenge": "Write two different predictions and say which one the text makes more likely, and why.", "step": 4, "hinge": "Predicts from imagination rather than from clues in the text.", "suggested": true}, {"vipers": "Summarise", "domain": "2c: summarise main ideas", "objective": "To summarise the main events of \"Standing Alone\" in order and in my own words.", "success": ["I can pick out the most important events.", "I can put them in the right order.", "I can retell the text in a few sentences of my own."], "challenge": "Summarise the text in exactly twenty words, keeping only what matters most.", "step": 5, "hinge": "Retells everything instead of choosing the main points.", "suggested": true}]}, "5": {"text": "Small Acts, Big Difference", "text_type": "Non-fiction, article", "theme": "kindness reported as news", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To work out the meaning of subject vocabulary in \"Small Acts, Big Difference\" using the surrounding text.", "success": ["I can spot a subject word I do not know.", "I can use the sentence around it to work out its meaning.", "I can check the meaning against the rest of the article."], "challenge": "Find a formal word the writer used and suggest an everyday word that means the same.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Retrieve", "domain": "2b: retrieve and record", "objective": "To retrieve facts from \"Small Acts, Big Difference\", using the headings and subheadings to find them quickly.", "success": ["I can use a heading to find the right section.", "I can retrieve the fact the question asks for.", "I can record it accurately."], "challenge": "Find a fact in one section that connects to a fact in another, and explain the link.", "step": 2, "hinge": "Answers from memory rather than finding the exact words in the text.", "suggested": true}, {"vipers": "Summarise", "domain": "2c: summarise main ideas", "objective": "To summarise the main idea of each section of \"Small Acts, Big Difference\".", "success": ["I can find the main point of a section.", "I can leave out the small details.", "I can write each main idea in one sentence."], "challenge": "Write a new subheading for each section that captures its main idea in three words.", "step": 3, "hinge": "Retells everything instead of choosing the main points.", "suggested": true}, {"vipers": "Explain", "domain": "2f and 2g: features and meaning", "objective": "To explain how the layout features of \"Small Acts, Big Difference\" help the reader.", "success": ["I can name a feature such as a heading, bullet list or caption.", "I can say what that feature is for.", "I can explain how it helps me as a reader."], "challenge": "Choose one feature the writer did not use and explain where it would have helped.", "step": 4, "hinge": "Names a word or technique but not the effect it has on the reader.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer the writer's viewpoint in \"Small Acts, Big Difference\" and what they want the reader to think.", "success": ["I can say what the writer thinks about the topic.", "I can find words that show their viewpoint.", "I can explain what they want the reader to feel or do."], "challenge": "Rewrite one sentence so it shows the opposite viewpoint, keeping the facts the same.", "step": 5, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}]}, "6": {"text": "Ordinary", "text_type": "Poetry", "theme": "being ordinary and extraordinary", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To explore the meaning of chosen words in \"Ordinary\" and why the poet chose them.", "success": ["I can find a word that stands out in the poem.", "I can say what it means here.", "I can suggest why the poet chose it."], "challenge": "Swap one word for a similar one and say how the line changes.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Explain", "domain": "2g: language and impact", "objective": "To explain how a word or image in \"Ordinary\" creates a feeling for the reader.", "success": ["I can find an image or phrase the poet uses.", "I can say what feeling it creates.", "I can explain how the words do that."], "challenge": "Find two images that create opposite feelings and explain the contrast.", "step": 2, "hinge": "Names a word or technique but not the effect it has on the reader.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer the message of \"Ordinary\" and support it from the words of the poem.", "success": ["I can say what I think the poem is really about.", "I can find lines that support my idea.", "I can explain my thinking."], "challenge": "Suggest a second, different message the poem could carry, and defend it.", "step": 3, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}, {"vipers": "Compare", "domain": "2h: comparison within and across texts", "objective": "To compare \"Ordinary\" with an earlier text in the unit, looking at how each treats its theme.", "success": ["I can say what the two texts have in common.", "I can say how they are different.", "I can use an example from each to prove it."], "challenge": "Decide which text makes the theme feel stronger, and justify your choice.", "step": 4, "hinge": "Lists features of each text without actually comparing them.", "suggested": true}, {"vipers": "Summarise / Perform", "domain": "2c: summarise main ideas", "objective": "To summarise the message of \"Ordinary\" and read it aloud in a way that carries that meaning.", "success": ["I can sum up the poem's message in one sentence.", "I can choose how to read key lines.", "I can read aloud so a listener feels the meaning."], "challenge": "Mark up the poem for a partner to perform, showing where to pause and stress.", "step": 5, "hinge": "Reads the words aloud without carrying the meaning.", "suggested": true}]}, "7": {"text": "Two Sides", "text_type": "Fiction, dual narrative", "theme": "one event, two viewpoints", "lessons": [{"vipers": "Vocabulary", "domain": "2a: word meaning in context", "objective": "To work out unfamiliar words in \"Two Sides\" where two narrators use language differently.", "success": ["I can find a tricky word in each narrator's part.", "I can use the context to work out its meaning.", "I can notice if the two narrators use words differently."], "challenge": "Find a word one narrator would use that the other never would, and explain why.", "step": 1, "hinge": "Guesses a word from how it looks instead of using the words around it.", "suggested": true}, {"vipers": "Retrieve", "domain": "2b: retrieve and record", "objective": "To retrieve, from \"Two Sides\", what each narrator says happened, and record both accounts.", "success": ["I can find what the first narrator says.", "I can find what the second narrator says.", "I can record both accurately."], "challenge": "Find one fact both narrators agree on and one they do not, and show the evidence.", "step": 2, "hinge": "Answers from memory rather than finding the exact words in the text.", "suggested": true}, {"vipers": "Infer", "domain": "2d: inference from evidence", "objective": "To infer how each narrator in \"Two Sides\" feels about the same event, using evidence.", "success": ["I can say how the first narrator feels.", "I can say how the second narrator feels.", "I can prove each from the text."], "challenge": "Explain why the same event produces two different feelings.", "step": 3, "hinge": "Gives an opinion but no evidence from the text to back it.", "suggested": true}, {"vipers": "Compare", "domain": "2h: comparison within the text", "objective": "To compare the two viewpoints in \"Two Sides\" and explain where and why they differ.", "success": ["I can line up the two accounts side by side.", "I can find where they disagree.", "I can explain why they see it differently."], "challenge": "Decide which narrator the reader is meant to trust more, and justify it from the text.", "step": 4, "hinge": "Lists features of each text without actually comparing them.", "suggested": true}, {"vipers": "Explain", "domain": "2f: structure and meaning", "objective": "To explain how telling \"Two Sides\" in two voices changes what the reader understands.", "success": ["I can say why the writer used two narrators.", "I can say what the reader learns from having both.", "I can explain what would be lost with only one."], "challenge": "Rewrite one moment in a third character's voice and say what it adds.", "step": 5, "hinge": "Names a word or technique but not the effect it has on the reader.", "suggested": true}]}}}}};
+const NAV_TEACHER = [["dash","Dashboard",""],["map","Objective map",""],["library","Library",""],["pace","Pacing",""],["daily","Daily layer",""],["sheets","Sheets",""],["progress","Progress",""],["reports","Reports",""],["gen","Generate","key"],["settings","Settings",""]];
+const NAV_LEADER  = [["cohort","Cohort",""],["map","Objective map",""],["weekly","Weekly meeting",""],["class","Class data",""],["compare","Progress over time",""]];
+const TEACHER_GROUPS=[{label:"",keys:["dash"]},{label:"Plan",keys:["map","library","pace","sheets"]},{label:"Track",keys:["daily","progress","reports"]},{label:"Create",keys:["gen"]},{label:"",keys:["settings"],foot:true}];
+const ROLES = {
+  teacher:{label:"Class teacher",who:["Y6D · El Alsson","Autumn 1 · 2026-2027"],hint:"Your class. Each teacher sees only their own.",nav:NAV_TEACHER,groups:TEACHER_GROUPS,home:"dash"},
+  leader:{label:"Year lead",who:["Year 6 · El Alsson","Four classes · 2026-2027"],hint:"All four classes. Lead view, walled from coaching.",nav:NAV_LEADER,home:"cohort"}
+};
+let role="teacher";
+const cal = DATA.calendar; const wkById={}; cal.weeks.forEach(w=>wkById[w.w]=w);
+const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const parse=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(Date.UTC(y,m-1,d));};
+const dow=s=>DOW[parse(s).getUTCDay()], niceD=s=>parse(s).getUTCDate(), niceM=s=>MON[parse(s).getUTCMonth()];
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function nextMove(seen,wt,ny){if(!seen)return null;const behind=wt+ny;if(behind===0)return{k:'ok',t:'Secure across the class. SEQUENS suggests moving on.'};if(behind<=4)return{k:'wt',t:'SEQUENS suggests a short small-group revisit tomorrow while the rest move on.'};return{k:'ny',t:'Re-teach flagged. SEQUENS suggests this objective returns as a starter tomorrow.'};}
+
+const SPINE=[['first_thing','Switch thinking on, retrieve'],['show_them_how','Model it, think aloud'],['build_it_together','We do it together'],['quick_check','The hinge, one diagnostic check'],['their_turn','They do it, unaided'],['last_thing','Close the loop, back to the start']];
+const FRAMES='nest, iceberg, keystone, spokes, loop, scales, track, turn, chain, weigh, bound';
+let ASSESS=[]; let bookImg=null; const CHECKPOINTS=['Baseline','Autumn 1 end','Autumn 2 end','Spring 1 end','Spring 2 end','Summer 1 end','Summer 2 end'];
+const SCALE=[{k:1,label:'Significantly below'},{k:2,label:'Below expectations'},{k:3,label:'Working towards'},{k:4,label:'Working securely at'},{k:5,label:'Greater depth'}];
+const SECURE_MIN=4; // 'Working securely at' = consistently meeting age-expected
+// GL SAS boundaries (CAT4, NGRT, PTE, PTM): 69-75>1, 76-89>2, 90-109>3, 110-127>4, 128-141>5
+function bandGL(sas){var n=+sas; if(isNaN(n))return null; var b=CONFIG.glB; return n<=b[0]?1:n<=b[1]?2:n<=b[2]?3:n<=b[3]?4:5;}
+// White Rose Maths %: 0-40>1, 41-49>2, 50-70>3, 71-90>4, 91-100>5
+function bandWR(pct){var n=+pct; if(isNaN(n))return null; var b=CONFIG.wrB; return n<=b[0]?1:n<=b[1]?2:n<=b[2]?3:n<=b[3]?4:5;}
+const CONFIG={
+  scale:SCALE, secureMin:4,
+  glB:[75,89,109,127], wrB:[40,49,70,90],
+  ipcHomeLearningNA:true,
+  vision:'', mission:'',
+  values:['Respect','Responsibility','Integrity','Resilience','Empathy'],
+  valuesReach:'lessons',  // 'lessons' or 'lessons+reports'
+  reportAreas:[
+    {subj:'Reading',code:'READ',focus:'Progress, comprehension, fluency, and engagement with Bug Club and reading at home.',tone:'Honest about level and growth; frame improvements constructively with clear targets.'},
+    {subj:'Writing',code:'WRIT',focus:'Writing skills, taught concepts, grammar and punctuation, handwriting and presentation, and specific next steps.',tone:'Strengths first, then areas for practice; targets for next term.'},
+    {subj:'Maths',code:'WRM',focus:'Mastery of key concepts, application of skills, problem-solving, and fluency.',tone:'Highlight successes; one or two achievable next steps.'},
+    {subj:'IPC',code:'IPC',focus:'Engagement with the units, research skills, collaboration and teamwork, and application of knowledge.',tone:'Emphasise effort and participation; if attainment is low, describe specific behaviours.'}
+  ]
+};
+const MHINGE={1:"Thinks place value columns run ones, tens, hundreds, thousands, millions, skipping ten-thousands and hundred-thousands.",2:"Cannot read a 7-digit number written without commas, or misplaces the commas.",3:"Drops or misreads placeholders when writing large numbers in words (for example 5,208,001).",4:"Thinks multiplying by 10 then by 10 again is the same as multiplying by 20.",5:"Gives the midpoint wrongly, for example calling the midpoint of 1,000,000 and 2,000,000 as 1,000,005.",6:"Compares on the leading digit alone, so thinks 56,700 is greater than 201,000 because 5 is greater than 2.",7:"Looks at the digit being rounded rather than the next digit when rounding.",8:"Thinks negative 5 is greater than negative 3 because 5 is greater than 3."};
+const SHINGE={1:"Thinks plants are non-living because they do not appear to move.",2:"Thinks all animals that live in the sea are fish.",3:"Classifies animals by habitat or movement rather than features, so calls a whale a fish.",4:"Classifies a mushroom as a plant because it has a stem.",5:"Thinks all bacteria are harmful.",6:"Thinks microorganisms cannot be classified.",7:"Thinks Linnaeus created the classification system we use today."};
+const TEACH=[]; cal.weeks.forEach(w=>w.days=w.days||["","","","",""]);
+// build teaching days Sun-Thu per week from week begins
+cal.weeks.forEach(w=>{const b=parse(w.begins);const arr=[];for(let k=0;k<5;k++){const d=new Date(b);d.setUTCDate(b.getUTCDate()+k);arr.push(d.toISOString().slice(0,10));}w._days=arr;arr.forEach(x=>TEACH.push(x));});
+const PVLESSONS = DATA.subjects.maths.steps.map((s,i)=>({kind:"pv",step:s.step,title:s.title,hinge:MHINGE[s.step]}))
+  .concat(Array.from({length:27},(_,i)=>({kind:"pending",step:i+1,title:"Add/sub/mul/div · lesson "+(i+1)})));
+const SETTLE=1; // Week 1 is ice breakers + baseline; teaching starts Week 2
+const TEACH_DAYS=[]; cal.weeks.forEach(w=>{ if(w.w>SETTLE) w._days.forEach(d=>TEACH_DAYS.push(d)); });
+
+let genTarget=null;
+let route="dash";
+function buildNav(){
+  const rs=document.getElementById("roleswitch");rs.innerHTML="";
+  [["teacher","Class teacher"],["leader","Year lead"]].forEach(([r,lab])=>{const b=document.createElement("button");b.textContent=lab;b.className=(r===role?"sel":"");b.dataset.role=r;b.setAttribute("aria-pressed",r===role);
+    b.onclick=()=>{if(role!==r){role=r;const R=ROLES[role];if(!R.nav.some(n=>n[0]===route))route=R.home;buildNav();render();}};rs.appendChild(b);});
+  document.getElementById("rolehint").textContent=ROLES[role].hint;
+  document.getElementById("who").innerHTML=ROLES[role].who.map(x=>'<div>'+x+'</div>').join('');
+  const nav=document.getElementById("nav");nav.innerHTML="";
+  const Rr=ROLES[role]; const byKey={}; Rr.nav.forEach(function(n){byKey[n[0]]=n;});
+  function addLink(n){var k=n[0],l=n[1],tag=n[2];var a=document.createElement("a");a.textContent=l;a.dataset.k=k;a.setAttribute("role","button");a.setAttribute("tabindex","0");
+    if(tag){a.innerHTML=l+'<span class="dot" aria-hidden="true"></span>';a.setAttribute("title","Awaiting the production key");}
+    var go=function(){route=k;render();};a.onclick=go;a.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};nav.appendChild(a);}
+  if(Rr.groups){Rr.groups.forEach(function(g){if(g.label){var hd=document.createElement("div");hd.className="navsec"+(g.foot?" foot":"");hd.textContent=g.label;nav.appendChild(hd);}g.keys.forEach(function(k){if(byKey[k])addLink(byKey[k]);});});}
+  else {Rr.nav.forEach(addLink);}
+}
+
+const closures=new Set();
+const dstate={}; // daily quick_check
+
+function render(){
+  document.querySelectorAll(".nav a").forEach(a=>a.classList.toggle("sel",a.dataset.k===route));
+  const m=document.getElementById("main");
+  m.innerHTML = ({dash:dash,map:mapP,library:library,pace:pace,daily:daily,sheets:sheetsP,progress:progress,reports:reports,settings:settingsP,"class":classP,cohort:cohortP,weekly:weekly,compare:compareP,gen:gen})[route]();
+  ({dash:wireDash,map:wireMap,library:wireLibrary,pace:wirePace,daily:wireDaily,sheets:wireSheets,progress:wireProgress,reports:wireReports,settings:wireSettings,"class":wireClass,cohort:wireCohort,weekly:wireWeekly,compare:wireCompare,gen:wireGen})[route]?.();
+  window.scrollTo(0,0);
+}
+
+// ---------- DASHBOARD ----------
+function dash(){
+  const s=DATA.subjects;
+  const cE=Object.values(s.english.weeks).reduce((a,w)=>a+w.objectives.length,0);
+  const cR=Object.values(s.reading.weeks).reduce((a,w)=>a+w.lessons.length,0);
+  const cI=Object.values(s.ipc.weeks).reduce((a,w)=>a+w.lessons.length,0);
+  const total=cE+cR+cI+s.science.steps.length+s.maths.steps.length;
+  function tile(k,t,d,gated){return '<div class="tile" data-go="'+k+'" role="button" tabindex="0"><h4>'+t+(gated?'<span class="dot" aria-hidden="true"></span>':'')+'</h4><p>'+d+'</p></div>';}
+  const plan=tile("map","Objective map","Your objectives, steps and misconceptions")+tile("library","Library","Pick White Rose blocks, no PDF")+tile("pace","Pacing","The week, subject by subject")+tile("sheets","Sheets","Print writing sheets for books");
+  const track=tile("daily","Daily layer","Mark the class against each objective")+tile("progress","Progress","Where the class sits, visually")+tile("reports","Reports","Per pupil term report");
+  const create=tile("gen","Generate","Objective to a full lesson",true);
+  const checks=[
+    ["g","Objective map",total+" objectives across five subjects, from your plans and the schemes."],
+    ["a","Saving your data","This session is live, not saved. Uploads and marks persist once the database cutover is wired."],
+    ["a","Lesson generation","Waiting on the 30 August key and the generation stress-test."],
+    ["r","ICO decision","Coded now; register before real names enter the tracker."]
+  ].map(([c,t,d])=>'<div class="check"><div class="dot '+c+'">'+(c==="g"?"\u2713":c==="a"?"\u00b7":"!")+'</div><div class="t"><b>'+t+'</b> <span>'+d+'</span></div></div>').join("");
+  return '<div class="kicker">Engine</div><div class="h">Y6D \u00b7 Autumn 1</div>'+
+    '<div class="sub">Settling Week 1, teaching Weeks 2 to 7 to 22 October. '+total+' objectives mapped across five subjects. Your class, your tool.</div>'+
+    '<div class="homegroup">Plan</div><div class="tiles">'+plan+'</div>'+
+    '<div class="homegroup">Track</div><div class="tiles">'+track+'</div>'+
+    '<div class="homegroup">Create</div><div class="tiles">'+create+'</div>'+
+    '<div class="homegroup">Where things stand</div><div class="checklist">'+checks+'</div>';
+}
+function wireDash(){document.querySelectorAll(".tile[data-go]").forEach(function(c){var go=function(){route=c.dataset.go;render();};c.onclick=go;c.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};});}
+
+// ---------- OBJECTIVE MAP ----------
+let mapCur="english";
+
+function copyText(t,msgId){try{var ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);if(msgId&&document.getElementById(msgId))document.getElementById(msgId).textContent="copied to clipboard";}catch(e){if(msgId&&document.getElementById(msgId))document.getElementById(msgId).textContent="select and copy manually";}}
+function mapText(k){
+  var s=DATA.subjects[k]; if(!s) return "";
+  var t=s.subject+" - "+s.source+"\n";
+  function line(lo,success,hinge,sug){var x="  "+lo+"\n";if(success&&success.length)x+="    Steps to success"+(sug?" (suggested)":"")+": "+success.join("; ")+"\n";if(hinge)x+="    Misconception"+(sug?" (suggested)":"")+": "+hinge+"\n";return x;}
+  var w,wk;
+  if(k==="english"){for(w=1;w<=7;w++){wk=s.weeks[w];if(!wk)continue;t+="\nWeek "+w+(wk.strand?" - "+wk.strand:"")+"\n";wk.objectives.forEach(function(o){t+=line(o.objective,o.success,o.hinge,true);});}}
+  else if(k==="reading"){for(w=1;w<=7;w++){wk=s.weeks[w];if(!wk)continue;t+="\nWeek "+w+(wk.text?" - "+wk.text:"")+"\n";wk.lessons.forEach(function(l){t+=line((l.vipers?l.vipers+": ":"")+l.objective,l.success,l.hinge,true);});}}
+  else if(k==="ipc"){for(w=1;w<=7;w++){wk=s.weeks[w];if(!wk)continue;t+="\nWeek "+w+"\n";wk.lessons.forEach(function(l){t+=line(l.objective,l.success,l.hinge,true);});}}
+  else if(k==="science"){t+="\n";s.steps.forEach(function(st,i){t+=line("Step "+(i+1)+": "+st.title,st.success,(typeof SHINGE!=="undefined"?SHINGE[st.step]:null),false);if(st.practical&&st.practical.objective)t+="    Practical: "+st.practical.objective+"\n";});}
+  else if(k==="maths"){t+="\n";s.steps.forEach(function(st,i){t+=line("Step "+(i+1)+": "+st.title,st.success,(typeof MHINGE!=="undefined"?MHINGE[st.step]:null),false);});}
+  return t;
+}
+
+function mapP(){
+  return '<div class="kicker">Objective map</div><div class="h">Objectives from your plans</div>'+
+    '<div class="sub">Transcribed verbatim from the MTPs and White Rose schemes. SEQUENS suggests; you confirm.</div>'+
+    '<div class="controls"><button class="btn" id="mcopy">Copy this subject</button><button class="btn" id="mcopyall">Copy whole map</button><span class="meta" id="mcopymsg">for your meeting minutes</span></div>'+'<div class="tabs" id="mtabs"></div><div id="mpanel"></div>';
+}
+function wireDash(){document.querySelectorAll(".card.clickable").forEach(function(c){var go=function(){mapCur=c.dataset.subj;route="map";render();};c.onclick=go;c.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};});}
+function wireMap(){
+  var mc=document.getElementById("mcopy");if(mc){mc.onclick=function(){copyText(mapText(mapCur),"mcopymsg");};}
+  var mca=document.getElementById("mcopyall");if(mca){mca.onclick=function(){copyText(["english","reading","ipc","science","maths"].map(mapText).join("\n\n"),"mcopymsg");};}
+  const tabs=document.getElementById("mtabs");tabs.innerHTML="";
+  [["english","Writing"],["reading","Reading"],["ipc","IPC"],["science","Science"],["maths","Maths"]].forEach(([k,l])=>{
+    const b=document.createElement("button");b.className="tab"+(k===mapCur?" sel":"");b.textContent=l;b.onclick=()=>{mapCur=k;wireMap();};tabs.appendChild(b);});
+  const s=DATA.subjects[mapCur];let h='<div class="note"><b>Week 1 is settling and baseline.</b> Ice breakers and assessments. Teaching starts Week 2, so the plan weeks below begin the week of 13 September; the seventh week carries into Autumn 2 after half term.</div>';
+  h+='<div class="wk-h" style="margin-bottom:10px"><span class="n" style="font-size:1.1rem">'+s.subject+'</span><span class="dt">'+s.source+'</span>'+(s.status==="provisional"?'<span class="st flag">Provisional</span>':s.status==="synthesised"?'<span class="st flag">Synthesised</span>':'')+'</div>';
+  if(s.note)h+='<div class="note">'+esc(s.note)+'</div>';
+  if(mapCur==="english"){h+='<div class="note"><b>EUA.</b> '+esc(s.eua)+'</div>';
+    let _ei=0;for(let w=1;w<=7;w++){const wk=s.weeks[w],c=wkById[w+SETTLE];
+      h+='<div class="wk"><div class="wk-h"><span class="n">Week '+w+'</span><span class="dt">'+(c?niceD(c.begins)+' '+niceM(c.begins)+' to '+niceD(c.ends)+' '+niceM(c.ends):'Autumn 2, after half term')+'</span><span class="st'+(wk.strand.indexOf("4-day")>-1?" flag":"")+'">'+wk.strand+'</span></div>'+
+        wk.objectives.map(function(o,li){var ss=(o.success||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+        return '<div class="step"><span class="num">'+(li+1)+'</span><div style="min-width:0"><div class="nc">'+esc(o.objective)+'</div>'+
+          (ss?'<div class="meta" style="margin-top:6px"><b>Steps to success</b> <span style="color:var(--muted)">suggested</span><ol class="objs" style="margin-top:3px">'+ss+'</ol></div>':'')+
+          (o.hinge?'<div class="hinge"><b>Misconception</b> <span style="font-weight:400;color:var(--muted)">suggested</span> '+esc(o.hinge)+'</div>':'')+
+          '<button class="openbtn" data-gs="Writing" data-gi="'+(_ei++)+'">Open in Generate</button></div></div>';}).join('')+
+        '<div class="meta" style="margin-top:8px"><b>GPS:</b> '+esc(wk.gps)+' · <b>'+wk.spelling+'</b></div></div>';}}
+  else if(mapCur==="ipc"){let _ii=0;for(let w=1;w<=7;w++){const wk=s.weeks[w];if(!wk)continue;const c=wkById[w+SETTLE];const _dt=c?(niceD(c.begins)+' '+niceM(c.begins)):'Autumn 2, after half term';
+      h+='<div class="wk"><div class="wk-h"><span class="n">Week '+w+'</span><span class="dt">'+_dt+'</span>'+(w===7?'<span class="st">Exit Point</span>':'')+'</div>'+
+        wk.lessons.map(function(o,li){var ss=(o.success||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+        return '<div class="step"><span class="num">'+(li+1)+'</span><div style="min-width:0"><div class="nc">'+esc(o.objective)+'</div>'+
+          (ss?'<div class="meta" style="margin-top:6px"><b>Steps to success</b> <span style="color:var(--muted)">suggested</span><ol class="objs" style="margin-top:3px">'+ss+'</ol></div>':'')+
+          (o.hinge?'<div class="hinge"><b>Misconception</b> <span style="font-weight:400;color:var(--muted)">suggested</span> '+esc(o.hinge)+'</div>':'')+
+          '<button class="openbtn" data-gs="IPC" data-gi="'+(_ii++)+'">Open in Generate</button></div></div>';}).join('')+'</div>';}}
+  else if(mapCur==="reading"){let _ri=0;for(let w=1;w<=7;w++){const wk=s.weeks[w];if(!wk)continue;const c=wkById[w+SETTLE];const _dt=c?(niceD(c.begins)+' '+niceM(c.begins)):'Autumn 2, after half term';
+      h+='<div class="wk"><div class="wk-h"><span class="n">Week '+w+'</span><span class="dt">'+_dt+'</span><span class="st">'+esc(wk.text_type)+' · '+esc(wk.text)+'</span></div>';
+      h+=wk.lessons.map(function(ls){var ss=(ls.success||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+        return '<div class="step"><span class="num">'+ls.step+'</span><div style="min-width:0"><div class="ttl">'+esc(ls.vipers)+' <span style="font-weight:400;color:var(--muted);font-size:.78rem">'+esc(ls.domain)+'</span></div><div class="nc">'+esc(ls.objective)+'</div>'+
+          (ss?'<div class="meta" style="margin-top:6px"><b>Steps to success</b><ol class="objs" style="margin-top:3px">'+ss+'</ol></div>':'')+
+          (ls.challenge?'<div class="challenge"><b>Challenge</b>'+esc(ls.challenge)+'</div>':'')+(ls.hinge?'<div class="hinge"><b>Misconception</b> <span style="font-weight:400;color:var(--muted)">suggested</span> '+esc(ls.hinge)+'</div>':'')+'<button class="openbtn" data-gs="Reading" data-gi="'+(_ri++)+'">Open in Generate</button>'+
+          '</div></div>';}).join('');
+      h+='</div>';}}
+  else if(mapCur==="science"){h+='<div class="note">'+esc(s.model||s.pacing_note)+'</div>';
+    if(s.enquiry_question)h+='<div class="meta" style="margin-bottom:12px"><b>Enquiry:</b> '+esc(s.enquiry_question)+'</div>';
+    h+=s.steps.map(function(st){
+      var ss=(st.success||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+      var p=st.practical||{}; var ps=(p.success||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');
+      var block='<div class="wk"><div class="wk-h"><span class="n">Step '+st.step+'</span><span class="st">Week '+st.step+'</span></div>';
+      block+='<div class="step" style="border-bottom:1px solid var(--rule)"><span class="num">1</span><div style="min-width:0"><div class="ttl">'+esc(st.title)+' <span style="font-weight:400;color:var(--muted);font-size:.76rem">White Rose lesson</span></div><div class="nc">'+esc(st.nc)+'</div>'+
+        (ss?'<div class="meta" style="margin-top:6px"><b>Steps to success</b><ol class="objs" style="margin-top:3px">'+ss+'</ol></div>':'')+
+        (st.challenge?'<div class="challenge"><b>Challenge</b>'+esc(st.challenge)+'</div>':'')+
+        '<div class="hinge"><b>Quick-check hinge</b>'+esc(SHINGE[st.step])+'<div style="margin-top:5px;font-weight:400;color:var(--ink-soft);font-size:.76rem">If most are secure, move on. If the class is split, teach into this before the next step.</div></div></div></div>';
+      block+='<div class="step"><span class="num" style="background:var(--teal)">2</span><div style="min-width:0"><div class="ttl">Practical <span style="font-weight:400;color:var(--muted);font-size:.76rem">'+esc(p.lab||"Science lab")+'</span></div><div class="nc">'+esc(p.objective||"")+'</div>'+
+        '<div class="meta" style="margin-top:4px"><b>Working scientifically:</b> '+esc(p.ws||"")+'</div>'+
+        (ps?'<div class="meta" style="margin-top:6px"><b>Steps to success</b><ol class="objs" style="margin-top:3px">'+ps+'</ol></div>':'')+
+        (p.challenge?'<div class="challenge"><b>Challenge</b>'+esc(p.challenge)+'</div>':'')+
+        '</div></div>';
+      block+='<button class="openbtn" data-gs="Science" data-gi="'+(st.step-1)+'">Open in Generate</button>';block+='</div>'; return block;}).join('');
+  }
+  else{h+='<div class="note">'+esc(s.pacing_note)+'</div>';
+    if(s.enquiry_question)h+='<div class="meta" style="margin-bottom:10px"><b>Enquiry:</b> '+esc(s.enquiry_question)+'</div>';
+    const HG=mapCur==="maths"?MHINGE:SHINGE;
+    h+='<div class="wk">'+s.steps.map(st=>{var ss=(st.success||[]).map(x=>'<li>'+esc(x)+'</li>').join('');return '<div class="step"><span class="num">'+st.step+'</span><div style="min-width:0"><div class="ttl">'+esc(st.title)+'</div><div class="nc">'+esc(st.nc)+'</div>'+(ss?'<div class="meta" style="margin-top:6px"><b>Steps to success</b><ol class="objs" style="margin-top:3px">'+ss+'</ol></div>':'')+(st.challenge?'<div class="challenge"><b>Challenge</b>'+esc(st.challenge)+'</div> ':'')+'<div class="hinge"><b>Quick-check hinge</b>'+esc(HG[st.step])+'<div style="margin-top:5px;font-weight:400;color:var(--ink-soft);font-size:.76rem">If most are secure, move on. If the class is split, teach into this before the next step. The full hinge question is written at generation.</div></div>'+'<button class="openbtn" data-gs="Maths" data-gi="'+(st.step-1)+'">Open in Generate</button>'+'</div></div>';}).join('')+'</div>';
+    if(s.pending_blocks)s.pending_blocks.forEach(pb=>h+='<div class="wk" style="border-style:dashed"><div class="wk-h"><span class="n">Next block</span><span class="st flag">'+pb.status+'</span></div><div class="meta"><b>'+esc(pb.block)+'</b> · send the SOL and it maps in verbatim.</div></div>');}
+  document.getElementById("mpanel").innerHTML=h;
+  document.querySelectorAll("#mpanel .openbtn").forEach(function(b){b.onclick=function(e){e.stopPropagation();genTarget={subj:b.dataset.gs,idx:+b.dataset.gi};route="gen";render();};});
+}
+
+// ---------- PACING ----------
+function pace(){return '<div class="kicker">Pacing</div><div class="h">The teaching week, subject by subject</div>'+
+  '<div class="sub">Week 1 is settling and baseline. Maths is dated to the day, one lesson from Week 2, Place value filling the first 8 days then add/sub. The other subjects are shown per week beneath each grid. Close a day and everything after shifts.</div>'+
+  '<div class="controls" id="pctrl"></div><div id="pgrid"></div><div class="foot" id="pfoot"></div>';}
+function wirePace(){
+  const ctrl=document.getElementById("pctrl");ctrl.innerHTML="";
+  [["2026-09-16","Week 2 day"],["2026-10-06","6 Oct (Tue)"],["2026-10-04","Sun 4 Oct"],["2026-10-08","Thu 8 Oct"]].forEach(([id,l])=>{
+    const b=document.createElement("button");b.className="btn"+(closures.has(id)?" on":"");b.textContent=l;b.onclick=()=>{closures.has(id)?closures.delete(id):closures.add(id);wirePace();};ctrl.appendChild(b);});
+  const r=document.createElement("button");r.className="btn ghost";r.textContent="Reset";r.onclick=()=>{closures.clear();wirePace();};ctrl.appendChild(r);
+  const stat=document.createElement("span");stat.className="stat-inline";ctrl.appendChild(stat);
+  const open=[];cal.weeks.forEach(w=>{if(w.w<=SETTLE)return;w._days.forEach(d=>{if(!closures.has(d))open.push(d);});});
+  const byDay={};open.forEach((d,i)=>byDay[d]=PVLESSONS[i]||null);
+  const g=document.getElementById("pgrid");g.innerHTML="";
+  cal.weeks.forEach(w=>{const settle=w.w<=SETTLE;const sci=settle?null:DATA.subjects.science.steps[w.w-1-SETTLE];
+    const el=document.createElement("div");el.className="wk";
+    el.innerHTML='<div class="wk-h"><span class="n">Week '+w.w+'</span><span class="dt">'+niceD(w._days[0])+' to '+niceD(w._days[4])+' '+niceM(w._days[4])+'</span>'+(settle?'<span class="st" style="background:var(--gold-soft);color:var(--gold-deep)">Ice breakers and baseline</span>':(sci?'<span class="st" style="background:var(--green-soft);color:var(--green-deep)">Science · '+esc(sci.title)+' + practical</span>':''))+'</div>';
+    const days=document.createElement("div");days.className="days";
+    w._days.forEach(d=>{const closed=closures.has(d);const L=byDay[d];const cell=document.createElement("div");
+      cell.className="day"+(closed?" closed":"")+((!closed&&L&&L.kind==="pending")?" pending":"");
+      let body="";if(!closed){if(L&&L.kind==="pv")body='<span class="sn">PV '+L.step+'</span><div class="ti">'+esc(L.title)+'</div>';else if(L&&L.kind==="pending")body='<span class="sn">B2</span><div class="ti">'+esc(L.title)+'</div>';else body='<div class="ti" style="color:var(--muted)">'+(settle?'Settling and baseline':'No lesson')+'</div>';}
+      cell.innerHTML='<div class="body"><div class="dow">'+dow(d)+'</div><div class="date">'+niceD(d)+' '+niceM(d)+'</div>'+body+'</div>';
+      cell.onclick=()=>{closures.has(d)?closures.delete(d):closures.add(d);wirePace();};days.appendChild(cell);});
+    el.appendChild(days);
+    if(!settle){var T=w.w-SETTLE;var S=DATA.subjects;var parts=[];
+      var ew=S.english.weeks[T],rw=S.reading.weeks[T],iw=S.ipc.weeks[T];
+      if(ew)parts.push('<b>Writing</b> '+esc(ew.strand)+' ('+ew.objectives.length+')');
+      if(rw)parts.push('<b>Reading</b> '+esc(rw.text_type)+' · '+esc(rw.text));
+      if(sci)parts.push('<b>Science</b> '+esc(sci.title)+' + practical');
+      if(iw)parts.push('<b>IPC</b> '+iw.lessons.length+' lesson'+(iw.lessons.length===1?'':'s'));
+      var sum=document.createElement('div');sum.className='meta';sum.style.marginTop='11px';sum.style.lineHeight='1.7';
+      sum.innerHTML='Also this week &nbsp; '+parts.join(' &nbsp;·&nbsp; ');el.appendChild(sum);}
+    g.appendChild(el);});
+  let b2=null;for(const d of open){if(byDay[d]&&byDay[d].kind==="pending"){b2=d;break;}}
+  stat.innerHTML="<b>"+open.length+"</b> days · <b>"+closures.size+"</b> closed";
+  document.getElementById("pfoot").innerHTML="Place value fills the first 8 open maths days."+(b2?" Add/sub/mul/div begins <b>"+dow(b2)+" "+niceD(b2)+" "+niceM(b2)+"</b>, pending its SOL.":"")+" Science is one step a week.";
+}
+
+// ---------- DAILY LAYER ----------
+let dCur="maths";
+function daily(){return '<div class="kicker">Tracker feed</div><div class="h">Daily objective layer</div>'+
+  '<div class="sub">Fed from the map. You confirm taught, then quick-check against the hinge. Coded until ICO.</div>'+
+  '<div class="guar"><b>Name-free.</b> Pupils are Y6D-01 to Y6D-21. Names bind in school after ICO, never in the AI path.</div>'+'<div class="sub" style="margin-bottom:8px">Judge each pupil <b>against the objective</b> on the five-point scale, using the hinge and their classwork together. The hinge is the fast in-lesson signal; your judgement is the call. SEQUENS suggests, you confirm.</div>'+'<div class="scalekey">'+SCALE.map(function(x){return '<span><b>'+x.k+'</b> '+x.label+'</span>';}).join('')+'</div>'+
+  '<div class="tabs" id="dtabs"></div><div id="dlist"></div>';}
+function dailyRows(kind){
+  if(kind==="maths")return PVLESSONS.filter(l=>l.kind==="pv").map((l,i)=>[TEACH_DAYS[i],"WRM-Y6-A1-PV-"+l.step,l.title,l.hinge]);
+  const tw=cal.weeks.length-SETTLE;const out=[];const S=DATA.subjects;
+  if(kind==="science"){S.science.steps.slice(0,tw).forEach((s,i)=>{const d=cal.weeks[i+SETTLE]._days[0];
+    out.push([d,"WRS-Y6-A1-LTH-"+s.step,s.title,SHINGE[s.step]]);
+    out.push([d,"WRS-Y6-A1-LTH-"+s.step+"-P","Practical: "+((s.practical&&s.practical.objective)||""),"Working scientifically: "+((s.practical&&s.practical.ws)||"")]);});
+    return out;}
+  for(let T=1;T<=tw;T++){const days=cal.weeks[T+SETTLE-1]._days;let ls=[];
+    if(kind==="writing")ls=(S.english.weeks[T]?S.english.weeks[T].objectives:[]).map((o,i)=>["WRIT-W"+T+"-"+(i+1),o.objective,o.hinge]);
+    else if(kind==="reading")ls=(S.reading.weeks[T]?S.reading.weeks[T].lessons:[]).map((l,i)=>["READ-W"+T+"-"+(i+1),l.vipers+": "+l.objective,l.hinge]);
+    else if(kind==="ipc")ls=(S.ipc.weeks[T]?S.ipc.weeks[T].lessons:[]).map((l,i)=>["IPC-W"+T+"-"+(i+1),l.objective,l.hinge]);
+    ls.forEach((x,i)=>out.push([days[Math.min(i,days.length-1)],x[0],x[1],x[2]]));}
+  return out;
+}
+function wireDaily(){
+  const tabs=document.getElementById("dtabs");tabs.innerHTML="";
+  [["maths","Maths"],["science","Science"],["writing","Writing"],["reading","Reading"],["ipc","IPC"]].forEach(([k,l])=>{const b=document.createElement("button");b.className="tab"+(k===dCur?" sel":"");b.textContent=l;b.onclick=()=>{dCur=k;wireDaily();};tabs.appendChild(b);});
+  const PUP=Array.from({length:21},(_,i)=>"Y6D-"+String(i+1).padStart(2,"0"));
+  const list=document.getElementById("dlist");list.innerHTML="";
+  dailyRows(dCur).forEach(([date,code,title,hinge])=>{
+    if(!dstate[code])dstate[code]={c:false,j:{}};const s=dstate[code];
+    const oc=outcome(code);const met=oc.met,wt=oc.wt,ny=oc.ny,seen=oc.seen;const nm=nextMove(seen,wt,ny);
+    const row=document.createElement("div");row.className="row-d";
+    row.innerHTML='<div class="rh"><div class="dd"><div class="d">'+niceD(date)+'</div><div class="m">'+niceM(date)+'</div></div>'+
+      '<div class="mm"><div class="cc">'+code+'</div><div class="oo">'+esc(title)+'</div><div class="hh"><b>Quick-check hinge</b>'+esc(hinge)+'</div></div>'+
+      '<button class="conf'+(s.c?" done":"")+'" data-c="'+code+'">'+(s.c?"Taught ✓":"Confirm")+'</button></div>'+
+      '<div class="bd" data-c="'+code+'"><div class="meta" style="margin-bottom:8px">'+(seen?met+" secure · "+wt+" developing · "+ny+" not yet":"Tap a pupil to cycle 1 to 5, or set the class then adjust.")+'</div>'+
+      '<div style="margin-bottom:8px"><button class="chipfill" data-fill="4" data-c="'+code+'">All secure</button><button class="chipfill" data-fill="3" data-c="'+code+'">All developing</button><button class="chipfill" data-fill="0" data-c="'+code+'">Clear</button></div>'+
+      '<div class="chips">'+PUP.map(p=>'<div class="chip"'+(s.j[p]?' data-band="'+s.j[p]+'"':'')+' data-c="'+code+'" data-p="'+p+'">'+p+(s.j[p]?' <b>'+s.j[p]+'</b>':'')+'</div>').join('')+'</div>'+(nm?'<div class="nextmove '+nm.k+'">'+nm.t+'</div>':'')+'</div>';
+    list.appendChild(row);
+  });
+  list.querySelectorAll(".conf").forEach(b=>b.onclick=e=>{e.stopPropagation();dstate[b.dataset.c].c=!dstate[b.dataset.c].c;wireDaily();});
+  list.querySelectorAll(".rh").forEach(h=>h.onclick=()=>{const bd=h.parentElement.querySelector(".bd");bd.classList.toggle("open");});
+  list.querySelectorAll('.chip').forEach(ch=>ch.onclick=e=>{e.stopPropagation();const s=dstate[ch.dataset.c];var v=s.j[ch.dataset.p];s.j[ch.dataset.p]=!v?1:(v>=5?undefined:v+1);const wasOpen=ch.closest('.bd').classList.contains('open');wireDaily();if(wasOpen)list.querySelector('.bd[data-c="'+ch.dataset.c+'"]').classList.add('open');});
+  list.querySelectorAll('.chipfill').forEach(b=>b.onclick=e=>{e.stopPropagation();const s=dstate[b.dataset.c];const val=+b.dataset.fill;const PUPS=Array.from({length:21},(_,i)=>'Y6D-'+String(i+1).padStart(2,'0'));PUPS.forEach(p=>{s.j[p]=val?val:undefined;});wireDaily();list.querySelector('.bd[data-c="'+b.dataset.c+'"]').classList.add('open');});
+}
+
+// ---------- CLASS ----------
+let parsed=null;
+function classP(){return '<div class="kicker">Import</div><div class="h">Upload the new class</div>'+
+  '<div class="sub">Upload the whole year group in one sheet with a class column. The engine splits it into 6A to 6D, codes each class, and bands each GL score 1 to 5 on the school boundaries. Parsed on your device.</div>'+
+  '<div class="guar"><b>Parsed in your browser.</b> The file never leaves the page. Pupils are coded before anything moves. Names commit to the tracker only after ICO.</div>'+
+  '<div class="controls"><button class="btn" id="tpl">Download template</button><span class="meta">One sheet, or send a real GL / summer export and I match a parser to it.</span></div>'+
+  '<div class="row" style="margin:4px 0 12px"><label style="font-family:var(--display);font-weight:600;font-size:.82rem">This upload is: <select id="ckpt" style="margin-left:6px;padding:7px 9px;border:1px solid var(--rule);border-radius:8px">'+CHECKPOINTS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select></label> <span class="meta">Each point is kept, not overwritten. Compare them in Progress over time.</span></div>'+'<div class="drop" id="drop"><b>Drop CSV here</b> or click. Read locally.<input type="file" id="file" accept=".csv" class="hide"></div>'+
+  '<div class="meta" id="fname" style="margin-top:8px"></div><div id="review" class="hide" style="margin-top:14px"></div>';}
+function wireClass(){
+  const SRC=[["cat4_sas","cat4"],["ngrt_sas","ngrt"],["pte_score","pte"],["ptm_score","ptm"]];
+  document.getElementById("tpl").onclick=()=>{const rows=["pupil_name,upn,class,cat4_sas,ngrt_sas,pte_score,ptm_score","Example One,A123,6D,102,98,105,99","Example Two,B234,6D,88,,94,"].join("\n");const bl=new Blob([rows],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download="sequens-class-template.csv";a.click();URL.revokeObjectURL(a.href);};
+  const drop=document.getElementById("drop"),file=document.getElementById("file");
+  function pcsv(t){const o=[];let i=0,f="",r=[],q=false;const pf=()=>{r.push(f);f="";},pr=()=>{o.push(r);r=[];};while(i<t.length){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++;}else q=false;}else f+=c;}else{if(c==='"')q=true;else if(c===",")pf();else if(c==="\r"){}else if(c==="\n"){pf();pr();}else f+=c;}i++;}if(f.length||r.length){pf();pr();}return o.filter(x=>x.length>1||(x[0]&&x[0].trim()));}
+  function ingest(text){const rows=pcsv(text);if(!rows.length)return;const head=rows[0].map(h=>h.trim().toLowerCase());const ix=n=>head.indexOf(n);const iN=ix("pupil_name");if(iN<0){alert("No pupil_name column. Use the template.");return;}
+    const pupils=[];for(let r=1;r<rows.length;r++){const c=rows[r];if(!c[iN]||!c[iN].trim())continue;const rec={name:c[iN].trim(),upn:(ix("upn")>=0?c[ix("upn")]:"").trim(),cls:(ix("class")>=0?c[ix("class")]:"6D").trim()||"6D",scores:{}};SRC.forEach(([col,s])=>{const ci=ix(col);const v=ci>=0?(c[ci]||"").trim():"";if(v&&!isNaN(+v))rec.scores[s]=+v;});pupils.push(rec);}
+    const per={};pupils.forEach(p=>{const c=(p.cls||"6?").replace(/[^0-9a-zA-Z]/g,"");per[c]=(per[c]||0)+1;p.code=c+"-"+String(per[c]).padStart(2,"0");});parsed=pupils;window.__cohort=pupils;
+    const cnt={};SRC.forEach(([,s])=>cnt[s]=0);pupils.forEach(p=>Object.keys(p.scores).forEach(s=>cnt[s]++));const aN=Object.values(cnt).reduce((a,b)=>a+b,0);
+    let h='<div class="card"><h3>Check, then confirm</h3><div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px">'+
+      '<div><div class="big" style="font-family:var(--display);font-weight:700;font-size:1.5rem">'+pupils.length+'</div><div class="meta">pupils</div></div>'+
+      '<div><div class="big" style="font-family:var(--display);font-weight:700;font-size:1.5rem">'+aN+'</div><div class="meta">score rows</div></div>'+
+      SRC.map(([,s])=>'<div><div class="big" style="font-family:var(--display);font-weight:700;font-size:1.5rem">'+cnt[s]+'</div><div class="meta">'+s.toUpperCase()+'</div></div>').join('')+'</div>'+'<div class="meta" style="margin-bottom:10px"><b>By class:</b> '+Object.entries(pupils.reduce((a,p)=>{const c=p.cls||'6?';a[c]=(a[c]||0)+1;return a;},{})).map(function(e){return e[0]+' '+e[1];}).join(' · ')+'</div>'+
+      '<div class="tablewrap"><table><tr><th>Code</th><th>Name (on device)</th><th>UPN</th><th>Class</th>'+SRC.map(([,s])=>'<th>'+s.toUpperCase()+'</th>').join('')+'</tr>'+
+      pupils.map(p=>'<tr><td style="font-family:var(--display);font-weight:700;color:var(--terra-deep)">'+p.code+'</td><td>'+esc(p.name)+'</td><td class="meta">'+esc(p.upn||"not set")+'</td><td>'+esc(p.cls)+'</td>'+SRC.map(([,s])=>{if(p.scores[s]===undefined)return '<td class="meta">no score</td>';var bd=bandGL(p.scores[s]);return '<td>'+p.scores[s]+(bd?'<span class="bandpill b'+bd+'">'+bd+'</span>':'')+'</td>';}).join('')+'</tr>').join('')+'</table></div>'+
+      '<div class="note" style="margin-top:12px">Replaces the current 21 test pupils with these '+pupils.length+'. Map, pacing and hinges untouched. On confirm, writes to the tracker behind the Year 6 lead wall, after ICO for names.</div></div>';
+    var lbl=(document.getElementById('ckpt')||{}).value||'Baseline'; ASSESS=ASSESS.filter(function(a){return a.label!==lbl;}); ASSESS.push({label:lbl,pupils:pupils,when:Date.now()}); ASSESS.sort(function(a,b){return CHECKPOINTS.indexOf(a.label)-CHECKPOINTS.indexOf(b.label);});
+    h+='<div class="card"><h3>Assessment points stored</h3>'+ASSESS.map(function(a){return '<div class="pgrow" style="grid-template-columns:1fr auto"><div class="lab">'+esc(a.label)+'</div><div class="fig">'+a.pupils.length+' pupils</div></div>';}).join('')+'<div class="foot">'+(ASSESS.length>1?'Open Progress over time to compare any two.':'Upload a second point (a later checkpoint) to compare.')+'</div></div>';
+    document.getElementById("review").classList.remove("hide");document.getElementById("review").innerHTML=h;}
+  drop.onclick=()=>file.click();
+  file.onchange=e=>{const f=e.target.files[0];if(f){document.getElementById("fname").textContent=f.name+" · read locally";f.text().then(ingest);}};
+  ["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("hot");}));
+  ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("hot");}));
+  drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f){document.getElementById("fname").textContent=f.name+" · read locally";f.text().then(ingest);}});
+}
+
+// ---------- GENERATE ----------
+function genOptions(){
+  const out=[];
+  function push(subj,list){list.forEach(function(it,i){out.push({subj:subj,idx:i,label:subj+' · '+it.title,hinge:it.hinge||null,prior:i>0?subj+' · '+list[i-1].title:null,next:i<list.length-1?subj+' · '+list[i+1].title:null});});}
+  push('Maths',DATA.subjects.maths.steps.map(function(s){return {title:s.title,hinge:MHINGE[s.step]};}));
+  push('Science',DATA.subjects.science.steps.map(function(s){return {title:s.title,hinge:SHINGE[s.step]};}));
+  var ew=[];Object.entries(DATA.subjects.english.weeks).forEach(function(e){e[1].objectives.forEach(function(o){ew.push({title:'W'+e[0]+': '+o.objective.slice(0,52)+(o.objective.length>52?'…':''),hinge:null});});});push('Writing',ew);
+  var rd=[];Object.entries(DATA.subjects.reading.weeks).forEach(function(e){e[1].lessons.forEach(function(l){rd.push({title:'W'+e[0]+': '+l.vipers,hinge:null});});});push('Reading',rd);
+  var ip=[];Object.entries(DATA.subjects.ipc.weeks).forEach(function(e){e[1].lessons.forEach(function(l){ip.push({title:'W'+e[0]+': '+l.objective.split(':')[0],hinge:null});});});push('IPC',ip);
+  return out;
+}
+function gen(){
+  const opts=genOptions();
+  return '<div class="kicker">Generate</div><div class="h">Objective to lesson</div>'+
+    '<div class="sub">Not a slide factory. The engine returns one SEQUENSed lesson: a six-part spine, one diagnostic hinge, dual-coded vocabulary, and the next lesson suggested from what this one reveals. That coherence is the thing a horizontal generator cannot do.</div>'+
+    '<div class="assure"><b>Every lesson is a draft you confirm.</b> The engine suggests; you review and adapt before teaching. Content is checked for the school setting and its cultural context. The model receives only the objective, year and subject, never a pupil name or any pupil data.</div>'+
+    '<div class="gate"><b>Awaiting the production key.</b> Live generation needs the 30 August API key and the generation stress-test that gates launch. The structure below is what it returns; the button turns on then.</div>'+
+    '<div class="pickwrap"><label for="obj" style="font-family:var(--display);font-weight:600;font-size:.8rem;color:var(--ink-soft)">Objective</label><select id="obj" aria-label="Choose an objective">'+opts.map(function(o,i){return '<option value="'+i+'">'+esc(o.label)+'</option>';}).join('')+'</select><button class="btn primary" id="genbtn" disabled>Generate lesson</button></div>'+
+    '<div id="seq" class="note"></div>'+
+    '<div class="sheet" id="spine"></div>'+
+    '<div class="foot">Renders to a deck and a full plan through render.js; validate.js enforces the locked rules on every pupil-facing field.</div>';
+}
+function wireGen(){
+  const opts=genOptions(); const sel=document.getElementById("obj");
+  if(genTarget){var k=opts.findIndex(function(o){return o.subj===genTarget.subj&&o.idx===genTarget.idx;});if(k>=0)sel.value=k;genTarget=null;}
+  function upd(){
+    const o=opts[+sel.value];
+    document.getElementById("seq").innerHTML='<b>Sequence.</b> '+(o.prior?esc(o.prior):'start of the sequence')+'  ->  <b>this lesson</b>  ->  '+(o.next?esc(o.next):'end of the sequence')+'. The engine suggests the next lesson; you use it or come back to it. Its first_thing opens with whatever this quick-check reveals.';
+    let h='<div class="sheet-h"><span class="t">This lesson, SEQUENSed</span><span class="d">Frame: one of eleven ('+FRAMES+') or none</span></div>';
+    SPINE.forEach(function(sp,i){
+      const isHinge=sp[0]==="quick_check";
+      h+='<div class="step"><span class="num"'+(isHinge?' style="background:var(--gold-deep)"':'')+'>'+(i+1)+'</span><div style="min-width:0"><div class="ttl">'+sp[0]+' <span style="font-weight:400;color:var(--muted);font-size:.78rem">'+sp[1]+'</span></div>'+
+        (isHinge?(o.hinge?'<div class="hinge"><b>Diagnostic hinge</b>'+esc(o.hinge)+'<div style="margin-top:5px;font-weight:400;color:var(--ink-soft);font-size:.76rem">The wrong answer names the misconception. No other step carries a hinge.</div></div>':'<div class="meta" style="margin-top:4px">You name the misconception this catches; the engine writes the diagnostic question.</div>'):'')+
+        '</div></div>';
+    });
+    document.getElementById("spine").innerHTML=h;
+  }
+  sel.onchange=upd; upd();
+}
+
+// ---------- COHORT (Head of Year) ----------
+function cohortClasses(){
+  const up = window.__cohort;
+  if(up && up.length){
+    const by={}; up.forEach(p=>{const c=p.cls||"6?"; (by[c]=by[c]||[]).push(p);});
+    return Object.keys(by).sort().map(c=>({name:c,n:by[c].length,live:true}));
+  }
+  return [{name:"6A",n:null},{name:"6B",n:null},{name:"6C",n:null},{name:"6D",n:null}];
+}
+function cohortP(){
+  const cls=cohortClasses(); const live=cls[0].live;
+  const cards=cls.map(c=>'<div class="card"><h3>'+c.name+'</h3><div class="big">'+(c.n!=null?c.n:"awaiting")+'</div><div class="lil">'+(c.n!=null?"pupils, coded":"awaiting upload")+'</div></div>').join('');
+  const axes=[
+    ["Class against class","Band 1 to 5 spread per class, per subject, so you can see where a class sits against the year group."],
+    ["Objective coverage and gaps","Which objectives a class has met, is working towards, or has not reached, drawn from the daily layer."],
+    ["Subject view","English, Maths, Science and IPC side by side across the four classes."],
+    ["Across the data points","Movement from the baseline drop to the termly and unit checks, so you can track progress across the term as well as attainment."],
+  ].map(a=>'<div class="wk"><div class="wk-h"><span class="n">'+a[0]+'</span></div><div class="meta" style="margin-top:2px">'+a[1]+'</div></div>').join('');
+  return '<div class="kicker">Head of Year</div><div class="h">Cohort · Year 6</div>'+
+    '<div class="sub">The whole year group, four classes. You see all of it; each teacher sees only their own class; coaching sees none of it.</div>'+
+    '<div class="guar"><b>Coded and local.</b> The comparison runs on Y6A-01 style codes, not names. The whole year group is real named children, so ICO registration matters most here before any name enters the tracker.</div>'+
+    '<div class="grid">'+cards+'</div>'+
+    '<div class="note" style="margin-top:16px">'+(live?'Populated from your upload. ':'Upload the cohort on the Class screen to populate these. ')+
+    'The comparisons below light up once the assessment uploads (CAT4, NGRT, PTE, PTM, summer tracker) are in and banded 1 to 5. Those parsers wait on one real sample of each.</div>'+
+    '<div style="margin-top:6px">'+axes+'</div>'+
+    '<div class="foot">Nothing here is a guessed number. Structure now, live figures when the banded assessment data lands. Tell me which of these comparisons you actually run and I build that view first.</div>';
+}
+function wireCohort(){}
+
+// ---------- WRITING SHEETS (print a week, stick in books) ----------
+let shWk=1;
+function sheetHTML(lo, steps, wk){
+  var img = bookImg ? '<img src="'+bookImg+'" class="bookimg" alt="book cover">' : '<div class="bookph">book cover</div>';
+  return '<div class="wsheet"><div class="wshead"><div class="wskick">Year 6 Writing &middot; Week '+wk+'</div>'+img+'</div>'+
+    '<div class="wslo"><span>Learning objective</span>'+esc(lo)+'</div>'+
+    '<div class="wss2s"><span>Steps to success</span><ol>'+(steps||[]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ol></div>'+
+    '<div class="wsbox"><span>SpaG starter</span><div class="wsblank"></div><div class="wsnote">A targeted starter prints here once generation is live.</div></div>'+
+    '<div class="wsbox"><span>Going further</span><div class="wsblank"></div></div></div>';
+}
+function weekSheets(T){
+  var wk=DATA.subjects.english.weeks[String(T)];
+  if(!wk||!wk.objectives) return '';
+  return wk.objectives.map(function(o){return sheetHTML(o.objective,o.success,T);}).join('');
+}
+function sheetsP(){
+  return '<div class="kicker">Print</div><div class="h">Writing sheets</div>'+
+    '<div class="sub">One sheet per writing lesson, from the objectives in your map: the learning objective and the steps to success. Print a whole week and photocopy. SpaG starter and a proper render arrive with generation.</div>'+
+    '<div class="controls"><label class="btn" style="cursor:pointer">Add book cover<input type="file" id="bookfile" accept="image/*" class="hide"></label>'+
+    '<span class="meta" id="bookmsg">'+(bookImg?'cover added':'optional, prints on every sheet')+'</span></div>'+
+    '<div class="controls" style="margin-top:8px"><label style="font-family:var(--display);font-weight:600;font-size:.82rem">Week <select id="shwk"></select></label>'+
+    '<button class="btn primary" id="shprintwk">Print this week</button><button class="btn" id="shprintall">Print all weeks</button></div>'+
+    '<div id="shbody" style="margin-top:14px"></div>';
+}
+function printSheets(inner, title){
+  var css='@page{margin:14mm}*{box-sizing:border-box}body{font-family:Lexend,Arial,sans-serif;color:#12303f;margin:0}'+
+    '.wsheet{border:1.5px solid #12303f;border-radius:10px;padding:12px 15px;margin:0 0 12px;break-inside:avoid;page-break-inside:avoid}'+
+    '.wshead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #d7e4ea;padding-bottom:7px;margin-bottom:9px}'+
+    '.wskick{font-weight:700;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#0A7563}'+
+    '.bookimg{width:52px;height:auto;border-radius:4px;border:1px solid #d7e4ea}'+
+    '.bookph{width:52px;height:70px;border:1px dashed #b8c9d3;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#7a8fa0;text-align:center}'+
+    '.wslo{margin:7px 0;font-size:15px;font-weight:500}.wss2s,.wsbox{margin:7px 0}'+
+    '.wslo>span,.wss2s>span,.wsbox>span{display:block;font-weight:700;font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:#7a8fa0;margin-bottom:3px}'+
+    '.wss2s ol{margin:2px 0 0 18px;padding:0}.wss2s li{margin:3px 0;font-size:13px}'+
+    '.wsblank{height:28px;border-bottom:1px dashed #b8c9d3}.wsnote{font-size:8px;color:#9aabb8;font-style:italic}';
+  var ifr=document.createElement('iframe');
+  ifr.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+  document.body.appendChild(ifr);
+  var doc=ifr.contentWindow.document;
+  doc.open(); doc.write('<!doctype html><html><head><meta charset="utf-8"><title>'+title+'</title><style>'+css+'</style></head><body>'+inner+'</body></html>'); doc.close();
+  setTimeout(function(){ try{ifr.contentWindow.focus();ifr.contentWindow.print();}catch(e){} setTimeout(function(){document.body.removeChild(ifr);},2000); }, 350);
+}
+function wireSheets(){
+  var wksel=document.getElementById("shwk");
+  for(var T=1;T<=7;T++){var op=document.createElement("option");op.value=T;op.textContent=T;if(T===shWk)op.selected=true;wksel.appendChild(op);}
+  wksel.onchange=function(e){shWk=+e.target.value;draw();};
+  document.getElementById("bookfile").onchange=function(e){var fl=e.target.files[0];if(!fl)return;var rd=new FileReader();rd.onload=function(){bookImg=rd.result;var m=document.getElementById("bookmsg");if(m)m.textContent="cover added";draw();};rd.readAsDataURL(fl);};
+  document.getElementById("shprintwk").onclick=function(){printSheets(weekSheets(shWk),"Writing sheets, week "+shWk);};
+  document.getElementById("shprintall").onclick=function(){var all='';for(var T=1;T<=7;T++){all+=weekSheets(T);}printSheets(all,"Writing sheets, all weeks");};
+  function draw(){ document.getElementById("shbody").innerHTML='<div class="card"><h3>Week '+shWk+' preview</h3>'+ (weekSheets(shWk)||'<div class="meta">No writing objectives mapped for this week.</div>') +'</div>'; }
+  draw();
+}
+
+// ---------- REPORTS (per pupil, Toddle structure, from the daily evidence) ----------
+function repTitles(){var T={};["maths","science","writing","reading","ipc"].forEach(function(k){dailyRows(k).forEach(function(r){T[r[1]]=r[2];});});return T;}
+function pupilArea(pupil,code,TITLES){
+  var bands=[],secure=[],targets=[];
+  Object.keys(dstate).forEach(function(c){ if(c.indexOf(code)!==0) return; var b=+dstate[c].j[pupil]; if(!b) return;
+    bands.push(b); if(b>=CONFIG.secureMin) secure.push(TITLES[c]||c); else if(b<=2) targets.push(TITLES[c]||c); });
+  var att=null; if(bands.length) att=Math.round(bands.reduce(function(a,x){return a+x;},0)/bands.length);
+  return {att:att,n:bands.length,secure:secure,targets:targets};
+}
+function reports(){
+  return '<div class="kicker">Reports</div><div class="h">Term report</div>'+
+    '<div class="sub">Per pupil, built from what you have marked in the daily layer. Coded now, names after ICO. Attainment is a suggestion from the evidence, you confirm. Comments follow the school\'s four areas and tone.</div>'+
+    '<div class="pickwrap"><label for="reppupil" style="font-family:var(--display);font-weight:600;font-size:.8rem;color:var(--ink-soft)">Pupil</label><select id="reppupil" aria-label="Choose a pupil"></select><button class="btn" id="repcopy">Copy this report</button><span class="meta" id="repmsg"></span></div>'+
+    '<div id="repbody"></div>';
+}
+function wireReports(){
+  var PUPS=Array.from({length:21},function(_,i){return 'Y6D-'+String(i+1).padStart(2,'0');});
+  var sel=document.getElementById("reppupil");
+  if(!sel.options.length){ PUPS.forEach(function(p){var o=document.createElement("option");o.value=p;o.textContent=p;sel.appendChild(o);}); }
+  var TITLES=repTitles();
+  function draw(){
+    var pupil=sel.value; var h='';
+    CONFIG.reportAreas.forEach(function(a){
+      var d=pupilArea(pupil,a.code,TITLES);
+      var bandTxt = d.att? ('<span class="bandpill b'+d.att+'">'+d.att+'</span> '+esc(CONFIG.scale[d.att-1].label)) : '<span class="meta">no data yet</span>';
+      var naHL = (a.subj==='IPC' && CONFIG.ipcHomeLearningNA);
+      h+='<div class="card"><h3>'+esc(a.subj)+'</h3>'+
+        '<div class="pg-head"><div class="pg-stat"><div class="l">Attainment (suggested)</div><div style="font-family:var(--display);font-weight:600;font-size:1rem;margin-top:3px">'+bandTxt+'</div></div>'+
+        '<div class="pg-stat"><div class="l">Effort</div><div style="margin-top:3px"><select data-eff="'+a.code+'">'+[1,2,3,4,5].map(function(n){return '<option>'+n+'</option>';}).join('')+'</select></div></div>'+
+        '<div class="pg-stat"><div class="l">Home learning</div>'+(naHL?'<div style="font-family:var(--display);font-weight:700;margin-top:6px">NA</div>':'<div style="margin-top:3px"><select data-hl="'+a.code+'">'+[1,2,3,4,5].map(function(n){return '<option>'+n+'</option>';}).join('')+'</select></div>')+'</div></div>'+
+        '<div class="meta" style="margin-top:9px"><b>Evidence:</b> '+(d.secure.length?esc(d.secure.slice(0,3).join('; ')):'none marked secure yet')+'</div>'+
+        '<div class="meta" style="margin-top:4px"><b>Next steps:</b> '+(d.targets.length?esc(d.targets.slice(0,2).join('; ')):'none flagged yet')+'</div>'+
+        '<div class="meta" style="margin-top:7px;color:var(--ink-soft)"><b>Comment focus:</b> '+esc(a.focus)+'</div>'+
+        '<div class="meta" style="margin-top:2px;color:var(--muted)"><b>Tone:</b> '+esc(a.tone)+'</div>'+
+        '<div class="note" style="margin-top:8px">The written comment drafts here once generation is live. Today this is the evidence to write it from.</div></div>';
+    });
+    document.getElementById("repbody").innerHTML=h;
+  }
+  sel.onchange=draw; draw();
+  document.getElementById("repcopy").onclick=function(){
+    var pupil=sel.value; var t="TERM REPORT - "+pupil+"\n";
+    CONFIG.reportAreas.forEach(function(a){var d=pupilArea(pupil,a.code,TITLES);
+      t+="\n"+a.subj.toUpperCase()+"\n  Attainment (suggested): "+(d.att?d.att+" "+CONFIG.scale[d.att-1].label:"no data yet")+"\n";
+      t+="  Evidence: "+(d.secure.length?d.secure.slice(0,3).join('; '):'none yet')+"\n";
+      t+="  Next steps: "+(d.targets.length?d.targets.slice(0,2).join('; '):'none yet')+"\n  Focus: "+a.focus+"\n";
+    });
+    t+="\nEffort and Home Learning are teacher-set. Drafted by SEQUENS from the daily layer; confirm before use.";
+    try{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);document.getElementById("repmsg").textContent="copied";}catch(e){document.getElementById("repmsg").textContent="select and copy manually";}
+  };
+}
+
+// ---------- PROGRESS OVER TIME (compare two assessment points) ----------
+let cmpA=0, cmpB=1, cmpM='cat4';
+const MEASURES=[['cat4','CAT4'],['ngrt','NGRT'],['pte','PTE'],['ptm','PTM']];
+function pupilKey(p){return (p.upn&&p.upn.trim())?('upn:'+p.upn.trim().toLowerCase()):('nm:'+(p.name||'').trim().toLowerCase());}
+function compareP(){
+  return '<div class="kicker">Year lead</div><div class="h">Progress over time</div>'+
+    '<div class="sub">Compare any two assessment points you have uploaded. Movement is measured on the 1 to 5 bands, so it reads the same as the report scale. Coded, no names.</div>'+
+    '<div id="cmpctrl" class="controls"></div><div id="cmpbody"></div>';
+}
+function wireCompare(){
+  var ctrl=document.getElementById("cmpctrl");
+  if(ASSESS.length<2){ ctrl.innerHTML=''; document.getElementById("cmpbody").innerHTML='<div class="note">Upload at least two assessment points on the Class data screen, a baseline and a later one, and the comparison appears here.</div>'; return; }
+  if(cmpA>=ASSESS.length)cmpA=0; if(cmpB>=ASSESS.length)cmpB=ASSESS.length-1; if(cmpA===cmpB)cmpB=(cmpA+1)%ASSESS.length;
+  function sel(id,val){return '<select id="'+id+'">'+ASSESS.map(function(a,i){return '<option value="'+i+'"'+(val===i?' selected':'')+'>'+esc(a.label)+'</option>';}).join('')+'</select>';}
+  ctrl.innerHTML='From '+sel('cmpA',cmpA)+' to '+sel('cmpB',cmpB)+' on <select id="cmpM">'+MEASURES.map(function(m){return '<option value="'+m[0]+'"'+(cmpM===m[0]?' selected':'')+'>'+m[1]+'</option>';}).join('')+'</select>';
+  document.getElementById("cmpA").onchange=function(e){cmpA=+e.target.value;wireCompare();};
+  document.getElementById("cmpB").onchange=function(e){cmpB=+e.target.value;wireCompare();};
+  document.getElementById("cmpM").onchange=function(e){cmpM=e.target.value;wireCompare();};
+
+  var A=ASSESS[cmpA], B=ASSESS[cmpB];
+  var mapB={}; B.pupils.forEach(function(p){mapB[pupilKey(p)]=p;});
+  var up=0,held=0,down=0,incomplete=0,rows=[]; var distA=[0,0,0,0,0],distB=[0,0,0,0,0];
+  A.pupils.forEach(function(pa){
+    var pb=mapB[pupilKey(pa)];
+    var ba=bandGL(pa.scores[cmpM]); var bb=pb?bandGL(pb.scores[cmpM]):null;
+    if(ba)distA[ba-1]++; if(bb)distB[bb-1]++;
+    if(ba==null||bb==null){incomplete++; rows.push({code:pa.code,ba:ba,bb:bb,d:null}); return;}
+    var d=bb-ba; if(d>0)up++; else if(d<0)down++; else held++;
+    rows.push({code:pa.code,ba:ba,bb:bb,d:d});
+  });
+  rows.sort(function(x,y){return (x.d==null?99:x.d)-(y.d==null?99:y.d);});
+
+  var h='<div class="card"><h3>Movement, '+esc(A.label)+' to '+esc(B.label)+'</h3>'+
+    '<div class="pg-head"><div class="pg-stat"><div class="n" style="color:var(--green-deep)">'+up+'</div><div class="l">moved up</div></div>'+
+    '<div class="pg-stat"><div class="n" style="color:var(--amber)">'+held+'</div><div class="l">held</div></div>'+
+    '<div class="pg-stat"><div class="n" style="color:var(--red)">'+down+'</div><div class="l">slipped</div></div>'+
+    (incomplete?'<div class="pg-stat"><div class="n" style="color:var(--muted)">'+incomplete+'</div><div class="l">one point missing</div></div>':'')+'</div></div>';
+
+  h+='<div class="card"><h3>Where the class sits</h3>'+
+    '<div class="pgrow" style="grid-template-columns:70px 1fr"><div class="lab">'+esc(A.label)+'</div><div>'+distBar(distA)+'</div></div>'+
+    '<div class="pgrow" style="grid-template-columns:70px 1fr"><div class="lab">'+esc(B.label)+'</div><div>'+distBar(distB)+'</div></div>'+
+    '<div class="legend"><span><i style="background:var(--red)"></i>band 1</span><span><i style="background:#e8b06a"></i>2</span><span><i style="background:var(--gold)"></i>3</span><span><i style="background:var(--green)"></i>4</span><span><i style="background:var(--green-deep)"></i>5</span></div></div>';
+
+  h+='<div class="card"><h3>Pupil by pupil</h3><div class="tablewrap"><table><tr><th>Code</th><th>'+esc(A.label)+'</th><th>'+esc(B.label)+'</th><th>Move</th></tr>'+
+    rows.map(function(r){
+      var arrow = r.d==null?'<span class="meta">missing</span>':(r.d>0?'<span style="color:var(--green-deep);font-weight:700">up '+r.d+'</span>':r.d<0?'<span style="color:var(--red);font-weight:700">down '+(-r.d)+'</span>':'<span class="meta">held</span>');
+      function pill(b){return b?'<span class="bandpill b'+b+'">'+b+'</span>':'<span class="meta">-</span>';}
+      return '<tr><td style="font-family:var(--display);font-weight:700;color:var(--terra-deep)">'+esc(r.code)+'</td><td>'+pill(r.ba)+'</td><td>'+pill(r.bb)+'</td><td>'+arrow+'</td></tr>';
+    }).join('')+'</table></div></div>';
+
+  h+='<div class="foot">Matched pupils by UPN where present, otherwise by name. Movement is band to band on the school boundaries. This is the spine of the half-termly SLT report and the catch-up advice.</div>';
+  document.getElementById("cmpbody").innerHTML=h;
+}
+function distBar(d){var cols=['var(--red)','#e8b06a','var(--gold)','var(--green)','var(--green-deep)'];var tot=d.reduce(function(a,b){return a+b;},0)||1;var w=360;var x=0;var s='<svg width="'+w+'" height="16" style="border-radius:4px;overflow:hidden" role="img" aria-hidden="true">';for(var i=0;i<5;i++){var wd=Math.round(d[i]/tot*w);s+='<rect x="'+x+'" y="0" width="'+wd+'" height="16" fill="'+cols[i]+'"/>';x+=wd;}return s+'</svg>';}
+
+// ---------- WHITE ROSE LIBRARY (select, do not parse) ----------
+const WRLIB = {
+  maths: { scheme:'White Rose Maths', year:'Year 6', blocks:[
+    {term:'Autumn', name:'Place value', status:'curated', steps:DATA.subjects.maths.steps},
+    {term:'Autumn', name:'Addition, subtraction, multiplication and division', status:'pending'},
+    {term:'Autumn', name:'Fractions', status:'pending'},
+    {term:'Spring', name:'Ratio', status:'pending'},
+    {term:'Spring', name:'Algebra', status:'pending'},
+    {term:'Spring', name:'Decimals', status:'pending'},
+    {term:'Spring', name:'Fractions, decimals and percentages', status:'pending'},
+    {term:'Spring', name:'Area, perimeter and volume', status:'pending'},
+    {term:'Spring', name:'Statistics', status:'pending'},
+    {term:'Summer', name:'Shape', status:'pending'},
+    {term:'Summer', name:'Position and direction', status:'pending'},
+    {term:'Summer', name:'Themed projects and consolidation', status:'pending'}
+  ]},
+  science: { scheme:'White Rose Science', year:'Year 6', units:[
+    {name:'Living things and their habitats', status:'curated', steps:DATA.subjects.science.steps},
+    {name:'Animals including humans', status:'pending'},
+    {name:'Light', status:'pending'},
+    {name:'Electricity', status:'pending'},
+    {name:'Evolution and inheritance', status:'pending'}
+  ]}
+};
+function library(){
+  return '<div class="kicker">Library</div><div class="h">White Rose, pick a block</div>'+
+    '<div class="sub">White Rose is a fixed, published scheme, identical for every school, so you select it here. You never upload its PDF. Each block is curated once, correctly, then it is select-only forever.</div>'+
+    '<div class="note"><b>How it works.</b> A green block is curated and in your map. A gold block is in the scheme but not yet curated; send its SOL once and it joins the library for good, then everyone just picks it.</div>'+
+    '<div id="libbody"></div>';
+}
+function libRow(title, sub, status, steps){
+  var pill = status==='curated'
+    ? '<span class="status ok">in your map</span>'
+    : '<span class="status pend">add SOL once</span>';
+  var h='<div class="pgrow" style="grid-template-columns:1fr auto"><div><div class="lab">'+esc(title)+'</div>'+(sub?'<div class="fig">'+esc(sub)+'</div>':'')+'</div>'+pill+'</div>';
+  return h;
+}
+function wireLibrary(){
+  var h='<div class="card"><h3>'+esc(WRLIB.maths.scheme)+' \u00b7 '+esc(WRLIB.maths.year)+'</h3>';
+  var lastTerm='';
+  WRLIB.maths.blocks.forEach(function(b){
+    if(b.term!==lastTerm){ h+='<div class="subj" style="margin:12px 0 2px">'+esc(b.term)+'</div>'; lastTerm=b.term; }
+    h+=libRow(b.name, b.status==='curated'?(b.steps.length+' steps, with hinges'):'', b.status);
+  });
+  h+='</div>';
+  h+='<div class="card"><h3>'+esc(WRLIB.science.scheme)+' \u00b7 '+esc(WRLIB.science.year)+'</h3>';
+  WRLIB.science.units.forEach(function(u){ h+=libRow(u.name, u.status==='curated'?(u.steps.length+' steps + practicals'):'', u.status); });
+  h+='</div>';
+  h+='<div class="foot">Your own plans, English and IPC, are the other path: those you upload, because they are yours and they change. That is the next build. Between the two, you never wrestle a design PDF.</div>';
+  document.getElementById("libbody").innerHTML=h;
+}
+
+// ---------- SETTINGS (the changeable things, yours to edit) ----------
+function settingsP(){
+  return '<div class="kicker">Settings</div><div class="h">Your school\'s rules</div>'+
+    '<div class="sub">Change these when school changes them, here, not in code. Saved for this session now; in your account it persists.</div>'+
+    '<div id="setbody"></div>';
+}
+function wireSettings(){
+  var h='<div class="card"><h3>Five-point scale</h3><div class="meta" style="margin-bottom:8px">The label for each band, and which band counts as securely meeting expectations.</div>';
+  CONFIG.scale.forEach(function(x,i){ h+='<div class="pgrow" style="grid-template-columns:30px 1fr"><div class="lab">'+x.k+'</div><input data-scale="'+i+'" value="'+esc(x.label)+'" style="padding:8px 10px;border:1px solid var(--rule);border-radius:8px;font-family:inherit"></div>'; });
+  h+='<div class="meta" style="margin-top:10px">Secure line: band <select id="setSecure">'+[3,4,5].map(function(n){return '<option value="'+n+'"'+(CONFIG.secureMin===n?' selected':'')+'>'+n+' and above</option>';}).join('')+'</select> and above counts as met.</div></div>';
+
+  h+='<div class="card"><h3>Grade boundaries</h3>';
+  h+='<div class="meta" style="margin-bottom:6px"><b>GL SAS</b> (CAT4, NGRT, PTE, PTM). Upper score for each band; 5 is anything above band 4.</div><div class="row">'+
+     [0,1,2,3].map(function(i){return 'Band '+(i+1)+' to <input data-glb="'+i+'" value="'+CONFIG.glB[i]+'" style="width:64px;padding:6px 8px;border:1px solid var(--rule);border-radius:7px">';}).join(' ')+'</div>';
+  h+='<div class="meta" style="margin:10px 0 6px"><b>White Rose Maths %</b>.</div><div class="row">'+
+     [0,1,2,3].map(function(i){return 'Band '+(i+1)+' to <input data-wrb="'+i+'" value="'+CONFIG.wrB[i]+'" style="width:64px;padding:6px 8px;border:1px solid var(--rule);border-radius:7px">';}).join(' ')+'</div></div>';
+
+  h+='<div class="card"><h3>Vision, mission and values</h3><div class="meta" style="margin-bottom:8px">Your school\'s, editable. The engine weaves the values into a lesson only where the objective genuinely affords it, names them there, and leaves them out where they would be a stretch.</div>'+    '<label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:3px">Vision</label><input id="setVision" value="'+esc(CONFIG.vision||'')+'" placeholder="one line" style="width:100%;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;margin-bottom:9px">'+    '<label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:3px">Mission</label><input id="setMission" value="'+esc(CONFIG.mission||'')+'" placeholder="one line" style="width:100%;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;margin-bottom:9px">'+    '<label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:3px">Values</label>'+CONFIG.values.map(function(v,i){return '<input data-val="'+i+'" value="'+esc(v)+'" style="width:auto;padding:7px 9px;border:1px solid var(--rule);border-radius:8px;margin:0 6px 6px 0">';}).join('')+    '<div style="margin-top:8px"><label style="font-size:.8rem">Weave values into: <select id="setReach"><option value="lessons"'+(CONFIG.valuesReach==="lessons"?' selected':'')+'>lessons only</option><option value="lessons+reports"'+(CONFIG.valuesReach==="lessons+reports"?' selected':'')+'>lessons and report comments</option></select></label></div></div>'+  '<div class="card"><h3>Report rules</h3><label style="display:flex;gap:9px;align-items:center;font-size:.9rem"><input type="checkbox" id="setNA" '+(CONFIG.ipcHomeLearningNA?'checked':'')+'> IPC Home Learning is NA this term (year-group agreed, applies to all four classes)</label></div>';
+
+  h+='<div class="controls"><button class="btn primary" id="setSave">Save</button><span class="meta" id="setMsg"></span></div>';
+  document.getElementById("setbody").innerHTML=h;
+
+  document.getElementById("setSave").onclick=function(){
+    document.querySelectorAll('[data-scale]').forEach(function(inp){CONFIG.scale[+inp.dataset.scale].label=inp.value;});
+    CONFIG.secureMin=+document.getElementById("setSecure").value;
+    document.querySelectorAll('[data-glb]').forEach(function(inp){CONFIG.glB[+inp.dataset.glb]=+inp.value;});
+    document.querySelectorAll('[data-wrb]').forEach(function(inp){CONFIG.wrB[+inp.dataset.wrb]=+inp.value;});
+    CONFIG.ipcHomeLearningNA=document.getElementById("setNA").checked;
+    var vv=document.getElementById('setVision'); if(vv)CONFIG.vision=vv.value;
+    var mm2=document.getElementById('setMission'); if(mm2)CONFIG.mission=mm2.value;
+    document.querySelectorAll('[data-val]').forEach(function(inp){CONFIG.values[+inp.dataset.val]=inp.value;});
+    var rr=document.getElementById('setReach'); if(rr)CONFIG.valuesReach=rr.value;
+    document.getElementById("setMsg").textContent="Saved. The scale, banding and reports now use these.";
+  };
+}
+
+// ---------- PROGRESS (visual tracker, class teacher) ----------
+let pgAnalyse=false;
+function svgBar(a,b,c,w,colors){
+  var tot=a+b+c||1; var wa=Math.round(a/tot*w), wb=Math.round(b/tot*w), wc=w-wa-wb;
+  return '<svg width="'+w+'" height="16" style="border-radius:4px;overflow:hidden;vertical-align:middle" role="img" aria-hidden="true">'+
+    '<rect x="0" y="0" width="'+wa+'" height="16" fill="'+colors[0]+'"/>'+
+    '<rect x="'+wa+'" y="0" width="'+wb+'" height="16" fill="'+colors[1]+'"/>'+
+    '<rect x="'+(wa+wb)+'" y="0" width="'+wc+'" height="16" fill="'+colors[2]+'"/></svg>';
+}
+function pgCompute(){
+  var SUBS=[["maths","Maths"],["science","Science"],["writing","Writing"],["reading","Reading"],["ipc","IPC"]];
+  var met=0,wt=0,ny=0,focus=[],per=[];
+  SUBS.forEach(function(s){var rows=dailyRows(s[0]);var secure=0,gaps=0,unchecked=0;
+    rows.forEach(function(r){var code=r[1],title=r[2],hinge=r[3];var o=outcome(code);
+      if(o.status==="pending")unchecked++; else if(o.status==="secure")secure++; else {gaps++;focus.push({subj:s[1],title:title,hinge:hinge,o:o});}
+      met+=(o.seen-o.behind); wt+=o.wt; ny+=o.ny;});
+    per.push({key:s[0],label:s[1],secure:secure,gaps:gaps,unchecked:unchecked,total:rows.length});});
+  focus.sort(function(x,y){return y.o.behind-x.o.behind;});
+  return {met:met,wt:wt,ny:ny,focus:focus,per:per};
+}
+function progress(){
+  return '<div class="kicker">Tracker</div><div class="h">Progress</div>'+
+    '<div class="sub">Drawn from what you have marked in the daily layer. Coded, no names. Plain on top; open Analyse for the per-objective detail.</div>'+
+    '<div class="controls" id="pgctrl"></div><div id="pgbody"></div>';
+}
+function wireProgress(){
+  var d=pgCompute();
+  var ctrl=document.getElementById("pgctrl");ctrl.innerHTML="";
+  var an=document.createElement("button");an.className="btn"+(pgAnalyse?" on":"");an.textContent=pgAnalyse?"Hide detail":"Analyse";an.onclick=function(){pgAnalyse=!pgAnalyse;wireProgress();};ctrl.appendChild(an);
+  var cp=document.createElement("button");cp.className="btn";cp.textContent="Copy report";ctrl.appendChild(cp);
+  var st=document.createElement("span");st.className="meta";ctrl.appendChild(st);
+
+  var body=document.getElementById("pgbody");
+  var total=d.met+d.wt+d.ny;
+  if(!total){ body.innerHTML='<div class="note">Mark a lesson in the daily layer and the picture appears here.</div>'; cp.onclick=function(){st.textContent="Nothing marked yet.";}; return; }
+
+  var h='<div class="card"><h3>Class attainment</h3>'+
+    '<div class="pg-head"><div class="pg-stat"><div class="n" style="color:var(--green-deep)">'+d.met+'</div><div class="l">met</div></div>'+
+    '<div class="pg-stat"><div class="n" style="color:var(--amber)">'+d.wt+'</div><div class="l">working</div></div>'+
+    '<div class="pg-stat"><div class="n" style="color:var(--red)">'+d.ny+'</div><div class="l">not yet</div></div></div>'+
+    '<div style="margin-top:10px">'+svgBar(d.met,d.wt,d.ny,520,["var(--green)","var(--gold)","var(--red)"])+'</div>'+
+    '<div class="legend"><span><i style="background:var(--green)"></i>met</span><span><i style="background:var(--gold)"></i>working</span><span><i style="background:var(--red)"></i>not yet</span></div></div>';
+
+  h+='<div class="card"><h3>By subject</h3>';
+  d.per.forEach(function(p){ if(!p.total)return;
+    h+='<div class="pgrow"><div class="lab">'+esc(p.label)+'</div><div>'+svgBar(p.secure,p.gaps,p.unchecked,320,["var(--green)","var(--red)","#DCE6EC"])+'</div>'+
+      '<div class="fig">'+p.secure+' secure \u00b7 '+p.gaps+' gap'+(p.gaps===1?'':'s')+' \u00b7 '+p.unchecked+' to check</div></div>';});
+  h+='<div class="legend"><span><i style="background:var(--green)"></i>secure</span><span><i style="background:var(--red)"></i>gap</span><span><i style="background:#DCE6EC"></i>not checked</span></div></div>';
+
+  if(d.focus.length){ h+='<div class="card"><h3>Needs attention</h3>';
+    d.focus.slice(0,8).forEach(function(g){var nm=nextMove(g.o.seen,g.o.wt,g.o.ny);
+      h+='<div class="focusrow"><div class="t"><b>'+esc(g.subj)+'</b> \u00b7 '+esc(g.title)+'</div>'+
+        '<div class="meta" style="margin-top:2px">'+g.o.behind+' of '+g.o.seen+' not yet secure. '+esc(g.hinge)+'</div>'+
+        '<div class="mv '+nm.k+'">'+nm.t+'</div></div>';});
+    h+='</div>'; }
+
+  if(pgAnalyse){ h+='<div class="card"><h3>Every marked objective</h3>';
+    var SUBS=[["maths","Maths"],["science","Science"],["writing","Writing"],["reading","Reading"],["ipc","IPC"]];
+    SUBS.forEach(function(s){var rows=dailyRows(s[0]);var any=rows.some(function(r){return outcome(r[1]).status!=="pending";});if(!any)return;
+      h+='<div class="subj" style="margin:12px 0 4px">'+esc(s[1])+'</div>';
+      rows.forEach(function(r){var o=outcome(r[1]);if(o.status==="pending")return;
+        h+='<div class="pgrow"><div class="lab" style="font-weight:400;font-size:.82rem">'+esc(r[2]).slice(0,40)+'</div><div>'+svgBar(o.seen-o.behind,o.wt,o.ny,300,["var(--green)","var(--gold)","var(--red)"])+'</div><div class="fig">'+(o.seen-o.behind)+'/'+o.wt+'/'+o.ny+'</div></div>';});});
+    h+='</div>'; }
+  body.innerHTML=h;
+
+  cp.onclick=function(){
+    var t="Y6D PROGRESS REPORT\n\nClass attainment: "+d.met+" met, "+d.wt+" working, "+d.ny+" not yet.\n\nBY SUBJECT\n";
+    d.per.forEach(function(p){if(p.total)t+="  "+p.label+": "+p.secure+" secure of "+p.total+", "+p.gaps+" gap(s), "+p.unchecked+" to check\n";});
+    if(d.focus.length){t+="\nNEXT STEPS FOR LEARNING\n";d.focus.slice(0,12).forEach(function(g){var nm=nextMove(g.o.seen,g.o.wt,g.o.ny);t+="  "+g.subj+" - "+g.title+"\n    "+g.o.behind+" of "+g.o.seen+" not yet secure. "+nm.t+"\n";});}
+    t+="\nDrafted by SEQUENS from the daily layer. Suggestions to confirm.";
+    try{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);st.textContent="copied to clipboard";}catch(e){st.textContent="select and copy manually";}
+  };
+}
+
+// ---------- WEEKLY MEETING (Year lead): toggles + full LO, S2S, misconception ----------
+let wkSel=1;
+const MTG_SUBJ=[["writing","Writing"],["reading","Reading"],["maths","Maths"],["science","Science"],["ipc","IPC"]];
+const mtgOn=new Set(["writing","reading","maths","science","ipc"]);
+function outcome(code){
+  const s=dstate[code]; if(!s) return {status:'pending',seen:0,behind:0,met:0,wt:0,ny:0,bands:[0,0,0,0,0]};
+  const bands=[0,0,0,0,0]; let seen=0;
+  Object.values(s.j).forEach(function(v){var b=+v; if(b>=1&&b<=5){seen++;bands[b-1]++;}});
+  if(!seen) return {status:'pending',seen:0,behind:0,met:0,wt:0,ny:0,bands:bands};
+  var met=bands[3]+bands[4], wt=bands[2], ny=bands[0]+bands[1], behind=wt+ny;
+  return {status:behind===0?'secure':'gap',seen:seen,behind:behind,met:met,wt:wt,ny:ny,bands:bands};
+}
+function subjLessons(k,T){
+  const S=DATA.subjects, out=[];
+  if(k==="writing"){(S.english.weeks[T]?S.english.weeks[T].objectives:[]).forEach(function(o,i){out.push({lo:o.objective,success:o.success,hinge:o.hinge,suggested:true,code:"WRIT-W"+T+"-"+(i+1)});});}
+  else if(k==="reading"){(S.reading.weeks[T]?S.reading.weeks[T].lessons:[]).forEach(function(l,i){out.push({lo:l.vipers+": "+l.objective,success:l.success,hinge:l.hinge,suggested:true,code:"READ-W"+T+"-"+(i+1)});});}
+  else if(k==="ipc"){(S.ipc.weeks[T]?S.ipc.weeks[T].lessons:[]).forEach(function(l,i){out.push({lo:l.objective,success:l.success,hinge:l.hinge,suggested:true,code:"IPC-W"+T+"-"+(i+1)});});}
+  else if(k==="maths"){const ml=PVLESSONS.slice((T-1)*5,T*5);ml.forEach(function(l){if(l.kind==="pv"){var stp=S.maths.steps[l.step-1];out.push({lo:stp.title,success:stp.success,hinge:l.hinge,code:"WRM-Y6-A1-PV-"+l.step,suggested:false});}});}
+  else if(k==="science"){var stp=S.science.steps[T-1];if(stp){out.push({lo:stp.title,success:stp.success,hinge:SHINGE[stp.step],code:"WRS-Y6-A1-LTH-"+stp.step,suggested:false});var p=stp.practical||{};out.push({lo:"Practical: "+(p.objective||""),success:p.success,hinge:null,ws:p.ws,suggested:false});}}
+  return out;
+}
+function weekly(){
+  return '<div class="kicker">Year lead</div><div class="h">Weekly meeting</div>'+
+    '<div class="sub">Read from the daily layer for the week. Every subject carries its objective, steps to success and the misconception to align on. Toggle subjects on or off. For Writing, Reading and IPC these are SEQUENS-suggested; you confirm.</div>'+
+    '<div class="weekpick" id="weekpick"></div><div class="tabs" id="mtgtoggle"></div><div id="sheet"></div>'+
+    '<div class="controls" style="margin-top:14px"><button class="btn" id="copymtg">Copy as text</button><span class="meta" id="copystate"></span></div>'+
+    '<div class="foot">Honours your own meeting structure. Reads Y6D now; cross-class gaps fill in once the cohort data is uploaded.</div>';
+}
+function wireWeekly(){
+  const wp=document.getElementById("weekpick");wp.innerHTML="";
+  for(let w=1;w<=7;w++){const b=document.createElement("button");b.textContent="Week "+w;b.className=(w===wkSel?"sel":"");b.onclick=(function(x){return function(){wkSel=x;wireWeekly();};})(w);wp.appendChild(b);}
+  const tg=document.getElementById("mtgtoggle");tg.innerHTML="";
+  MTG_SUBJ.forEach(function(p){const b=document.createElement("button");b.className="tab"+(mtgOn.has(p[0])?" sel":"");b.textContent=p[1];b.onclick=function(){if(mtgOn.has(p[0]))mtgOn.delete(p[0]);else mtgOn.add(p[0]);wireWeekly();};tg.appendChild(b);});
+  const c=wkById[wkSel];
+  const dt=niceD(c.begins)+' '+niceM(c.begins)+' to '+niceD(c.ends)+' '+niceM(c.ends);
+  if(wkSel<=SETTLE){
+    document.getElementById("sheet").innerHTML='<div class="sheet"><div class="sheet-h"><span class="t">Year 6 · Week '+wkSel+' · Settling</span><span class="d">'+dt+'</span></div><div class="mrow"><div class="subj">Ice breakers and baseline</div><div class="focus">Settling routines, class ice breakers, and baseline assessments. No curriculum objectives this week.</div><div class="dir"><b>Focus:</b> CAT4, NGRT, PTE, PTM and the summer tracker completed and uploaded, so the coded profile builds before teaching starts in Week 2.</div></div></div>';
+    document.getElementById("copymtg").onclick=function(){document.getElementById("copystate").textContent="Week 1 is settling and baseline, nothing to schedule.";};
+    return;
+  }
+  const T=wkSel-SETTLE;
+  let h='<div class="sheet"><div class="sheet-h"><span class="t">Year 6 · Week '+wkSel+'</span><span class="d">'+dt+'</span></div>';
+  let anyGap=0;
+  MTG_SUBJ.forEach(function(p){
+    if(!mtgOn.has(p[0]))return; const rows=subjLessons(p[0],T); if(!rows.length)return;
+    h+='<div class="mrow"><div class="subj">'+esc(p[1])+'</div>';
+    rows.forEach(function(r){
+      h+='<div style="margin:9px 0 12px;padding-left:11px;border-left:2px solid var(--rule)">';
+      h+='<div class="focus">'+esc(r.lo)+'</div>';
+      if(r.code){var o=outcome(r.code);
+        if(o.status==="gap"){anyGap++;var nm=nextMove(o.seen,o.wt,o.ny);h+='<div class="meta" style="color:var(--red);margin-top:3px"><b>Confirmed gap:</b> '+o.behind+' of '+o.seen+' not yet secure. '+nm.t+'</div>';}
+        else if(o.status==="secure"){h+='<div class="meta" style="color:var(--green-deep);margin-top:3px">Secure across the class.</div>';}}
+      if(r.success&&r.success.length){h+='<div class="meta" style="margin-top:5px"><b>Steps to success</b>'+(r.suggested?' <span style="color:var(--muted)">suggested</span>':'')+'<ol class="objs" style="margin-top:2px">'+r.success.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ol></div>';}
+      if(r.hinge){h+='<div class="watch" style="margin-top:5px"><b style="font-family:var(--display);font-weight:700;font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;display:block">Misconception to align on'+(r.suggested?' (suggested)':'')+'</b>'+esc(r.hinge)+'</div>';}
+      else if(r.ws){h+='<div class="meta" style="margin-top:5px"><b>Working scientifically:</b> '+esc(r.ws)+'</div>';}
+      h+='</div>';
+    });
+    h+='</div>';
+  });
+  h+='</div>';
+  document.getElementById("sheet").innerHTML=h;
+  document.getElementById("copymtg").onclick=function(){
+    let t="YEAR 6 WEEKLY MEETING - Week "+wkSel+"\n"+dt+"\n";
+    MTG_SUBJ.forEach(function(p){ if(!mtgOn.has(p[0]))return; const rows=subjLessons(p[0],T); if(!rows.length)return;
+      t+="\n"+p[1].toUpperCase()+"\n";
+      rows.forEach(function(r){ t+="  "+r.lo+"\n";
+        if(r.code){var o=outcome(r.code); if(o.status==="gap"){var nm=nextMove(o.seen,o.wt,o.ny);t+="    Confirmed gap: "+o.behind+" of "+o.seen+" not yet secure. "+nm.t+"\n";} else if(o.status==="secure"){t+="    Secure across the class.\n";}}
+        if(r.success&&r.success.length){t+="    Steps to success"+(r.suggested?" (suggested)":"")+": "+r.success.join("; ")+"\n";}
+        if(r.hinge){t+="    Misconception"+(r.suggested?" (suggested)":"")+": "+r.hinge+"\n";} else if(r.ws){t+="    Working scientifically: "+r.ws+"\n";}
+      });
+    });
+    t+="\nDrafted by SEQUENS. Suggestions to confirm and adjust.";
+    try{const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);document.getElementById("copystate").textContent="copied to clipboard";}
+    catch(e){document.getElementById("copystate").textContent="select and copy manually";}
+  };
+}
+
+buildNav();
+render();
+</script>
+</body>
+</html>
