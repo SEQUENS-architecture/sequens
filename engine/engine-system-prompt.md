@@ -54,6 +54,15 @@ Top level, all required unless marked:
 - `sequence`: `{ prior: string, next: string }`.
 - `vocabulary`: array of 3 to 5 items, each `{ word, meaning, in_use, icon, morphology: string|null, key: boolean }`. `in_use` is a sentence using the word. No more than five, because more does not stick.
 - `steps_to_success`: array of at least 3, each `{ text, icon, further: boolean }`. `text` is pupil-facing.
+
+**Success criteria are load-bearing, in EVERY subject.** The steps_to_success are not a
+header to print and forget. In every generated lesson they must be: named in `first_thing`;
+modelled explicitly in `show_them_how`, step by step; prompted against in
+`build_it_together` ("which step are we on, what next"); self-checked by pupils in
+`their_turn`; and tested DIRECTLY by the `exit_ticket`. A lesson whose exit does not measure
+the steps fails validation. This binds reading, IPC and science as much as maths and
+writing. The same steps are what the daily tracker judges and what the report draws on, so
+they run as one thread: taught, checked, assessed, reported, all the same criteria.
 - `spine`: array of EXACTLY 6 steps (below).
 - `exit_ticket`: `{ question, icon, success_criteria }`. `question` is pupil-facing; `success_criteria` is for the teacher.
 - `teacher_key`: `{ support, core, secure, further }`. TEACHER-ONLY. This is the only place ability language may appear.
