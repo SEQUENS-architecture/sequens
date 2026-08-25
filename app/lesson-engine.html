@@ -508,32 +508,141 @@ function wireGen(){
 function renderGen(j){
   var box=document.getElementById("spine");
   if(j.error){ box.innerHTML='<div class="gate"><b>Generation error.</b> '+esc(j.error)+'</div>'; return; }
-  if(!j.lesson){ box.innerHTML='<div class="gate"><b>The model did not return clean JSON.</b> '+esc(j.parseError||"")+' Try again; if it persists the prompt needs a tune.</div>'; return; }
-  var L=j.lesson, sp=L.spine||{};
-  var c=j.checks||{}; var pass=Object.keys(c).every(function(k){return c[k];});
+  if(!j.lesson){ box.innerHTML='<div class="gate"><b>The model did not return clean JSON.</b> '+esc(j.parseError||"")+' Try again; if it persists tell me and I tune the prompt.</div>'; return; }
+  injectPlanCSS();
+  var L=j.lesson;
+  var c=j.checks||{}; var keys=Object.keys(c); var pass=keys.length&&keys.every(function(k){return c[k];});
   var chip=function(ok,t){return '<span class="status '+(ok?"ok":"pend")+'" style="margin:0 4px 4px 0">'+(ok?"\u2713 ":"\u00d7 ")+t+'</span>';};
-  var h='<div class="sheet-h"><span class="t">'+esc(L.title_question||"Lesson")+'</span><span class="d">Frame: '+esc(L.frame||"none")+' \u00b7 '+esc(j.model||"")+'</span></div>';
-  h+='<div style="margin:8px 0 12px">'+chip(c.spine_complete,"spine")+chip(c.three_steps,"3 steps")+chip(c.one_hinge,"hinge")+chip(c.exit_tests_steps,"exit tests steps")+chip(c.no_em_dash,"no em-dash")+chip(c.no_banned,"clean words")+'</div>';
-  if(!pass) h+='<div class="gate" style="margin-bottom:10px"><b>Some checks failed.</b> This is a trial; do not teach from it as is. Regenerate or tell me which check fails and I tune the prompt.</div>';
-  if(L.steps_to_success&&L.steps_to_success.length){h+='<div class="card"><h3>Steps to success</h3><ol class="objs">'+L.steps_to_success.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ol></div>';}
-  var order=[["first_thing","First thing"],["show_them_how","Show them how"],["build_it_together","Build it together"],["quick_check","Quick check (hinge)"],["their_turn","Their turn"],["last_thing","Last thing"]];
-  order.forEach(function(pr){var part=sp[pr[0]]; if(!part)return;
-    h+='<div class="card"><h3>'+esc(pr[1])+'</h3>';
-    if(pr[0]==="quick_check"){h+='<div class="hinge"><b>Diagnostic hinge</b>'+esc(part.question||"")+'<div style="margin-top:5px;color:var(--ink-soft);font-size:.8rem"><b>Catches:</b> '+esc(part.misconception_caught||"")+'. '+esc(part.why_diagnostic||"")+'</div></div>';}
-    else { Object.keys(part).forEach(function(kk){ if(kk==="timing_mins")return; var v=part[kk];
-      if(Array.isArray(v)){ if(kk==="questions"&&part.expected){return;} h+='<div class="meta" style="margin-top:5px"><b>'+esc(kk.replace(/_/g," "))+'</b><ul class="objs">'+v.map(function(x){return '<li>'+esc(typeof x==="object"?JSON.stringify(x):x)+'</li>';}).join('')+'</ul></div>'; }
-      else if(v&&typeof v==="object"){ h+='<div class="meta" style="margin-top:5px"><b>'+esc(kk.replace(/_/g," "))+'</b> '+esc(JSON.stringify(v))+'</div>'; }
-      else if(v){ h+='<div class="meta" style="margin-top:5px"><b>'+esc(kk.replace(/_/g," "))+':</b> '+esc(v)+'</div>'; }
-    });
-      if(pr[0]==="build_it_together"&&part.questions){ h+='<div class="meta" style="margin-top:5px"><b>questions and expected</b><ul class="objs">'+part.questions.map(function(q,i){return '<li>'+esc(q)+(part.expected&&part.expected[i]?' \u2192 '+esc(part.expected[i]):'')+'</li>';}).join('')+'</ul></div>'; }
-    }
-    if(part.timing_mins)h+='<div class="meta" style="margin-top:5px;color:var(--muted)">'+part.timing_mins+' mins</div>';
+  var h='<div style="margin:0 0 12px">'+keys.map(function(k){return chip(c[k],k.replace(/_/g," "));}).join('')+'</div>';
+  if(keys.length&&!pass) h+='<div class="gate" style="margin-bottom:12px"><b>Some checks failed.</b> A trial, not a lesson to teach as is. Regenerate, or tell me which check fails.</div>';
+
+  h+='<div class="planwrap">';
+  // layer toggle bar
+  h+='<div class="pl-layers"><span class="pl-lbl">Layers</span>'+
+     ['script:Teacher script','ta:TA','ai:AI','sup:Barriers','str:Going further','send:SEND & EAL'].map(function(p){var k=p.split(":")[0];return '<button class="pl-tog pl-'+k+'" data-lay="'+k+'"><span class="pl-dot"></span>'+esc(p.split(":")[1])+'</button>';}).join('')+'</div>';
+
+  // head
+  h+='<div class="pl-head"><div class="pl-kick">Lesson plan \u00b7 teacher\'s copy</div>'+
+     '<h1 class="pl-h1">'+esc(L.title_question||"Lesson")+'</h1>'+
+     (L.objective?'<div class="pl-obj"><b>Objective:</b> '+esc(L.objective)+'</div>':'')+
+     '<div class="pl-meta">'+[["Year",L.year],["Subject",L.subject],["Frame",L.frame],["Duration",(L.duration_mins?L.duration_mins+" minutes":"")]].filter(function(m){return m[1];}).map(function(m){return '<div><span>'+esc(m[0])+'</span><b>'+esc(m[1])+'</b></div>';}).join('')+'</div></div>';
+  if(L.curriculum_source||L.sequence) h+='<div class="pl-src">'+(L.curriculum_source?'<b>Curriculum source:</b> '+esc(L.curriculum_source)+' ':'')+(L.sequence&&L.sequence.prior?'<b>Prior:</b> '+esc(L.sequence.prior)+' ':'')+(L.sequence&&L.sequence.next?'<b>Next:</b> '+esc(L.sequence.next):'')+'</div>';
+
+  // sequence strip
+  h+='<div class="pl-seq">'+["First thing","Show them how","Build together","Quick check","Their turn","Last thing"].map(function(s){return '<div>'+s+'</div>';}).join('')+'</div>';
+
+  if(L.steps_to_success&&L.steps_to_success.length) h+='<div class="pl-step"><div class="pl-stop"><span class="pl-sname">Steps to success</span></div><ol class="objs">'+L.steps_to_success.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ol></div>';
+
+  (L.steps||[]).forEach(function(s){
+    var hinge = s.hinge && s.hinge.misconception_caught;
+    h+='<div class="pl-step'+(hinge?' hinge':'')+'"><div class="pl-stop"><span class="pl-sname">'+esc(s.name||"")+'</span>'+(hinge?'<span class="pl-badge">Hinge</span>':'')+(s.timing_mins?'<span class="pl-stime">'+s.timing_mins+' min</span>':'')+'</div>';
+    (s.teach||[]).forEach(function(p){h+='<p>'+esc(p)+'</p>';});
+    (s.say||[]).forEach(function(p){h+='<p class="pl-say">'+esc(p)+'</p>';});
+    if(hinge) h+='<div class="pl-misc" style="background:#EAF2F8;border-left-color:#2C6E9B"><b>Diagnostic hinge:</b><p>'+esc(s.hinge.misconception_caught)+'. '+esc(s.hinge.why_diagnostic||"")+'</p></div>';
+    if(s.misconception&&s.misconception.body) h+='<div class="pl-misc"><b>'+esc(s.misconception.title||"The misconception")+'</b><p>'+esc(s.misconception.body)+'</p></div>';
+    var m=s.modelling_space;
+    if(m&&(m.purpose||m.detail)){ h+='<div class="pl-msg"><div class="pl-mtitle">The modelling space</div>'+(m.purpose?'<p class="pl-purpose">'+esc(m.purpose)+'</p>':'')+(m.detail||[]).map(function(d){return '<p class="pl-detail">'+esc(d)+'</p>';}).join('');
+      if(m.examples&&m.examples.items&&m.examples.items.length) h+='<div class="pl-egs"><b>'+esc(m.examples.label||"For example")+'</b>'+m.examples.items.map(esc).join(' \u00b7 ')+'</div>';
+      if(m.warn) h+='<div class="pl-warn">'+esc(m.warn)+'</div>';
+      h+='</div>'; }
+    // layers
+    var ly=s.layers||{};
+    if(ly.script) h+='<div class="pl-lay pl-l-script"><div class="pl-lt">Teacher script</div>'+(ly.script.lines||[]).map(function(x){return '<div class="pl-line">'+esc(x)+'</div>';}).join('')+(ly.script.note?'<p class="pl-note">'+esc(ly.script.note)+'</p>':'')+'</div>';
+    if(ly.ta) h+='<div class="pl-lay pl-l-ta"><div class="pl-lt">Teaching assistant</div>'+(ly.ta.todos||[]).map(function(t){return '<div class="pl-todo"><span class="pl-b">'+esc(t.when||"")+'</span><span>'+esc(t.what||"")+'</span></div>';}).join('')+(ly.ta.note?'<p class="pl-note">'+esc(ly.ta.note)+'</p>':'')+'</div>';
+    if(ly.ai) h+='<div class="pl-lay pl-l-ai"><div class="pl-lt">AI opportunities, and where not</div>'+(ly.ai.could||[]).map(function(x){return '<div class="pl-yes"><span class="pl-tag">Could:</span><span>'+esc(x)+'</span></div>';}).join('')+(ly.ai.dont||[]).map(function(x){return '<div class="pl-no"><span class="pl-tag">Do not:</span><span>'+esc(x)+'</span></div>';}).join('')+'</div>';
+    if(ly.barriers) h+='<div class="pl-lay pl-l-sup"><div class="pl-lt">Barriers and routes in</div>'+(ly.barriers.doing||[]).map(function(d){return '<div class="pl-doing"><b>'+esc(d.label||"")+'</b>'+esc(d.text||"")+'</div>';}).join('')+(ly.barriers.same?'<div class="pl-same">'+esc(ly.barriers.same)+'</div>':'')+'</div>';
+    if(ly.going_further) h+='<div class="pl-lay pl-l-str"><div class="pl-lt">Going further, open to anyone</div>'+(ly.going_further.items||[]).map(function(d){return '<div class="pl-push"><b>'+esc(d.label||"")+'</b>'+esc(d.text||"")+'</div>';}).join('')+(ly.going_further.warn?'<div class="pl-warn">'+esc(ly.going_further.warn)+'</div>':'')+'</div>';
+    if(ly.send) h+='<div class="pl-lay pl-l-send"><div class="pl-lt">SEND and EAL, by barrier not label</div>'+(ly.send.needs||[]).map(function(n){return '<div class="pl-need"><span class="pl-who">'+esc(n.who||"")+'</span><span class="pl-what">'+esc(n.what||"")+'</span></div>';}).join('')+(ly.send.eal?'<div class="pl-eal"><b>EAL:</b> '+esc(ly.send.eal)+'</div>':'')+'</div>';
     h+='</div>';
   });
-  if(L.teacher_key)h+='<div class="card"><h3>Teacher key</h3><div class="meta">'+esc(L.teacher_key)+'</div></div>';
-  h+='<div class="controls"><button class="btn" id="gencopy">Copy as text</button><span class="meta" id="gencopymsg"></span></div>';
+
+  // teacher key
+  if(L.teacher_key){ var tk=L.teacher_key; h+='<div class="pl-key"><h3>Teacher key</h3><div class="pl-keyrow">'+['k1','k2','k3','k4'].map(function(k){var v=tk[k];if(!v||!v.text)return '';return '<div class="pl-kchip pl-'+k+'"><b>'+esc(v.label||"")+'</b>'+esc(v.text)+'</div>';}).join('')+'</div></div>'; }
+
+  h+='<div class="controls" style="margin-top:14px"><button class="btn" id="gencopy">Copy as text</button><span class="meta" id="gencopymsg"></span></div>';
+  h+='</div>';
   box.innerHTML=h;
+
+  // wire layer toggles
+  box.querySelectorAll('.pl-tog').forEach(function(b){b.onclick=function(){var k=b.dataset.lay;box.querySelector('.planwrap').classList.toggle('show-'+k);b.classList.toggle('on');};});
+  // default on: barriers + SEND, like the demo
+  ['sup','send'].forEach(function(k){box.querySelector('.planwrap').classList.add('show-'+k);var btn=box.querySelector('.pl-tog[data-lay="'+k+'"]');if(btn)btn.classList.add('on');});
   var gc=document.getElementById("gencopy"); if(gc)gc.onclick=function(){copyText(JSON.stringify(L,null,2),"gencopymsg");};
+}
+function injectPlanCSS(){
+  if(document.getElementById("planCSS"))return;
+  var css=`
+.planwrap{--nv:#0A3D62;--ad:#0A7A67;--gs:#EAF3EE;--sd:#0A6B5C;--rl:#D7E4EA;--mu:#54718A;--dim:#566F82;--rs:#F7E9E7;--rd:#C0453B;--ss:#EAF2F8;--st:#2C6E9B;--gd:#8A6A18}
+.planwrap h1.pl-h1{font-family:var(--display);font-weight:800;font-size:1.7rem;color:var(--nv);margin:.3rem 0 .5rem}
+.pl-kick{font-family:var(--display);font-weight:700;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ad)}
+.pl-head,.pl-step,.pl-key{background:#fff;border:1px solid var(--rl);border-radius:14px;padding:1.3rem 1.5rem;margin-bottom:.9rem}
+.pl-obj{background:var(--gs);border-left:4px solid var(--ad);padding:.75rem 1rem;border-radius:0 8px 8px 0;font-size:.95rem;color:var(--sd);margin-top:.5rem}
+.pl-meta{display:flex;gap:1.8rem;flex-wrap:wrap;margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--rl);font-size:.86rem}
+.pl-meta span{display:block;color:var(--dim);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.1rem}
+.pl-meta b{color:var(--nv);font-weight:600}
+.pl-src{background:var(--ss);border:1px solid #C5DAEA;border-radius:10px;padding:.85rem 1.05rem;font-size:.85rem;color:#1F4A6E;margin-bottom:1rem}
+.pl-seq{display:flex;gap:.35rem;margin-bottom:1.1rem;flex-wrap:wrap}
+.pl-seq div{flex:1;min-width:90px;text-align:center;font-size:.64rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--mu);padding:.5rem .2rem;background:#fff;border:1px solid var(--rl);border-radius:7px}
+.pl-step.hinge{border-color:var(--st);border-width:2px;background:#FBFDFE}
+.pl-stop{display:flex;align-items:baseline;gap:.7rem;margin-bottom:.6rem}
+.pl-sname{font-family:var(--display);font-weight:800;font-size:1.1rem;color:var(--nv)}
+.pl-stime{margin-left:auto;font-size:.78rem;color:var(--dim);font-weight:600}
+.pl-badge{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--st);color:#fff;border-radius:20px;padding:.12rem .5rem}
+.pl-step p{margin:0 0 .6rem;font-size:.94rem}
+.pl-say{background:#F6FAFC;border-left:3px solid var(--mu);padding:.6rem .9rem;border-radius:0 7px 7px 0;font-style:italic}
+.pl-msg{background:#F7FCFB;border:1.5px solid var(--ad);border-radius:12px;padding:1rem 1.2rem;margin:.8rem 0}
+.pl-mtitle{font-family:var(--display);font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ad);margin-bottom:.5rem}
+.pl-purpose{font-size:.95rem;color:var(--nv);font-weight:600;margin:0 0 .5rem}
+.pl-detail{font-size:.88rem;color:var(--mu);margin:0 0 .5rem}
+.pl-egs{background:#fff;border:1px dashed #BEDFD0;border-radius:8px;padding:.65rem .85rem;font-size:.86rem;color:var(--sd)}
+.pl-egs b{display:block;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:.3rem;font-weight:700}
+.pl-warn{font-size:.83rem;color:var(--gd);background:#FBF6E9;border-radius:7px;padding:.5rem .75rem;margin-top:.55rem}
+.pl-misc{background:var(--rs);border-left:4px solid var(--rd);border-radius:0 10px 10px 0;padding:.85rem 1.05rem;margin:.7rem 0}
+.pl-misc b{color:#8A2F27}.pl-misc p{margin:.2rem 0 0;font-size:.88rem;color:#8A2F27}
+.pl-layers{position:sticky;top:0;z-index:20;background:rgba(242,247,249,.95);backdrop-filter:blur(8px);padding:.7rem 0;margin-bottom:1rem;border-bottom:1px solid var(--rl);display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.pl-lbl{font-family:var(--display);font-weight:700;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-right:.2rem}
+.pl-tog{border:1.5px solid var(--rl);background:#fff;border-radius:9px;padding:.4rem .8rem;font-family:var(--body);font-size:.82rem;font-weight:600;color:var(--mu);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+.pl-tog:hover{border-color:var(--ad)}
+.pl-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+.pl-tog.on{background:var(--nv);border-color:var(--nv);color:#fff}
+.pl-tog.on.pl-script{background:var(--ad);border-color:var(--ad)}
+.pl-tog.on.pl-ta{background:#7A4A8B;border-color:#7A4A8B}
+.pl-tog.on.pl-ai{background:var(--st);border-color:var(--st)}
+.pl-tog.on .pl-dot{opacity:1}
+.pl-lay{display:none;border-radius:10px;padding:.85rem 1.05rem;margin-top:.7rem;font-size:.88rem;line-height:1.55}
+.planwrap.show-script .pl-l-script{display:block}
+.planwrap.show-ta .pl-l-ta{display:block}
+.planwrap.show-ai .pl-l-ai{display:block}
+.planwrap.show-sup .pl-l-sup{display:block}
+.planwrap.show-str .pl-l-str{display:block}
+.planwrap.show-send .pl-l-send{display:block}
+.pl-lt{font-family:var(--display);font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.45rem}
+.pl-l-script{background:#F1FAF8;border:1px solid #BEDFD0}.pl-l-script .pl-lt{color:var(--ad)}
+.pl-line{background:#fff;border-left:3px solid var(--ad);border-radius:0 7px 7px 0;padding:.55rem .8rem;margin-bottom:.45rem;font-style:italic}
+.pl-note{font-size:.83rem;color:var(--mu);margin:.3rem 0 0}
+.pl-l-ta{background:#F7F2FA;border:1px dashed #C89AD8}.pl-l-ta .pl-lt{color:#7A4A8B}
+.pl-todo{background:#fff;border-radius:7px;padding:.5rem .75rem;margin-bottom:.35rem;display:flex;gap:.5rem;font-size:.86rem;color:#5E3A6B}
+.pl-todo .pl-b{color:#7A4A8B;font-weight:700;flex-shrink:0}
+.pl-l-ai{background:var(--ss);border:1px solid #C5DAEA}.pl-l-ai .pl-lt{color:var(--st)}
+.pl-yes,.pl-no{border-radius:7px;padding:.5rem .8rem;margin-bottom:.35rem;font-size:.86rem;display:flex;gap:.5rem}
+.pl-yes{background:#fff;border-left:3px solid var(--st);color:#1F4A6E}
+.pl-no{background:#FBF0EF;border-left:3px solid var(--rd);color:#8A2F27}
+.pl-tag{font-weight:700;flex-shrink:0}
+.pl-l-sup{background:#F0F6EF;border:1px solid #BEDFD0}.pl-l-sup .pl-lt{color:var(--sd)}
+.pl-doing{margin-bottom:.5rem;font-size:.87rem}.pl-doing b{display:block;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);margin-bottom:.15rem}
+.pl-same{background:#fff;border-radius:7px;padding:.5rem .8rem;font-weight:600;color:var(--sd);font-size:.85rem;margin-top:.3rem}
+.pl-l-str{background:#FBF6E9;border:1px solid #E0C97F}.pl-l-str .pl-lt{color:var(--gd)}
+.pl-push{margin-bottom:.45rem;font-size:.87rem;color:var(--gd)}.pl-push b{display:block;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem}
+.pl-l-send{background:#F7F2FA;border:1px solid #C89AD8}.pl-l-send .pl-lt{color:#7A4A8B}
+.pl-need{margin-bottom:.5rem;font-size:.86rem}.pl-who{display:block;font-weight:700;color:#5E3A6B;margin-bottom:.1rem}.pl-what{color:#5E3A6B}
+.pl-eal{background:#fff;border-radius:7px;padding:.5rem .8rem;margin-top:.3rem;font-size:.85rem;color:#5E3A6B}
+.pl-key h3{font-family:var(--display);font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin:0 0 .7rem}
+.pl-keyrow{display:flex;gap:.5rem;flex-wrap:wrap}
+.pl-kchip{border-radius:8px;padding:.5rem .8rem;font-size:.84rem;flex:1;min-width:150px}
+.pl-kchip b{display:block;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem}
+.pl-k1{background:#EAF6F4;color:#0A6B5C}.pl-k2{background:var(--gs);color:var(--sd)}.pl-k3{background:#FBF6E9;color:var(--gd)}.pl-k4{background:var(--ss);color:#1F4A6E}
+`;
+  var st=document.createElement("style");st.id="planCSS";st.textContent=css;document.head.appendChild(st);
 }
 
 // ---------- COHORT (Head of Year) ----------

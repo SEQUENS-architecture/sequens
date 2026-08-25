@@ -17,8 +17,11 @@ WRITING lessons: first_thing runs Do Now, then objective and steps, then reads a
 
 ALWAYS: no pupil-facing ability labels (grouping is teacher-only, in teacher_key); never reproduce White Rose or any scheme's materials, generate original teaching aligned to the step order; weave a school value ONLY where the content genuinely affords it, else none; give timings, teacher script, board notes, expected pupil responses, and differentiation; nothing vague. NEVER use an em-dash. NEVER use these words: vibes, empower, unlock, leverage, seamless, revolutionary, amazing, game-changing.
 
-Return exactly this JSON shape:
-{"title_question":"","frame":"nest|iceberg|keystone|spokes|loop|scales|track|turn|chain|weigh|bound|null","steps_to_success":["","",""],"spine":{"first_thing":{"teacher":"","script":"","board":"","timing_mins":0},"show_them_how":{"teacher":"","script":"","board":"","timing_mins":0},"build_it_together":{"teacher":"","questions":[""],"expected":[""],"timing_mins":0},"quick_check":{"question":"","misconception_caught":"","why_diagnostic":"","timing_mins":0},"their_turn":{"fluency":[""],"reasoning":[""],"problem_solving":[""],"going_further":"","timing_mins":0},"last_thing":{"exit_ticket":{"questions":[""],"tests_steps":true},"close":"","timing_mins":0}},"teacher_key":"","sequence":{"prior":"","next":""}}`;
+Return exactly this JSON shape, filled richly. Every step carries its teaching moves AND its layers. The layers are where the real help lives, fill them with specific, concrete guidance a real teacher would give, not generic filler:
+
+{"title_question":"","frame":"nest|iceberg|keystone|spokes|loop|scales|track|turn|chain|weigh|bound|null","objective":"","curriculum_source":"","year":"","subject":"","duration_mins":0,"steps_to_success":["","",""],"steps":[{"name":"First thing","timing_mins":0,"teach":["a paragraph of what the teacher does"],"say":["an optional say-aloud line"],"modelling_space":{"purpose":"what the blank space or model is for","detail":["a paragraph of how to fill it"],"examples":{"label":"What usually comes up","items":["","",""]},"warn":"an optional do-it-your-way note"},"misconception":null,"hinge":null,"layers":{"script":{"lines":["words you might actually say","and another"],"note":"a why-it-matters note"},"ta":{"todos":[{"when":"Before","what":""},{"when":"During","what":""},{"when":"Watch for","what":""}],"note":""},"ai":{"could":["a genuine AI use",""],"dont":["where AI must NOT go and why"]},"barriers":{"doing":[{"label":"What they are doing","text":""},{"label":"What might stop them","text":""},{"label":"What actually helps","text":""},{"label":"What does not help","text":""}],"same":"one line: everyone does the real task, nobody is given the answer"},"going_further":{"items":[{"label":"On the slide","text":""},{"label":"If they are quick","text":""}],"warn":"never name a stretch group; the challenge is asked to the room"},"send":{"needs":[{"who":"Reading or writing is the barrier","what":""},{"who":"Sustained attention is the barrier","what":""},{"who":"Uncertainty is the barrier","what":""},{"who":"Time to think is the barrier","what":""}],"eal":"EAL is not a learning difficulty: accept the idea in any language, add the English word beside it"}}}],"teacher_key":{"k1":{"label":"","text":""},"k2":{"label":"","text":""},"k3":{"label":"","text":""},"k4":{"label":"","text":""}},"sequence":{"prior":"","next":""}}
+
+There are exactly 6 steps, in spine order: First thing, Show them how, Build it together, Quick check, Their turn, Last thing. Only the Quick check step has a "hinge" object {"misconception_caught","why_diagnostic"}; the others have "hinge":null. A step has a "misconception" object {"title","body"} only where one genuinely bites, else null. Fill every layer on every step with real, specific content.`;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -52,7 +55,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model,
-        max_tokens: 8000,
+        max_tokens: 16000,
         system: SYSTEM,
         messages: [{ role: 'user', content: userMsg }]
       })
@@ -77,11 +80,12 @@ export default async function handler(req, res) {
     // light spec checks so bad output does not render as if fine
     const checks = {};
     if (lesson) {
-      const sp = lesson.spine || {};
-      checks.spine_complete = ['first_thing','show_them_how','build_it_together','quick_check','their_turn','last_thing'].every(k => sp[k]);
+      const steps = Array.isArray(lesson.steps) ? lesson.steps : [];
+      checks.six_steps = steps.length === 6;
       checks.three_steps = Array.isArray(lesson.steps_to_success) && lesson.steps_to_success.length === 3;
-      checks.one_hinge = !!(sp.quick_check && sp.quick_check.misconception_caught);
-      checks.exit_tests_steps = !!(sp.last_thing && sp.last_thing.exit_ticket && sp.last_thing.exit_ticket.tests_steps);
+      const qc = steps.find(s => s && /quick/i.test(s.name || ''));
+      checks.one_hinge = !!(qc && qc.hinge && qc.hinge.misconception_caught);
+      checks.layers_filled = steps.every(s => s && s.layers && s.layers.script && s.layers.barriers);
       const joined = JSON.stringify(lesson);
       checks.no_em_dash = !joined.includes('\u2014');
       checks.no_banned = !['vibes','empower','unlock','leverage','seamless','revolutionary','amazing','game-changing'].some(w => joined.toLowerCase().includes(w));
