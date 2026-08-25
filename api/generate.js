@@ -52,19 +52,29 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model,
-        max_tokens: 4000,
+        max_tokens: 8000,
         system: SYSTEM,
-        messages: [{ role: 'user', content: userMsg }]
+        messages: [{ role: 'user', content: userMsg }, { role: 'assistant', content: '{' }]
       })
     });
     const data = await r.json();
     if (!r.ok) { console.error('anthropic error', data); return res.status(502).json({ error: (data.error && data.error.message) || 'Generation failed.' }); }
 
     let text = (data.content || []).filter(c => c.type === 'text').map(c => c.text).join('\n').trim();
+    // the assistant turn was prefilled with '{', so the reply is the rest of the object
+    if (!text.startsWith('{')) text = '{' + text;
     text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
 
     let lesson, parseError = null;
-    try { lesson = JSON.parse(text); } catch (e) { parseError = 'Model did not return clean JSON.'; }
+    try {
+      lesson = JSON.parse(text);
+    } catch (e1) {
+      // salvage: take from the first { to the last } and try again
+      var s = text.indexOf('{'), e = text.lastIndexOf('}');
+      if (s !== -1 && e !== -1 && e > s) {
+        try { lesson = JSON.parse(text.slice(s, e + 1)); } catch (e2) { parseError = 'Model reply was not valid JSON (it may have been cut off).'; }
+      } else { parseError = 'Model reply was not valid JSON.'; }
+    }
 
     // light spec checks so bad output does not render as if fine
     const checks = {};
