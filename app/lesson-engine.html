@@ -215,7 +215,7 @@ function buildNav(){
   const nav=document.getElementById("nav");nav.innerHTML="";
   const Rr=ROLES[role]; const byKey={}; Rr.nav.forEach(function(n){byKey[n[0]]=n;});
   function addLink(n){var k=n[0],l=n[1],tag=n[2];var a=document.createElement("a");a.textContent=l;a.dataset.k=k;a.setAttribute("role","button");a.setAttribute("tabindex","0");
-    if(tag){a.innerHTML=l+'<span class="dot" aria-hidden="true"></span>';a.setAttribute("title","Awaiting the production key");}
+    if(tag){a.innerHTML=l+'<span class="dot" aria-hidden="true"></span>';a.setAttribute("title","In testing, behind the key");}
     var go=function(){route=k;render();};a.onclick=go;a.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};nav.appendChild(a);}
   if(Rr.groups){Rr.groups.forEach(function(g){if(g.label){var hd=document.createElement("div");hd.className="navsec"+(g.foot?" foot":"");hd.textContent=g.label;nav.appendChild(hd);}g.keys.forEach(function(k){if(byKey[k])addLink(byKey[k]);});});}
   else {Rr.nav.forEach(addLink);}
