@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     (prior ? `Prior lesson: ${prior}\n` : '') +
     (next ? `Likely next lesson: ${next}\n` : '') +
     (values ? `School values to weave only where genuinely afforded: ${values}\n` : '') +
-    `\nGenerate the lesson now. Return only the JSON.`;
+    `\nGenerate the lesson now. Output ONLY the JSON object, starting with { and ending with }. No preamble, no explanation, no markdown fences.`;
 
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
@@ -54,15 +54,13 @@ export default async function handler(req, res) {
         model,
         max_tokens: 8000,
         system: SYSTEM,
-        messages: [{ role: 'user', content: userMsg }, { role: 'assistant', content: '{' }]
+        messages: [{ role: 'user', content: userMsg }]
       })
     });
     const data = await r.json();
     if (!r.ok) { console.error('anthropic error', data); return res.status(502).json({ error: (data.error && data.error.message) || 'Generation failed.' }); }
 
     let text = (data.content || []).filter(c => c.type === 'text').map(c => c.text).join('\n').trim();
-    // the assistant turn was prefilled with '{', so the reply is the rest of the object
-    if (!text.startsWith('{')) text = '{' + text;
     text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
 
     let lesson, parseError = null;
