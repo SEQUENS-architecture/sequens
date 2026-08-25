@@ -470,8 +470,8 @@ function gen(){
   return '<div class="kicker">Generate</div><div class="h">Objective to lesson</div>'+
     '<div class="sub">Not a slide factory. The engine returns one SEQUENSed lesson: a six-part spine, one diagnostic hinge, dual-coded vocabulary, and the next lesson suggested from what this one reveals. That coherence is the thing a horizontal generator cannot do.</div>'+
     '<div class="assure"><b>Every lesson is a draft you confirm.</b> The engine suggests; you review and adapt before teaching. Content is checked for the school setting and its cultural context. The model receives only the objective, year and subject, never a pupil name or any pupil data.</div>'+
-    '<div class="gate"><b>Awaiting the production key.</b> Live generation needs the 30 August API key and the generation stress-test that gates launch. The structure below is what it returns; the button turns on then.</div>'+
-    '<div class="pickwrap"><label for="obj" style="font-family:var(--display);font-weight:600;font-size:.8rem;color:var(--ink-soft)">Objective</label><select id="obj" aria-label="Choose an objective">'+opts.map(function(o,i){return '<option value="'+i+'">'+esc(o.label)+'</option>';}).join('')+'</select><button class="btn primary" id="genbtn" disabled>Generate lesson</button></div>'+
+    '<div class="gate"><b>Live, in testing.</b> The key is in. Every lesson is a draft you check against the spec before teaching. We are validating output now; treat results as trials, not finished lessons.</div>'+
+    '<div class="pickwrap"><label for="obj" style="font-family:var(--display);font-weight:600;font-size:.8rem;color:var(--ink-soft)">Objective</label><select id="obj" aria-label="Choose an objective">'+opts.map(function(o,i){return '<option value="'+i+'">'+esc(o.label)+'</option>';}).join('')+'</select><button class="btn primary" id="genbtn">Generate lesson</button></div>'+
     '<div id="seq" class="note"></div>'+
     '<div class="sheet" id="spine"></div>'+
     '<div class="foot">Renders to a deck and a full plan through render.js; validate.js enforces the locked rules on every pupil-facing field.</div>';
@@ -492,6 +492,48 @@ function wireGen(){
     document.getElementById("spine").innerHTML=h;
   }
   sel.onchange=upd; upd();
+  var btn=document.getElementById("genbtn");
+  if(btn) btn.onclick=function(){
+    var o=opts[+sel.value];
+    var subj=o.subj; var year="Year 6";
+    var objText=o.label.replace(subj+" \u00b7 ","");
+    btn.disabled=true; var was=btn.textContent; btn.textContent="Generating...";
+    document.getElementById("spine").innerHTML='<div class="note">Calling the engine. One lesson, checked against the spec.</div>';
+    fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({objective:objText,subject:subj,year:year,prior:o.prior||"",next:o.next||"",values:(typeof CONFIG!=="undefined"?CONFIG.values:[])})})
+      .then(function(r){return r.json();})
+      .then(function(j){ btn.disabled=false; btn.textContent=was; renderGen(j); })
+      .catch(function(){ btn.disabled=false; btn.textContent=was; document.getElementById("spine").innerHTML='<div class="gate"><b>Could not reach the engine.</b> Check the key is in Vercel and the site has redeployed.</div>'; });
+  };
+}
+function renderGen(j){
+  var box=document.getElementById("spine");
+  if(j.error){ box.innerHTML='<div class="gate"><b>Generation error.</b> '+esc(j.error)+'</div>'; return; }
+  if(!j.lesson){ box.innerHTML='<div class="gate"><b>The model did not return clean JSON.</b> '+esc(j.parseError||"")+' Try again; if it persists the prompt needs a tune.</div>'; return; }
+  var L=j.lesson, sp=L.spine||{};
+  var c=j.checks||{}; var pass=Object.keys(c).every(function(k){return c[k];});
+  var chip=function(ok,t){return '<span class="status '+(ok?"ok":"pend")+'" style="margin:0 4px 4px 0">'+(ok?"\u2713 ":"\u00d7 ")+t+'</span>';};
+  var h='<div class="sheet-h"><span class="t">'+esc(L.title_question||"Lesson")+'</span><span class="d">Frame: '+esc(L.frame||"none")+' \u00b7 '+esc(j.model||"")+'</span></div>';
+  h+='<div style="margin:8px 0 12px">'+chip(c.spine_complete,"spine")+chip(c.three_steps,"3 steps")+chip(c.one_hinge,"hinge")+chip(c.exit_tests_steps,"exit tests steps")+chip(c.no_em_dash,"no em-dash")+chip(c.no_banned,"clean words")+'</div>';
+  if(!pass) h+='<div class="gate" style="margin-bottom:10px"><b>Some checks failed.</b> This is a trial; do not teach from it as is. Regenerate or tell me which check fails and I tune the prompt.</div>';
+  if(L.steps_to_success&&L.steps_to_success.length){h+='<div class="card"><h3>Steps to success</h3><ol class="objs">'+L.steps_to_success.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ol></div>';}
+  var order=[["first_thing","First thing"],["show_them_how","Show them how"],["build_it_together","Build it together"],["quick_check","Quick check (hinge)"],["their_turn","Their turn"],["last_thing","Last thing"]];
+  order.forEach(function(pr){var part=sp[pr[0]]; if(!part)return;
+    h+='<div class="card"><h3>'+esc(pr[1])+'</h3>';
+    if(pr[0]==="quick_check"){h+='<div class="hinge"><b>Diagnostic hinge</b>'+esc(part.question||"")+'<div style="margin-top:5px;color:var(--ink-soft);font-size:.8rem"><b>Catches:</b> '+esc(part.misconception_caught||"")+'. '+esc(part.why_diagnostic||"")+'</div></div>';}
+    else { Object.keys(part).forEach(function(kk){ if(kk==="timing_mins")return; var v=part[kk];
+      if(Array.isArray(v)){ if(kk==="questions"&&part.expected){return;} h+='<div class="meta" style="margin-top:5px"><b>'+esc(kk.replace(/_/g," "))+'</b><ul class="objs">'+v.map(function(x){return '<li>'+esc(typeof x==="object"?JSON.stringify(x):x)+'</li>';}).join('')+'</ul></div>'; }
+      else if(v&&typeof v==="object"){ h+='<div class="meta" style="margin-top:5px"><b>'+esc(kk.replace(/_/g," "))+'</b> '+esc(JSON.stringify(v))+'</div>'; }
+      else if(v){ h+='<div class="meta" style="margin-top:5px"><b>'+esc(kk.replace(/_/g," "))+':</b> '+esc(v)+'</div>'; }
+    });
+      if(pr[0]==="build_it_together"&&part.questions){ h+='<div class="meta" style="margin-top:5px"><b>questions and expected</b><ul class="objs">'+part.questions.map(function(q,i){return '<li>'+esc(q)+(part.expected&&part.expected[i]?' \u2192 '+esc(part.expected[i]):'')+'</li>';}).join('')+'</ul></div>'; }
+    }
+    if(part.timing_mins)h+='<div class="meta" style="margin-top:5px;color:var(--muted)">'+part.timing_mins+' mins</div>';
+    h+='</div>';
+  });
+  if(L.teacher_key)h+='<div class="card"><h3>Teacher key</h3><div class="meta">'+esc(L.teacher_key)+'</div></div>';
+  h+='<div class="controls"><button class="btn" id="gencopy">Copy as text</button><span class="meta" id="gencopymsg"></span></div>';
+  box.innerHTML=h;
+  var gc=document.getElementById("gencopy"); if(gc)gc.onclick=function(){copyText(JSON.stringify(L,null,2),"gencopymsg");};
 }
 
 // ---------- COHORT (Head of Year) ----------
