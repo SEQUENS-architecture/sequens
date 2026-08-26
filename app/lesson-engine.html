@@ -571,12 +571,33 @@ function renderDeck(L){
   sl.push({cls:'dark center', html:'<div class="dspine"><i class="now"></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlabel">'+esc((L.subject||'Lesson')+(L.year?' \u00b7 '+L.year:''))+'</div><h1 class="dh1">'+esc(L.title_question||'Lesson')+'</h1>'+(L.objective?'<p class="dsub">'+esc(L.objective)+'</p>':'')});
   if(L.steps_to_success&&L.steps_to_success.length) sl.push({cls:'', html:seg(-1)+'<div class="dlabel">Steps to success</div><ol class="ds2s">'+L.steps_to_success.map(function(s,i){return '<li><span class="dn">'+(i+1)+'</span><span>'+esc(s)+'</span></li>';}).join('')+'</ol>'});
   steps.forEach(function(s,idx){
+    var sc=s.slide||{};
+    var head=sc.heading||'';
     var isModel=/show them how/i.test(s.name||''), isHinge=s.hinge&&s.hinge.misconception_caught, isLast=/last thing/i.test(s.name||''), isTurn=/their turn/i.test(s.name||'');
     var lab='<div class="dlabel">'+esc(s.name||'')+(s.timing_mins?'<span class="dmins">'+s.timing_mins+' min</span>':'')+'</div>';
-    if(isHinge){ sl.push({cls:'hinge', html:seg(idx)+'<div class="hbadge">Quick check \u00b7 hold up your answer</div><div class="theirwords">'+esc(s.hinge.question||(s.teach&&s.teach[0])||'')+'</div>'+(s.hinge.why_diagnostic?'<p class="dsub" style="margin-top:1rem">'+esc(s.hinge.why_diagnostic)+'</p>':'')}); }
-    else if(isModel){ var m=s.modelling_space||{}; sl.push({cls:'', html:seg(idx)+lab+'<h2 class="dh2">'+esc((s.teach&&s.teach[0])||'Model it')+'</h2><div class="dmodel"><div class="dghost">The teacher builds this live. Press Show the model.</div><div class="dfilled">'+((m.detail||[]).map(function(d){return '<div class="dhand">'+esc(d)+'</div>';}).join(''))+((m.examples&&m.examples.items&&m.examples.items.length)?'<div class="dhand" style="color:var(--muted);font-size:1.05rem">'+esc((m.examples.label||'')+': ')+m.examples.items.map(esc).join(', ')+'</div>':'')+'</div></div>'}); }
-    else if(isLast){ sl.push({cls:'dark', html:seg(idx)+'<div class="dlabel" style="color:#2DE1C2">'+esc(s.name||'')+' \u00b7 exit ticket'+(s.timing_mins?'<span class="dmins">'+s.timing_mins+' min</span>':'')+'</div><h2 class="dh2" style="color:#fff">Show me what you learned</h2><div class="dexit">'+(L.steps_to_success||[]).map(function(x,i){return '<div><span class="den">'+(i+1)+'</span>'+esc(x)+'</div>';}).join('')+'</div>'}); }
-    else { var body=seg(idx)+lab; if(s.teach&&s.teach[0]) body+='<p class="dbig">'+esc(s.teach[0])+'</p>'; (s.say||[]).forEach(function(x){body+='<p class="dsay">'+esc(x)+'</p>';}); if(isTurn&&s.layers&&s.layers.going_further&&s.layers.going_further.items&&s.layers.going_further.items.length){body+='<div class="dfurther"><div class="dft">Going further, open to anyone</div><div class="dfq">'+esc(s.layers.going_further.items[0].text||'')+'</div></div>';} sl.push({cls:'', html:body}); }
+    if(isHinge){
+      var opts=(sc.options||[]).filter(function(o){return o;});
+      var votes=opts.length?'<div class="dvotes">'+opts.map(function(o){var m=String(o).match(/^\s*([A-Da-d])[\).:\s-]*(.*)$/);var letter=m?m[1].toUpperCase():'';var rest=m?m[2]:o;return '<div class="dvote">'+(letter?'<span>'+esc(letter)+'</span>':'')+esc(rest)+'</div>';}).join('')+'</div>':'';
+      sl.push({cls:'hinge', html:seg(idx)+'<div class="hbadge">Quick check \u00b7 hold up your answer</div><div class="theirwords">'+esc(head||s.hinge.question||'')+'</div>'+votes});
+    } else if(isModel){
+      var m=s.modelling_space||{};
+      sl.push({cls:'', html:seg(idx)+lab+(head?'<h2 class="dh2">'+esc(head)+'</h2>':'')+'<div class="dmodel"><div class="dghost">The teacher builds this live. Press Show the model.</div><div class="dfilled">'+((m.detail||[]).map(function(d){return '<div class="dhand">'+esc(d)+'</div>';}).join(''))+((m.examples&&m.examples.items&&m.examples.items.length)?'<div class="dhand" style="color:var(--muted);font-size:1.05rem">'+esc((m.examples.label||'')+': ')+m.examples.items.map(esc).join(', ')+'</div>':'')+'</div></div>'});
+    } else if(isLast){
+      sl.push({cls:'dark', html:seg(idx)+'<div class="dlabel" style="color:#2DE1C2">'+esc(s.name||'')+' \u00b7 exit ticket'+(s.timing_mins?'<span class="dmins">'+s.timing_mins+' min</span>':'')+'</div><h2 class="dh2" style="color:#fff">'+esc(head||'Show me what you learned')+'</h2><div class="dexit">'+(L.steps_to_success||[]).map(function(x,i){return '<div><span class="den">'+(i+1)+'</span>'+esc(x)+'</div>';}).join('')+'</div>'});
+    } else if(isTurn){
+      var body=seg(idx)+lab+(head?'<h2 class="dh2">'+esc(head)+'</h2>':'');
+      if(sc.task&&sc.task.length){ body+='<div class="dtask">'+sc.task.map(function(t,i){return '<div><span class="dtn">'+(i+1)+'</span><span>'+esc(t)+'</span></div>';}).join('')+'</div>'; }
+      else if(sc.prompt){ body+='<p class="dbig">'+esc(sc.prompt)+'</p>'; }
+      if(sc.stems&&sc.stems.length){ body+='<div class="dstems">'+sc.stems.map(function(x){return '<span class="dstem">'+esc(x)+'</span>';}).join('')+'</div>'; }
+      if(s.layers&&s.layers.going_further&&s.layers.going_further.items&&s.layers.going_further.items.length){ body+='<div class="dfurther"><div class="dft">Going further, open to anyone</div><div class="dfq">'+esc(s.layers.going_further.items[0].text||'')+'</div></div>'; }
+      sl.push({cls:'', html:body});
+    } else {
+      var b=seg(idx)+lab+(head?'<h2 class="dh2">'+esc(head)+'</h2>':'');
+      if(sc.prompt) b+='<p class="dbig">'+esc(sc.prompt)+'</p>';
+      if(sc.task&&sc.task.length) b+='<div class="dtask">'+sc.task.map(function(t,i){return '<div><span class="dtn">'+(i+1)+'</span><span>'+esc(t)+'</span></div>';}).join('')+'</div>';
+      if(sc.stems&&sc.stems.length) b+='<div class="dstems">'+sc.stems.map(function(x){return '<span class="dstem">'+esc(x)+'</span>';}).join('')+'</div>';
+      sl.push({cls:'', html:b});
+    }
   });
   return '<div class="deckwrap"><div class="dstage">'+sl.map(function(x,i){return '<div class="dslide '+x.cls+(i===0?' on':'')+'" data-slide="'+i+'">'+x.html+'</div>';}).join('')+'</div>'+
     '<div class="dctrl"><button data-nav="prev">Back</button><button data-nav="next">Next</button><button class="dtoggle" data-nav="reveal">Show the model</button><span class="dcount"></span></div></div>';
@@ -635,6 +656,14 @@ function injectDeckCSS(){
 .dctrl button{background:#0A3D62;color:#fff;border:0;border-radius:8px;padding:.5rem 1rem;font-weight:600;cursor:pointer;font-family:inherit}
 .dctrl .dtoggle{background:#fff;color:var(--ad);border:1.5px solid var(--ad)}
 .dcount{margin-left:auto;color:var(--muted);font-size:.85rem;font-weight:600}
+.dvotes{display:flex;gap:1rem;margin-top:1.1rem}
+.dvote{border:3px solid var(--steel);background:#fff;border-radius:12px;padding:.7rem 1.1rem;font-family:var(--display);font-weight:700;font-size:1.05rem;color:var(--navy);flex:1;text-align:center;line-height:1.3}
+.dvote span{display:block;font-size:1.7rem;color:var(--steel)}
+.dtask{display:flex;flex-direction:column;gap:.6rem;margin-top:.3rem}
+.dtask div{display:flex;gap:.7rem;align-items:flex-start;font-size:1.3rem;color:var(--ink)}
+.dtn{background:var(--navy);color:#fff;border-radius:6px;width:1.7rem;height:1.7rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--display);font-size:.9rem}
+.dstems{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
+.dstem{background:#EAF3EE;border:1px solid #BEDFD0;border-radius:8px;padding:.5rem .9rem;font-size:1.05rem;color:#0A6B5C;font-weight:500}
 `;
   var st=document.createElement("style");st.id="deckCSS";st.textContent=css;document.head.appendChild(st);
 }
