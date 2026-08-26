@@ -505,34 +505,34 @@ function wireGen(){
       .catch(function(){ btn.disabled=false; btn.textContent=was; document.getElementById("spine").innerHTML='<div class="gate"><b>Could not reach the engine.</b> Check the key is in Vercel and the site has redeployed.</div>'; });
   };
 }
-function renderGen(j){
-  var box=document.getElementById("spine");
+let GENJ=null, genView='plan';
+function renderGen(j){ GENJ=j; genView='plan'; paintGen(); }
+function paintGen(){
+  var box=document.getElementById("spine"); var j=GENJ; if(!j){box.innerHTML='';return;}
   if(j.error){ box.innerHTML='<div class="gate"><b>Generation error.</b> '+esc(j.error)+'</div>'; return; }
   if(!j.lesson){ box.innerHTML='<div class="gate"><b>The model did not return clean JSON.</b> '+esc(j.parseError||"")+' Try again; if it persists tell me and I tune the prompt.</div>'; return; }
-  injectPlanCSS();
-  var L=j.lesson;
-  var c=j.checks||{}; var keys=Object.keys(c); var pass=keys.length&&keys.every(function(k){return c[k];});
+  injectPlanCSS(); injectDeckCSS();
+  var L=j.lesson, c=j.checks||{}, keys=Object.keys(c), pass=keys.length&&keys.every(function(k){return c[k];});
   var chip=function(ok,t){return '<span class="status '+(ok?"ok":"pend")+'" style="margin:0 4px 4px 0">'+(ok?"\u2713 ":"\u00d7 ")+t+'</span>';};
-  var h='<div style="margin:0 0 12px">'+keys.map(function(k){return chip(c[k],k.replace(/_/g," "));}).join('')+'</div>';
-  if(keys.length&&!pass) h+='<div class="gate" style="margin-bottom:12px"><b>Some checks failed.</b> A trial, not a lesson to teach as is. Regenerate, or tell me which check fails.</div>';
-
-  h+='<div class="planwrap">';
-  // layer toggle bar
+  var top='<div style="margin:0 0 10px">'+keys.map(function(k){return chip(c[k],k.replace(/_/g," "));}).join('')+'</div>';
+  if(keys.length&&!pass) top+='<div class="gate" style="margin-bottom:10px"><b>Some checks failed.</b> A trial, not a lesson to teach as is. Regenerate, or tell me which check fails.</div>';
+  top+='<div class="genviews">'+[['plan','Plan'],['deck','Slides'],['sheet','Worksheet']].map(function(v){return '<button class="gv'+(genView===v[0]?' on':'')+'" data-v="'+v[0]+'">'+v[1]+'</button>';}).join('')+'</div>';
+  var body = genView==='deck' ? renderDeck(L) : genView==='sheet' ? '<div class="note">The pupil worksheet render is the next build, right after this. Plan and Slides are live now.</div>' : planBody(L);
+  box.innerHTML=top+body;
+  box.querySelectorAll('.gv').forEach(function(b){b.onclick=function(){genView=b.dataset.v;paintGen();};});
+  if(genView==='deck') wireDeck(box); else if(genView==='plan') wirePlan(box,L);
+}
+function planBody(L){
+  var h='<div class="planwrap">';
   h+='<div class="pl-layers"><span class="pl-lbl">Layers</span>'+
      ['script:Teacher script','ta:TA','ai:AI','sup:Barriers','str:Going further','send:SEND & EAL'].map(function(p){var k=p.split(":")[0];return '<button class="pl-tog pl-'+k+'" data-lay="'+k+'"><span class="pl-dot"></span>'+esc(p.split(":")[1])+'</button>';}).join('')+'</div>';
-
-  // head
   h+='<div class="pl-head"><div class="pl-kick">Lesson plan \u00b7 teacher\'s copy</div>'+
      '<h1 class="pl-h1">'+esc(L.title_question||"Lesson")+'</h1>'+
      (L.objective?'<div class="pl-obj"><b>Objective:</b> '+esc(L.objective)+'</div>':'')+
      '<div class="pl-meta">'+[["Year",L.year],["Subject",L.subject],["Frame",L.frame],["Duration",(L.duration_mins?L.duration_mins+" minutes":"")]].filter(function(m){return m[1];}).map(function(m){return '<div><span>'+esc(m[0])+'</span><b>'+esc(m[1])+'</b></div>';}).join('')+'</div></div>';
   if(L.curriculum_source||L.sequence) h+='<div class="pl-src">'+(L.curriculum_source?'<b>Curriculum source:</b> '+esc(L.curriculum_source)+' ':'')+(L.sequence&&L.sequence.prior?'<b>Prior:</b> '+esc(L.sequence.prior)+' ':'')+(L.sequence&&L.sequence.next?'<b>Next:</b> '+esc(L.sequence.next):'')+'</div>';
-
-  // sequence strip
   h+='<div class="pl-seq">'+["First thing","Show them how","Build together","Quick check","Their turn","Last thing"].map(function(s){return '<div>'+s+'</div>';}).join('')+'</div>';
-
   if(L.steps_to_success&&L.steps_to_success.length) h+='<div class="pl-step"><div class="pl-stop"><span class="pl-sname">Steps to success</span></div><ol class="objs">'+L.steps_to_success.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ol></div>';
-
   (L.steps||[]).forEach(function(s){
     var hinge = s.hinge && s.hinge.misconception_caught;
     h+='<div class="pl-step'+(hinge?' hinge':'')+'"><div class="pl-stop"><span class="pl-sname">'+esc(s.name||"")+'</span>'+(hinge?'<span class="pl-badge">Hinge</span>':'')+(s.timing_mins?'<span class="pl-stime">'+s.timing_mins+' min</span>':'')+'</div>';
@@ -545,7 +545,6 @@ function renderGen(j){
       if(m.examples&&m.examples.items&&m.examples.items.length) h+='<div class="pl-egs"><b>'+esc(m.examples.label||"For example")+'</b>'+m.examples.items.map(esc).join(' \u00b7 ')+'</div>';
       if(m.warn) h+='<div class="pl-warn">'+esc(m.warn)+'</div>';
       h+='</div>'; }
-    // layers
     var ly=s.layers||{};
     if(ly.script) h+='<div class="pl-lay pl-l-script"><div class="pl-lt">Teacher script</div>'+(ly.script.lines||[]).map(function(x){return '<div class="pl-line">'+esc(x)+'</div>';}).join('')+(ly.script.note?'<p class="pl-note">'+esc(ly.script.note)+'</p>':'')+'</div>';
     if(ly.ta) h+='<div class="pl-lay pl-l-ta"><div class="pl-lt">Teaching assistant</div>'+(ly.ta.todos||[]).map(function(t){return '<div class="pl-todo"><span class="pl-b">'+esc(t.when||"")+'</span><span>'+esc(t.what||"")+'</span></div>';}).join('')+(ly.ta.note?'<p class="pl-note">'+esc(ly.ta.note)+'</p>':'')+'</div>';
@@ -555,20 +554,91 @@ function renderGen(j){
     if(ly.send) h+='<div class="pl-lay pl-l-send"><div class="pl-lt">SEND and EAL, by barrier not label</div>'+(ly.send.needs||[]).map(function(n){return '<div class="pl-need"><span class="pl-who">'+esc(n.who||"")+'</span><span class="pl-what">'+esc(n.what||"")+'</span></div>';}).join('')+(ly.send.eal?'<div class="pl-eal"><b>EAL:</b> '+esc(ly.send.eal)+'</div>':'')+'</div>';
     h+='</div>';
   });
-
-  // teacher key
   if(L.teacher_key){ var tk=L.teacher_key; h+='<div class="pl-key"><h3>Teacher key</h3><div class="pl-keyrow">'+['k1','k2','k3','k4'].map(function(k){var v=tk[k];if(!v||!v.text)return '';return '<div class="pl-kchip pl-'+k+'"><b>'+esc(v.label||"")+'</b>'+esc(v.text)+'</div>';}).join('')+'</div></div>'; }
-
   h+='<div class="controls" style="margin-top:14px"><button class="btn" id="gencopy">Copy as text</button><span class="meta" id="gencopymsg"></span></div>';
   h+='</div>';
-  box.innerHTML=h;
-
-  // wire layer toggles
+  return h;
+}
+function wirePlan(box,L){
   box.querySelectorAll('.pl-tog').forEach(function(b){b.onclick=function(){var k=b.dataset.lay;box.querySelector('.planwrap').classList.toggle('show-'+k);b.classList.toggle('on');};});
-  // default on: barriers + SEND, like the demo
-  ['sup','send'].forEach(function(k){box.querySelector('.planwrap').classList.add('show-'+k);var btn=box.querySelector('.pl-tog[data-lay="'+k+'"]');if(btn)btn.classList.add('on');});
+  ['sup','send'].forEach(function(k){var pw=box.querySelector('.planwrap');if(pw)pw.classList.add('show-'+k);var btn=box.querySelector('.pl-tog[data-lay="'+k+'"]');if(btn)btn.classList.add('on');});
   var gc=document.getElementById("gencopy"); if(gc)gc.onclick=function(){copyText(JSON.stringify(L,null,2),"gencopymsg");};
 }
+function renderDeck(L){
+  var steps=L.steps||[];
+  function seg(idx){var s='<div class="dspine">';for(var i=0;i<6;i++){s+='<i class="'+(i<idx?'done':i===idx?'now':'')+'"></i>';}return s+'</div>';}
+  var sl=[];
+  sl.push({cls:'dark center', html:'<div class="dspine"><i class="now"></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlabel">'+esc((L.subject||'Lesson')+(L.year?' \u00b7 '+L.year:''))+'</div><h1 class="dh1">'+esc(L.title_question||'Lesson')+'</h1>'+(L.objective?'<p class="dsub">'+esc(L.objective)+'</p>':'')});
+  if(L.steps_to_success&&L.steps_to_success.length) sl.push({cls:'', html:seg(-1)+'<div class="dlabel">Steps to success</div><ol class="ds2s">'+L.steps_to_success.map(function(s,i){return '<li><span class="dn">'+(i+1)+'</span><span>'+esc(s)+'</span></li>';}).join('')+'</ol>'});
+  steps.forEach(function(s,idx){
+    var isModel=/show them how/i.test(s.name||''), isHinge=s.hinge&&s.hinge.misconception_caught, isLast=/last thing/i.test(s.name||''), isTurn=/their turn/i.test(s.name||'');
+    var lab='<div class="dlabel">'+esc(s.name||'')+(s.timing_mins?'<span class="dmins">'+s.timing_mins+' min</span>':'')+'</div>';
+    if(isHinge){ sl.push({cls:'hinge', html:seg(idx)+'<div class="hbadge">Quick check \u00b7 hold up your answer</div><div class="theirwords">'+esc(s.hinge.question||(s.teach&&s.teach[0])||'')+'</div>'+(s.hinge.why_diagnostic?'<p class="dsub" style="margin-top:1rem">'+esc(s.hinge.why_diagnostic)+'</p>':'')}); }
+    else if(isModel){ var m=s.modelling_space||{}; sl.push({cls:'', html:seg(idx)+lab+'<h2 class="dh2">'+esc((s.teach&&s.teach[0])||'Model it')+'</h2><div class="dmodel"><div class="dghost">The teacher builds this live. Press Show the model.</div><div class="dfilled">'+((m.detail||[]).map(function(d){return '<div class="dhand">'+esc(d)+'</div>';}).join(''))+((m.examples&&m.examples.items&&m.examples.items.length)?'<div class="dhand" style="color:var(--muted);font-size:1.05rem">'+esc((m.examples.label||'')+': ')+m.examples.items.map(esc).join(', ')+'</div>':'')+'</div></div>'}); }
+    else if(isLast){ sl.push({cls:'dark', html:seg(idx)+'<div class="dlabel" style="color:#2DE1C2">'+esc(s.name||'')+' \u00b7 exit ticket'+(s.timing_mins?'<span class="dmins">'+s.timing_mins+' min</span>':'')+'</div><h2 class="dh2" style="color:#fff">Show me what you learned</h2><div class="dexit">'+(L.steps_to_success||[]).map(function(x,i){return '<div><span class="den">'+(i+1)+'</span>'+esc(x)+'</div>';}).join('')+'</div>'}); }
+    else { var body=seg(idx)+lab; if(s.teach&&s.teach[0]) body+='<p class="dbig">'+esc(s.teach[0])+'</p>'; (s.say||[]).forEach(function(x){body+='<p class="dsay">'+esc(x)+'</p>';}); if(isTurn&&s.layers&&s.layers.going_further&&s.layers.going_further.items&&s.layers.going_further.items.length){body+='<div class="dfurther"><div class="dft">Going further, open to anyone</div><div class="dfq">'+esc(s.layers.going_further.items[0].text||'')+'</div></div>';} sl.push({cls:'', html:body}); }
+  });
+  return '<div class="deckwrap"><div class="dstage">'+sl.map(function(x,i){return '<div class="dslide '+x.cls+(i===0?' on':'')+'" data-slide="'+i+'">'+x.html+'</div>';}).join('')+'</div>'+
+    '<div class="dctrl"><button data-nav="prev">Back</button><button data-nav="next">Next</button><button class="dtoggle" data-nav="reveal">Show the model</button><span class="dcount"></span></div></div>';
+}
+function wireDeck(box){
+  var wrap=box.querySelector('.deckwrap'); if(!wrap)return;
+  var slides=[].slice.call(wrap.querySelectorAll('.dslide')); var i=0;
+  function show(n){ i=Math.max(0,Math.min(slides.length-1,n)); slides.forEach(function(s,x){s.classList.toggle('on',x===i);}); var cc=wrap.querySelector('.dcount'); if(cc)cc.textContent=(i+1)+' / '+slides.length; }
+  wrap.querySelector('[data-nav=next]').onclick=function(){show(i+1);};
+  wrap.querySelector('[data-nav=prev]').onclick=function(){show(i-1);};
+  wrap.querySelector('[data-nav=reveal]').onclick=function(){wrap.classList.toggle('reveal');this.textContent=wrap.classList.contains('reveal')?'Hide the model':'Show the model';};
+  show(0);
+}
+function injectDeckCSS(){
+  if(document.getElementById("deckCSS"))return;
+  var css=`
+.genviews{display:flex;gap:.4rem;margin:0 0 14px}
+.gv{border:1.5px solid var(--rule);background:#fff;border-radius:9px;padding:.4rem .9rem;font-family:var(--display);font-weight:600;font-size:.82rem;color:var(--muted);cursor:pointer}
+.gv.on{background:#0A3D62;border-color:#0A3D62;color:#fff}
+.deckwrap{--navy:#0A3D62;--ad:#0A7A67;--muted:#54718A;--rule:#D7E4EA;--steel:#2C6E9B;--steel-soft:#EAF2F8;--paper:#F2F7F9;--gd:#8A6A18;--ink:#12303f}
+.dstage{background:#1a2733;border-radius:10px;padding:1rem;display:flex;justify-content:center}
+.dslide{display:none;width:100%;max-width:900px;aspect-ratio:16/9;background:#fff;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.3);padding:1.4rem 2rem;flex-direction:column;position:relative;overflow:hidden}
+.dslide.on{display:flex}
+.dslide.dark{background:linear-gradient(175deg,#071322,#0A3D62);color:#fff}
+.dslide.center{justify-content:center;text-align:center;align-items:center}
+.dslide.hinge{background:var(--steel-soft)}
+.dspine{position:absolute;top:0;left:0;right:0;height:5px;display:flex}
+.dspine i{flex:1;background:var(--rule)}.dspine i.done{background:var(--ad);opacity:.35}.dspine i.now{background:var(--ad)}
+.dslide.dark .dspine i{background:rgba(255,255,255,.15)}.dslide.dark .dspine i.now{background:#2DE1C2}
+.dlabel{font-family:var(--display);font-weight:700;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ad);margin-bottom:.6rem;display:flex;align-items:center;gap:.6rem}
+.dslide.dark .dlabel{color:#2DE1C2}
+.dmins{margin-left:auto;background:var(--paper);border-radius:20px;padding:.1rem .55rem;color:var(--muted);font-size:.7rem}
+.dh1{font-family:var(--display);font-weight:800;font-size:2rem;line-height:1.1;color:var(--navy);margin:0 0 .7rem}.dslide.dark .dh1{color:#fff}
+.dh2{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--navy);margin:0 0 .8rem}
+.dbig{font-size:1.4rem;line-height:1.45;color:var(--ink);margin:0 0 .6rem}
+.dsub{font-size:1.05rem;color:var(--muted);margin:0}.dslide.dark .dsub{color:#9FB6C6}
+.dsay{background:#F6FAFC;border-left:3px solid var(--muted);padding:.5rem .8rem;border-radius:0 7px 7px 0;font-style:italic;font-size:1.05rem;margin:.4rem 0}
+.ds2s{list-style:none;padding:0;margin:.3rem 0 0;display:flex;flex-direction:column;gap:.6rem}
+.ds2s li{font-size:1.2rem;color:var(--navy);display:flex;gap:.7rem;align-items:flex-start}
+.dn{background:var(--ad);color:#fff;border-radius:7px;width:1.7rem;height:1.7rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:.95rem}
+.dmodel{flex:1;border:1.5px solid var(--rule);border-radius:12px;margin-top:.6rem;display:flex;flex-direction:column;justify-content:center;background:#FBFDFE;position:relative;padding:1rem 1.3rem;min-height:0}
+.dghost{color:#9FB6C6;font-style:italic;text-align:center}
+.dfilled{display:none;flex-direction:column;gap:.5rem}
+.deckwrap.reveal .dghost{display:none}.deckwrap.reveal .dfilled{display:flex}
+.deckwrap.reveal .dmodel{border-color:var(--ad);background:#F7FCFB}
+.dhand{font-size:1.2rem;color:var(--navy);line-height:1.4}
+.hbadge{display:inline-flex;background:var(--steel);color:#fff;border-radius:24px;padding:.3rem .9rem;font-weight:700;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;font-family:var(--display);margin-bottom:.8rem;align-self:flex-start}
+.theirwords{background:#fff;border-left:5px solid var(--steel);padding:.9rem 1.2rem;border-radius:0 10px 10px 0;font-size:1.35rem;color:var(--navy);font-style:italic}
+.dfurther{background:#FBF6E9;border:1.5px solid #E0C97F;border-radius:12px;padding:.9rem 1.2rem;margin-top:.5rem}
+.dft{font-family:var(--display);font-weight:700;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gd);margin-bottom:.4rem}
+.dfq{font-size:1.2rem;color:var(--navy)}
+.dexit{display:flex;flex-direction:column;gap:.55rem;margin-top:.4rem}
+.dexit div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:.65rem 1rem;font-size:1.1rem;color:#fff;display:flex;gap:.7rem;align-items:center}
+.den{background:var(--ad);color:#fff;border-radius:6px;width:1.6rem;height:1.6rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--display)}
+.dctrl{display:flex;gap:.6rem;align-items:center;margin-top:.8rem}
+.dctrl button{background:#0A3D62;color:#fff;border:0;border-radius:8px;padding:.5rem 1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.dctrl .dtoggle{background:#fff;color:var(--ad);border:1.5px solid var(--ad)}
+.dcount{margin-left:auto;color:var(--muted);font-size:.85rem;font-weight:600}
+`;
+  var st=document.createElement("style");st.id="deckCSS";st.textContent=css;document.head.appendChild(st);
+}
+
 function injectPlanCSS(){
   if(document.getElementById("planCSS"))return;
   var css=`
