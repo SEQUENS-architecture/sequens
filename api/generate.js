@@ -16,25 +16,36 @@ async function callOnce(key, system, user, max) {
 function parseLoose(t){ t=t.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,' '); try{return JSON.parse(t);}catch(e){} var s=t.indexOf('{'),e=t.lastIndexOf('}'); if(s!==-1&&e>s)return JSON.parse(t.slice(s,e+1)); throw new Error('not valid JSON'); }
 async function ask(key,sys,user,max){ try{return parseLoose(await callOnce(key,sys,user,max));}catch(e){return parseLoose(await callOnce(key,sys,user+'\nReturn ONLY valid JSON. Single quotes for speech.',max));} }
 
-async function writingFlow(key, ctx, novel){
-  const metaSys = BASE + ` A Write Stuff style writing lesson, built in THREE chunks. Return SMALL JSON: {"kind":"writing","title_question":"a pupil-facing question","novel":"","objective":"","do_now":{"prompt":"a show-not-tell instruction","sentence":"a telling sentence to rewrite"},"steps_to_success":["","",""],"read":{"book":"novel title and author","passage":"name the exact moment to read, do NOT quote the book","listen":"what to catch while listening"},"chunk_plan":[{"name":"short chunk title","lens":"Detail lens or Impact lens","focus":"what this chunk captures"},{"name":"","lens":"","focus":""},{"name":"","lens":"","focus":""}],"hinge":{"optionA":"a TELLING sentence","optionB":"a SHOWING sentence","answer":"B","why":"why B shows and A tells"},"going_further":"a short extension for pupils ready to go further, on the same moment, original and not from the book","close":"a share-and-check instruction,","teacher_key":{"k1":{"label":"The method","text":"three chunks: record, model, write, each time"},"k2":{"label":"","text":""},"k3":{"label":"","text":""},"k4":{"label":"Hinge answer","text":""}}}. The three chunks form an arc across the moment (for example setting and senses, then the body, then the emotional turn). Lenses: Detail for sensory and body, Impact for the turn.`;
-  const meta = await ask(key, metaSys, ctx + `Novel: ${novel}\nGenerate the writing lesson frame. JSON only.`, 2000);
+async function writingFlow(key, ctx, novel, hingeLetter){
+  // Revamp (Nov 2026): talk-first writing. Pupils gather ideas from guiding questions BEFORE any word bank or model;
+  // the teacher models from the class idea bank; stems and prompt words live on the support card, not the slides.
+  const metaSys = BASE + ` A chunked writing lesson, built in THREE chunks, taught through talk. Return SMALL JSON: {"kind":"writing","title_question":"a pupil-facing question","novel":"","objective":"","big_idea":"one sentence a Year 6 child can read aloud","do_now":{"prompt":"a short retrieval or grammar task done in books","answers":["two possible answers"]},"steps_to_success":["I can ...","I can ...","I can ..."],"read":{"book":"novel title and author","passage":"name the exact moment to read, do NOT quote the book","listen":"what to catch while listening"},"chunk_plan":[{"name":"short chunk title","lens":"Detail lens, Grammar lens or Impact lens","focus":"what this chunk captures"},{"name":"","lens":"","focus":""},{"name":"","lens":"","focus":""}],"hinge":{"question":"","correct":"the right answer","wrong":["three plausible wrong answers, each from a real misconception"],"misconception":"what the wrong answers reveal","why":"why the correct one is right"},"prove_it":{"task":"an independent write that combines the three chunks, no stems","checks":["four short self-check boxes"]},"going_further":"a short extension open to anyone, on the same moment, original","close":{"talk":"a turn-and-talk question on the steps to success","exit":"an exit ticket question","exit_model":"a model exit answer"},"teacher_key":{"k1":{"label":"The method","text":"gather ideas, share, model from their ideas, say it, write it, partner check"},"k2":{"label":"","text":""},"k3":{"label":"","text":""},"k4":{"label":"Hinge answer","text":""}}}. The three chunks form an arc across the moment. Children talk far more than the teacher.`;
+  const meta = await ask(key, metaSys, ctx + `Novel: ${novel}\nGenerate the writing lesson frame. JSON only.`, 2400);
   const plan = Array.isArray(meta.chunk_plan) ? meta.chunk_plan.slice(0,3) : [];
-  const chunkSys = BASE + ` For ONE chunk of a Write Stuff writing lesson, return SMALL JSON: {"record":[{"key":"a short label like He sees"},{"key":""},{"key":""}],"word_bank":["five vivid words"],"model":[{"text":"a SHORT model sentence the teacher writes live","note":"why short here"},{"text":"a LONGER model sentence","note":"why long here"}],"write_task":"the pupil write instruction for this chunk","stems":["two or three sentence starters"],"layers":{"script":{"lines":["a teacher line"]},"ta":{"todos":[{"when":"During","what":""}]},"barriers":{"doing":[{"label":"What actually helps","text":""}],"same":"everyone writes this chunk; the scaffold supports, it does not write it"},"send":{"needs":[{"who":"Writing is the barrier","what":""}],"eal":""}}. The record labels are the ACTUAL things pupils jot before writing. Models are original, never from the book.`;
+  const chunkSys = BASE + ` For ONE chunk of a chunked writing lesson taught through talk, return SMALL JSON: {"goal":"In this chunk you will write: one short pupil-facing line","guiding_questions":["three open questions pupils discuss at their table to GENERATE their own ideas before any model; concrete, rooted in the named moment, never giving the answer"],"capture":["three or four short labels for what pupils jot, e.g. What she does"],"prompt_words":["five or six words the teacher uses ONLY if a table is stuck; also printed on the support card"],"model":[{"text":"a SHORT model sentence the teacher could write from typical class ideas","note":"why short here"},{"text":"a LONGER model sentence","note":"why long here"}],"write_task":"the pupil write instruction for this chunk","support_stems":["two or three sentence starters for the support card only"],"going_further":"one short extension for this chunk","misconception":"the most likely slip in this chunk","layers":{"script":{"lines":["a short teacher line; the teacher talks under one minute per slide"]},"ta":{"todos":[{"when":"During","what":""}]},"barriers":{"doing":[{"label":"What actually helps","text":""}],"same":"everyone writes this chunk; the scaffold supports, it does not write it"},"send":{"needs":[{"who":"Writing is the barrier","what":""}],"eal":""}}}. Models are original, never from the book.`;
   const chunks = await Promise.all(plan.map(async (cp)=>{
     const cctx = ctx + `Novel: ${novel}\nChunk: ${cp.name}\nLens: ${cp.lens}\nThis chunk captures: ${cp.focus}\n`;
-    let c={record:[],word_bank:[],model:[],stems:[],write_task:''};
-    try{ c = await ask(key, chunkSys, cctx+'Return this chunk. JSON only.', 1600); }catch(e){}
+    let c={guiding_questions:[],capture:[],prompt_words:[],model:[],support_stems:[],write_task:''};
+    try{ c = await ask(key, chunkSys, cctx+'Return this chunk. JSON only.', 1800); }catch(e){}
     return Object.assign({ name:cp.name, lens:cp.lens }, c);
   }));
-  const lesson = Object.assign({}, meta, { chunks });
+  // Hinge: four options, correct answer placed at the letter the client asks for (rotates lesson to lesson).
+  const h = meta.hinge || {}; const L = ['A','B','C','D'];
+  const want = L.includes(hingeLetter) ? hingeLetter : L[Math.floor(Math.random()*4)];
+  const wrong = (h.wrong||[]).slice(0,3); const opts = wrong.slice(); opts.splice(L.indexOf(want), 0, h.correct||'');
+  meta.hinge = Object.assign({}, h, { options: opts.slice(0,4), answer: want });
+  const lesson = Object.assign({}, meta, { chunks, talk_routines: ['Say it with me','Turn and talk','Table talk','Say it before you write it','Partner check','Show me'] });
   const checks = {};
   checks.three_chunks = chunks.length===3;
-  checks.record_slots = chunks.every(c=>Array.isArray(c.record)&&c.record.length);
+  checks.guiding_questions = chunks.every(c=>Array.isArray(c.guiding_questions)&&c.guiding_questions.length===3);
+  checks.ideas_before_model = true; // structural: the renderer always places Gather and Share before the model
   checks.model_and_write = chunks.every(c=>Array.isArray(c.model)&&c.model.length&&c.write_task);
-  checks.one_hinge = !!(meta.hinge&&meta.hinge.optionB);
+  checks.support_card = chunks.every(c=>Array.isArray(c.support_stems)&&c.support_stems.length&&Array.isArray(c.prompt_words)&&c.prompt_words.length);
+  checks.one_hinge_four_options = !!(meta.hinge&&meta.hinge.options&&meta.hinge.options.length===4&&meta.hinge.misconception);
+  checks.prove_it = !!(meta.prove_it&&meta.prove_it.task&&Array.isArray(meta.prove_it.checks)&&meta.prove_it.checks.length>=3);
+  checks.three_steps = Array.isArray(meta.steps_to_success)&&meta.steps_to_success.length===3;
   const j=JSON.stringify(lesson);
-  checks.no_em_dash = !j.includes('\u2014');
+  checks.no_em_dash = !j.includes('—');
   checks.clean_words = !['vibes','empower','unlock','leverage','seamless','revolutionary','amazing','game-changing'].some(w=>j.toLowerCase().includes(w));
   return { lesson, checks, model: MODEL() };
 }
@@ -81,7 +92,8 @@ export default async function handler(req,res){
   const ctx=`Subject: ${subject}\nYear: ${year}\nObjective: ${objective}\n`+(prior?`Prior: ${prior}\n`:'')+(next?`Next: ${next}\n`:'')+(values?`Values to weave only where genuinely afforded: ${values}\n`:'');
   const isWriting = /writing|english/i.test(subject);
   try {
-    const out = isWriting ? await writingFlow(key, ctx, novel||'the class novel') : await genericFlow(key, ctx);
+    const hingeLetter=(b.hinge_letter||'').toString().toUpperCase().slice(0,1);
+    const out = isWriting ? await writingFlow(key, ctx, novel||'the class novel', hingeLetter) : await genericFlow(key, ctx);
     return res.status(200).json(out);
   } catch(err){ console.error('generate failed',err); return res.status(500).json({error:err.message||'Generation failed.'}); }
 }

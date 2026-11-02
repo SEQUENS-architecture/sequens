@@ -1,4 +1,4 @@
-# SEQUENS WRITING SPEC (v1) - held until generation is live
+# SEQUENS WRITING SPEC (v2, November 2026 revamp)
 
 The writing fill of the spine. Sits under `engine-system-prompt.md` with the maths and
 values specs. Every rule here is enforced by the writing validator in code.
@@ -102,6 +102,39 @@ left page is not optional.
    others carries Empathy honestly), never stamped on.
 8. Nothing vague: teacher script for the modelled sentence, the expected shape of a
    pupil's sentence, the lens made explicit. A non-specialist can teach it.
+
+
+## Talk-first teaching (added November 2026, from the Y6D classroom)
+
+These rules came from real teaching in Autumn 2 and now bind every generated writing lesson.
+
+1. **Children gather ideas before they see any words.** Before each chunk, a Gather your
+   ideas slide shows three guiding questions rooted in the named moment. Tables talk for
+   three minutes; everyone adds one idea before anyone adds two; each child jots their best
+   two. No word bank is shown first.
+2. **Share, then model from their ideas.** A Share our ideas slide holds a blank class idea
+   bank the teacher scribes live, one idea per table. The teacher then models ONE sentence
+   from those ideas, in under a minute.
+3. **Say it before you write it.** Each chunk slide shows "In this chunk you will write" and
+   three steps: Watch me, Say it to your partner, Write it. The class then reads the model
+   aloud together and does a Partner check against the steps to success.
+4. **Prompt words and stems are support, not the start.** Prompt words sit in the teacher
+   notes for a table that is stuck; stems sit on the printed support card. Neither appears
+   on the pupil-facing chunk slide.
+5. **Six named talk routines**, the same names in every lesson: Say it with me, Turn and
+   talk, Table talk, Say it before you write it, Partner check, Show me. Teacher talk stays
+   under one minute per slide.
+6. **Hinge with talk.** Four options; the correct letter rotates lesson to lesson. Think for
+   ten seconds, Show me, convince your partner if the room is split, re-vote. Pupils still
+   wrong join the guided group for Prove it.
+7. **Prove it on your own.** After the three chunks, an independent write with no stems and
+   four self-check boxes; one minute of oral rehearsal first, partner check after.
+8. **Groups stay teacher-only.** Plans can name the guided group and TA group from the
+   school's own rotation; the slides never show a group name.
+
+Validator checks added: three guiding questions per chunk; support card filled (prompt
+words and stems); one hinge with four options and a named misconception; Prove it with at
+least three checks; three steps to success.
 
 ## Status
 
