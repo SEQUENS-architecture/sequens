@@ -107,27 +107,27 @@ function esc(s) {
 function activationHtml({ name, school, email, activateUrl }) {
   return `<!DOCTYPE html>
 <html>
-<body style="margin:0;background:#F2F7F9;font-family:'Segoe UI',system-ui,sans-serif;color:#3D5A6E;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F2F7F9;padding:24px 12px;">
+<body style="margin:0;background:#F6F1E7;font-family:'Segoe UI',system-ui,sans-serif;color:#3E4850;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F6F1E7;padding:24px 12px;">
     <tr><td align="center">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#FFFFFF;border-radius:14px;overflow:hidden;border:1px solid #D7E4EA;">
-        <tr><td style="background:#0A3D62;padding:20px 28px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#FFFFFF;border-radius:14px;overflow:hidden;border:1px solid #E2DACB;">
+        <tr><td style="background:#22282E;padding:20px 28px;">
           <span style="font-family:Arial,sans-serif;font-weight:800;letter-spacing:.05em;color:#fff;font-size:18px;">SEQUENS</span>
         </td></tr>
         <tr><td style="padding:28px 28px 8px;">
-          <h1 style="margin:0 0 12px;font-size:20px;color:#0A3D62;font-family:Arial,sans-serif;">Activate your account</h1>
+          <h1 style="margin:0 0 12px;font-size:20px;color:#22282E;font-family:Arial,sans-serif;">Activate your account</h1>
           <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Hi ${esc(name)},</p>
           <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">${esc(school)} has set up a SEQUENS account for you. To finish, choose a password.</p>
         </td></tr>
         <tr><td style="padding:6px 28px 20px;">
-          <a href="${esc(activateUrl)}" style="display:inline-block;background:#0C8F79;color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:600;font-size:15px;padding:12px 22px;border-radius:10px;">Choose your password</a>
+          <a href="${esc(activateUrl)}" style="display:inline-block;background:#585143;color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:600;font-size:15px;padding:12px 22px;border-radius:10px;">Choose your password</a>
         </td></tr>
         <tr><td style="padding:0 28px 24px;">
-          <p style="margin:0 0 10px;font-size:13.5px;line-height:1.6;color:#5B7A90;">Use this email address when you activate: <b style="color:#0A3D62;">${esc(email)}</b>. Your role has already been set, so there is nothing to fill in beyond a password.</p>
-          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#5B7A90;">If you were not expecting this, you can ignore it. Nothing happens until you set a password.</p>
+          <p style="margin:0 0 10px;font-size:13.5px;line-height:1.6;color:#867B65;">Use this email address when you activate: <b style="color:#22282E;">${esc(email)}</b>. Your role has already been set, so there is nothing to fill in beyond a password.</p>
+          <p style="margin:0;font-size:13.5px;line-height:1.6;color:#867B65;">If you were not expecting this, you can ignore it. Nothing happens until you set a password.</p>
         </td></tr>
-        <tr><td style="background:#F8FBFC;padding:16px 28px;border-top:1px solid #E9F1F5;">
-          <p style="margin:0;font-size:12px;color:#7C97AB;">If the button does not work, paste this into your browser:<br><span style="color:#0C8F79;">${esc(activateUrl)}</span></p>
+        <tr><td style="background:#FAF7F0;padding:16px 28px;border-top:1px solid #F1F0ED;">
+          <p style="margin:0;font-size:12px;color:#A39984;">If the button does not work, paste this into your browser:<br><span style="color:#585143;">${esc(activateUrl)}</span></p>
         </td></tr>
       </table>
     </td></tr>

@@ -9,16 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F2F7F9; --surface:#F8FBFC; --card:#FFFFFF;
-  --ink:#12303f; --ink-soft:#54718A; --muted:#54718A;
-  --terra:#0A7A67; --terra-deep:#0A7563; --terra-soft:#D9F2EC;
-  --teal:#2C6E9B; --teal-soft:#EAF2F8; --teal-deep:#1F4F73;
-  --gold:#B8912F; --gold-soft:#F3ECD2; --gold-deep:#8A6A18;
-  --green:#3F8F6B; --green-soft:#EAF3EE; --green-deep:#2C6B4F;
-  --red:#C0453B; --red-soft:#F7E9E7; --rule:#D7E4EA; --rule-2:#C2D6DF;
+  --paper:#F6F1E7; --surface:#FAF7F0; --card:#FFFFFF;
+  --ink:#22282E; --ink-soft:#4F5A63; --muted:#4F5A63;
+  --terra:#3E5568; --terra-deep:#3E5568; --terra-soft:#DFE8DC;
+  --teal:#3E5568; --teal-soft:#DDE5EB; --teal-deep:#3E5568;
+  --gold:#9A7628; --gold-soft:#F3E8CC; --gold-deep:#7A5C14;
+  --green:#5E7A57; --green-soft:#DFE8DC; --green-deep:#4F6B49;
+  --red:#A8543D; --red-soft:#F1DDD5; --rule:#E2DACB; --rule-2:#D7D3CA;
   --display:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
   --body:'Lexend','Segoe UI',system-ui,sans-serif;
-  --shadow:0 2px 16px rgba(10,61,98,.08);
+  --shadow:0 2px 16px rgba(34,40,46,.08);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -49,7 +49,7 @@ main{padding:26px 0 64px}
 .field label{display:block;font-family:var(--display);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:6px}
 input,textarea,select{width:100%;font-family:var(--body);font-size:1rem;color:var(--ink);background:#fff;border:1px solid var(--rule);border-radius:11px;padding:11px 13px}
 textarea{min-height:80px;resize:vertical}
-input:focus,textarea:focus,select:focus{outline:0;border-color:var(--terra);box-shadow:0 0 0 3px rgba(10,122,103,.13)}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--terra);box-shadow:0 0 0 3px rgba(62,85,104,.13)}
 .btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-weight:600;font-size:.92rem;border:0;border-radius:11px;padding:.6rem 1.1rem;cursor:pointer;background:var(--terra);color:#fff;transition:background .15s}
 .btn:hover{background:var(--terra-deep)}
 .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--rule)}
@@ -96,7 +96,7 @@ tr:last-child td{border-bottom:0}
 .matrix th{font-family:var(--display);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper)}
 .matrix td:first-child,.matrix th:first-child{text-align:left}
 .bandcell{font-weight:600}
-.b1{background:#F7E0DC;color:#B23A2E}.b2{background:#F5EAD2;color:#8A6A18}.b3{background:#EAF2F8;color:#2C6E9B}.b4{background:#E4F0E8;color:#2C6B4F}.b5{background:#CDE8D6;color:#1C5A3E}
+.b1{background:#F7E0DC;color:#B23A2E}.b2{background:#F5EAD2;color:#7A5C14}.b3{background:#DDE5EB;color:#3E5568}.b4{background:#E4F0E8;color:#4F6B49}.b5{background:#CDE8D6;color:#433E33}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -115,7 +115,7 @@ const SUPABASE_KEY = 'sb_publishable_i4Mc6yA4b3a-e6TYRWd-xQ__7pA2A8x';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const app = document.getElementById('app');
 const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const LOGO = `<svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="92" fill="#0A3D62"/><rect x="87.04" y="91.37" width="51.99" height="25.99" rx="13" fill="#2DE1C2"/><rect x="87.04" y="134.70" width="95.31" height="25.99" rx="13" fill="#2DE1C2"/><rect x="87.04" y="178.02" width="138.63" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="221.34" width="181.96" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="264.66" width="225.28" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="307.99" width="268.60" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="351.31" width="303.26" height="25.99" rx="13" fill="#DEE7EF"/><rect x="87.04" y="394.63" width="337.92" height="25.99" rx="13" fill="#DEE7EF"/></svg>`;
+const LOGO = `<svg class="logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" rx="92" fill="#22282E"/><rect x="87.04" y="91.37" width="51.99" height="25.99" rx="13" fill="#5A7389"/><rect x="87.04" y="134.70" width="95.31" height="25.99" rx="13" fill="#C47D66"/><rect x="87.04" y="178.02" width="138.63" height="25.99" rx="13" fill="#C6A055"/><rect x="87.04" y="221.34" width="181.96" height="25.99" rx="13" fill="#7E9477"/><rect x="87.04" y="264.66" width="225.28" height="25.99" rx="13" fill="#8A7088"/><rect x="87.04" y="307.99" width="268.60" height="25.99" rx="13" fill="#457B74"/><rect x="87.04" y="351.31" width="303.26" height="25.99" rx="13" fill="#5A7389"/><rect x="87.04" y="394.63" width="337.92" height="25.99" rx="13" fill="#C47D66"/></svg>`;
 const state = { me:null, peopleById:{}, areasById:{} };
 
 const REASSURE = `<details class="rd"><summary>New to being coached? Read this first</summary><div class="rd-body">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-tpl="light" data-door="coach">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,11 +20,11 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#F6F1E7">
 <style>
-:root{--navy:#0A3D62;--ink:#12303F;--accent:#2DE1C2;--accent-deep:#0A7A67;--paper:#F2F7F9;
---rule:#D7E4EA;--muted:#54718A;--dim:#566F82;--grey:#9AACBC;
---grad:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+:root{--navy:#22282E;--ink:#22282E;--accent:#E2C27C;--accent-deep:#3E5568;--paper:#F6F1E7;
+--rule:#E2DACB;--muted:#4F5A63;--dim:#4F5A63;--grey:#AEB1B2;
+--grad:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);
 --font:'Lexend','Segoe UI',system-ui,sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
 *{box-sizing:border-box} html,body{overflow-x:clip;max-width:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.75;font-size:1.05rem}
@@ -34,12 +34,12 @@ a{color:var(--accent-deep)}
 .top-in{max-width:1060px;margin:0 auto;padding:1rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
 .brand{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:800;color:#fff;font-size:1rem;letter-spacing:.03em;text-decoration:none}
 .brand svg{height:18px}
-.back{margin-left:auto;font-size:.85rem;color:#9FB6C6;font-weight:600;text-decoration:none}
+.back{margin-left:auto;font-size:.85rem;color:#BDBFBE;font-weight:600;text-decoration:none}
 .back:hover{color:#fff}
 .hero{max-width:760px;margin:0 auto;padding:3rem 1.4rem 2.4rem}
 .kick{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
 h1{font-family:var(--head);font-weight:800;font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.1;letter-spacing:-.02em;color:#fff;margin:.7rem 0 .8rem}
-.meta{color:#9FB6C6;font-size:.88rem}
+.meta{color:#BDBFBE;font-size:.88rem}
 article{max-width:680px;margin:0 auto;padding:2.6rem 1.4rem 4rem}
 article h2{font-family:var(--head);font-weight:700;font-size:1.35rem;line-height:1.25;color:var(--navy);margin:2.6rem 0 .9rem;letter-spacing:-.01em}
 article p{margin:0 0 1.15rem}
@@ -50,15 +50,16 @@ article p:first-of-type{font-size:1.16rem;line-height:1.65;color:var(--navy)}
 .ends{max-width:680px;margin:0 auto;padding:0 1.4rem 4rem}
 .ends .box{background:#fff;border:1px solid var(--rule);border-left:3px solid var(--accent-deep);border-radius:14px;padding:1.2rem 1.4rem;font-size:.94rem;color:var(--muted)}
 .ends .box b{color:var(--navy)}
-footer{background:var(--grad);color:#7E97AB}
+footer{background:var(--grad);color:#9DA1A4}
 .foot{max-width:1060px;margin:0 auto;padding:2rem 1.4rem;text-align:center;font-size:.82rem}
-.foot a{color:#9FB6C6}
+.foot a{color:#BDBFBE}
 @media print{.top,.back,footer,.ends{display:none}body{background:#fff}}
-</style></head><body>
+</style><link rel="stylesheet" href="/assets/layout.css">
+</head><body>
 
 <div class="top">
   <div class="top-in">
-    <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a>
+    <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a>
     <a class="back" href="/">Back to SEQUENS</a>
   </div>
   <div class="hero">
@@ -71,7 +72,7 @@ footer{background:var(--grad);color:#7E97AB}
 <article>
 <p>These terms apply when you use SEQUENS. Please read them. If something here is unclear, ask us rather than guessing.</p>
 
-<p><b>Who you are contracting with.</b> <span style="background:#FBF6E9;border:1px solid #E0C97F;color:#6B531A;padding:.05rem .35rem;border-radius:4px;font-size:.85em;font-weight:600">[TO CONFIRM]</span> (company number <span style="background:#FBF6E9;border:1px solid #E0C97F;color:#6B531A;padding:.05rem .35rem;border-radius:4px;font-size:.85em;font-weight:600">[TO CONFIRM]</span>), registered office <span style="background:#FBF6E9;border:1px solid #E0C97F;color:#6B531A;padding:.05rem .35rem;border-radius:4px;font-size:.85em;font-weight:600">[TO CONFIRM]</span>. Contact: <b>hello@sequens.education</b>.</p>
+<p><b>Who you are contracting with.</b> <span style="background:#F3E8CC;border:1px solid #E2C27C;color:#5E4710;padding:.05rem .35rem;border-radius:4px;font-size:.85em;font-weight:600">[TO CONFIRM]</span> (company number <span style="background:#F3E8CC;border:1px solid #E2C27C;color:#5E4710;padding:.05rem .35rem;border-radius:4px;font-size:.85em;font-weight:600">[TO CONFIRM]</span>), registered office <span style="background:#F3E8CC;border:1px solid #E2C27C;color:#5E4710;padding:.05rem .35rem;border-radius:4px;font-size:.85em;font-weight:600">[TO CONFIRM]</span>. Contact: <b>hello@sequens.education</b>.</p>
 
 <h2>What SEQUENS provides</h2>
 <p>SEQUENS generates teaching materials, records what you tell it, and produces reports from that record. It is a tool used by a professional or a parent, not a replacement for their judgement. <b>SEQUENS suggests and a human confirms.</b> Nothing is generated, recorded or acted on until you say so.</p>
@@ -117,7 +118,7 @@ footer{background:var(--grad);color:#7E97AB}
 </div></div>
 
 <footer><div class="foot">
-  <span class="brand" style="justify-content:center;margin-bottom:.4rem;"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
+  <span class="brand" style="justify-content:center;margin-bottom:.4rem;"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</span>
   <div>Elegant on the surface. Massive underneath.</div>
   <div style="margin-top:.5rem"><a href="/privacy.html">Privacy and data</a></div>
 </div></footer>

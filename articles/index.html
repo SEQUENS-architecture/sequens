@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-tpl="light" data-door="coach">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,11 +15,11 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#F6F1E7">
 <style>
-:root{--navy:#0A3D62;--ink:#12303F;--accent:#2DE1C2;--accent-deep:#0A7A67;--paper:#F2F7F9;
---rule:#D7E4EA;--muted:#54718A;
---grad:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+:root{--navy:#22282E;--ink:#22282E;--accent:#E2C27C;--accent-deep:#3E5568;--paper:#F6F1E7;
+--rule:#E2DACB;--muted:#4F5A63;
+--grad:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);
 --font:'Lexend','Segoe UI',system-ui,sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
 *{box-sizing:border-box} html,body{overflow-x:clip;max-width:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.65}
@@ -29,12 +29,12 @@ a{text-decoration:none;color:inherit}
 .top-in{max-width:1060px;margin:0 auto;padding:1rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
 .brand{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:800;color:#fff;font-size:1rem;letter-spacing:.03em}
 .brand svg{height:18px}
-.back{margin-left:auto;font-size:.85rem;color:#9FB6C6;font-weight:600}
+.back{margin-left:auto;font-size:.85rem;color:#BDBFBE;font-weight:600}
 .back:hover{color:#fff}
 .hero{max-width:860px;margin:0 auto;padding:3rem 1.4rem 2.4rem}
 .kick{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
 h1{font-family:var(--head);font-weight:800;font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.1;letter-spacing:-.02em;color:#fff;margin:.7rem 0 .8rem}
-.dek{color:#B9CCDA;max-width:56ch;margin:0;font-size:1.05rem}
+.dek{color:#D0CFCA;max-width:56ch;margin:0;font-size:1.05rem}
 main{max-width:860px;margin:0 auto;padding:2.4rem 1.4rem 4rem}
 .art{display:flex;gap:1.1rem;align-items:flex-start;padding:1.25rem 0;border-bottom:1px solid var(--rule)}
 .art .n{font-family:var(--head);font-weight:800;color:var(--rule);font-size:1.3rem;min-width:2.1rem;line-height:1.2}
@@ -48,9 +48,9 @@ main{max-width:860px;margin:0 auto;padding:2.4rem 1.4rem 4rem}
 .art.live:hover .n{color:var(--accent-deep)}
 .note{background:#fff;border:1px solid var(--rule);border-left:3px solid var(--accent-deep);border-radius:14px;padding:1.15rem 1.35rem;font-size:.93rem;color:var(--muted);margin-bottom:2rem}
 .note b{color:var(--navy)}
-footer{background:var(--grad);color:#7E97AB}
+footer{background:var(--grad);color:#9DA1A4}
 .foot{max-width:1060px;margin:0 auto;padding:2rem 1.4rem;text-align:center;font-size:.82rem}
-.foot a{color:#9FB6C6}
+.foot a{color:#BDBFBE}
 @media (max-width:560px){.art .go,.art .soon{display:none}}
 </style><meta property="og:type" content="website">
 <meta property="og:title" content="Articles | SEQUENS">
@@ -58,11 +58,12 @@ footer{background:var(--grad);color:#7E97AB}
 <meta property="og:url" content="https://sequens.education/articles/index.html">
 <meta property="og:site_name" content="SEQUENS">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/layout.css">
 </head><body>
 
 <div class="top">
   <div class="top-in">
-    <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a>
+    <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a>
     <a class="back" href="/">Back to SEQUENS</a>
   </div>
   <div class="hero">
@@ -164,7 +165,7 @@ footer{background:var(--grad);color:#7E97AB}
 </main>
 
 <footer><div class="foot">
-  <span class="brand" style="justify-content:center;margin-bottom:.4rem;"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
+  <span class="brand" style="justify-content:center;margin-bottom:.4rem;"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</span>
   <div>Elegant on the surface. Massive underneath.</div>
   <div style="margin-top:.5rem"><a href="/privacy.html">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html">Cookies</a></div>
 </div></footer>

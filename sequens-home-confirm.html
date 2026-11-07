@@ -4,10 +4,10 @@
 <title>SEQUENS Home - how did it go?</title>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0A3D62;--ink:#12303f;--accent:#2DE1C2;--accent-deep:#0A7A67;--paper:#F2F7F9;
---card:#ffffff;--rule:#D7E4EA;--muted:#54718A;--dim:#566F82;--steel:#2C6E9B;--steel-soft:#EAF2F8;
---gold:#B8912F;--gold-deep:#8A6A18;--red:#C0453B;--green-soft:#EAF3EE;--success-deep:#0A6B5C;
---warm:#C97B4A;--font:'Lexend',sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
+:root{--navy:#22282E;--ink:#22282E;--accent:#E2C27C;--accent-deep:#3E5568;--paper:#F6F1E7;
+--card:#ffffff;--rule:#E2DACB;--muted:#4F5A63;--dim:#4F5A63;--steel:#3E5568;--steel-soft:#DDE5EB;
+--gold:#9A7628;--gold-deep:#7A5C14;--red:#A8543D;--green-soft:#DFE8DC;--success-deep:#3F5A3B;
+--warm:#C47D66;--font:'Lexend',sans-serif;--head:'Schibsted Grotesk',Arial,sans-serif;}
 *{box-sizing:border-box}
 html,body{overflow-x:clip;max-width:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);line-height:1.6;padding:2rem 1.3rem 5rem}
@@ -17,16 +17,16 @@ h1{font-family:var(--head);font-weight:800;font-size:1.8rem;color:var(--navy);ma
 h2{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:2rem 0 .8rem}
 
 .card{background:var(--card);border:1px solid var(--rule);border-radius:18px;overflow:hidden;margin-bottom:1rem;
-box-shadow:0 2px 10px rgba(24,58,82,.05)}
-.chead{background:linear-gradient(170deg,#0A3D62,#0A2C49);color:#fff;padding:1.2rem 1.5rem}
+box-shadow:0 2px 10px rgba(34,40,46,.05)}
+.chead{background:linear-gradient(170deg,#22282E,#1E2328);color:#fff;padding:1.2rem 1.5rem}
 .chead .t{font-family:var(--head);font-weight:800;font-size:1.2rem}
-.chead .s{font-size:.87rem;color:#9FB6C6;margin-top:.15rem}
+.chead .s{font-size:.87rem;color:#BDBFBE;margin-top:.15rem}
 .cbody{padding:1.4rem 1.5rem}
 
 .kids{display:flex;gap:.5rem;margin-bottom:1.3rem;flex-wrap:wrap}
 .kid{border:2px solid var(--rule);background:#fff;border-radius:12px;padding:.5rem .95rem;cursor:pointer;
 font-family:var(--font);font-weight:700;font-size:.92rem;color:var(--muted);display:flex;align-items:center;gap:.5rem}
-.kid.on{border-color:var(--accent-deep);background:#F4FBF9;color:var(--accent-deep)}
+.kid.on{border-color:var(--accent-deep);background:#EEF2EA;color:var(--accent-deep)}
 .kid .age{font-size:.75rem;font-weight:500;opacity:.75}
 .kid .tick{width:16px;height:16px;border-radius:50%;background:var(--accent-deep);color:#fff;
 font-size:.68rem;display:none;align-items:center;justify-content:center;font-weight:800}
@@ -53,7 +53,7 @@ display:flex;flex-direction:column;align-items:center;gap:.15rem;line-height:1.2
 .opts button.sel[data-v="not"]{background:var(--warm);border-color:var(--warm);color:#fff}
 .opts button.sel small{opacity:.95}
 
-.gf{background:#FBF6E9;border:2px solid #E0C97F}
+.gf{background:#F3E8CC;border:2px solid #E2C27C}
 .gf .q .ico{background:#fff}
 
 .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.2rem}
@@ -71,28 +71,28 @@ display:flex;flex-direction:column;align-items:center;gap:.15rem;line-height:1.2
 .rbits{flex:1}
 .pill{display:inline-block;border-radius:20px;padding:.2rem .65rem;font-size:.78rem;font-weight:700;margin:.15rem .3rem .15rem 0}
 .p-yes{background:var(--green-soft);color:var(--success-deep)}
-.p-part{background:#FBF6E9;color:var(--gold-deep)}
+.p-part{background:#F3E8CC;color:var(--gold-deep)}
 .p-not{background:#FBEFE9;color:#8A4A26}
-.p-gf{background:#FBF6E9;color:var(--gold-deep);border:1px solid #E0C97F}
+.p-gf{background:#F3E8CC;color:var(--gold-deep);border:1px solid #E2C27C}
 
 .next{background:var(--navy);color:#fff;border-radius:16px;padding:1.4rem 1.6rem}
 .next h3{font-family:var(--head);font-weight:800;font-size:1.1rem;margin:0 0 .5rem;color:#fff}
-.next p{font-size:.93rem;color:#B9CCDA;margin:0 0 .7rem}
+.next p{font-size:.93rem;color:#D0CFCA;margin:0 0 .7rem}
 .next p b{color:var(--accent)}
 .nrow{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:11px;
 padding:.85rem 1rem;margin-bottom:.5rem}
 .nrow .h{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.25rem}
-.nrow .b{font-size:.92rem;color:#CFE0EC}
+.nrow .b{font-size:.92rem;color:#E0DBD1}
 .nbtns{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
 .nbtns button{border:none;border-radius:10px;padding:.6rem 1.1rem;font-family:var(--font);font-weight:700;font-size:.9rem;cursor:pointer}
-.nbtns .yes{background:var(--accent);color:#062B24}
+.nbtns .yes{background:var(--accent);color:#1C1A15}
 .nbtns .no{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22)}
 
 .note{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
 border-radius:14px;padding:1.2rem 1.4rem;margin-top:1.4rem;font-size:.92rem;color:var(--muted)}
 .note b{color:var(--navy)}
 .note p{margin:0 0 .7rem}.note p:last-child{margin:0}
-.gaps{background:var(--green-soft);border:1px solid #BEDFD0;border-left:3px solid var(--accent-deep);color:#0A5C4E}
+.gaps{background:var(--green-soft);border:1px solid #C5D3BF;border-left:3px solid var(--accent-deep);color:#3F5A3B}
 .gaps b{color:var(--success-deep)}
 </style><link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -100,14 +100,14 @@ border-radius:14px;padding:1.2rem 1.4rem;margin-top:1.4rem;font-size:.92rem;colo
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <style>
-.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav{background:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
 .sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
 .sqnav a{text-decoration:none;}
 .sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
 .sqnav-brand svg{height:16px;}
-.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#BDBFBE;font-weight:600;}
 .sqnav-back:hover{color:#fff;}
 @media print{.sqnav{display:none;}}
 </style>
@@ -120,7 +120,7 @@ border-radius:14px;padding:1.2rem 1.4rem;margin-top:1.4rem;font-size:.92rem;colo
 <meta property="og:site_name" content="SEQUENS">
 <meta name="twitter:card" content="summary_large_image">
 </head><body>
-<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="sequens-home-mockup.html">Back to the demonstration</a></div></div>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a><a class="sqnav-back" href="sequens-home-mockup.html">Back to the demonstration</a></div></div>
 
 <div class="wrap">
 <h1>How did it go?</h1>
@@ -258,5 +258,5 @@ function finish(){
 }
 drawKids(); drawSteps();
 </script>
-<div style="background:#0A3D62;padding:.9rem 1.3rem;text-align:center;font-size:.78rem;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;"><a href="/privacy.html">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html">Cookies</a></div>
+<div style="background:#22282E;padding:.9rem 1.3rem;text-align:center;font-size:.78rem;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;"><a href="/privacy.html">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html">Cookies</a></div>
 </body></html>

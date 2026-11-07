@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-tpl="dark" data-door="home">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --white:#F2F6FA; --grey:#9AACBC; --dim:#566F82;
+    --white:#F8F4EC; --grey:#AEB1B2; --dim:#4F5A63;
     --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16); --panel:rgba(255,255,255,.03);
-    --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --accent-deep:#0A7A67; --navy:#0A3D62;
+    --accent:#E2C27C; --accent2:#E2C27C; --accent-ink:#161A1E; --accent-deep:#3E5568; --navy:#22282E;
     --font:'Lexend','Segoe UI',system-ui,sans-serif;
     --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
   }
@@ -20,7 +20,7 @@
   html{scroll-behavior:smooth;}
   html.rs{font-size:114%;}
   html.rs body{line-height:1.85;letter-spacing:.012em;}
-  body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);color:var(--grey);font-family:var(--font);font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:linear-gradient(175deg,#161A1E 0%,#1E2328 55%,#22282E 100%);color:var(--grey);font-family:var(--font);font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 1.7rem;}
   a{color:var(--white);text-decoration:none;}
   a:hover{color:var(--accent);}
@@ -34,22 +34,22 @@
   .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:.7rem 1rem;z-index:99;font-weight:700;}
   .skip:focus{left:1rem;top:1rem;}
 
-  header.top{position:sticky;top:0;z-index:40;background:rgba(247,250,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(10,61,98,.14);}
+  header.top{position:sticky;top:0;z-index:40;background:rgba(247,250,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(34,40,46,.14);}
   .top-in{max-width:1120px;margin:0 auto;padding:.7rem 1.7rem;display:flex;align-items:center;gap:1.2rem;}
   .brand{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);font-weight:800;letter-spacing:.04em;color:var(--navy);font-size:1.02rem;}
   .brand svg{height:20px;width:auto;}
-  .top .arm{font-size:.8rem;font-weight:600;color:#54718A;border-left:1px solid rgba(10,61,98,.2);padding-left:1rem;}
+  .top .arm{font-size:.8rem;font-weight:600;color:#4F5A63;border-left:1px solid rgba(34,40,46,.2);padding-left:1rem;}
   .top nav{margin-left:auto;display:flex;gap:1.3rem;align-items:center;}
-  .top nav a{font-size:.86rem;font-weight:600;color:#3D5A6E;}
+  .top nav a{font-size:.86rem;font-weight:600;color:#3E4850;}
   .top nav a:hover{color:var(--accent-deep);}
-  .rs-toggle{font-family:var(--font);font-size:.74rem;font-weight:600;border:1px solid rgba(10,61,98,.3);background:transparent;color:var(--navy);border-radius:9px;padding:.45rem .8rem;cursor:pointer;}
+  .rs-toggle{font-family:var(--font);font-size:.74rem;font-weight:600;border:1px solid rgba(34,40,46,.3);background:transparent;color:var(--navy);border-radius:9px;padding:.45rem .8rem;cursor:pointer;}
   .rs-toggle[aria-pressed="true"]{background:var(--navy);color:#fff;}
   @media (max-width:860px){.top nav a{display:none;}}
 
   section{padding:3.4rem 0;}
   section.contd{padding-top:2.6rem;}
   h2.sec{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-bottom:1rem;line-height:1.12;}
-  section.light{background:linear-gradient(180deg,#FFFFFF 0%,#EDF5F7 100%);color:#3D5A6E;}
+  section.light{background:linear-gradient(180deg,#FFFFFF 0%,#F4F3F0 100%);color:#3E4850;}
   .light h2.sec{color:var(--navy);}
   .light .lead{max-width:64ch;font-size:1.1rem;margin:0 0 1.4rem;}
   .light b{color:var(--navy);font-weight:600;}
@@ -66,30 +66,30 @@
   .mchip{background:var(--navy);color:#fff;border-radius:16px;padding:.85rem 1.3rem;font-weight:600;font-size:.98rem;justify-self:start;align-self:center;height:auto;max-width:15rem;overflow-wrap:break-word;line-height:1.45;}
   .mcards{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;}
   @media (max-width:820px){.mcards{grid-template-columns:1fr;}}
-  .mcard{background:#fff;border:1px solid rgba(10,61,98,.16);border-radius:12px;padding:1rem 1.1rem;}
+  .mcard{background:#fff;border:1px solid rgba(34,40,46,.16);border-radius:12px;padding:1rem 1.1rem;}
   .mcard .sub{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);}
   .mcard h3{font-family:var(--font);font-size:.98rem;font-weight:600;color:var(--navy);margin:.3rem 0 .25rem;letter-spacing:0;}
-  .mcard p{margin:0;font-size:.85rem;color:#54718A;line-height:1.5;}
-  .mcard .tag{display:block;margin-top:.7rem;padding-top:.55rem;border-top:1px solid rgba(10,61,98,.1);font-size:.8rem;font-weight:500;color:#54718A;}
+  .mcard p{margin:0;font-size:.85rem;color:#4F5A63;line-height:1.5;}
+  .mcard .tag{display:block;margin-top:.7rem;padding-top:.55rem;border-top:1px solid rgba(34,40,46,.1);font-size:.8rem;font-weight:500;color:#4F5A63;}
   .mcard .tag b{font-weight:600;}
   .tag.hon b{color:#8A6A16;}
-  .tag.enr b{color:#1F4F73;}
-  .tag.core b{color:#0A7563;}
+  .tag.enr b{color:#3E5568;}
+  .tag.core b{color:#3E5568;}
 
   /* one activity, every age */
-  .ages{margin-top:1.6rem;border:1px solid rgba(10,61,98,.16);border-radius:14px;background:#fff;overflow:hidden;}
-  .ages-head{background:rgba(10,61,98,.04);padding:.9rem 1.2rem;border-bottom:1px solid rgba(10,61,98,.1);}
+  .ages{margin-top:1.6rem;border:1px solid rgba(34,40,46,.16);border-radius:14px;background:#fff;overflow:hidden;}
+  .ages-head{background:rgba(34,40,46,.04);padding:.9rem 1.2rem;border-bottom:1px solid rgba(34,40,46,.1);}
   .ages-head b{color:var(--navy);font-weight:600;font-size:1rem;}
-  .ages-head span{display:block;font-size:.86rem;color:#54718A;margin-top:.15rem;}
+  .ages-head span{display:block;font-size:.86rem;color:#4F5A63;margin-top:.15rem;}
   .agrid{display:grid;grid-template-columns:repeat(3,1fr);}
   @media (max-width:820px){.agrid{grid-template-columns:1fr;}}
-  .arow{padding:1.1rem 1.2rem;border-right:1px solid rgba(10,61,98,.1);}
+  .arow{padding:1.1rem 1.2rem;border-right:1px solid rgba(34,40,46,.1);}
   .arow:last-child{border-right:none;}
-  @media (max-width:820px){.arow{border-right:none;border-bottom:1px solid rgba(10,61,98,.1);} .arow:last-child{border-bottom:none;}}
+  @media (max-width:820px){.arow{border-right:none;border-bottom:1px solid rgba(34,40,46,.1);} .arow:last-child{border-bottom:none;}}
   .arow .who{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);}
   .arow h4{font-family:var(--font);font-size:.96rem;font-weight:600;color:var(--navy);margin:.35rem 0 .3rem;letter-spacing:0;}
-  .arow p{margin:0;font-size:.85rem;color:#54718A;line-height:1.5;}
-  .ages-foot{padding:.9rem 1.2rem;border-top:1px solid rgba(10,61,98,.1);font-size:.86rem;color:#54718A;background:rgba(10,61,98,.02);}
+  .arow p{margin:0;font-size:.85rem;color:#4F5A63;line-height:1.5;}
+  .ages-foot{padding:.9rem 1.2rem;border-top:1px solid rgba(34,40,46,.1);font-size:.86rem;color:#4F5A63;background:rgba(34,40,46,.02);}
   .ages-foot b{color:var(--navy);font-weight:600;}
 
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:2.6rem;align-items:start;}
@@ -101,40 +101,40 @@
 
   .reports{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin:1.4rem 0;}
   @media (max-width:760px){.reports{grid-template-columns:1fr;}}
-  .rep{background:#fff;border:1px solid rgba(10,61,98,.14);border-radius:12px;padding:1.1rem 1.2rem;}
+  .rep{background:#fff;border:1px solid rgba(34,40,46,.14);border-radius:12px;padding:1.1rem 1.2rem;}
   .rep h3{font-family:var(--font);font-size:.98rem;font-weight:600;color:var(--navy);margin:0 0 .3rem;letter-spacing:0;}
-  .rep p{margin:0;font-size:.88rem;color:#54718A;line-height:1.5;}
-  .author{font-size:.98rem;color:#4A6B82;margin:0;}
+  .rep p{margin:0;font-size:.88rem;color:#4F5A63;line-height:1.5;}
+  .author{font-size:.98rem;color:#4F5A63;margin:0;}
 
   .lawnote{background:#fff;border:1.5px solid rgba(44,110,155,.4);border-radius:14px;padding:1.3rem 1.4rem;margin-top:1.6rem;max-width:760px;}
-  .lawnote h3{font-family:var(--font);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1F4F73;margin:0 0 .6rem;}
-  .lawnote p{margin:0 0 .7rem;font-size:.95rem;color:#3D5A6E;line-height:1.6;}
-  .lawnote p:last-child{margin:0;font-size:.82rem;color:#7A93A6;}
+  .lawnote h3{font-family:var(--font);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#3E5568;margin:0 0 .6rem;}
+  .lawnote p{margin:0 0 .7rem;font-size:.95rem;color:#3E4850;line-height:1.6;}
+  .lawnote p:last-child{margin:0;font-size:.82rem;color:#5F6569;}
 
   .safe p{max-width:62ch;font-size:1.06rem;margin:0 0 .9rem;}
   .safe p:last-child{margin:0;}
   .safe b{color:var(--white);font-weight:600;}
 
-  .claim{border-top:1px solid rgba(10,61,98,.15);}
-  .claim:last-of-type{border-bottom:1px solid rgba(10,61,98,.15);}
+  .claim{border-top:1px solid rgba(34,40,46,.15);}
+  .claim:last-of-type{border-bottom:1px solid rgba(34,40,46,.15);}
   .claim summary{display:flex;align-items:center;gap:1.1rem;padding:1.1rem .2rem;cursor:pointer;list-style:none;}
   .claim summary::-webkit-details-marker{display:none;}
   .claim summary:hover .ct{color:var(--accent-deep);}
   .ci{width:52px;flex-shrink:0;display:flex;}
   .ci svg{width:100%;height:auto;}
   .ct{color:var(--navy);font-weight:600;font-size:1.04rem;line-height:1.35;flex:1;}
-  .chev{color:#7A93A6;font-weight:600;font-size:1.2rem;width:1.2rem;text-align:center;flex-shrink:0;transition:transform .15s;}
+  .chev{color:#5F6569;font-weight:600;font-size:1.2rem;width:1.2rem;text-align:center;flex-shrink:0;transition:transform .15s;}
   .claim[open] .chev{transform:rotate(45deg);color:var(--accent-deep);}
   .cb{padding:0 .2rem 1.3rem calc(52px + 1.3rem);}
   @media (max-width:560px){.ci{width:38px;}.cb{padding-left:.2rem;}}
-  .cb p{font-size:.98rem;margin:0 0 .75rem;color:#3D5A6E;}
-  .cb .does{font-size:.98rem;border-left:2.5px solid rgba(12,143,121,.55);padding-left:.95rem;margin:.2rem 0 .7rem;font-weight:500;color:#3D5A6E;}
-  .cb .src{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;color:#7A93A6;text-transform:uppercase;}
+  .cb p{font-size:.98rem;margin:0 0 .75rem;color:#3E4850;}
+  .cb .does{font-size:.98rem;border-left:2.5px solid rgba(62,85,104,.55);padding-left:.95rem;margin:.2rem 0 .7rem;font-weight:500;color:#3E4850;}
+  .cb .src{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;color:#5F6569;text-transform:uppercase;}
 
   .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.6rem 0 1.2rem;max-width:760px;}
   @media (max-width:760px){.pricing{grid-template-columns:1fr;}}
   .ptier{background:var(--panel);border:1px solid var(--hair2);border-radius:14px;padding:1.4rem 1.3rem;display:flex;flex-direction:column;}
-  .ptier.feature{border-color:var(--accent);background:rgba(45,225,194,.05);}
+  .ptier.feature{border-color:var(--accent);background:rgba(226,194,124,.05);}
   .pname{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);}
   .pcost{font-family:var(--head);color:var(--white);font-size:1.05rem;font-weight:500;margin:.5rem 0 .7rem;}
   .pcost b{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;}
@@ -207,24 +207,25 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#F6F1E7">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"SEQUENS","alternateName":"SEQUENS - The Coherence Architecture","url":"https://sequens.education","logo":"https://sequens.education/logo.png","description":"SEQUENS is an implementation coherence architecture for education: instructional coaching, a lesson engine, and home education, on one evidence base.","founder":{"@type":"Person","name":"James Banfield","jobTitle":"SEQUENS Architect"},"areaServed":"GB","knowsAbout":["Instructional coaching","Lesson planning","Retrieval practice","Formative assessment","Hinge questions","Adaptive teaching","Home education","Cognitive load theory"]}</script>
+<link rel="stylesheet" href="/assets/layout.css">
 </head>
 <body>
 <a class="skip" href="#moment">Skip to content</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <g id="markDark">
-    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/>
-    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/>
-    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/>
-    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/>
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/>
   </g>
   <g id="mark">
-    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/>
-    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
-    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
-    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/>
   </g>
 </defs></svg>
 
@@ -237,7 +238,7 @@
     <a href="#data">Your data</a>
     <a href="#evidence">Evidence</a>
     <a href="#join">Pricing</a>
-  <a href="sequens-home-mockup.html" style="display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:9px;background:transparent;color:#0A7A67;border:1px solid #0A7A67;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Demo</a><a href="/app/" style="display:inline-flex;align-items:center;padding:.5rem .95rem;border-radius:9px;background:#0A7A67;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Sign in</a></nav>
+  <a href="sequens-home-mockup.html" style="display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:9px;background:transparent;color:#3E5568;border:1px solid #3E5568;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Demo</a><a href="/app/" style="display:inline-flex;align-items:center;padding:.5rem .95rem;border-radius:9px;background:#3E5568;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Sign in</a></nav>
   <button class="rs-toggle" id="rsT" aria-pressed="false" title="Larger, more spaced text">Aa&ensp;Reading support</button>
 </div></header>
 
@@ -339,37 +340,37 @@
   <p class="reassure" style="margin-top:1rem;"><b>Who built this.</b> SEQUENS is built by one person: a qualified teacher and senior leader who started out designing learning resources for children with SEND in mainstream schools, ran an alternative provision for young people out of education, taught primary through to leading teaching and learning internationally, and returned to the UK as an instructional coaching lead. It is built alongside a teaching timetable, which is why it is designed around the week a teacher actually has rather than the one a planning template assumes.</p>
   <p class="reassure" style="margin-top:1.1rem;"><b>SEQUENS suggests. You confirm.</b> Everything is built for you first, and you decide what reaches your child. Nothing is recorded, shared or shown until you say so, and you can change any of it.</p>
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><circle cx="45" cy="55" r="22" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M45 40 V55 L57 63" fill="none" stroke="#0A7A67" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M85 55 h40 M112 42 l14 13 -14 13" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ct">Little and often beats one big push.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><circle cx="45" cy="55" r="22" fill="none" stroke="#A9AEB2" stroke-width="4"/><path d="M45 40 V55 L57 63" fill="none" stroke="#3E5568" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M85 55 h40 M112 42 l14 13 -14 13" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ct">Little and often beats one big push.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Memory is strengthened by being used. Short retrieval, spaced out over time, keeps learning alive far better than covering something once and moving on.</p><div class="does">SEQUENS builds in little and often: the map tracks when something was secured and gently resurfaces it when a revisit is due, as a five-minute practice, not a test.</div><span class="src">Roediger &amp; Karpicke · spacing-effect research · EEF</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"><line x1="18" y1="40" x2="66" y2="40"/><line x1="18" y1="56" x2="54" y2="56"/><line x1="18" y1="72" x2="60" y2="72"/></g><path d="M92 80 L110 48 L128 80 Z" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linejoin="round"/><circle cx="126" cy="32" r="7" fill="#0A7A67"/></svg></span><span class="ct">We think in words and pictures, so learning uses both.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"><line x1="18" y1="40" x2="66" y2="40"/><line x1="18" y1="56" x2="54" y2="56"/><line x1="18" y1="72" x2="60" y2="72"/></g><path d="M92 80 L110 48 L128 80 Z" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linejoin="round"/><circle cx="126" cy="32" r="7" fill="#3E5568"/></svg></span><span class="ct">We think in words and pictures, so learning uses both.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>A clear explanation beside a simple, matched picture lets more be understood and more be kept than either alone, for every child, and especially for children still growing into English.</p><div class="does">SEQUENS is dual coded: Frames put a picture beside the thinking in every session, and symbol support is there for the children who need a way in.</div><span class="src">Paivio, dual coding · Mayer, multimedia learning</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="20" y1="78" x2="130" y2="78" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="52" r="10" fill="#0A7A67"/><line x1="75" y1="62" x2="75" y2="78" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/><path d="M38 78 q8 -18 22 -22 M112 78 q-8 -18 -22 -22" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">One thing at a time, pitched right, is how minds work.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="20" y1="78" x2="130" y2="78" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="52" r="10" fill="#3E5568"/><line x1="75" y1="62" x2="75" y2="78" stroke="#3E5568" stroke-width="4" stroke-linecap="round"/><path d="M38 78 q8 -18 22 -22 M112 78 q-8 -18 -22 -22" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">One thing at a time, pitched right, is how minds work.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Working memory is small. A session that asks for one clear thing, entered at your child&#39;s level, will always beat a crowded worksheet.</p><div class="does">SEQUENS does one thing at a time: every session follows the six-part shape, one focus, one shared task, with support and depth shaped around your actual child.</div><span class="src">Cognitive-load theory · Sweller · EEF</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="14" y="40" width="122" height="30" rx="15" fill="none" stroke="#0A7A67" stroke-width="3.5"/><g fill="#7FA0B5"><circle cx="32" cy="55" r="6"/><circle cx="53.5" cy="55" r="6"/><circle cx="75" cy="55" r="6"/><circle cx="96.5" cy="55" r="6"/><circle cx="118" cy="55" r="6"/></g></svg></span><span class="ct">Inclusion is a foundation, not a feature.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="14" y="40" width="122" height="30" rx="15" fill="none" stroke="#3E5568" stroke-width="3.5"/><g fill="#A9AEB2"><circle cx="32" cy="55" r="6"/><circle cx="53.5" cy="55" r="6"/><circle cx="75" cy="55" r="6"/><circle cx="96.5" cy="55" r="6"/><circle cx="118" cy="55" r="6"/></g></svg></span><span class="ct">Inclusion is a foundation, not a feature.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Reaching every child, including children with additional needs and children learning English, is the condition on the whole design, not an option beside it.</p><div class="does">SEQUENS is inclusive by design: reading level, chunked instructions, symbol support and interest-shaped practice are set once on your child&#39;s profile and applied to every session after.</div><span class="src">EEF SEND guidance · dual-coding research · the SEQUENS engine, adaptive by default</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 55h50"/><path d="M68 55l46-19"/><path d="M68 55l46 19"/></g><circle cx="68" cy="55" r="7" fill="#0A7A67"/></svg></span><span class="ct">Teaching that responds in the moment beats deciding in advance.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 55h50"/><path d="M68 55l46-19"/><path d="M68 55l46 19"/></g><circle cx="68" cy="55" r="7" fill="#3E5568"/></svg></span><span class="ct">Teaching that responds in the moment beats deciding in advance.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Deciding in advance who gets the easier version turns a judgement into a ceiling. Responding to what your child actually does, on the day, does not.</p><div class="does">SEQUENS never gives a child a reduced activity. Everybody does every thread, and what changes is what you expect back. Nobody is told which expectation is theirs.</div><span class="src">DfE ITT Core Content Framework, adaptive teaching &middot; EEF SEND in mainstream schools</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><path d="M75 22 L108 55 L75 88 L42 55 Z" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linejoin="round"/><path d="M75 44v18" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="70" r="3.5" fill="#0A7A67"/></svg></span><span class="ct">Checking beats assuming.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><path d="M75 22 L108 55 L75 88 L42 55 Z" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linejoin="round"/><path d="M75 44v18" stroke="#3E5568" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="70" r="3.5" fill="#3E5568"/></svg></span><span class="ct">Checking beats assuming.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>A question whose wrong answer tells you what your child has misunderstood is worth more than asking whether they understood. You find out while there is still time to do something about it.</p><div class="does">Every thread names what to look for, in plain words, so you know what you are watching for rather than guessing. Yes, partly and not yet are all real answers, and partly is the most common one.</div><span class="src">Black &amp; Wiliam, formative assessment &middot; EEF feedback guidance</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="26" y="30" width="46" height="34" rx="4" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M36 42h26M36 52h16" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="104" cy="40" r="6" fill="#0A7A67"/><path d="M92 78a12 12 0 0124 0" fill="none" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Show it before you ask for it.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="26" y="30" width="46" height="34" rx="4" fill="none" stroke="#A9AEB2" stroke-width="4"/><path d="M36 42h26M36 52h16" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/><circle cx="104" cy="40" r="6" fill="#3E5568"/><path d="M92 78a12 12 0 0124 0" fill="none" stroke="#3E5568" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Show it before you ask for it.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>A child with little experience of something learns far more from watching somebody do it and hearing the thinking out loud than from being left to work it out alone.</p><div class="does">Every thread gives you an opening line to say and, if you have not taught it before, the background you need. You are not expected to already know how a classification key works.</div><span class="src">Sweller &amp; Cooper, worked examples &middot; Kirschner, Sweller &amp; Clark &middot; Rosenshine</span></div>
   </details>
 </div></section>

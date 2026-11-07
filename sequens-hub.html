@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-tpl="dark" data-door="coach">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,16 +10,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --white:#F2F6FA; --grey:#9AACBC; --dim:#566F82;
+    --white:#F8F4EC; --grey:#AEB1B2; --dim:#4F5A63;
     --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16);
     --panel:rgba(255,255,255,.03);
-    --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --accent-deep:#0A7A67; --navy:#0A3D62;
+    --accent:#E2C27C; --accent2:#E2C27C; --accent-ink:#161A1E; --accent-deep:#3E5568; --navy:#22282E;
     --font:'Lexend','Segoe UI',system-ui,sans-serif;
     --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);color:var(--grey);font-family:var(--font);font-weight:400;font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
+  body{margin:0;background:linear-gradient(175deg,#161A1E 0%,#1E2328 55%,#22282E 100%);color:var(--grey);font-family:var(--font);font-weight:400;font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 1.7rem;}
   a{color:var(--white);text-decoration:none;}
   h1,h2,h3{color:var(--white);font-family:var(--head);font-weight:700;letter-spacing:-.02em;margin:0;}
@@ -71,7 +71,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#F6F1E7">
 <link rel="canonical" href="https://sequens.education/sequens-hub.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SEQUENS - The Coherence Architecture">
@@ -79,21 +79,22 @@
 <meta property="og:url" content="https://sequens.education/sequens-hub.html">
 <meta property="og:site_name" content="SEQUENS">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/layout.css">
 </head>
 <body>
 <a class="skip" href="#doors">Skip to content</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <g id="mark">
-    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/>
-    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
-    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
-    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/>
   </g>
 </defs></svg>
 
 <header><div class="wrap-h">
-  <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#mark"/></svg>SEQUENS</a><a href="/app/" style="display:inline-flex;align-items:center;padding:.5rem .95rem;border-radius:9px;background:#0A7A67;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Sign in</a>
+  <a class="brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><use href="#mark"/></svg>SEQUENS</a><a href="/app/" style="display:inline-flex;align-items:center;padding:.5rem .95rem;border-radius:9px;background:#3E5568;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Sign in</a>
   <button class="rs-toggle" id="rsT" aria-pressed="false" title="Larger, more spaced text">Aa&ensp;Reading support</button>
 </div></header>
 
@@ -108,10 +109,10 @@
 
   <a class="door" href="sequens-linear.html">
     <svg class="ic" viewBox="0 0 60 44" aria-hidden="true">
-      <circle cx="20" cy="12" r="7" fill="none" stroke="#9AACBC" stroke-width="2.6"/>
-      <path d="M6 40 a14 12 0 0 1 28 0" fill="none" stroke="#9AACBC" stroke-width="2.6" stroke-linecap="round"/>
-      <circle cx="42" cy="12" r="7" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
-      <path d="M28 40 a14 12 0 0 1 28 0" fill="none" stroke="#2DE1C2" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="20" cy="12" r="7" fill="none" stroke="#AEB1B2" stroke-width="2.6"/>
+      <path d="M6 40 a14 12 0 0 1 28 0" fill="none" stroke="#AEB1B2" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="42" cy="12" r="7" fill="none" stroke="#E2C27C" stroke-width="2.6"/>
+      <path d="M28 40 a14 12 0 0 1 28 0" fill="none" stroke="#E2C27C" stroke-width="2.6" stroke-linecap="round"/>
     </svg>
     <span class="who">For schools</span>
     <h2>Coaching Architecture</h2>
@@ -121,12 +122,12 @@
 
   <a class="door" href="sequens-builder.html">
     <svg class="ic" viewBox="0 0 60 44" aria-hidden="true">
-      <rect x="4" y="6" width="38" height="26" rx="3" fill="none" stroke="#9AACBC" stroke-width="2.6"/>
-      <line x1="11" y1="15" x2="27" y2="15" stroke="#2DE1C2" stroke-width="2.6" stroke-linecap="round"/>
-      <line x1="11" y1="23" x2="33" y2="23" stroke="#9AACBC" stroke-width="2.6" stroke-linecap="round"/>
-      <line x1="23" y1="32" x2="23" y2="41" stroke="#9AACBC" stroke-width="2.6" stroke-linecap="round"/>
-      <circle cx="50" cy="33" r="7" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
-      <path d="M47 33 l2.4 2.4 l4.2 -5" fill="none" stroke="#2DE1C2" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="4" y="6" width="38" height="26" rx="3" fill="none" stroke="#AEB1B2" stroke-width="2.6"/>
+      <line x1="11" y1="15" x2="27" y2="15" stroke="#E2C27C" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="11" y1="23" x2="33" y2="23" stroke="#AEB1B2" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="23" y1="32" x2="23" y2="41" stroke="#AEB1B2" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="50" cy="33" r="7" fill="none" stroke="#E2C27C" stroke-width="2.6"/>
+      <path d="M47 33 l2.4 2.4 l4.2 -5" fill="none" stroke="#E2C27C" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
     </svg>
     <span class="who">For teachers &amp; schools</span>
     <h2>Lesson Engine</h2>
@@ -136,9 +137,9 @@
 
   <a class="door" href="sequens-home.html">
     <svg class="ic" viewBox="0 0 60 44" aria-hidden="true">
-      <path d="M8 22 L30 6 L52 22" fill="none" stroke="#9AACBC" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
-      <path d="M14 20 V40 H46 V20" fill="none" stroke="#9AACBC" stroke-width="2.6" stroke-linejoin="round"/>
-      <circle cx="30" cy="29" r="5.5" fill="none" stroke="#2DE1C2" stroke-width="2.6"/>
+      <path d="M8 22 L30 6 L52 22" fill="none" stroke="#AEB1B2" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M14 20 V40 H46 V20" fill="none" stroke="#AEB1B2" stroke-width="2.6" stroke-linejoin="round"/>
+      <circle cx="30" cy="29" r="5.5" fill="none" stroke="#E2C27C" stroke-width="2.6"/>
     </svg>
     <span class="who">For families</span>
     <h2>Home Education Engine</h2>

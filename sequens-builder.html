@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-tpl="dark" data-door="teach">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,10 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#08101B; --white:#F2F6FA; --grey:#9AACBC; --dim:#566F82;
+    --bg:#14120F; --white:#F8F4EC; --grey:#AEB1B2; --dim:#4F5A63;
     --hair:rgba(255,255,255,.09); --hair2:rgba(255,255,255,.16); --panel:rgba(255,255,255,.03);
-    --accent:#2DE1C2; --accent2:#7FE7FF; --accent-ink:#06202A; --accent-deep:#0A7A67; --navy:#0A3D62;
-    --support:#7FC8BC; --core:#0A7A67; --secure:#B8912F; --stretch:#0A3D62;
+    --accent:#E2C27C; --accent2:#E2C27C; --accent-ink:#161A1E; --accent-deep:#3E5568; --navy:#22282E;
+    --support:#6B6355; --core:#3E5568; --secure:#9A7628; --stretch:#22282E;
     --font:'Lexend','Segoe UI',system-ui,sans-serif;
     --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
   }
@@ -21,7 +21,7 @@
   html{scroll-behavior:smooth;}
   html.rs{font-size:114%;}
   html.rs body{line-height:1.85;letter-spacing:.012em;}
-  body{margin:0;background:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);color:var(--grey);font-family:var(--font);font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:linear-gradient(175deg,#161A1E 0%,#1E2328 55%,#22282E 100%);color:var(--grey);font-family:var(--font);font-size:1.06rem;line-height:1.7;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 1.7rem;}
   a{color:var(--white);text-decoration:none;}
   a:hover{color:var(--accent);}
@@ -35,22 +35,22 @@
   .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:var(--accent-ink);padding:.7rem 1rem;z-index:99;font-weight:700;}
   .skip:focus{left:1rem;top:1rem;}
 
-  header.top{position:sticky;top:0;z-index:40;background:rgba(247,250,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(10,61,98,.14);}
+  header.top{position:sticky;top:0;z-index:40;background:rgba(247,250,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(34,40,46,.14);}
   .top-in{max-width:1120px;margin:0 auto;padding:.7rem 1.7rem;display:flex;align-items:center;gap:1.2rem;}
   .brand{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);font-weight:800;letter-spacing:.04em;color:var(--navy);font-size:1.02rem;}
   .brand svg{height:20px;width:auto;}
-  .top .arm{font-size:.8rem;font-weight:600;color:#54718A;border-left:1px solid rgba(10,61,98,.2);padding-left:1rem;}
+  .top .arm{font-size:.8rem;font-weight:600;color:#4F5A63;border-left:1px solid rgba(34,40,46,.2);padding-left:1rem;}
   .top nav{margin-left:auto;display:flex;gap:1.3rem;align-items:center;}
-  .top nav a{font-size:.86rem;font-weight:600;color:#3D5A6E;}
+  .top nav a{font-size:.86rem;font-weight:600;color:#3E4850;}
   .top nav a:hover{color:var(--accent-deep);}
-  .rs-toggle{font-family:var(--font);font-size:.74rem;font-weight:600;border:1px solid rgba(10,61,98,.3);background:transparent;color:var(--navy);border-radius:9px;padding:.45rem .8rem;cursor:pointer;}
+  .rs-toggle{font-family:var(--font);font-size:.74rem;font-weight:600;border:1px solid rgba(34,40,46,.3);background:transparent;color:var(--navy);border-radius:9px;padding:.45rem .8rem;cursor:pointer;}
   .rs-toggle[aria-pressed="true"]{background:var(--navy);color:#fff;}
   @media (max-width:860px){.top nav a{display:none;}}
 
   section{padding:3.4rem 0;}
   section.contd{padding-top:2.6rem;}
   h2.sec{font-size:clamp(1.8rem,3.4vw,2.5rem);margin-bottom:1rem;line-height:1.12;}
-  section.light{background:linear-gradient(180deg,#FFFFFF 0%,#EDF5F7 100%);color:#3D5A6E;}
+  section.light{background:linear-gradient(180deg,#FFFFFF 0%,#F4F3F0 100%);color:#3E4850;}
   .light h2.sec{color:var(--navy);}
   .light .lead{max-width:64ch;font-size:1.1rem;margin:0 0 1.6rem;}
 
@@ -68,50 +68,50 @@
   .sico{width:46px;flex-shrink:0;}
   .sstep h3{font-family:var(--font);font-weight:600;color:var(--navy);font-size:1.02rem;margin:0 0 .2rem;letter-spacing:0;}
   .sn{color:var(--accent-deep);font-weight:700;margin-right:.5rem;font-size:.85rem;}
-  .sstep p{margin:0;font-size:.95rem;color:#54718A;line-height:1.5;}
-  .spinenote{margin-top:1.8rem;font-size:.98rem;color:#4A6B82;max-width:62ch;}
+  .sstep p{margin:0;font-size:.95rem;color:#4F5A63;line-height:1.5;}
+  .spinenote{margin-top:1.8rem;font-size:.98rem;color:#4F5A63;max-width:62ch;}
 
   .adapt{display:grid;grid-template-columns:1.15fr .85fr;gap:2.6rem;align-items:start;}
   @media (max-width:860px){.adapt{grid-template-columns:1fr;}}
   .adapt .prose p{margin:0 0 1rem;font-size:1.05rem;}
   .adapt .prose p:last-child{margin:0;}
   .adapt b{color:var(--navy);font-weight:600;}
-  .keycard{background:#fff;border:1px solid rgba(10,61,98,.16);border-radius:14px;padding:1.3rem 1.4rem;}
+  .keycard{background:#fff;border:1px solid rgba(34,40,46,.16);border-radius:14px;padding:1.3rem 1.4rem;}
   .keycard h3{font-family:var(--font);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);margin:0 0 1rem;}
-  .krow{display:flex;align-items:center;gap:.75rem;padding:.42rem 0;font-size:.95rem;color:#3D5A6E;}
+  .krow{display:flex;align-items:center;gap:.75rem;padding:.42rem 0;font-size:.95rem;color:#3E4850;}
   .krow i{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
   .krow b{color:var(--navy);font-weight:600;min-width:4.6rem;}
-  .keyfoot{margin-top:.9rem;font-size:.8rem;color:#7A93A6;border-top:1px solid rgba(10,61,98,.12);padding-top:.75rem;}
+  .keyfoot{margin-top:.9rem;font-size:.8rem;color:#5F6569;border-top:1px solid rgba(34,40,46,.12);padding-top:.75rem;}
 
   .frames{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1rem;margin-top:1.6rem;}
-  .frame{background:#fff;border:1px solid rgba(10,61,98,.14);border-radius:12px;padding:1rem 1.1rem;display:flex;gap:.85rem;align-items:flex-start;}
+  .frame{background:#fff;border:1px solid rgba(34,40,46,.14);border-radius:12px;padding:1rem 1.1rem;display:flex;gap:.85rem;align-items:flex-start;}
   .fico{width:40px;flex-shrink:0;}
   .frame h3{font-family:var(--font);font-size:.98rem;font-weight:600;color:var(--navy);margin:0 0 .15rem;letter-spacing:0;}
-  .frame p{margin:0;font-size:.85rem;color:#54718A;line-height:1.45;}
+  .frame p{margin:0;font-size:.85rem;color:#4F5A63;line-height:1.45;}
 
   .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin:1.6rem 0;}
   @media (max-width:760px){.tiers{grid-template-columns:1fr;}}
-  .tier{background:#fff;border:1px solid rgba(10,61,98,.14);border-radius:12px;padding:1.2rem 1.2rem 1.1rem;}
+  .tier{background:#fff;border:1px solid rgba(34,40,46,.14);border-radius:12px;padding:1.2rem 1.2rem 1.1rem;}
   .tier h3{font-family:var(--font);font-size:1rem;font-weight:600;color:var(--navy);margin:0 0 .3rem;letter-spacing:0;}
-  .tier p{margin:0;font-size:.92rem;color:#54718A;line-height:1.5;}
-  .hnote{font-size:.95rem;color:#4A6B82;max-width:66ch;margin:0;}
+  .tier p{margin:0;font-size:.92rem;color:#4F5A63;line-height:1.5;}
+  .hnote{font-size:.95rem;color:#4F5A63;max-width:66ch;margin:0;}
   .hnote + .hnote{margin-top:.7rem;}
 
-  .claim{border-top:1px solid rgba(10,61,98,.15);}
-  .claim:last-of-type{border-bottom:1px solid rgba(10,61,98,.15);}
+  .claim{border-top:1px solid rgba(34,40,46,.15);}
+  .claim:last-of-type{border-bottom:1px solid rgba(34,40,46,.15);}
   .claim summary{display:flex;align-items:center;gap:1.1rem;padding:1.1rem .2rem;cursor:pointer;list-style:none;}
   .claim summary::-webkit-details-marker{display:none;}
   .claim summary:hover .ct{color:var(--accent-deep);}
   .ci{width:52px;flex-shrink:0;display:flex;}
   .ci svg{width:100%;height:auto;}
   .ct{color:var(--navy);font-weight:600;font-size:1.04rem;line-height:1.35;flex:1;}
-  .chev{color:#7A93A6;font-weight:600;font-size:1.2rem;width:1.2rem;text-align:center;flex-shrink:0;transition:transform .15s;}
+  .chev{color:#5F6569;font-weight:600;font-size:1.2rem;width:1.2rem;text-align:center;flex-shrink:0;transition:transform .15s;}
   .claim[open] .chev{transform:rotate(45deg);color:var(--accent-deep);}
   .cb{padding:0 .2rem 1.3rem calc(52px + 1.3rem);}
   @media (max-width:560px){.ci{width:38px;}.cb{padding-left:.2rem;}}
-  .cb p{font-size:.98rem;margin:0 0 .75rem;color:#3D5A6E;}
-  .cb .does{font-size:.98rem;border-left:2.5px solid rgba(12,143,121,.55);padding-left:.95rem;margin:.2rem 0 .7rem;font-weight:500;color:#3D5A6E;}
-  .cb .src{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;color:#7A93A6;text-transform:uppercase;}
+  .cb p{font-size:.98rem;margin:0 0 .75rem;color:#3E4850;}
+  .cb .does{font-size:.98rem;border-left:2.5px solid rgba(62,85,104,.55);padding-left:.95rem;margin:.2rem 0 .7rem;font-weight:500;color:#3E4850;}
+  .cb .src{display:block;font-size:.7rem;font-weight:600;letter-spacing:.12em;color:#5F6569;text-transform:uppercase;}
 
   .safe h2.sec{max-width:20ch;}
   .safe p{max-width:60ch;font-size:1.08rem;margin:0 0 .9rem;}
@@ -184,23 +184,24 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#F6F1E7">
+<link rel="stylesheet" href="/assets/layout.css">
 </head>
 <body>
 <a class="skip" href="#spine">Skip to content</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <g id="markDark">
-    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/>
-    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/>
-    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/>
-    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/>
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/>
   </g>
   <g id="mark">
-    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/>
-    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
-    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
-    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+    <rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/>
+    <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/>
+    <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/>
+    <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/>
   </g>
 </defs></svg>
 
@@ -213,7 +214,7 @@
     <a href="#frames">Frames</a>
     <a href="#evidence">Evidence</a>
     <a href="#join">Waiting list</a>
-  <a href="/demo/" style="display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:9px;background:transparent;color:#0A7A67;border:1px solid #0A7A67;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Demo</a><a href="/app/" style="display:inline-flex;align-items:center;padding:.5rem .95rem;border-radius:9px;background:#0A7A67;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Sign in</a></nav>
+  <a href="/demo/" style="display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:9px;background:transparent;color:#3E5568;border:1px solid #3E5568;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Demo</a><a href="/app/" style="display:inline-flex;align-items:center;padding:.5rem .95rem;border-radius:9px;background:#3E5568;color:#fff;font-weight:600;font-size:.85rem;text-decoration:none;margin-left:.5rem">Sign in</a></nav>
   <button class="rs-toggle" id="rsT" aria-pressed="false" title="Larger, more spaced text">Aa&ensp;Reading support</button>
 </div></header>
 
@@ -228,12 +229,12 @@
   <h2 class="sec">The six-part spine.</h2>
   <p class="lead">Every lesson the builder makes follows the same evidence-based shape. The renderer enforces it: the model cannot skip a step, and neither can a rushed Thursday afternoon.</p>
   <div class="spinegrid">
-    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="16" fill="none" stroke="#7FA0B5" stroke-width="3.5"/><path d="M30 20 V30 L38 35" fill="none" stroke="#0A7A67" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3><span class="sn">1</span>First thing</h3><p>Retrieval from last time. Memory is strengthened by being used.</p></div></div>
-    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="11" y="14" width="32" height="23" rx="2.5" fill="none" stroke="#7FA0B5" stroke-width="3.5"/><line x1="17" y1="24" x2="31" y2="24" stroke="#0A7A67" stroke-width="3.5" stroke-linecap="round"/><line x1="27" y1="37" x2="27" y2="47" stroke="#7FA0B5" stroke-width="3.5" stroke-linecap="round"/></svg><div><h3><span class="sn">2</span>Show them how</h3><p>Worked example, thinking aloud, step by step.</p></div></div>
-    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><path d="M8 40 L20 40 L26 30" fill="none" stroke="#7FA0B5" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M52 40 L40 40 L34 30" fill="none" stroke="#0A7A67" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="30" cy="24" r="5" fill="#0A7A67"/></svg><div><h3><span class="sn">3</span>Build it together</h3><p>Guided practice before independence.</p></div></div>
-    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="17" y="17" width="26" height="26" rx="5" fill="none" stroke="#7FA0B5" stroke-width="3.5" transform="rotate(45 30 30)"/><text x="30" y="36" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="17" fill="#0A7A67">?</text></svg><div><h3><span class="sn">4</span>Quick check</h3><p>The hinge question targets a named misconception before it embeds.</p></div></div>
-    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="14" y="30" width="26" height="18" rx="2" fill="none" stroke="#7FA0B5" stroke-width="3.5"/><line x1="20" y1="38" x2="32" y2="38" stroke="#7FA0B5" stroke-width="3" stroke-linecap="round"/><path d="M40 20 L48 28 L34 42 L28 44 L30 38 Z" fill="none" stroke="#0A7A67" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3><span class="sn">5</span>Their turn</h3><p>One shared task, entered at the right level.</p></div></div>
-    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="16" fill="none" stroke="#7FA0B5" stroke-width="3.5" stroke-dasharray="76 26" transform="rotate(-55 30 30)"/><path d="M24 30.5 L29 35.5 L37 24" fill="none" stroke="#0A7A67" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3><span class="sn">6</span>Last thing</h3><p>Recap and exit ticket. The learning leaves the room named.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="16" fill="none" stroke="#A9AEB2" stroke-width="3.5"/><path d="M30 20 V30 L38 35" fill="none" stroke="#3E5568" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3><span class="sn">1</span>First thing</h3><p>Retrieval from last time. Memory is strengthened by being used.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="11" y="14" width="32" height="23" rx="2.5" fill="none" stroke="#A9AEB2" stroke-width="3.5"/><line x1="17" y1="24" x2="31" y2="24" stroke="#3E5568" stroke-width="3.5" stroke-linecap="round"/><line x1="27" y1="37" x2="27" y2="47" stroke="#A9AEB2" stroke-width="3.5" stroke-linecap="round"/></svg><div><h3><span class="sn">2</span>Show them how</h3><p>Worked example, thinking aloud, step by step.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><path d="M8 40 L20 40 L26 30" fill="none" stroke="#A9AEB2" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M52 40 L40 40 L34 30" fill="none" stroke="#3E5568" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="30" cy="24" r="5" fill="#3E5568"/></svg><div><h3><span class="sn">3</span>Build it together</h3><p>Guided practice before independence.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="17" y="17" width="26" height="26" rx="5" fill="none" stroke="#A9AEB2" stroke-width="3.5" transform="rotate(45 30 30)"/><text x="30" y="36" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="17" fill="#3E5568">?</text></svg><div><h3><span class="sn">4</span>Quick check</h3><p>The hinge question targets a named misconception before it embeds.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><rect x="14" y="30" width="26" height="18" rx="2" fill="none" stroke="#A9AEB2" stroke-width="3.5"/><line x1="20" y1="38" x2="32" y2="38" stroke="#A9AEB2" stroke-width="3" stroke-linecap="round"/><path d="M40 20 L48 28 L34 42 L28 44 L30 38 Z" fill="none" stroke="#3E5568" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3><span class="sn">5</span>Their turn</h3><p>One shared task, entered at the right level.</p></div></div>
+    <div class="sstep"><svg class="sico" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="16" fill="none" stroke="#A9AEB2" stroke-width="3.5" stroke-dasharray="76 26" transform="rotate(-55 30 30)"/><path d="M24 30.5 L29 35.5 L37 24" fill="none" stroke="#3E5568" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3><span class="sn">6</span>Last thing</h3><p>Recap and exit ticket. The learning leaves the room named.</p></div></div>
   </div>
   <p class="spinenote">Every plan opens with its place in the sequence: the prior objective, this one, the next. A lesson is part of a coherent unit, not a one-off.</p>
   <p class="spinenote" style="margin-top:.8rem;">Because every lesson follows the same shape, a whole staff builds from one consistent structure - which is also what a school&#39;s <a href="sequens-linear.html" style="color:var(--accent-deep);font-weight:600;">SEQUENS coaching</a> works from. The lesson engine sits inside the school arm, not beside it.</p>
@@ -243,7 +244,7 @@
   <h2 class="sec">Adaptive teaching, not tiered worksheets.</h2>
   <div class="adapt">
     <div class="prose">
-      <p><b>Their turn is one shared task entered at the right level.</b> The builder generates responsive scaffold and stretch around it: vocabulary pre-taught, sentence stems, a picture key for the children who need a way in; depth, not more of the same, for the children who are ready.</p>
+      <p><b>Their turn is one shared task entered at the right level.</b> The builder generates responsive scaffold and going further around it: vocabulary pre-taught, sentence stems, a picture key for the children who need a way in; depth, not more of the same, for the children who are ready.</p>
       <p>Going further moves a child toward age-related expectation without overloading working memory. Scaffolds print ink-light, for books. And because generation is live, a scaffold can be shaped to the actual child: an interest that motivates them, a symbol per step for early English, one instruction at a time for a child who needs it.</p>
       <p>On a pupil&#39;s slide there is only a colour. The words live on the teacher key.</p>
     </div>
@@ -262,32 +263,32 @@
   <h2 class="sec">Frames.</h2>
   <p class="lead">SEQUENS Frames: visual organisers that make thinking visible. Eleven of them, one per thinking procedure, dual-coded into decks and plans wherever a picture will carry more than words alone. A child meets the same shape in Year 2 and in Year 9, and knows it.</p>
   <div class="frames">
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="4" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><rect x="10" y="10" width="20" height="20" rx="3" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><rect x="16" y="16" width="8" height="8" rx="2" fill="none" stroke="#0A7A67" stroke-width="2.4"/></svg><div><h3>Nest</h3><p>Big set down to small.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="16" x2="36" y2="16" stroke="#7FA0B5" stroke-width="2.4"/><path d="M14 16 L20 7 L26 16" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 16 L20 33 L28 16" fill="none" stroke="#0A7A67" stroke-width="2.4" stroke-linejoin="round"/></svg><div><h3>Iceberg</h3><p>What shows, and what sits beneath.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="6" fill="#0A7A67"/><circle cx="7" cy="9" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="33" cy="9" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="7" cy="31" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><circle cx="33" cy="31" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.2"/><g stroke="#7FA0B5" stroke-width="2"><line x1="10" y1="11.5" x2="15.5" y2="16"/><line x1="30" y1="11.5" x2="24.5" y2="16"/><line x1="10" y1="28.5" x2="15.5" y2="24"/><line x1="30" y1="28.5" x2="24.5" y2="24"/></g></svg><div><h3>Keystone</h3><p>One central idea everything connects to.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="5" fill="#0A7A67"/><g stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"><line x1="20" y1="13" x2="20" y2="4"/><line x1="20" y1="27" x2="20" y2="36"/><line x1="13" y1="20" x2="4" y2="20"/><line x1="27" y1="20" x2="36" y2="20"/><line x1="15" y1="15" x2="8" y2="8"/><line x1="25" y1="25" x2="32" y2="32"/></g></svg><div><h3>Spokes</h3><p>A centre with ideas radiating out.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><path d="M31 12 A13 13 0 1 0 33 24" fill="none" stroke="#7FA0B5" stroke-width="2.6"/><path d="M24.7 10.4 L31 12 L31.1 5.5" fill="none" stroke="#0A7A67" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3>Loop</h3><p>A repeating cycle or process.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="6" x2="20" y2="30" stroke="#7FA0B5" stroke-width="2.6"/><line x1="8" y1="12" x2="32" y2="12" stroke="#7FA0B5" stroke-width="2.6"/><path d="M4 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#0A7A67" stroke-width="2.4"/><path d="M27 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#7FA0B5" stroke-width="2.4"/><line x1="13" y1="34" x2="27" y2="34" stroke="#7FA0B5" stroke-width="2.6" stroke-linecap="round"/></svg><div><h3>Scales</h3><p>Weighing two things side by side.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="20" x2="30" y2="20" stroke="#7FA0B5" stroke-width="2.6"/><path d="M29 14 L36 20 L29 26" fill="none" stroke="#0A7A67" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><g fill="#7FA0B5"><circle cx="9" cy="20" r="3"/><circle cx="18" cy="20" r="3"/><circle cx="27" cy="20" r="3"/></g></svg><div><h3>Track</h3><p>An ordered sequence over time.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="9" cy="20" r="6" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-dasharray="2.5 2.5"/>
-<line x1="17" y1="20" x2="25" y2="20" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M22 16.5 L25.5 20 L22 23.5" fill="none" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="32" cy="20" r="6" fill="#0A7A67"/></svg><div><h3>Turn</h3><p>What you thought, and what you think now.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="8" cy="20" r="5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/>
-<line x1="13" y1="20" x2="15" y2="20" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
-<circle cx="20" cy="20" r="5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/>
-<line x1="25" y1="20" x2="27" y2="20" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
-<circle cx="32" cy="20" r="5" fill="#0A7A67"/></svg><div><h3>Chain</h3><p>This causes this, which causes this.</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="4" x2="20" y2="12" stroke="#7FA0B5" stroke-width="2.4" stroke-linecap="round"/>
-<line x1="5" y1="15" x2="35" y2="11" stroke="#7FA0B5" stroke-width="2.6" stroke-linecap="round"/>
-<path d="M5 15 L5 27" stroke="#7FA0B5" stroke-width="2.4"/>
-<path d="M35 11 L35 19" stroke="#7FA0B5" stroke-width="2.4"/>
-<circle cx="5" cy="30" r="5" fill="#0A7A67"/>
-<circle cx="35" cy="22" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/></svg><div><h3>Weigh</h3><p>How strong is the evidence, really?</p></div></div>
-    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="18" cy="20" r="12" fill="none" stroke="#0A7A67" stroke-width="2.4"/>
-<circle cx="14" cy="17" r="3" fill="#0A7A67"/>
-<circle cx="22" cy="24" r="3" fill="#0A7A67"/>
-<circle cx="34" cy="8" r="3.5" fill="none" stroke="#7FA0B5" stroke-width="2.4"/></svg><div><h3>Bound</h3><p>What counts, and what does not.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="4" fill="none" stroke="#A9AEB2" stroke-width="2.4"/><rect x="10" y="10" width="20" height="20" rx="3" fill="none" stroke="#A9AEB2" stroke-width="2.4"/><rect x="16" y="16" width="8" height="8" rx="2" fill="none" stroke="#3E5568" stroke-width="2.4"/></svg><div><h3>Nest</h3><p>Big set down to small.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="16" x2="36" y2="16" stroke="#A9AEB2" stroke-width="2.4"/><path d="M14 16 L20 7 L26 16" fill="none" stroke="#A9AEB2" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 16 L20 33 L28 16" fill="none" stroke="#3E5568" stroke-width="2.4" stroke-linejoin="round"/></svg><div><h3>Iceberg</h3><p>What shows, and what sits beneath.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="6" fill="#3E5568"/><circle cx="7" cy="9" r="3.5" fill="none" stroke="#A9AEB2" stroke-width="2.2"/><circle cx="33" cy="9" r="3.5" fill="none" stroke="#A9AEB2" stroke-width="2.2"/><circle cx="7" cy="31" r="3.5" fill="none" stroke="#A9AEB2" stroke-width="2.2"/><circle cx="33" cy="31" r="3.5" fill="none" stroke="#A9AEB2" stroke-width="2.2"/><g stroke="#A9AEB2" stroke-width="2"><line x1="10" y1="11.5" x2="15.5" y2="16"/><line x1="30" y1="11.5" x2="24.5" y2="16"/><line x1="10" y1="28.5" x2="15.5" y2="24"/><line x1="30" y1="28.5" x2="24.5" y2="24"/></g></svg><div><h3>Keystone</h3><p>One central idea everything connects to.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="5" fill="#3E5568"/><g stroke="#A9AEB2" stroke-width="2.4" stroke-linecap="round"><line x1="20" y1="13" x2="20" y2="4"/><line x1="20" y1="27" x2="20" y2="36"/><line x1="13" y1="20" x2="4" y2="20"/><line x1="27" y1="20" x2="36" y2="20"/><line x1="15" y1="15" x2="8" y2="8"/><line x1="25" y1="25" x2="32" y2="32"/></g></svg><div><h3>Spokes</h3><p>A centre with ideas radiating out.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><path d="M31 12 A13 13 0 1 0 33 24" fill="none" stroke="#A9AEB2" stroke-width="2.6"/><path d="M24.7 10.4 L31 12 L31.1 5.5" fill="none" stroke="#3E5568" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg><div><h3>Loop</h3><p>A repeating cycle or process.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="6" x2="20" y2="30" stroke="#A9AEB2" stroke-width="2.6"/><line x1="8" y1="12" x2="32" y2="12" stroke="#A9AEB2" stroke-width="2.6"/><path d="M4 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#3E5568" stroke-width="2.4"/><path d="M27 22 a5 4 0 0 0 9 0 z" fill="none" stroke="#A9AEB2" stroke-width="2.4"/><line x1="13" y1="34" x2="27" y2="34" stroke="#A9AEB2" stroke-width="2.6" stroke-linecap="round"/></svg><div><h3>Scales</h3><p>Weighing two things side by side.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="4" y1="20" x2="30" y2="20" stroke="#A9AEB2" stroke-width="2.6"/><path d="M29 14 L36 20 L29 26" fill="none" stroke="#3E5568" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><g fill="#A9AEB2"><circle cx="9" cy="20" r="3"/><circle cx="18" cy="20" r="3"/><circle cx="27" cy="20" r="3"/></g></svg><div><h3>Track</h3><p>An ordered sequence over time.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="9" cy="20" r="6" fill="none" stroke="#A9AEB2" stroke-width="2.4" stroke-dasharray="2.5 2.5"/>
+<line x1="17" y1="20" x2="25" y2="20" stroke="#A9AEB2" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M22 16.5 L25.5 20 L22 23.5" fill="none" stroke="#A9AEB2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="32" cy="20" r="6" fill="#3E5568"/></svg><div><h3>Turn</h3><p>What you thought, and what you think now.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="8" cy="20" r="5" fill="none" stroke="#A9AEB2" stroke-width="2.4"/>
+<line x1="13" y1="20" x2="15" y2="20" stroke="#A9AEB2" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="20" cy="20" r="5" fill="none" stroke="#A9AEB2" stroke-width="2.4"/>
+<line x1="25" y1="20" x2="27" y2="20" stroke="#A9AEB2" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="32" cy="20" r="5" fill="#3E5568"/></svg><div><h3>Chain</h3><p>This causes this, which causes this.</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><line x1="20" y1="4" x2="20" y2="12" stroke="#A9AEB2" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="5" y1="15" x2="35" y2="11" stroke="#A9AEB2" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M5 15 L5 27" stroke="#A9AEB2" stroke-width="2.4"/>
+<path d="M35 11 L35 19" stroke="#A9AEB2" stroke-width="2.4"/>
+<circle cx="5" cy="30" r="5" fill="#3E5568"/>
+<circle cx="35" cy="22" r="3.5" fill="none" stroke="#A9AEB2" stroke-width="2.4"/></svg><div><h3>Weigh</h3><p>How strong is the evidence, really?</p></div></div>
+    <div class="frame"><svg class="fico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="18" cy="20" r="12" fill="none" stroke="#3E5568" stroke-width="2.4"/>
+<circle cx="14" cy="17" r="3" fill="#3E5568"/>
+<circle cx="22" cy="24" r="3" fill="#3E5568"/>
+<circle cx="34" cy="8" r="3.5" fill="none" stroke="#A9AEB2" stroke-width="2.4"/></svg><div><h3>Bound</h3><p>What counts, and what does not.</p></div></div>
   </div>
 </div></section>
 
@@ -317,42 +318,42 @@
   <p class="reassure" style="margin-top:1rem;"><b>Who built this.</b> SEQUENS is built by one person: a qualified teacher and senior leader who started out designing learning resources for children with SEND in mainstream schools, ran an alternative provision for young people out of education, taught primary through to leading teaching and learning internationally, and returned to the UK as an instructional coaching lead. It is built alongside a teaching timetable, which is why it is designed around the week a teacher actually has rather than the one a planning template assumes.</p>
   <p class="reassure" style="margin-top:1.1rem;"><b>SEQUENS suggests. A human confirms.</b> Every lesson arrives as a first draft with its reasoning attached. You change it, you reject it, or you teach it. Nothing reaches a class until you have said so, and every generated artefact is marked as AI-assisted.</p>
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><circle cx="45" cy="55" r="22" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M45 40 V55 L57 63" fill="none" stroke="#0A7A67" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M85 55 h40 M112 42 l14 13 -14 13" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ct">Memory is strengthened by retrieval, not re-reading.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><circle cx="45" cy="55" r="22" fill="none" stroke="#A9AEB2" stroke-width="4"/><path d="M45 40 V55 L57 63" fill="none" stroke="#3E5568" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M85 55 h40 M112 42 l14 13 -14 13" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ct">Memory is strengthened by retrieval, not re-reading.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Recalling knowledge changes it: retrieval practice produces more durable learning than reviewing the same material again, and spacing those retrievals multiplies the effect.</p><div class="does">SEQUENS builds in retrieval: every lesson opens with First thing, retrieval from last time, and closes with Last thing. Coverage feeds revisit, so what was secured comes back before it fades.</div><span class="src">Roediger &amp; Karpicke · EEF cognitive science review</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="20" y="22" width="62" height="46" rx="5" fill="none" stroke="#7FA0B5" stroke-width="4"/><line x1="30" y1="38" x2="60" y2="38" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/><line x1="30" y1="52" x2="70" y2="52" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="112" cy="45" r="10" fill="#0A7A67"/><path d="M104 78 a12 10 0 0 1 16 0" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Novices learn from worked examples and clear modelling.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="20" y="22" width="62" height="46" rx="5" fill="none" stroke="#A9AEB2" stroke-width="4"/><line x1="30" y1="38" x2="60" y2="38" stroke="#3E5568" stroke-width="4" stroke-linecap="round"/><line x1="30" y1="52" x2="70" y2="52" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/><circle cx="112" cy="45" r="10" fill="#3E5568"/><path d="M104 78 a12 10 0 0 1 16 0" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">Novices learn from worked examples and clear modelling.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>New learning lands when it is shown, step by step, before it is attempted; guided practice bridges the gap to independence. Asking novices to discover unaided overloads them.</p><div class="does">SEQUENS models before independence: Show them how and Build it together are enforced stages of the spine, with the thinking made visible before Their turn begins.</div><span class="src">Sweller, worked-example effect · Rosenshine, principles of instruction</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="52" y="32" width="46" height="46" rx="8" fill="none" stroke="#7FA0B5" stroke-width="4" transform="rotate(45 75 55)"/><text x="75" y="63" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="24" fill="#0A7A67">?</text></svg></span><span class="ct">Checking understanding beats assuming it.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="52" y="32" width="46" height="46" rx="8" fill="none" stroke="#A9AEB2" stroke-width="4" transform="rotate(45 75 55)"/><text x="75" y="63" text-anchor="middle" font-family="Lexend,sans-serif" font-weight="700" font-size="24" fill="#3E5568">?</text></svg></span><span class="ct">Checking understanding beats assuming it.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Formative checks change teaching in the moment. A well-built hinge question exposes the specific misconception a class is most likely to hold, while there is still time to act on it.</p><div class="does">SEQUENS checks understanding: the Quick check is a hinge targeting a named misconception, generated with the lesson. Coverage is never mistaken for learning.</div><span class="src">Wiliam &amp; Black, inside the black box · EEF feedback guidance</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="20" y1="78" x2="130" y2="78" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="52" r="10" fill="#0A7A67"/><line x1="75" y1="62" x2="75" y2="78" stroke="#0A7A67" stroke-width="4" stroke-linecap="round"/><path d="M38 78 q8 -18 22 -22 M112 78 q-8 -18 -22 -22" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">One shared task, entered at the right level, beats three worksheets.</span><span class="chev" aria-hidden="true">+</span></summary>
-    <div class="cb"><p>Working memory is small; overload it and nothing sticks. Adaptive scaffolds give every child a way into the same learning, and stretch adds depth toward age-related expectation rather than a separate, capped track.</p><div class="does">SEQUENS keeps it one task: Their turn is one shared task with responsive scaffold and stretch generated around it. Labels stay on the teacher key, never on a child&#39;s screen.</div><span class="src">Cognitive-load theory · EEF SEND guidance, scaffolding</span></div>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="20" y1="78" x2="130" y2="78" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="52" r="10" fill="#3E5568"/><line x1="75" y1="62" x2="75" y2="78" stroke="#3E5568" stroke-width="4" stroke-linecap="round"/><path d="M38 78 q8 -18 22 -22 M112 78 q-8 -18 -22 -22" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/></svg></span><span class="ct">One shared task, entered at the right level, beats three worksheets.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <div class="cb"><p>Working memory is small; overload it and nothing sticks. Adaptive scaffolds give every child a way into the same learning, and going further adds depth toward age-related expectation rather than a separate, capped track.</p><div class="does">SEQUENS keeps it one task: Their turn is one shared task with responsive scaffold and going further generated around it. Labels stay on the teacher key, never on a child&#39;s screen.</div><span class="src">Cognitive-load theory · EEF SEND guidance, scaffolding</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"><line x1="18" y1="40" x2="66" y2="40"/><line x1="18" y1="56" x2="54" y2="56"/><line x1="18" y1="72" x2="60" y2="72"/></g><path d="M92 80 L110 48 L128 80 Z" fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linejoin="round"/><circle cx="126" cy="32" r="7" fill="#0A7A67"/></svg></span><span class="ct">We think in words and pictures, so teaching uses both.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"><line x1="18" y1="40" x2="66" y2="40"/><line x1="18" y1="56" x2="54" y2="56"/><line x1="18" y1="72" x2="60" y2="72"/></g><path d="M92 80 L110 48 L128 80 Z" fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linejoin="round"/><circle cx="126" cy="32" r="7" fill="#3E5568"/></svg></span><span class="ct">We think in words and pictures, so teaching uses both.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Pairing a clear explanation with a simple, matched visual lets more be held and more be kept than either channel alone.</p><div class="does">SEQUENS is dual coded: the seven Frames put a picture beside the thinking, on slides and plans, wherever it earns its place.</div><span class="src">Paivio, dual coding · Mayer, multimedia learning · Caviglioli</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="14" y="40" width="122" height="30" rx="15" fill="none" stroke="#0A7A67" stroke-width="3.5"/><g fill="#7FA0B5"><circle cx="32" cy="55" r="6"/><circle cx="53.5" cy="55" r="6"/><circle cx="75" cy="55" r="6"/><circle cx="96.5" cy="55" r="6"/><circle cx="118" cy="55" r="6"/></g></svg></span><span class="ct">Inclusion is a foundation, not a feature.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="14" y="40" width="122" height="30" rx="15" fill="none" stroke="#3E5568" stroke-width="3.5"/><g fill="#A9AEB2"><circle cx="32" cy="55" r="6"/><circle cx="53.5" cy="55" r="6"/><circle cx="75" cy="55" r="6"/><circle cx="96.5" cy="55" r="6"/><circle cx="118" cy="55" r="6"/></g></svg></span><span class="ct">Inclusion is a foundation, not a feature.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Reaching every learner, including children with SEND and children learning English, is the condition on the whole design, not an option beside it.</p><div class="does">SEQUENS is inclusive by design: scaffolds carry symbol support and chunked instructions where a child needs them, dual coding runs through every deck, and personalisation shapes the same learning to the actual child.</div><span class="src">EEF SEND guidance · dual-coding research · the SEQUENS engine, adaptive by default</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g fill="none" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 55h50"/><path d="M68 55l46-19"/><path d="M68 55l46 19"/></g><circle cx="68" cy="55" r="7" fill="#0A7A67"/></svg></span><span class="ct">Teaching that responds in the moment beats deciding in advance.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><g fill="none" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 55h50"/><path d="M68 55l46-19"/><path d="M68 55l46 19"/></g><circle cx="68" cy="55" r="7" fill="#3E5568"/></svg></span><span class="ct">Teaching that responds in the moment beats deciding in advance.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Adapting to what a child actually does, during the lesson, achieves more than allocating tasks by group beforehand. A group decided in advance becomes a ceiling; a teacher reading the room does not.</p><div class="does">SEQUENS is adaptive and responsive by design: every step long enough for a teacher to be circulating carries its in-the-moment moves, what you might see and what to do about it, alongside what to do if a child is stuck and if a child is already finished. Support and challenge live inside the lesson, never in a separate plan.</div><span class="src">DfE ITT Core Content Framework, adaptive teaching &middot; Black &amp; Wiliam, formative assessment &middot; EEF feedback guidance</span></div>
   </details>
 
   <details class="claim">
-    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="30" y="34" width="90" height="46" rx="6" fill="none" stroke="#7FA0B5" stroke-width="4"/><path d="M44 50h30M44 62h18" stroke="#7FA0B5" stroke-width="4" stroke-linecap="round"/><circle cx="98" cy="50" r="5" fill="#0A7A67"/><circle cx="98" cy="64" r="5" fill="#0A7A67"/></svg></span><span class="ct">One thing at a time is a principle, not a limitation.</span><span class="chev" aria-hidden="true">+</span></summary>
+    <summary><span class="ci"><svg viewBox="0 0 150 110" aria-hidden="true"><rect x="30" y="34" width="90" height="46" rx="6" fill="none" stroke="#A9AEB2" stroke-width="4"/><path d="M44 50h30M44 62h18" stroke="#A9AEB2" stroke-width="4" stroke-linecap="round"/><circle cx="98" cy="50" r="5" fill="#3E5568"/><circle cx="98" cy="64" r="5" fill="#3E5568"/></svg></span><span class="ct">One thing at a time is a principle, not a limitation.</span><span class="chev" aria-hidden="true">+</span></summary>
     <div class="cb"><p>Working memory holds very little at once, and a novice holds least of all. Two new ideas presented together are not twice as much learning, they are usually neither.</p><div class="does">The six-part spine exists to hold one idea at a time: retrieve, model, build together, check, do it alone, close the loop. Vocabulary is capped at three to five words for the same reason, and each one arrives in a sentence rather than on a list.</div><span class="src">Sweller, cognitive load theory &middot; Miller and Cowan on working memory &middot; Mayer, multimedia principles</span></div>
   </details>
 </div></section>

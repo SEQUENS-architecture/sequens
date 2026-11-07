@@ -8,7 +8,7 @@
 <style>
   :root{
     --navy:#22282E; --ink:#22282E; --accent:#E2C27C; --accent2:#E2C27C; --accent-deep:#3E5568;
-    --paper:#F6F1E7; --card:#ffffffFFF; --rule:#E2DACB; --muted:#4F5A63; --dim:#4F5A63;
+    --paper:#F6F1E7; --card:#FBF8F2; --rule:#E2DACB; --muted:#4F5A63; --dim:#4F5A63;
     --gold:#9A7628; --gold-deep:#7A5C14; --steel:#3E5568; --steel-soft:#DDE5EB;
     --red:#A8543D; --red-soft:#F1DDD5; --success-deep:#3F5A3B; --green-soft:#DFE8DC;
     --grad:linear-gradient(175deg,#161A1E 0%,#1E2328 55%,#22282E 100%);
@@ -204,6 +204,35 @@
   body.reveal .slide{aspect-ratio:auto;min-height:min(56.25vw,620px);}
   /* keep the empty-board experience untouched */
   body:not(.reveal) .model{flex:1;}
+
+  /* ===== READABLE BY DEFAULT (dyslexia pass, Nov 2026) =====
+     Every child gets this, not only when someone turns it on.
+     Cream ground, left aligned, no italics, no capitals-only labels,
+     nothing smaller than a child at the back can read, extra space between words. */
+  .slide{background:#FBF8F2;text-align:left;}
+  .slide .big,.slide .sub,.slide .task,.slide .sts li,.slide .vword .def,.slide .vword .use,
+  .slide .ftxt,.slide .stem,.slide .lotext,.slide .vnote,.slide .say,.slide .handwrite,
+  .slide .theirwords,.slide .turnspace .box{letter-spacing:.02em;word-spacing:.12em;line-height:1.5;}
+  .center{text-align:left;align-items:flex-start;}
+  .center .demo{align-self:stretch;}
+  .step-label,.lo .lolabel,.sts .stslabel,.turnspace .cap,.hinge-badge{
+    text-transform:none;letter-spacing:0;font-size:1.05rem;}
+  .step-label .mins{font-size:.95rem;letter-spacing:0;}
+  .further .ftxt b{display:inline;font-family:inherit;font-size:inherit;letter-spacing:0;text-transform:none;margin:0;color:#4A380C;}
+  .further .ftxt b:first-child{display:block;font-family:var(--head);font-size:1.05rem;margin-bottom:.2rem;color:#7A5C14;}
+  .sts li{display:block;position:relative;padding-left:3rem;}
+  .sts li::before{position:absolute;left:0;top:.55rem;width:36px;height:36px;font-size:1.05rem;}
+  .theirwords,.vword .use,.dghost{font-style:normal;}
+  .turnspace .was{opacity:1;}
+  .vword .morph{font-size:1.05rem;}
+  body.reveal .model::before{content:"From the lesson plan";letter-spacing:0;font-size:.95rem;}
+  .controls button{font-size:1rem;min-height:44px;}
+  .controls .count,.controls .step{font-size:1rem;text-transform:none;letter-spacing:0;}
+  .notes,.presenter .ptxt,.presenter .pnext .ptxt{font-size:1rem;}
+  .notes .ttl,.presenter .plabel{text-transform:none;letter-spacing:0;font-size:.95rem;}
+  /* Reading support now goes one step further: bigger, and more space again */
+  body.rs .slide{background:#FDF6E3;}
+  body.rs .slide .big,body.rs .slide .task,body.rs .slide .sts li,body.rs .slide .ftxt{font-size:1.15em;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
