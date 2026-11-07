@@ -581,7 +581,7 @@ function planBody(L){
     if(hinge) h+='<div class="pl-misc" style="background:#EAF2F8;border-left-color:#2C6E9B"><b>Diagnostic hinge:</b><p>'+esc(s.hinge.misconception_caught)+'. '+esc(s.hinge.why_diagnostic||"")+'</p></div>';
     if(s.misconception&&s.misconception.body) h+='<div class="pl-misc"><b>'+esc(s.misconception.title||"The misconception")+'</b><p>'+esc(s.misconception.body)+'</p></div>';
     var m=s.modelling_space;
-    if(m&&(m.purpose||m.detail)){ h+='<div class="pl-msg"><div class="pl-mtitle">The modelling space</div>'+(m.purpose?'<p class="pl-purpose">'+esc(m.purpose)+'</p>':'')+(m.detail||[]).map(function(d){return '<p class="pl-detail">'+esc(d)+'</p>';}).join('');
+    if(m&&(m.purpose||m.detail)){ h+='<div class="pl-msg"><div class="pl-mtitle">Your flipchart model (write live from the class ideas; title it with the chunk and date and add it to the working wall)</div>'+(m.purpose?'<p class="pl-purpose">'+esc(m.purpose)+'</p>':'')+(m.detail||[]).map(function(d){return '<p class="pl-detail">'+esc(d)+'</p>';}).join('');
       if(m.examples&&m.examples.items&&m.examples.items.length) h+='<div class="pl-egs"><b>'+esc(m.examples.label||"For example")+'</b>'+m.examples.items.map(esc).join(' \u00b7 ')+'</div>';
       if(m.warn) h+='<div class="pl-warn">'+esc(m.warn)+'</div>';
       h+='</div>'; }
@@ -648,7 +648,7 @@ function wireDeck(box){
   function show(n){ i=Math.max(0,Math.min(slides.length-1,n)); slides.forEach(function(s,x){s.classList.toggle('on',x===i);}); var cc=wrap.querySelector('.dcount'); if(cc)cc.textContent=(i+1)+' / '+slides.length; }
   wrap.querySelector('[data-nav=next]').onclick=function(){show(i+1);};
   wrap.querySelector('[data-nav=prev]').onclick=function(){show(i-1);};
-  wrap.querySelector('[data-nav=reveal]').onclick=function(){wrap.classList.toggle('reveal');this.textContent=wrap.classList.contains('reveal')?'Hide the model':'Show the model';};
+  var rv=wrap.querySelector('[data-nav=reveal]'); if(rv) rv.onclick=function(){wrap.classList.toggle('reveal');this.textContent=wrap.classList.contains('reveal')?'Hide the model':'Show the model';};
   show(0);
 }
 function renderWritingDeck(W){
@@ -661,7 +661,8 @@ function renderWritingDeck(W){
   sl.push({cls:'dark center', html:'<div class="dspine"><i class="now"></i><i></i><i></i><i></i><i></i><i></i></div><div class="dlabel">Writing · '+esc(W.novel||'')+'</div><h1 class="dh1">'+esc(W.title_question||'Writing')+'</h1><p class="dsub">We gather ideas together, then build the moment in three chunks.</p>'});
   sl.push({cls:'', html:'<div class="dlabel">How we talk in writing</div><div class="dw-routines">'+[['Say it with me','I say it, you say it back.'],['Turn and talk','Partner A first, then Partner B.'],['Table talk','Everyone adds one idea before anyone adds two.'],['Say it before you write it','Tell your partner your sentence first.'],['Partner check','Read it to your partner; they name a step they can hear.'],['Show me','Fingers or whiteboards up on three.']].map(function(r){return '<div class="dw-rt"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>';}).join('')+'</div>'});
   if(W.do_now) sl.push({cls:'', html:spineAt(1)+'<div class="dlabel">Do Now · in your books</div><h2 class="dh2">'+esc(W.do_now.prompt||'')+'</h2>'+(W.do_now.sentence?'<div class="dw-task"><b>'+esc(W.do_now.sentence)+'</b></div>':'')+talk('Then turn and talk: choose the better answer')});
-  if(W.steps_to_success&&W.steps_to_success.length) sl.push({cls:'', html:spineAt(1)+'<div class="dlabel">What we are aiming for</div>'+talk('Say it with me')+'<ol class="ds2s">'+W.steps_to_success.map(function(s,i){return '<li><span class="dn">'+(i+1)+'</span><span>'+esc(s)+'</span></li>';}).join('')+'</ol>'});
+  sl.push({cls:'', html:spineAt(1)+'<div class="dlabel">We are learning to</div>'+talk('Say it with me')+'<h2 class="dh2 dw-lo">'+esc(W.objective||'')+'</h2>'+((W.steps_to_success&&W.steps_to_success.length)?'<div class="dlabel" style="margin-top:.6rem">Steps to success</div><ol class="ds2s">'+W.steps_to_success.map(function(s,i){return '<li><span class="dn">'+(i+1)+'</span><span>'+esc(s)+'</span></li>';}).join('')+'</ol>':'')});
+  if(W.vocabulary&&W.vocabulary.length) sl.push({cls:'', html:spineAt(1)+'<div class="dlabel">Words we need today</div>'+talk('Say it with me, then use one in a sentence')+'<div class="dw-vocab">'+W.vocabulary.map(function(v){return '<div class="dw-v"><b>'+esc(v.word||'')+'</b><span>'+esc(v.meaning||'')+'</span></div>';}).join('')+'</div>'});
   if(W.big_idea) sl.push({cls:'', html:spineAt(1)+'<div class="dlabel">The big idea</div><h2 class="dh2">'+esc(W.big_idea)+'</h2>'+talk('Turn and talk: where have we seen this?')});
   if(W.read) sl.push({cls:'', html:spineAt(2)+'<div class="dlabel">Read the moment</div><div class="dw-read"><div class="dw-book"><div class="dw-cov">'+esc((W.read.book||'NOVEL').split(',')[0])+'</div><div><div class="dw-bt">'+esc(W.read.book||'')+'</div><div class="dw-bp">'+esc(W.read.passage||'')+'</div></div></div>'+(W.read.listen?'<div class="dw-listen">'+esc(W.read.listen)+'</div>':'')+'</div>'});
   chunks.forEach(function(c,idx){
@@ -673,9 +674,9 @@ function renderWritingDeck(W){
     // 2 share: class idea bank, scribed live
     sl.push({cls:'', html:spineAt(3)+bar(idx)+'<div class="dlabel">Share our ideas</div><h2 class="dh2">Each table shares its best idea.</h2><div class="dw-bank"><span>Our class idea bank</span></div>'});
     // 3 watch, say, write
-    sl.push({cls:'', html:spineAt(3)+bar(idx)+(c.goal?'<div class="dw-goal"><b>In this chunk you will write</b>'+esc(String(c.goal).replace(/^In this chunk you will write:?\s*/i,''))+'</div>':'')+'<div class="dw-steps"><div><b>1</b>Watch me</div><div><b>2</b>Say it to your partner</div><div><b>3</b>Write it</div></div><div class="dmodel"><div class="dghost">The teacher models one sentence live, from the class idea bank. Press Show the model.</div><div class="dfilled">'+(c.model||[]).map(function(m){return '<div class="dhand">'+esc(m.text||'')+(m.note?'<span class="note">'+esc(m.note)+'</span>':'')+'</div>';}).join('')+'</div></div><div class="dw-taskr">'+esc(c.write_task||'')+'</div><p class="dsub">Use your ideas. Need a start? Use your support card.</p>'+(c.going_further?'<div class="dw-gf"><b>Going further</b> '+esc(c.going_further)+'</div>':'')});
+    sl.push({cls:'', html:spineAt(3)+bar(idx)+(c.goal?'<div class="dw-goal"><b>In this chunk you will write</b>'+esc(String(c.goal).replace(/^In this chunk you will write:?\s*/i,''))+'</div>':'')+'<div class="dw-steps"><div><b>1</b>Watch me</div><div><b>2</b>Say it to your partner</div><div><b>3</b>Write it</div></div><div class="dw-flip"><b>Model on the flipchart</b>One sentence, from our class idea bank. It goes on the working wall after the lesson.</div>'+'<div class="dw-taskr">'+esc(c.write_task||'')+'</div><p class="dsub">Use your ideas. Need a start? Use your support card.</p>'+(c.going_further?'<div class="dw-gf"><b>Going further</b> '+esc(c.going_further)+'</div>':'')});
     // 4 model read aloud + partner check
-    if(c.model&&c.model.length) sl.push({cls:'', html:spineAt(4)+bar(idx)+'<div class="dlabel">My model</div>'+talk('Say it with me')+'<div class="dw-echo">'+esc(c.model[0].text||'')+'</div>'+talk('Partner check: which step to success can you hear?')});
+    sl.push({cls:'', html:spineAt(4)+bar(idx)+'<div class="dlabel">Our flipchart model</div>'+talk('Say it with me')+'<h2 class="dh2">Read the flipchart model aloud together.</h2>'+talk('Partner check: which step to success can you hear?')+'<p class="dsub">Read your sentence to your partner. Partner: point to the step.</p>'});
     if(idx===0 && W.hinge){
       var o=W.hinge.options||[W.hinge.optionA,W.hinge.optionB];
       sl.push({cls:'hinge', html:'<div class="hbadge">Quick check · think 10 seconds, then show me</div>'+(W.hinge.question?'<h2 class="dh2">'+esc(W.hinge.question)+'</h2>':'')+'<div class="dw-four">'+o.map(function(t,i){return '<div class="dw-opt"><span class="dw-oa">'+'ABCD'.charAt(i)+'</span>'+esc(t||'')+'</div>';}).join('')+'</div><p class="dsub" style="margin-top:1rem">Disagree with your partner? Convince them in 30 seconds, then vote again.</p>'});
@@ -685,7 +686,7 @@ function renderWritingDeck(W){
   if(W.going_further)sl.push({cls:'', html:'<div class="dlabel">Going further</div><h2 class="dh2">Going further, open to anyone</h2><div class="dw-task"><b>'+esc(W.going_further)+'</b></div>'});
   var cl=W.close||{}; var clTalk=typeof cl==='string'?cl:(cl.talk||'');
   sl.push({cls:'dark center', html:'<div class="dspine"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i></div><div class="dlabel">Last thing</div><h2 class="dh2" style="color:#fff">'+esc(clTalk||'Read your three chunks as one piece.')+'</h2>'+(cl.exit?'<p class="dsub" style="margin-top:1rem">Exit ticket: '+esc(cl.exit)+'</p>':'')});
-  return '<div class="deckwrap"><div class="dstage">'+sl.map(function(x,i){return '<div class="dslide '+x.cls+(i===0?' on':'')+'" data-slide="'+i+'">'+x.html+'</div>';}).join('')+'</div><div class="dctrl"><button data-nav="prev">Back</button><button data-nav="next">Next</button><button class="dtoggle" data-nav="reveal">Show the model</button><span class="dcount"></span></div></div>';
+  return '<div class="deckwrap"><div class="dstage">'+sl.map(function(x,i){return '<div class="dslide '+x.cls+(i===0?' on':'')+'" data-slide="'+i+'">'+x.html+'</div>';}).join('')+'</div><div class="dctrl"><button data-nav="prev">Back</button><button data-nav="next">Next</button><span class="dcount"></span></div></div>';
 }
 function renderWritingPlan(W){
   var chunks=W.chunks||[];
@@ -694,6 +695,7 @@ function renderWritingPlan(W){
   h+='<div class="pl-head"><div class="pl-kick">Lesson plan \u00b7 teacher\'s copy</div><h1 class="pl-h1">'+esc(W.title_question||'Writing')+'</h1>'+(W.objective?'<div class="pl-obj"><b>Objective:</b> '+esc(W.objective)+'</div>':'')+'<div class="pl-meta">'+[["Subject","Writing"],["Novel",W.novel],["Method","Talk-first chunks: gather, share, model, write"]].filter(function(m){return m[1];}).map(function(m){return '<div><span>'+esc(m[0])+'</span><b>'+esc(m[1])+'</b></div>';}).join('')+'</div></div>';
   h+='<div class="pl-src"><b>The shape:</b> read the moment, then build it in three chunks. Each chunk: children record ideas, you model one part live, they write it, then the next. The novel is named and read; its text is never reproduced.</div>';
   h+='<div class="pl-seq"><div>Do Now</div><div>Read</div><div>Chunk 1</div><div>Chunk 2</div><div>Chunk 3</div><div>Prove it</div><div>Last thing</div></div>';
+  if(W.vocabulary&&W.vocabulary.length) h+='<div class="pl-step"><div class="pl-stop"><span class="pl-sname">Key vocabulary</span></div><p>'+W.vocabulary.map(function(v){return '<b>'+esc(v.word||'')+'</b>: '+esc(v.meaning||'');}).join('; ')+'. Say it with me, then partners use one word in a sentence.</p></div>';
   if(W.do_now) h+='<div class="pl-step"><div class="pl-stop"><span class="pl-sname">Do Now and objective</span></div><p>On the board: <b>'+esc(W.do_now.sentence||'')+'</b> '+esc(W.do_now.prompt||'Rewrite it to show, not tell.')+'</p>'+(W.steps_to_success?'<ol class="objs">'+W.steps_to_success.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ol>':'')+'</div>';
   if(W.read) h+='<div class="pl-step"><div class="pl-stop"><span class="pl-sname">Read the moment</span></div><p><b>'+esc(W.read.book||'')+'</b> '+esc(W.read.passage||'')+'</p>'+(W.read.listen?'<p class="pl-say">'+esc(W.read.listen)+'</p>':'')+'</div>';
   chunks.forEach(function(c,i){
@@ -703,7 +705,7 @@ function renderWritingPlan(W){
     h+='<div class="pw-record"><b>Gather your ideas (Table talk, 3 min): guiding questions</b><ol>'+gq.map(function(q){return '<li>'+esc(q||'')+'</li>';}).join('')+'</ol><p>Pupils generate ideas first. Then Share: one idea per table, scribed live into the class idea bank. Model ONE sentence from their ideas (under a minute), partners say their sentence aloud, then write, then read the model together and partner check.</p></div>';
     if((c.prompt_words&&c.prompt_words.length)||(c.support_stems&&c.support_stems.length)) h+='<div class="pw-record"><b>Support card and prompts (not on the slides)</b><p>'+((c.prompt_words&&c.prompt_words.length)?'Prompt words if a table is stuck: '+c.prompt_words.map(esc).join(', ')+'. ':'')+((c.support_stems&&c.support_stems.length)?'Stems: '+c.support_stems.map(esc).join(' / '):'')+'</p></div>';
     if(c.misconception) h+='<div class="pl-misc"><b>Watch for:</b><p>'+esc(c.misconception)+'</p></div>';
-    if(c.model&&c.model.length){ h+='<div class="pl-msg"><div class="pl-mtitle">The modelling space</div>'+c.model.map(function(m){return '<div class="pl-egs" style="margin-bottom:6px">'+esc(m.text||'')+(m.note?' <i>'+esc(m.note)+'</i>':'')+'</div>';}).join('')+'</div>'; }
+    if(c.model&&c.model.length){ h+='<div class="pl-msg"><div class="pl-mtitle">Your flipchart model (write live from the class ideas; title it with the chunk and date and add it to the working wall)</div>'+c.model.map(function(m){return '<div class="pl-egs" style="margin-bottom:6px">'+esc(m.text||'')+(m.note?' <i>'+esc(m.note)+'</i>':'')+'</div>';}).join('')+'</div>'; }
     if(c.write_task) h+='<p><b>Write.</b> '+esc(c.write_task)+(c.going_further?' <i>Going further: '+esc(c.going_further)+'</i>':'')+'</p>';
     var ly=c.layers||{};
     if(ly.script) h+='<div class="pl-lay pl-l-script"><div class="pl-lt">Teacher script</div>'+(ly.script.lines||[]).map(function(x){return '<div class="pl-line">'+esc(x)+'</div>';}).join('')+'</div>';
@@ -734,7 +736,7 @@ function deckOutline(L){
       out.push('Slide: Chunk '+(i+1)+' '+(c.name||'')+' - gather your ideas (table talk)'+(c.lens?' ('+c.lens+')':''));
       ((c.guiding_questions&&c.guiding_questions.length)?c.guiding_questions:(c.record||[]).map(function(r){return r.key;})).forEach(function(q){out.push('- '+(q||''));});
       out.push(''); out.push('Slide: Chunk '+(i+1)+' - share our ideas (class idea bank, blank, scribed live)'); out.push('');
-      out.push('Slide: Chunk '+(i+1)+' - watch me write (leave blank, modelled live)'); out.push('');
+      out.push('Slide: Chunk '+(i+1)+' - model on the flipchart (nothing on screen)'); out.push('');
       out.push('Slide: Chunk '+(i+1)+' - now you write'); if(c.write_task)out.push('- '+c.write_task); out.push('- Steps: watch me, say it to your partner, write it. Stems are on the support card, not the slide.'); out.push('');
       if(i===0&&L.hinge){ out.push('Slide: Quick check'); (L.hinge.options||[L.hinge.optionA,L.hinge.optionB]).forEach(function(t,k){out.push('- '+'ABCD'.charAt(k)+': '+(t||''));}); out.push(''); }
     });
@@ -758,6 +760,8 @@ function deckOutline(L){
 function injectWritingCSS(){
   if(document.getElementById("writingCSS"))return;
   var css=`
+.dw-flip{background:#FFFBEA;border:2px dashed #D4A82A;border-radius:12px;padding:.7rem 1rem;margin-bottom:.6rem;font-size:1rem}.dw-flip b{display:block;color:#8A6A12;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.dw-vocab{display:grid;gap:.5rem}.dw-v{background:#fff;border-radius:12px;padding:.6rem .9rem;box-shadow:0 6px 18px -12px rgba(16,40,34,.4)}.dw-v b{display:block;font-size:1.2rem;color:#0A7A67}.dw-lo{margin:.2rem 0 .4rem}
 .dw-talk{display:block;width:fit-content;background:#FFF4E0;color:#8A4B14;border-radius:99px;padding:.25rem .8rem;font-weight:700;font-size:.8rem;margin:.3rem 0 .6rem}
 .dw-routines{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.dw-rt{background:#fff;border-radius:12px;padding:.6rem .8rem;box-shadow:0 6px 18px -12px rgba(16,40,34,.4)}.dw-rt b{display:block;color:#0A7A67}
 .dw-q{margin:.2rem 0 .8rem 1.2rem;font-size:1.05rem;line-height:1.5}
