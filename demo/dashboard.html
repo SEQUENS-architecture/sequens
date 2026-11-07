@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <title>SEQUENS - Dashboard (demo)</title>
 <meta name="description" content="The teacher dashboard. What needs you today, what does not, and the one decision the lesson left behind.">
 <meta name="robots" content="index, follow">
@@ -12,17 +12,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0A3D62; --ink:#12303f; --paper:#F2F7F9; --card:#ffffffFFF; --surface:#F8FBFC;
-    --rule:#D7E4EA; --rule2:#C2D6DF; --muted:#54718a; --dim:#566f82;
-    --accent:#2DE1C2; --terra:#0A7A67; --terra-deep:#0A7563; --terra-soft:#D9F2EC;
-    --steel:#2C6E9B; --steel-soft:#eaf2f8; --steel-deep:#1F4F73;
-    --gold:#B8912F; --gold-soft:#f3ecd2; --gold-deep:#8a6a18;
-    --red:#C0453B; --red-soft:#f7e9e7; --red-deep:#8E362E;
-    --green:#3F8F6B; --green-soft:#eaf3ee; --green-deep:#2C6B4F;
-    --grad:linear-gradient(175deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);
+    --navy:#22282E; --ink:#22282E; --paper:#F6F1E7; --card:#ffffffFFF; --surface:#FAF7F0;
+    --rule:#E2DACB; --rule2:#D7D3CA; --muted:#4F5A63; --dim:#4F5A63;
+    --accent:#E2C27C; --terra:#3E5568; --terra-deep:#3E5568; --terra-soft:#DFE8DC;
+    --steel:#3E5568; --steel-soft:#DDE5EB; --steel-deep:#3E5568;
+    --gold:#9A7628; --gold-soft:#F3E8CC; --gold-deep:#7A5C14;
+    --red:#A8543D; --red-soft:#F1DDD5; --red-deep:#8E362E;
+    --green:#5E7A57; --green-soft:#DFE8DC; --green-deep:#4F6B49;
+    --grad:linear-gradient(175deg,#161A1E 0%,#1E2328 55%,#22282E 100%);
     --font:'Lexend','Segoe UI',system-ui,sans-serif;
     --head:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
-    --shadow:0 2px 18px rgba(10,61,98,.07);
+    --shadow:0 2px 18px rgba(34,40,46,.07);
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);
@@ -34,15 +34,15 @@
   .wrap{max-width:1080px;margin:0 auto;padding:0 1.4rem;}
 
   /* ---- top ---- */
-  .top{background:var(--grad);color:#CFE0EC;}
+  .top{background:var(--grad);color:#E0DBD1;}
   .top-in{max-width:1080px;margin:0 auto;padding:1.1rem 1.4rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
   .mark{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);
     font-weight:800;letter-spacing:.05em;color:#fff;font-size:1.02rem;}
   .mark svg{height:19px;}
-  .crumb{margin-left:auto;font-size:.85rem;color:#9FB6C6;}
+  .crumb{margin-left:auto;font-size:.85rem;color:#BDBFBE;}
   .crumb a:hover{color:#fff;}
 
-  .intro{background:var(--grad);color:#B9CCDA;padding:0 0 2.6rem;}
+  .intro{background:var(--grad);color:#D0CFCA;padding:0 0 2.6rem;}
   .intro h1{color:#fff;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.12;margin-bottom:.7rem;max-width:20ch;}
   .intro .kick{font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
     color:var(--accent);margin-bottom:.9rem;}
@@ -105,7 +105,7 @@
   .sugg{background:var(--terra-soft);border-radius:11px;padding:.85rem .95rem;margin-bottom:1rem;}
   .sugg .k{font-family:var(--head);font-size:.63rem;font-weight:700;letter-spacing:.11em;
     text-transform:uppercase;color:var(--terra-deep);margin-bottom:.25rem;}
-  .sugg .v{font-size:.93rem;color:#0A5C4E;}
+  .sugg .v{font-size:.93rem;color:#3F5A3B;}
   .btns{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
   .btn{background:var(--terra);color:#fff;border:0;border-radius:10px;padding:.6rem 1.1rem;
     font-family:var(--head);font-weight:600;font-size:.88rem;cursor:pointer;}
@@ -162,8 +162,8 @@
   .wcard h4{font-size:.95rem;margin-bottom:.3rem;}
   .wcard p{margin:0;font-size:.87rem;color:var(--muted);}
 
-  .honest{max-width:1000px;margin:1.4rem auto 0;background:var(--green-soft);border:1px solid #BEDFD0;
-    border-radius:12px;padding:1.05rem 1.2rem;font-size:.9rem;color:#0A5C4E;}
+  .honest{max-width:1000px;margin:1.4rem auto 0;background:var(--green-soft);border:1px solid #C5D3BF;
+    border-radius:12px;padding:1.05rem 1.2rem;font-size:.9rem;color:#3F5A3B;}
   .honest b{color:var(--green-deep);}
 
   /* ---- back links ---- */
@@ -175,17 +175,17 @@
   .backbar .bl:hover{border-color:var(--terra);color:var(--terra-deep);}
   .backbar .sp{margin-left:auto;font-size:.82rem;color:var(--dim);}
 
-  footer{margin-top:2.4rem;background:var(--grad);color:#7E97AB;}
+  footer{margin-top:2.4rem;background:var(--grad);color:#9DA1A4;}
   .fin{max-width:1080px;margin:0 auto;padding:1.8rem 1.4rem 2.2rem;font-size:.83rem;}
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="m">
-  <rect x="2" y="3"  width="6"  height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8"  width="11" height="3" rx="1.5" fill="#2DE1C2"/>
-  <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/>
-  <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/>
-  <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/>
+  <rect x="2" y="3"  width="6"  height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8"  width="11" height="3" rx="1.5" fill="#C47D66"/>
+  <rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/>
+  <rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/>
+  <rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/>
 </g></defs></svg>
 
 <div class="top"><div class="top-in">
@@ -301,15 +301,15 @@
             <h4>Coverage</h4>
             <p class="p">Year 5 science, this term.</p>
             <div class="bar">
-              <i style="width:46%;background:#2C6E9B"></i>
-              <i style="width:28%;background:#5FA8C4"></i>
-              <i style="width:14%;background:#0A7A67"></i>
+              <i style="width:46%;background:#3E5568"></i>
+              <i style="width:28%;background:#A19782"></i>
+              <i style="width:14%;background:#3E5568"></i>
             </div>
             <div class="key">
-              <span><b style="background:#2C6E9B"></b>Secure</span>
-              <span><b style="background:#5FA8C4"></b>Practised</span>
-              <span><b style="background:#0A7A67"></b>Introduced</span>
-              <span><b style="background:#D7E4EA"></b>Not started</span>
+              <span><b style="background:#3E5568"></b>Secure</span>
+              <span><b style="background:#A19782"></b>Practised</span>
+              <span><b style="background:#3E5568"></b>Introduced</span>
+              <span><b style="background:#E2DACB"></b>Not started</span>
             </div>
             <div class="quiet">Gravity moved from practised to secure for twenty-one. It stays practised for nine until Monday.</div>
           </div>

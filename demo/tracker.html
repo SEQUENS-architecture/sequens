@@ -7,12 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0A7A67; --accent:#2DE1C2;
-    --paper:#F2F7F9; --card:#ffffffFFF; --rule:#D7E4EA; --muted:#54718A; --dim:#566F82;
-    --gold:#B8912F; --gold-soft:#F3ECD2; --steel:#2C6E9B; --steel-soft:#EAF2F8;
-    --red:#C0453B; --red-soft:#F7E9E7; --green:#3f8f6b; --green-soft:#EAF3EE; --amber-soft:#F9F1DC;
-    --standard:#2C6E9B; --standard-soft:#EAF2F8;   /* CAT4 / PTM family */
-    --formative:#0A7A67;                            /* writing / comp / quiz family */
+    --navy:#22282E; --ink:#22282E; --accent-deep:#3E5568; --accent:#E2C27C;
+    --paper:#F6F1E7; --card:#ffffffFFF; --rule:#E2DACB; --muted:#4F5A63; --dim:#4F5A63;
+    --gold:#9A7628; --gold-soft:#F3E8CC; --steel:#3E5568; --steel-soft:#DDE5EB;
+    --red:#A8543D; --red-soft:#F1DDD5; --green:#5E7A57; --green-soft:#DFE8DC; --amber-soft:#F9F1DC;
+    --standard:#3E5568; --standard-soft:#DDE5EB;   /* CAT4 / PTM family */
+    --formative:#3E5568;                            /* writing / comp / quiz family */
     --font:'Lexend','Segoe UI',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
   }
   *{box-sizing:border-box;}
@@ -21,8 +21,8 @@
   .topbar-in{max-width:1120px;margin:0 auto;padding:.85rem 1.4rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;}
   .mark{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--head);font-weight:800;letter-spacing:.04em;color:#fff;}
   .mark svg{height:20px;}
-  .crumbs{margin-left:.5rem;display:flex;align-items:center;gap:.4rem;font-size:.84rem;color:#9FB6C6;}
-  .crumbs a{color:#CFE0EC;font-weight:600;cursor:pointer;text-decoration:none;}
+  .crumbs{margin-left:.5rem;display:flex;align-items:center;gap:.4rem;font-size:.84rem;color:#BDBFBE;}
+  .crumbs a{color:#E0DBD1;font-weight:600;cursor:pointer;text-decoration:none;}
   .crumbs a:hover{color:#fff;}
   .crumbs .sep{color:#456;}
   .demo-chip{margin-left:auto;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:var(--accent);border-radius:20px;padding:2px 9px;}
@@ -47,15 +47,15 @@
   .gh-standard{background:var(--standard);} .gh-formative{background:var(--formative);}
   .gh-blank{background:transparent;}
   td.name,th.name{text-align:left;font-weight:600;color:var(--ink);position:sticky;left:0;background:#fff;z-index:2;}
-  tbody tr:hover td{background:#F6FAFC;} tbody tr:hover td.name{background:#EEF5F9;}
+  tbody tr:hover td{background:#FAF7F0;} tbody tr:hover td.name{background:#F5F4F2;}
   tr.clickable{cursor:pointer;}
 
   /* score chips */
   .sc{display:inline-block;min-width:34px;border-radius:6px;padding:.2rem .35rem;font-weight:700;font-variant-numeric:tabular-nums;font-size:.82rem;}
-  .sc.hi{background:var(--green-soft);color:#0A6B5C;}
-  .sc.mid{background:var(--amber-soft);color:#6B531A;}
+  .sc.hi{background:var(--green-soft);color:#3F5A3B;}
+  .sc.mid{background:var(--amber-soft);color:#5E4710;}
   .sc.lo{background:var(--red-soft);color:var(--red);}
-  .sc.na{background:#F0F3F5;color:var(--dim);font-weight:500;}
+  .sc.na{background:#F4F3F1;color:var(--dim);font-weight:500;}
   .sub-sc{font-size:.72rem;color:var(--muted);display:block;margin-top:1px;}
 
   /* triangulation flag - quiet */
@@ -63,7 +63,7 @@
   .flag.under{background:#FBEEE6;color:#9A5A24;}      /* high potential, low attainment */
   .flag.coast{background:#EFF4E9;color:#5B6E2E;}      /* fine but below potential */
   .flag.support{background:var(--red-soft);color:var(--red);}
-  .flag.watch{background:var(--gold-soft);color:#6B531A;}
+  .flag.watch{background:var(--gold-soft);color:#5E4710;}
   .flag.none{color:var(--dim);font-weight:500;font-size:.76rem;}
   .flag svg{width:11px;height:11px;}
 
@@ -93,8 +93,8 @@
   .profile-head .pm{font-size:.85rem;color:var(--muted);margin:.1rem 0 0;}
   .verdict{margin-left:auto;max-width:340px;border-radius:11px;padding:.75rem .9rem;font-size:.86rem;line-height:1.45;}
   .verdict.under{background:#FBEEE6;color:#7A461C;border:1px solid #E7C08F;}
-  .verdict.support{background:var(--red-soft);color:#8A2F27;border:1px solid #E0A9A3;}
-  .verdict.secure{background:var(--green-soft);color:#0A6B5C;border:1px solid #BEDFD0;}
+  .verdict.support{background:var(--red-soft);color:#7A3B28;border:1px solid #E0A9A3;}
+  .verdict.secure{background:var(--green-soft);color:#3F5A3B;border:1px solid #C5D3BF;}
   .verdict b{font-weight:700;}
 
   .prof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
@@ -112,7 +112,7 @@
   .measure .mv.lo{color:var(--red);} .measure .mv.hi{color:var(--green);} .measure .mv.mid{color:var(--gold-deep);}
   .trend{font-size:.72rem;color:var(--muted);margin-left:.4rem;font-weight:500;}
 
-  .info{font-size:.78rem;color:var(--dim);background:#F6FAFC;border:1px solid var(--rule);border-radius:9px;padding:.6rem .8rem;margin-top:.9rem;line-height:1.5;}
+  .info{font-size:.78rem;color:var(--dim);background:#FAF7F0;border:1px solid var(--rule);border-radius:9px;padding:.6rem .8rem;margin-top:.9rem;line-height:1.5;}
   .info b{color:var(--navy);}
   .foot{margin-top:1.4rem;font-size:.78rem;color:var(--muted);text-align:center;}
 </style>
@@ -122,14 +122,14 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <style>
-.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav{background:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
 .sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
 .sqnav a{text-decoration:none;}
 .sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
 .sqnav-brand svg{height:16px;}
-.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#BDBFBE;font-weight:600;}
 .sqnav-back:hover{color:#fff;}
 @media print{.sqnav{display:none;}}
 </style>
@@ -143,10 +143,10 @@
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
 
 <div class="topbar"><div class="topbar-in">
-  <span class="mark"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</span>
+  <span class="mark"><svg viewBox="0 0 44 44"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</span>
   <div class="crumbs" id="crumbs"></div>
   <span class="demo-chip">Demo · Tracker</span>
 </div></div>
@@ -261,7 +261,7 @@ function triangulate(p){
 }
 function flagHTML(t){
   var ic={under:'<svg viewBox="0 0 24 24" fill="none" stroke="#9A5A24" stroke-width="2.4" stroke-linecap="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>',
-          support:'<svg viewBox="0 0 24 24" fill="none" stroke="#C0453B" stroke-width="2.4" stroke-linecap="round"><path d="M12 8v5M12 16v.5"/><circle cx="12" cy="12" r="9"/></svg>',
+          support:'<svg viewBox="0 0 24 24" fill="none" stroke="#A8543D" stroke-width="2.4" stroke-linecap="round"><path d="M12 8v5M12 16v.5"/><circle cx="12" cy="12" r="9"/></svg>',
           watch:'', coast:'', none:''};
   if(t.kind==="none") return '<span class="flag none">on track</span>';
   return '<span class="flag '+t.kind+'">'+(ic[t.kind]||'')+t.label+'</span>';
@@ -361,7 +361,7 @@ function renderClass(){
 }
 
 // ============ VIEW 3: child profile ============
-function trendArrow(t){ return t==="up"?'<span class="trend">\u2197 improving</span>':(t==="down"?'<span class="trend" style="color:#C0453B">\u2198 slipping</span>':'<span class="trend">\u2192 steady</span>'); }
+function trendArrow(t){ return t==="up"?'<span class="trend">\u2197 improving</span>':(t==="down"?'<span class="trend" style="color:#A8543D">\u2198 slipping</span>':'<span class="trend">\u2192 steady</span>'); }
 function mv(sas){ return '<span class="mv '+band(sas)+'">'+sas+'</span>'; }
 function renderChild(pid){
   var p=PUPILS.find(function(x){return x.id===pid;}); if(!p) return;
@@ -392,6 +392,6 @@ function renderChild(pid){
 renderCrumbs("cohort"); renderCohort();
 </script>
 
-<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+<div style="background:#161A1E;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#9DA1A4;"><a href="/privacy.html" style="color:#BDBFBE;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#BDBFBE;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#BDBFBE;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
 </body>
 </html>

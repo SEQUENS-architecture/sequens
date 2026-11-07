@@ -7,10 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0A3D62; --ink:#12303f; --accent:#2DE1C2; --accent-deep:#0A7A67;
-    --paper:#F2F7F9; --card:#ffffffFFF; --rule:#D7E4EA; --muted:#54718A; --dim:#566F82;
-    --gold:#B8912F; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
-    --red:#C0453B; --red-soft:#F7E9E7; --success-deep:#0A6B5C; --green-soft:#EAF3EE;
+    --navy:#22282E; --ink:#22282E; --accent:#E2C27C; --accent-deep:#3E5568;
+    --paper:#F6F1E7; --card:#ffffffFFF; --rule:#E2DACB; --muted:#4F5A63; --dim:#4F5A63;
+    --gold:#9A7628; --gold-deep:#7A5C14; --steel:#3E5568; --steel-soft:#DDE5EB;
+    --red:#A8543D; --red-soft:#F1DDD5; --success-deep:#3F5A3B; --green-soft:#DFE8DC;
     --font:'Lexend',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
   }
   *{box-sizing:border-box;}
@@ -23,9 +23,9 @@
   .wall{background:var(--navy);color:#fff;border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1.6rem;}
   .wall h2{font-family:var(--head);font-weight:800;font-size:1.1rem;margin:0 0 .8rem;color:#fff;}
   .wall .items{display:flex;gap:.5rem;flex-wrap:wrap;}
-  .wall .item{background:rgba(45,225,194,.14);border:1px solid rgba(45,225,194,.35);border-radius:8px;
+  .wall .item{background:rgba(226,194,124,.14);border:1px solid rgba(226,194,124,.35);border-radius:8px;
     padding:.45rem .85rem;font-size:.87rem;color:var(--accent);font-weight:600;}
-  .wall p{color:#9FB6C6;font-size:.9rem;margin:.9rem 0 0;}
+  .wall p{color:#BDBFBE;font-size:.9rem;margin:.9rem 0 0;}
 
   /* PICKER */
   .picker{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1.2rem;}
@@ -35,10 +35,10 @@
   .ped{border:2px solid var(--rule);background:#fff;border-radius:12px;padding:.9rem 1rem;cursor:pointer;text-align:left;
     font-family:var(--font);transition:.15s;}
   .ped:hover{border-color:var(--accent-deep);}
-  .ped.on{border-color:var(--accent-deep);background:#F4FBF9;}
+  .ped.on{border-color:var(--accent-deep);background:#EEF2EA;}
   .ped b{display:block;font-family:var(--head);font-weight:700;font-size:.98rem;color:var(--navy);margin-bottom:.15rem;}
   .ped span{font-size:.82rem;color:var(--muted);line-height:1.4;}
-  .ped.caution.on{border-color:var(--gold);background:#FBF6E9;}
+  .ped.caution.on{border-color:var(--gold);background:#F3E8CC;}
 
   /* THE SPINE, rendered */
   .spine-out{display:flex;flex-direction:column;gap:.7rem;}
@@ -53,25 +53,25 @@
     padding:.15rem .5rem;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:.4rem;}
   .lockchip svg{width:9px;height:9px;}
 
-  .method{background:#F6FAFC;border-radius:10px;padding:.9rem 1.1rem;transition:.25s;}
+  .method{background:#FAF7F0;border-radius:10px;padding:.9rem 1.1rem;transition:.25s;}
   .method .mlabel{font-family:var(--head);font-weight:700;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--accent-deep);margin-bottom:.35rem;}
   .method p{margin:0;font-size:.95rem;color:var(--ink);}
   .method .swap{font-size:.82rem;color:var(--muted);margin-top:.5rem;font-style:italic;}
 
   /* the honest challenge, when a weak pedagogy is picked */
-  .challenge{display:none;background:#FBF6E9;border:1.5px solid #E0C97F;border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+  .challenge{display:none;background:#F3E8CC;border:1.5px solid #E2C27C;border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
   .challenge.on{display:block;}
   .challenge .ctitle{display:flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:700;
     font-size:.95rem;color:var(--gold-deep);margin-bottom:.6rem;}
   .challenge .ctitle svg{width:18px;height:18px;}
-  .challenge p{font-size:.92rem;color:#6B531A;margin:0 0 .6rem;}
+  .challenge p{font-size:.92rem;color:#5E4710;margin:0 0 .6rem;}
   .challenge p:last-child{margin:0;}
-  .challenge .src{font-size:.82rem;color:#8A6A18;background:#fff;border-radius:8px;padding:.5rem .8rem;}
+  .challenge .src{font-size:.82rem;color:#7A5C14;background:#fff;border-radius:8px;padding:.5rem .8rem;}
   .challenge .choice{display:flex;gap:.5rem;margin-top:.8rem;}
-  .challenge .choice button{border:1.5px solid #E0C97F;background:#fff;border-radius:9px;padding:.5rem .9rem;
-    font-family:var(--font);font-weight:600;font-size:.87rem;color:#6B531A;cursor:pointer;}
-  .challenge .choice button:hover{background:#FBF6E9;}
+  .challenge .choice button{border:1.5px solid #E2C27C;background:#fff;border-radius:9px;padding:.5rem .9rem;
+    font-family:var(--font);font-weight:600;font-size:.87rem;color:#5E4710;cursor:pointer;}
+  .challenge .choice button:hover{background:#F3E8CC;}
 
   .foot{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent-deep);
     border-radius:12px;padding:1.2rem 1.4rem;margin-top:1.6rem;font-size:.92rem;color:var(--muted);}
@@ -83,14 +83,14 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <style>
-.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav{background:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
 .sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
 .sqnav a{text-decoration:none;}
 .sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
 .sqnav-brand svg{height:16px;}
-.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#BDBFBE;font-weight:600;}
 .sqnav-back:hover{color:#fff;}
 @media print{.sqnav{display:none;}}
 </style>
@@ -104,7 +104,7 @@
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
 
 <div class="wrap">
   <h1>What flexes, and what holds</h1>
@@ -142,7 +142,7 @@
   <!-- the honest pushback, only for pure discovery -->
   <div class="challenge" id="challenge">
     <div class="ctitle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#8A6A18" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7A5C14" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
       One thing, and then it is your call
     </div>
     <p>You have chosen <b>minimal guidance</b> for the modelling step. SEQUENS will build it. But you should know what the evidence says, once, and then we will not raise it again.</p>
@@ -249,6 +249,6 @@ function dismissChallenge(){
 render("direct");
 </script>
 
-<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+<div style="background:#161A1E;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#9DA1A4;"><a href="/privacy.html" style="color:#BDBFBE;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#BDBFBE;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#BDBFBE;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
 </body>
 </html>

@@ -9,16 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F2F7F9; --paper-2:#E9F1F5; --surface:#F8FBFC; --card:#ffffffFFF;
-    --ink:#12303f; --ink-soft:#54718a; --muted:#54718A;
-    --terra:#0A7A67; --terra-deep:#0A7563; --terra-soft:#d9f2ec;
-    --teal:#2C6E9B; --teal-soft:#eaf2f8; --teal-deep:#1F4F73;
-    --gold:#B8912F; --gold-soft:#F3ECD2; --gold-deep:#8a6a18;
-    --green:#3F8F6B; --green-soft:#eaf3ee; --green-deep:#2C6B4F;
-    --rule:#D7E4EA; --rule-2:#C2D6DF;
+    --paper:#F6F1E7; --paper-2:#F1F0ED; --surface:#FAF7F0; --card:#ffffffFFF;
+    --ink:#22282E; --ink-soft:#4F5A63; --muted:#4F5A63;
+    --terra:#3E5568; --terra-deep:#3E5568; --terra-soft:#DFE8DC;
+    --teal:#3E5568; --teal-soft:#DDE5EB; --teal-deep:#3E5568;
+    --gold:#9A7628; --gold-soft:#F3E8CC; --gold-deep:#7A5C14;
+    --green:#5E7A57; --green-soft:#DFE8DC; --green-deep:#4F6B49;
+    --rule:#E2DACB; --rule-2:#D7D3CA;
     --display:'Schibsted Grotesk','Segoe UI',Arial,sans-serif;
     --body:'Lexend','Segoe UI',system-ui,sans-serif;
-    --shadow:0 2px 16px rgba(10,61,98,.08);
+    --shadow:0 2px 16px rgba(34,40,46,.08);
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;}
@@ -68,11 +68,11 @@
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;}
   @media (max-width:820px){.grid2{grid-template-columns:1fr;}}
   .panel{background:var(--card);border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);padding:1.3rem 1.4rem;margin-bottom:1.3rem;}
-  .focus-card{background:var(--gold-soft);border:1px solid #CBE0D8;border-radius:16px;padding:1.4rem;}
+  .focus-card{background:var(--gold-soft);border:1px solid #DBD7D0;border-radius:16px;padding:1.4rem;}
   .focus-card .mono{color:var(--gold-deep);}
   .focus-card h3{margin-top:.2rem;}
   .focus-card p{margin:.3rem 0 0;color:var(--ink-soft);font-size:.95rem;}
-  .banner{background:var(--teal-soft);border-radius:12px;padding:.8rem 1rem;font-size:.9rem;color:#184f4c;margin-bottom:1.2rem;}
+  .banner{background:var(--teal-soft);border-radius:12px;padding:.8rem 1rem;font-size:.9rem;color:#3B362C;margin-bottom:1.2rem;}
   .banner b{font-weight:700;}
   .note{font-size:.82rem;color:var(--muted);font-style:italic;}
 
@@ -174,7 +174,7 @@
   .field label{display:flex;align-items:center;font-family:var(--display);font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:.28rem;}
   .field textarea{width:100%;border:1px solid var(--rule-2);border-radius:10px;padding:.6rem .7rem;font-family:var(--body);font-size:.9rem;color:var(--ink);background:var(--card);resize:vertical;min-height:50px;line-height:1.45;}
   .field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-soft);}
-  .field.private textarea{background:#F3F8FA;border-color:var(--terra-soft);}
+  .field.private textarea{background:#F8F7F5;border-color:var(--terra-soft);}
   .tag{font-family:var(--display);font-size:.56rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.2rem .5rem;border-radius:12px;margin-left:.5rem;}
   .tag.priv{color:var(--terra-deep);background:var(--terra-soft);}
   .tag.shared{color:var(--teal-deep);background:var(--teal-soft);}
@@ -229,7 +229,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <meta name="description" content="A working demonstration of the SEQUENS coaching platform: the fortnightly move, the shared record, and the wall between coaching and appraisal.">
 <link rel="canonical" href="https://sequens.education/coaching-mockup.html">
 <meta property="og:type" content="website">
@@ -244,7 +244,7 @@
 <!-- ================= LOGIN ================= -->
 <div id="login">
   <div class="login-card">
-    <div class="brand"><svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg>SEQUENS</div>
+    <div class="brand"><svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</div>
     <h1>Sign in to your dashboard</h1>
     <p class="sub">Choose your view. This is a mockup - pick a role to see exactly what that person lands on.</p>
     <div class="role-grid" id="roleGrid"></div>
@@ -254,7 +254,7 @@
 <!-- ================= APP ================= -->
 <div id="app">
   <div class="topbar"><div class="topbar-in">
-    <a class="brand" href="/"><svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg>SEQUENS</a>
+    <a class="brand" href="/"><svg class="logo-mark" viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a>
     <div class="role-seg" id="roleSeg"><button class="rs-toggle" onclick="document.documentElement.classList.toggle('rs')" title="Larger, more spaced text">Aa&ensp;Reading support</button></div>
     <div class="who"><span id="whoName"></span><span class="logout" id="logout">Log out</span></div>
   </div></div>
@@ -676,6 +676,6 @@ dash.addEventListener("change", e=>{
 });
 </script>
 
-<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+<div style="background:#161A1E;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#9DA1A4;"><a href="/privacy.html" style="color:#BDBFBE;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#BDBFBE;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#BDBFBE;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
 </body>
 </html>

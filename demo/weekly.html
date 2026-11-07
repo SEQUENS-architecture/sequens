@@ -7,10 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0A7A67; --accent:#2DE1C2;
-    --paper:#F2F7F9; --card:#ffffffFFF; --rule:#D7E4EA; --muted:#54718A; --dim:#566F82;
-    --gold:#B8912F; --gold-soft:#F3ECD2; --steel:#2C6E9B; --steel-soft:#EAF2F8;
-    --red:#C0453B; --red-soft:#F7E9E7; --amber:#B8912F;
+    --navy:#22282E; --ink:#22282E; --accent-deep:#3E5568; --accent:#E2C27C;
+    --paper:#F6F1E7; --card:#ffffffFFF; --rule:#E2DACB; --muted:#4F5A63; --dim:#4F5A63;
+    --gold:#9A7628; --gold-soft:#F3E8CC; --steel:#3E5568; --steel-soft:#DDE5EB;
+    --red:#A8543D; --red-soft:#F1DDD5; --amber:#9A7628;
     --font:'Lexend','Segoe UI',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
   }
   *{box-sizing:border-box;}
@@ -24,7 +24,7 @@
   .stepbar{display:flex;gap:.4rem;align-items:center;margin-bottom:1.4rem;flex-wrap:wrap;font-size:.8rem;}
   .stepbar .s{padding:.3rem .7rem;border-radius:7px;font-weight:600;color:var(--dim);background:#fff;border:1px solid var(--rule);}
   .stepbar .s.on{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep);}
-  .stepbar .s.done{color:var(--accent-deep);border-color:#BEDFD0;}
+  .stepbar .s.done{color:var(--accent-deep);border-color:#C5D3BF;}
   .stepbar .sep{color:var(--rule);}
 
   .card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.3rem 1.4rem;margin-bottom:1rem;}
@@ -59,8 +59,8 @@
 
   /* suggestion cards */
   .suggest{border:1.5px solid var(--rule);border-radius:12px;padding:1rem 1.1rem;margin-bottom:.8rem;}
-  .suggest.high{border-color:#E3B7B2;background:#FCF6F5;}
-  .suggest.low{border-color:#BEDFD0;background:#F4FBF8;}
+  .suggest.high{border-color:#E3B7B2;background:#F8EEE9;}
+  .suggest.low{border-color:#C5D3BF;background:#F9F8F6;}
   .sg-top{display:flex;align-items:flex-start;gap:.7rem;}
   .sg-badge{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;border-radius:20px;padding:2px 9px;flex-shrink:0;margin-top:2px;}
   .sg-badge.high{background:var(--red);} .sg-badge.low{background:var(--accent-deep);}
@@ -75,9 +75,9 @@
   .sg-decision{margin-top:.8rem;border-top:1px dashed var(--rule);padding-top:.7rem;font-size:.86rem;display:none;}
   .sg-decision.show{display:block;}
   .sg-decision .tag{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 9px;}
-  .tag.confirmed{background:#E4F3EC;color:#0A6B5C;}
-  .tag.adjusted{background:var(--gold-soft);color:#6B531A;}
-  .tag.dismissed{background:#EEF2F5;color:var(--muted);}
+  .tag.confirmed{background:#EEECE9;color:#3F5A3B;}
+  .tag.adjusted{background:var(--gold-soft);color:#5E4710;}
+  .tag.dismissed{background:#F3F2F0;color:var(--muted);}
   .sg-decision .detail{margin-top:.4rem;color:var(--ink);}
   .sg-decision .detail .was{color:var(--muted);text-decoration:line-through;}
   .sg-decision .undo{margin-left:.4rem;color:var(--steel);font-weight:600;font-size:.8rem;cursor:pointer;text-decoration:underline;}
@@ -97,28 +97,28 @@
   .rchip.on{background:var(--muted);color:#fff;border-color:var(--muted);}
 
   /* audit trail */
-  .audit{background:#0A2C49;color:#CFE0EC;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1rem;}
+  .audit{background:#1E2328;color:#E0DBD1;border-radius:14px;padding:1.3rem 1.4rem;margin-top:1rem;}
   .audit h2{color:#fff;}
-  .audit .psub{color:#9FB6C6;}
+  .audit .psub{color:#BDBFBE;}
   .arow{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem 0;border-top:1px solid rgba(255,255,255,.1);font-size:.86rem;}
   .arow:first-of-type{border-top:none;}
   .a-icon{width:26px;height:26px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;}
-  .a-icon.c{background:rgba(45,225,194,.15);color:var(--accent);}
+  .a-icon.c{background:rgba(226,194,124,.15);color:var(--accent);}
   .a-icon.a{background:rgba(184,145,47,.2);color:#E7C766;}
-  .a-icon.d{background:rgba(255,255,255,.1);color:#9FB6C6;}
+  .a-icon.d{background:rgba(255,255,255,.1);color:#BDBFBE;}
   .a-body{flex:1;} .a-body .cls{font-weight:700;color:#fff;}
-  .a-body .line{color:#B9CCDA;} .a-body .was{color:#7E97AB;text-decoration:line-through;}
-  .a-body .reason{color:#9FB6C6;font-style:italic;}
-  .a-time{color:#6E8BA0;font-size:.76rem;white-space:nowrap;}
-  .audit-empty{color:#7E97AB;font-size:.88rem;font-style:italic;}
-  .audit-note{margin-top:1rem;font-size:.8rem;color:#9FB6C6;line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:.8rem;}
+  .a-body .line{color:#D0CFCA;} .a-body .was{color:#9DA1A4;text-decoration:line-through;}
+  .a-body .reason{color:#BDBFBE;font-style:italic;}
+  .a-time{color:#988D76;font-size:.76rem;white-space:nowrap;}
+  .audit-empty{color:#9DA1A4;font-size:.88rem;font-style:italic;}
+  .audit-note{margin-top:1rem;font-size:.8rem;color:#BDBFBE;line-height:1.5;border-top:1px solid rgba(255,255,255,.1);padding-top:.8rem;}
 
   .foot{margin-top:1.4rem;font-size:.78rem;color:var(--muted);text-align:center;}
   .pupil-sec{margin-top:1rem;}
   .pupil-flag{display:flex;gap:.7rem;align-items:flex-start;border:1.5px solid var(--rule);border-radius:12px;padding:.9rem 1rem;margin-bottom:.7rem;}
-  .pupil-flag.watch{border-color:#E3B7B2;background:#FCF6F5;}
-  .pupil-flag.hidden-risk{border-color:#E3B7B2;background:#FCF6F5;}
-  .pupil-flag.cap{border-color:#D8B24E;background:#FBF6E9;}
+  .pupil-flag.watch{border-color:#E3B7B2;background:#F8EEE9;}
+  .pupil-flag.hidden-risk{border-color:#E3B7B2;background:#F8EEE9;}
+  .pupil-flag.cap{border-color:#D8B24E;background:#F3E8CC;}
   .pf-badge{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;border-radius:20px;padding:2px 8px;flex-shrink:0;margin-top:2px;white-space:nowrap;}
   .pf-badge.watch{background:var(--red);} .pf-badge.hidden-risk{background:var(--red);} .pf-badge.cap{background:var(--gold);}
   .pf-body{flex:1;}
@@ -129,9 +129,9 @@
   .pf-actions{display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap;}
   .pf-decision{margin-top:.7rem;border-top:1px dashed var(--rule);padding-top:.6rem;font-size:.85rem;display:none;}
   .pf-decision.show{display:block;}
-  .pupil-clear{font-size:.86rem;color:var(--accent-deep);background:#F4FBF8;border:1px solid #BEDFD0;border-radius:10px;padding:.6rem .85rem;margin-bottom:.7rem;}
-  .pupil-clear b{color:#0A6B5C;}
-  .bignote{background:var(--steel-soft);border:1px solid #CADEEC;border-radius:11px;padding:.8rem 1rem;font-size:.85rem;color:var(--navy);margin-bottom:1rem;line-height:1.5;}
+  .pupil-clear{font-size:.86rem;color:var(--accent-deep);background:#F9F8F6;border:1px solid #C5D3BF;border-radius:10px;padding:.6rem .85rem;margin-bottom:.7rem;}
+  .pupil-clear b{color:#3F5A3B;}
+  .bignote{background:var(--steel-soft);border:1px solid #E0DDD6;border-radius:11px;padding:.8rem 1rem;font-size:.85rem;color:var(--navy);margin-bottom:1rem;line-height:1.5;}
   .bignote b{font-weight:700;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -140,14 +140,14 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <style>
-.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav{background:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
 .sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
 .sqnav a{text-decoration:none;}
 .sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
 .sqnav-brand svg{height:16px;}
-.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#BDBFBE;font-weight:600;}
 .sqnav-back:hover{color:#fff;}
 @media print{.sqnav{display:none;}}
 </style>
@@ -162,10 +162,10 @@
 </head>
 <body>
 <h1 class="sr-only">The teaching week: what SEQUENS noticed and what it suggests</h1>
-<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
 
 <div class="app">
-  <div class="apphead"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#0A7A67"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#0A3D62"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#0A3D62"/></svg><b>SEQUENS</b><span class="demo-chip">Demo · Weekly Engine</span></div>
+  <div class="apphead"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg><b>SEQUENS</b><span class="demo-chip">Demo · Weekly Engine</span></div>
   <p class="sub">The Thursday data drop, the honest way. Four Year 6 classes, this week's arithmetic quiz already marked. SEQUENS suggests where each class stumbled from where marks were lost - you confirm, adjust, or dismiss. Nothing is decided for you.</p>
 
   <div class="stepbar"><span class="s done">1 · Marks in</span><span class="sep">›</span><span class="s on">2 · Confirm the gaps</span><span class="sep">›</span><span class="s">3 · Agenda &amp; lessons</span></div>
@@ -472,6 +472,6 @@ renderTabs(); renderSheet(); renderSuggestions(); renderPupils(); renderAudit();
 </script>
 </div>
 
-<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+<div style="background:#161A1E;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#9DA1A4;"><a href="/privacy.html" style="color:#BDBFBE;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#BDBFBE;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#BDBFBE;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
 </body>
 </html>

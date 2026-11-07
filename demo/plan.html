@@ -7,10 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0A3D62; --ink:#12303f; --accent-deep:#0A7A67; --accent:#2DE1C2;
-    --paper:#F2F7F9; --card:#ffffffFFF; --rule:#D7E4EA; --muted:#54718A; --dim:#566F82;
-    --gold:#B8912F; --gold-deep:#8A6A18; --steel:#2C6E9B; --steel-soft:#EAF2F8;
-    --red:#C0453B; --red-soft:#F7E9E7; --success-deep:#0A6B5C; --green-soft:#EAF3EE;
+    --navy:#22282E; --ink:#22282E; --accent-deep:#3E5568; --accent:#E2C27C;
+    --paper:#F6F1E7; --card:#ffffffFFF; --rule:#E2DACB; --muted:#4F5A63; --dim:#4F5A63;
+    --gold:#9A7628; --gold-deep:#7A5C14; --steel:#3E5568; --steel-soft:#DDE5EB;
+    --red:#A8543D; --red-soft:#F1DDD5; --success-deep:#3F5A3B; --green-soft:#DFE8DC;
     --font:'Lexend',sans-serif; --head:'Schibsted Grotesk',Arial,sans-serif;
   }
   *{box-sizing:border-box;}
@@ -26,7 +26,7 @@
   .meta div span{display:block;color:var(--dim);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.15rem;}
   .meta div b{color:var(--navy);font-weight:600;}
 
-  .src{background:var(--steel-soft);border:1px solid #C5DAEA;border-radius:10px;padding:.9rem 1.1rem;font-size:.86rem;color:#1F4A6E;margin-bottom:1.2rem;}
+  .src{background:var(--steel-soft);border:1px solid #D8D2C6;border-radius:10px;padding:.9rem 1.1rem;font-size:.86rem;color:#3E5568;margin-bottom:1.2rem;}
   .src b{color:var(--navy);}
 
   .seq{display:flex;gap:.35rem;margin-bottom:1.4rem;}
@@ -34,7 +34,7 @@
     color:var(--muted);padding:.5rem .2rem;background:var(--card);border:1px solid var(--rule);border-radius:7px;}
 
   .step{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:.9rem;}
-  .step.hinge{border-color:var(--steel);border-width:2px;background:#FBFDFE;}
+  .step.hinge{border-color:var(--steel);border-width:2px;background:#FCFAF5;}
   .step-top{display:flex;align-items:baseline;gap:.8rem;margin-bottom:.8rem;}
   .step-name{font-family:var(--head);font-weight:800;font-size:1.15rem;color:var(--navy);}
   .step-time{margin-left:auto;font-size:.8rem;color:var(--dim);font-weight:600;}
@@ -42,34 +42,34 @@
     background:var(--steel);color:#fff;border-radius:20px;padding:.15rem .55rem;}
   .step p{margin:0 0 .7rem;font-size:.95rem;}
   .step p:last-child{margin-bottom:0;}
-  .step .say{background:#F6FAFC;border-left:3px solid var(--muted);padding:.7rem 1rem;border-radius:0 7px 7px 0;
+  .step .say{background:#FAF7F0;border-left:3px solid var(--muted);padding:.7rem 1rem;border-radius:0 7px 7px 0;
     font-style:italic;color:var(--ink);}
 
   /* THE MODELLING SPACE GUIDANCE - the whole point of this document */
-  .msg{background:#F7FCFB;border:1.5px solid var(--accent-deep);border-radius:12px;padding:1.1rem 1.3rem;margin:.9rem 0;}
+  .msg{background:#F2F5EE;border:1.5px solid var(--accent-deep);border-radius:12px;padding:1.1rem 1.3rem;margin:.9rem 0;}
   .msg .mtitle{display:flex;align-items:center;gap:.5rem;font-family:var(--head);font-weight:700;font-size:.72rem;
     letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:.6rem;}
   .msg .mtitle svg{width:15px;height:15px;}
   .msg .purpose{font-size:.98rem;color:var(--navy);font-weight:600;margin:0 0 .6rem;}
   .msg .detail{font-size:.9rem;color:var(--muted);margin:0 0 .6rem;}
   .msg .detail:last-child{margin:0;}
-  .msg .egs{background:#fff;border:1px dashed #BEDFD0;border-radius:8px;padding:.7rem .9rem;font-size:.88rem;color:var(--success-deep);}
+  .msg .egs{background:#fff;border:1px dashed #C5D3BF;border-radius:8px;padding:.7rem .9rem;font-size:.88rem;color:var(--success-deep);}
   .msg .egs b{display:block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;font-weight:700;}
-  .msg .warn{font-size:.85rem;color:#8A6A18;background:#FBF6E9;border-radius:7px;padding:.55rem .8rem;margin-top:.6rem;}
+  .msg .warn{font-size:.85rem;color:#7A5C14;background:#F3E8CC;border-radius:7px;padding:.55rem .8rem;margin-top:.6rem;}
 
   .misc{background:var(--red-soft);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:.8rem 0;}
-  .misc b{color:#8A2F27;}
-  .misc p{margin:0;font-size:.9rem;color:#8A2F27;}
+  .misc b{color:#7A3B28;}
+  .misc p{margin:0;font-size:.9rem;color:#7A3B28;}
 
   .key{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:1.3rem 1.5rem;margin-top:1.2rem;}
   .key h3{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem;}
   .keyrow{display:flex;gap:.5rem;flex-wrap:wrap;}
   .kchip{border-radius:8px;padding:.5rem .8rem;font-size:.85rem;flex:1;min-width:150px;}
   .kchip b{display:block;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem;}
-  .k1{background:#EAF6F4;color:#0A6B5C;} .k1 b{color:#7FC8BC;}
+  .k1{background:#F2F1EE;color:#3F5A3B;} .k1 b{color:#6B6355;}
   .k2{background:var(--green-soft);color:var(--success-deep);} .k2 b{color:var(--accent-deep);}
-  .k3{background:#FBF6E9;color:var(--gold-deep);} .k3 b{color:var(--gold);}
-  .k4{background:var(--steel-soft);color:#1F4A6E;} .k4 b{color:var(--steel);}
+  .k3{background:#F3E8CC;color:var(--gold-deep);} .k3 b{color:var(--gold);}
+  .k4{background:var(--steel-soft);color:#3E5568;} .k4 b{color:var(--steel);}
   .keynote{font-size:.82rem;color:var(--dim);margin-top:.8rem;font-style:italic;}
 
   /* ===== LAYER TOGGLES ===== */
@@ -85,7 +85,7 @@
   .ltog:hover{border-color:var(--accent-deep);}
   .ltog.on{background:var(--navy);border-color:var(--navy);color:#fff;}
   .ltog.on.script{background:var(--accent-deep);border-color:var(--accent-deep);}
-  .ltog.on.ta{background:#7A4A8B;border-color:#7A4A8B;}
+  .ltog.on.ta{background:#6E5570;border-color:#6E5570;}
   .ltog.on.ai{background:var(--steel);border-color:var(--steel);}
   .ltog .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5;}
   .ltog.on .dot{opacity:1;}
@@ -103,7 +103,7 @@
   .lay p:last-child{margin:0;}
 
   /* SCRIPT layer - what you might actually say */
-  .lay.script{background:#F1FAF8;border:1px solid #BEDFD0;}
+  .lay.script{background:#F7F6F4;border:1px solid #C5D3BF;}
   .lay.script .ltitle{color:var(--accent-deep);}
   .lay.script .line{background:#fff;border-left:3px solid var(--accent-deep);border-radius:0 7px 7px 0;
     padding:.6rem .85rem;margin-bottom:.5rem;font-style:italic;color:var(--ink);}
@@ -112,70 +112,70 @@
 
   /* TA layer - purple, deliberate, documented in the palette lock */
   .lay.ta{background:#F7F2FA;border:1px dashed #C89AD8;}
-  .lay.ta .ltitle{color:#7A4A8B;}
-  .lay.ta p{color:#5E3A6B;}
+  .lay.ta .ltitle{color:#6E5570;}
+  .lay.ta p{color:#574357;}
   .lay.ta .todo{background:#fff;border-radius:7px;padding:.55rem .8rem;margin-bottom:.4rem;
-    display:flex;gap:.55rem;align-items:flex-start;font-size:.88rem;color:#5E3A6B;}
+    display:flex;gap:.55rem;align-items:flex-start;font-size:.88rem;color:#574357;}
   .lay.ta .todo:last-child{margin-bottom:0;}
-  .lay.ta .todo .b{color:#7A4A8B;font-weight:700;flex-shrink:0;}
+  .lay.ta .todo .b{color:#6E5570;font-weight:700;flex-shrink:0;}
 
   /* AI layer - steel, and honest about where AI should NOT go */
-  .lay.ai{background:var(--steel-soft);border:1px solid #C5DAEA;}
+  .lay.ai{background:var(--steel-soft);border:1px solid #D8D2C6;}
   .lay.ai .ltitle{color:var(--steel);}
-  .lay.ai p{color:#1F4A6E;}
+  .lay.ai p{color:#3E5568;}
   .lay.ai .yes,.lay.ai .no{border-radius:7px;padding:.55rem .85rem;margin-bottom:.4rem;font-size:.88rem;display:flex;gap:.55rem;align-items:flex-start;}
-  .lay.ai .yes{background:#fff;border-left:3px solid var(--steel);color:#1F4A6E;}
-  .lay.ai .no{background:#FBF0EF;border-left:3px solid var(--red);color:#8A2F27;}
+  .lay.ai .yes{background:#fff;border-left:3px solid var(--steel);color:#3E5568;}
+  .lay.ai .no{background:#FBF0EF;border-left:3px solid var(--red);color:#7A3B28;}
   .lay.ai .tag{font-weight:700;flex-shrink:0;}
 
-  .ltog.on.sup{background:#0A6B5C;border-color:#0A6B5C;}
-  .ltog.on.str{background:#8A6A18;border-color:#8A6A18;}
+  .ltog.on.sup{background:#3F5A3B;border-color:#3F5A3B;}
+  .ltog.on.str{background:#7A5C14;border-color:#7A5C14;}
   body.show-sup .lay.sup{display:block;}
   body.show-str .lay.str{display:block;}
 
   /* SUPPORT layer - what the child is DOING, not what they are given */
-  .lay.sup{background:#EEF8F5;border:1px solid #9FD4C6;}
-  .lay.sup .ltitle{color:#0A6B5C;}
-  .lay.sup p{color:#0A5C4E;}
-  .lay.sup .doing{background:#fff;border-left:3px solid #0A6B5C;border-radius:0 7px 7px 0;
-    padding:.65rem .9rem;margin-bottom:.45rem;font-size:.89rem;color:#0A5C4E;}
+  .lay.sup{background:#F5F4F1;border:1px solid #C3BDB0;}
+  .lay.sup .ltitle{color:#3F5A3B;}
+  .lay.sup p{color:#3F5A3B;}
+  .lay.sup .doing{background:#fff;border-left:3px solid #3F5A3B;border-radius:0 7px 7px 0;
+    padding:.65rem .9rem;margin-bottom:.45rem;font-size:.89rem;color:#3F5A3B;}
   .lay.sup .doing:last-child{margin-bottom:0;}
   .lay.sup .doing b{display:block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
-    color:#7FC8BC;margin-bottom:.2rem;font-weight:700;}
-  .lay.sup .same{background:#0A6B5C;color:#fff;border-radius:8px;padding:.6rem .9rem;
+    color:#6B6355;margin-bottom:.2rem;font-weight:700;}
+  .lay.sup .same{background:#3F5A3B;color:#fff;border-radius:8px;padding:.6rem .9rem;
     font-size:.87rem;font-weight:600;margin-top:.5rem;}
 
   /* GOING FURTHER layer */
-  .lay.str{background:#FBF6E9;border:1px solid #E0C97F;}
-  .lay.str .ltitle{color:#8A6A18;}
-  .lay.str p{color:#6B531A;}
-  .lay.str .push{background:#fff;border-left:3px solid #8A6A18;border-radius:0 7px 7px 0;
-    padding:.65rem .9rem;margin-bottom:.45rem;font-size:.89rem;color:#6B531A;}
+  .lay.str{background:#F3E8CC;border:1px solid #E2C27C;}
+  .lay.str .ltitle{color:#7A5C14;}
+  .lay.str p{color:#5E4710;}
+  .lay.str .push{background:#fff;border-left:3px solid #7A5C14;border-radius:0 7px 7px 0;
+    padding:.65rem .9rem;margin-bottom:.45rem;font-size:.89rem;color:#5E4710;}
   .lay.str .push:last-child{margin-bottom:0;}
   .lay.str .push b{display:block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
-    color:#B8912F;margin-bottom:.2rem;font-weight:700;}
-  .lay.str .warn{background:#8A6A18;color:#fff;border-radius:8px;padding:.6rem .9rem;
+    color:#9A7628;margin-bottom:.2rem;font-weight:700;}
+  .lay.str .warn{background:#7A5C14;color:#fff;border-radius:8px;padding:.6rem .9rem;
     font-size:.87rem;font-weight:600;margin-top:.5rem;}
 
-  .ltog.on.send{background:#2C6E9B;border-color:#2C6E9B;}
+  .ltog.on.send{background:#3E5568;border-color:#3E5568;}
   body.show-send .lay.send{display:block;}
 
   /* SEND & EAL - specific need, specific action. Never a generic box. */
-  .lay.send{background:#EDF4F9;border:1px solid #A9C9E0;padding:1.1rem 1.25rem;}
-  .lay.send .ltitle{color:#1F4A6E;}
-  .lay.send > p{color:#1F4A6E;}
+  .lay.send{background:#F5F4F1;border:1px solid #CDC7BC;padding:1.1rem 1.25rem;}
+  .lay.send .ltitle{color:#3E5568;}
+  .lay.send > p{color:#3E5568;}
   .lay.send .needs{display:flex;flex-direction:column;gap:.45rem;}
   .lay.send .need{background:#fff;border-radius:8px;padding:.65rem .9rem;display:flex;gap:.7rem;align-items:flex-start;}
   .lay.send .need .who{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.04em;
-    text-transform:uppercase;color:#2C6E9B;min-width:190px;flex-shrink:0;padding-top:.12rem;line-height:1.35;}
-  .lay.send .need .what{font-size:.88rem;color:#1F4A6E;line-height:1.5;}
-  .lay.send .need .what b{color:#0A3D62;}
-  .lay.send .eal{background:#0A3D62;color:#fff;border-radius:9px;padding:.75rem 1rem;margin-top:.6rem;font-size:.88rem;line-height:1.5;}
+    text-transform:uppercase;color:#3E5568;min-width:190px;flex-shrink:0;padding-top:.12rem;line-height:1.35;}
+  .lay.send .need .what{font-size:.88rem;color:#3E5568;line-height:1.5;}
+  .lay.send .need .what b{color:#22282E;}
+  .lay.send .eal{background:#22282E;color:#fff;border-radius:9px;padding:.75rem 1rem;margin-top:.6rem;font-size:.88rem;line-height:1.5;}
   .lay.send .eal .etitle{font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:.1em;
-    text-transform:uppercase;color:#7FE7FF;margin-bottom:.35rem;}
-  .lay.send .eal b{color:#7FE7FF;}
-  .lay.send .flag{background:#FBF6E9;border:1px solid #E0C97F;border-radius:8px;padding:.6rem .85rem;
-    font-size:.83rem;color:#6B531A;margin-top:.6rem;}
+    text-transform:uppercase;color:#E2C27C;margin-bottom:.35rem;}
+  .lay.send .eal b{color:#E2C27C;}
+  .lay.send .flag{background:#F3E8CC;border:1px solid #E2C27C;border-radius:8px;padding:.6rem .85rem;
+    font-size:.83rem;color:#5E4710;margin-top:.6rem;}
 
   /* keyboard focus - a teacher navigating by keyboard must see where they are */
   .ltog:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
@@ -215,14 +215,14 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0A3D62">
+<meta name="theme-color" content="#22282E">
 <style>
-.sqnav{background:linear-gradient(172deg,#071322 0%,#0A2C49 55%,#0A3D62 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
+.sqnav{background:linear-gradient(172deg,#161A1E 0%,#1E2328 55%,#22282E 100%);position:sticky;top:0;z-index:99999;border-bottom:1px solid rgba(255,255,255,.09);}
 .sqnav-in{max-width:1100px;margin:0 auto;padding:.62rem 1.3rem;display:flex;align-items:center;gap:.8rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;}
 .sqnav a{text-decoration:none;}
 .sqnav-brand{display:inline-flex;align-items:center;gap:.5rem;font-family:'Schibsted Grotesk',Arial,sans-serif;font-weight:800;letter-spacing:.03em;color:#fff;font-size:.98rem;}
 .sqnav-brand svg{height:16px;}
-.sqnav-back{margin-left:auto;font-size:.84rem;color:#9FB6C6;font-weight:600;}
+.sqnav-back{margin-left:auto;font-size:.84rem;color:#BDBFBE;font-weight:600;}
 .sqnav-back:hover{color:#fff;}
 @media print{.sqnav{display:none;}}
 </style>
@@ -236,7 +236,7 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="show-send show-sup">
-<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#2DE1C2"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#DEE7EF"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#DEE7EF"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
+<div class="sqnav"><div class="sqnav-in"><a class="sqnav-brand" href="/"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="2" y="3" width="6" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="8" width="11" height="3" rx="1.5" fill="#C47D66"/><rect x="2" y="13" width="16" height="3" rx="1.5" fill="#C6A055"/><rect x="2" y="18" width="21" height="3" rx="1.5" fill="#7E9477"/><rect x="2" y="23" width="26" height="3" rx="1.5" fill="#8A7088"/><rect x="2" y="28" width="31" height="3" rx="1.5" fill="#457B74"/><rect x="2" y="33" width="35" height="3" rx="1.5" fill="#5A7389"/><rect x="2" y="38" width="39" height="3" rx="1.5" fill="#C47D66"/></svg>SEQUENS</a><a class="sqnav-back" href="index.html">Back to the demonstration</a></div></div>
 
 <div class="wrap">
   <div class="layers">
@@ -278,7 +278,7 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
 
     <div class="msg">
       <div class="mtitle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0A7A67" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3E5568" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
         The blank space on this slide
       </div>
       <p class="purpose">It is for collecting what they already know, in their words.</p>
@@ -289,12 +289,12 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
       </div>
       <div class="warn"><b>Do it your way.</b> This space is yours. Bullet it, mind-map it, draw it. The slide does not care how you fill it, only that you fill it with <em>their</em> words rather than yours.</div>
     </div>
-  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"Three things you know about forces. Whiteboards. Thirty seconds. Go."</div><div class="line">"Right, hands down, shout them at me."</div><div class="line">"Is a force always a push? Think. Thumbs up for yes, down for no."</div><p class="note">Do not accept "a push" and move on. You need "pull" on the board before the next slide, because gravity is a pull and they will not accept that if push is the only word they own.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Before</span><span>Whiteboards and pens out on every table before the class comes in.</span></div><div class="todo"><span class="b">During</span><span>Sit beside the children who freeze at a blank whiteboard. Do not supply an answer - ask them what they saw in the last forces lesson.</span></div><div class="todo"><span class="b">Watch for</span><span>A child writing nothing. That is not always not knowing; it is often not daring.</span></div><p style="font-size:.84rem;margin-top:.5rem;">You are not scribing for them. You are getting them started.</p></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Generate five more retrieval questions on Y3 forces, if this class needs a longer warm-up.</span></div><div class="yes"><span class="tag">Could:</span><span>Turn their three answers into a quick class word cloud for the wall.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not have AI answer the retrieval questions for the children. Retrieval only works if the child does the retrieving - reading an answer is worth nothing.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Retrieving from memory, unaided, exactly like everyone else. This is not a reduced task - it is the same task.</div><div class="doing"><b>What might stop them</b>A blank whiteboard is frightening if you are not sure you know anything. The barrier is usually confidence, not knowledge.</div><div class="doing"><b>What actually helps</b>'What did we do last time with the springs?' A cue to a memory, not a supply of an answer. You are opening a door, not walking through it for them.</div><div class="doing"><b>What does not help</b>Telling them a force is a push or a pull. You have now done the retrieving, and they have done nothing.</div><div class="same">Everyone retrieves. Nobody is given the answer.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>On the slide</b>"Is a force always a push?" is already the challenge, and it is asked of everyone.</div><div class="push"><b>If they are quick</b>"Give me a force you cannot see." That is much harder than it sounds and it walks straight into gravity.</div><div class="warn">Never say "the stretch group". The question is asked to the room.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what">Whiteboards are a written task. <b>Take this orally.</b> Ask them for their three things aloud, and let a partner scribe if needed. You are retrieving forces knowledge, not handwriting.</span></div><div class="need"><span class="who">Sustained attention is the barrier</span><span class="what">Thirty seconds is <b>perfect</b> for this child, and it is why the task is timed. Do not extend it because others are still writing. A short sharp burst is where they are strongest.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">"Three things" is precise and finite, and that is why it works. <b>Do not change it to "as many as you can"</b> - an open-ended task with no end point is genuinely distressing.</span></div><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">Have the last lesson's key words visible on the wall. Retrieval is not cheating if the child still has to <b>choose</b> which words matter.</span></div><div class="need"><span class="who">Time to think is the barrier</span><span class="what">Give the question, then wait. <b>Five seconds of silence</b> before you take answers. It feels endless to you and it is the difference between them answering and not.</span></div></div><div class="need" style="background:#FBF6E9;border:1px solid #E0C97F;">
-      <span class="who" style="color:#8A6A18;">A label is not a need</span>
+  <div class="lay script"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Teacher script - words you might use</div><div class="line">"Three things you know about forces. Whiteboards. Thirty seconds. Go."</div><div class="line">"Right, hands down, shout them at me."</div><div class="line">"Is a force always a push? Think. Thumbs up for yes, down for no."</div><p class="note">Do not accept "a push" and move on. You need "pull" on the board before the next slide, because gravity is a pull and they will not accept that if push is the only word they own.</p></div><div class="lay ta"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0114 0"/><circle cx="18" cy="9" r="2.5"/><path d="M16 20a5 5 0 016-4.5"/></svg>Teaching assistant</div><div class="todo"><span class="b">Before</span><span>Whiteboards and pens out on every table before the class comes in.</span></div><div class="todo"><span class="b">During</span><span>Sit beside the children who freeze at a blank whiteboard. Do not supply an answer - ask them what they saw in the last forces lesson.</span></div><div class="todo"><span class="b">Watch for</span><span>A child writing nothing. That is not always not knowing; it is often not daring.</span></div><p style="font-size:.84rem;margin-top:.5rem;">You are not scribing for them. You are getting them started.</p></div><div class="lay ai"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M12 3v4M9 13h.01M15 13h.01M9.5 17h5"/></svg>AI opportunities - and where not to</div><div class="yes"><span class="tag">Could:</span><span>Generate five more retrieval questions on Y3 forces, if this class needs a longer warm-up.</span></div><div class="yes"><span class="tag">Could:</span><span>Turn their three answers into a quick class word cloud for the wall.</span></div><div class="no"><span class="tag">Do not:</span><span>Do not have AI answer the retrieval questions for the children. Retrieval only works if the child does the retrieving - reading an answer is worth nothing.</span></div></div><div class="lay sup"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>Barriers and routes in - what could stop any child, and what helps</div><div class="doing"><b>What they are doing</b>Retrieving from memory, unaided, exactly like everyone else. This is not a reduced task - it is the same task.</div><div class="doing"><b>What might stop them</b>A blank whiteboard is frightening if you are not sure you know anything. The barrier is usually confidence, not knowledge.</div><div class="doing"><b>What actually helps</b>'What did we do last time with the springs?' A cue to a memory, not a supply of an answer. You are opening a door, not walking through it for them.</div><div class="doing"><b>What does not help</b>Telling them a force is a push or a pull. You have now done the retrieving, and they have done nothing.</div><div class="same">Everyone retrieves. Nobody is given the answer.</div></div><div class="lay str"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Going further - open to anyone</div><div class="push"><b>On the slide</b>"Is a force always a push?" is already the challenge, and it is asked of everyone.</div><div class="push"><b>If they are quick</b>"Give me a force you cannot see." That is much harder than it sounds and it walks straight into gravity.</div><div class="warn">Never say "the stretch group". The question is asked to the room.</div></div><div class="lay send"><div class="ltitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Barriers and routes in - by barrier, not by label</div><div class="needs"><div class="need"><span class="who">Reading or writing is the barrier</span><span class="what">Whiteboards are a written task. <b>Take this orally.</b> Ask them for their three things aloud, and let a partner scribe if needed. You are retrieving forces knowledge, not handwriting.</span></div><div class="need"><span class="who">Sustained attention is the barrier</span><span class="what">Thirty seconds is <b>perfect</b> for this child, and it is why the task is timed. Do not extend it because others are still writing. A short sharp burst is where they are strongest.</span></div><div class="need"><span class="who">Uncertainty or ambiguity is the barrier</span><span class="what">"Three things" is precise and finite, and that is why it works. <b>Do not change it to "as many as you can"</b> - an open-ended task with no end point is genuinely distressing.</span></div><div class="need"><span class="who">Holding several things at once is the barrier</span><span class="what">Have the last lesson's key words visible on the wall. Retrieval is not cheating if the child still has to <b>choose</b> which words matter.</span></div><div class="need"><span class="who">Time to think is the barrier</span><span class="what">Give the question, then wait. <b>Five seconds of silence</b> before you take answers. It feels endless to you and it is the difference between them answering and not.</span></div></div><div class="need" style="background:#F3E8CC;border:1px solid #E2C27C;">
+      <span class="who" style="color:#7A5C14;">A label is not a need</span>
       <span class="what">An autistic child may need the closed question - or may need the <b>Going Further</b> one, and be held back by a scaffold nobody asked them if they wanted. A child with ADHD may be the strongest thinker in the room. <b>Read the barrier, not the label.</b> And ask the child - they usually know.</span>
     </div>
-    <div class="need" style="background:#F0F6EF;border:1px solid #BEDFD0;">
-      <span class="who" style="color:#0A6B5C;">Ask the child</span>
+    <div class="need" style="background:#F0F6EF;border:1px solid #C5D3BF;">
+      <span class="who" style="color:#3F5A3B;">Ask the child</span>
       <span class="what">Your Year 5s know exactly what helps them, and they are the most under-consulted experts in the building. <b>"What would make this easier for you?"</b> takes ten seconds and is more accurate than anything on this page.</span>
     </div>
     <div class="eal"><div class="etitle">EAL - not a learning difficulty</div>This is a <b>recall</b> task and an EAL child may know the science and not the English word. Accept <b>"push"</b> in any language, accept a gesture, accept a drawing. If they can show you a push, they have retrieved it. Write the English word next to their answer, do not correct them into it.</div></div></div>
@@ -307,9 +307,9 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
     <p>Drop the heavy book and the light pen, same height, same moment. <b>They land together.</b> Let that sit.</p>
 
 
-    <div class="misc" style="background:#FBF6E9;border-left-color:#B8912F;">
+    <div class="misc" style="background:#F3E8CC;border-left-color:#9A7628;">
       <b>The demonstration will go wrong. Plan for it.</b>
-      <p style="color:#6B531A;">Releasing two objects at exactly the same moment, one-handed, in front of thirty children, is harder than it looks. <b>If they do not land together, you have just proved the misconception.</b><br><br>
+      <p style="color:#5E4710;">Releasing two objects at exactly the same moment, one-handed, in front of thirty children, is harder than it looks. <b>If they do not land together, you have just proved the misconception.</b><br><br>
       <b>Practise it three times before the lesson.</b> Hold both at the same height, palms flat, and pull both hands away sideways at once. Do not drop from your fingers.<br><br>
       <b>If it goes wrong in the lesson:</b> say so. Out loud. <b>"That was my fault, not the science. Watch again."</b> Then do it again, slower. A teacher who admits a failed demonstration is modelling exactly what this lesson is about. A teacher who pretends it worked has taught the class that evidence does not matter.<br><br>
       <b>The backup:</b> two identical water bottles, one full, one empty. Almost impossible to release unevenly, and the mass difference is large and obvious.</p>
@@ -321,7 +321,7 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
 
     <div class="msg">
       <div class="mtitle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0A7A67" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="4" stroke-dasharray="2 2"/><path d="M13 12h5M16 9l3 3-3 3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3E5568" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="4" stroke-dasharray="2 2"/><path d="M13 12h5M16 9l3 3-3 3"/></svg>
         The Turn frame on this slide
       </div>
       <p class="purpose">Both boxes are empty. You fill them, live, with the class watching.</p>
@@ -332,7 +332,7 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
         Gravity pulls everything towards the Earth &middot; it pulls the book and it pulls the pen &middot; it pulls you, which is why you are in your chair and not on the ceiling
       </div>
 
-      <div class="egs" style="background:#F4FBF9;border:1px solid var(--accent-deep);margin-top:.6rem;">
+      <div class="egs" style="background:#EEF2EA;border:1px solid var(--accent-deep);margin-top:.6rem;">
         <b style="color:var(--accent-deep);">If you are new to this - one teacher's version</b>
         <div style="font-size:.88rem;color:var(--success-deep);line-height:1.6;">
         Not the version. <b>One</b>. Copy it the first time, adapt it the third, ignore it by the tenth.<br><br>
@@ -357,7 +357,7 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
 
     <div class="msg">
       <div class="mtitle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0A7A67" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3E5568" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
         The blank space on this slide
       </div>
       <p class="purpose">It is for the class's explanation, scribed by you as they build it.</p>
@@ -385,9 +385,9 @@ html.rs body{line-height:1.85;letter-spacing:.012em}
     </div>
 
 
-    <div class="misc" style="background:#F4FBF9;border-left-color:#0A7A67;">
+    <div class="misc" style="background:#EEF2EA;border-left-color:#3E5568;">
       <b style="color:var(--success-deep);">If the hinge fails, here is exactly what to do with the next twenty minutes.</b>
-      <p style="color:#0A5C4E;">You have been told your lesson has not worked. That is <b>good news</b> - you found out today rather than in three weeks. Do not panic and do not plough on.<br><br>
+      <p style="color:#3F5A3B;">You have been told your lesson has not worked. That is <b>good news</b> - you found out today rather than in three weeks. Do not panic and do not plough on.<br><br>
       <b>1. Say it plainly.</b> "Lots of us still think heavy things fall faster. Let's look again." No blame, no drama.<br>
       <b>2. Do the drop again, bigger.</b> The heaviest book in the room and the lightest pen. From higher. Twice.<br>
       <b>3. Ask ONE child who got it right to explain it.</b> A child's explanation lands differently from yours.<br>
@@ -434,14 +434,14 @@ function tog(name, btn){
 }
 </script>
 
-  <div class="key" style="border-color:#A9C9E0;background:#F7FAFC;">
-    <h3 style="color:#1F4A6E;">On the SEND and EAL layer</h3>
-    <p style="font-size:.9rem;color:#1F4A6E;margin:0 0 .7rem;"><b>SEND is not one thing.</b> A dyslexic child, an autistic child, a child with ADHD and a child with a working-memory difficulty need genuinely different things from this lesson, and sometimes opposite things. A generic instruction to "chunk it and use visuals" helps nobody in particular. Every entry in that layer names a <b>specific need and a specific action</b>.</p>
-    <p style="font-size:.9rem;color:#1F4A6E;margin:0 0 .7rem;"><b>EAL is not a learning difficulty.</b> An EAL child may be well ahead of the class in science and behind it in English. They do not need simpler science. They need the <b>language attached to the science they already have</b>. Conflating the two is a common error and it holds children back for years.</p>
-    <p style="font-size:.88rem;color:#6B531A;background:#FBF6E9;border:1px solid #E0C97F;border-radius:8px;padding:.75rem .95rem;margin:0;"><b>Honest limit.</b> This layer is written from published evidence and general good practice. It is <b>not a substitute for a child's EHCP, a SENDCo's advice, or a specialist assessment</b>. Where they differ, the child's own plan wins, every time. SEQUENS is a tool in the hands of a professional who knows the child. It is not the professional.</p>
+  <div class="key" style="border-color:#CDC7BC;background:#FAFAF9;">
+    <h3 style="color:#3E5568;">On the SEND and EAL layer</h3>
+    <p style="font-size:.9rem;color:#3E5568;margin:0 0 .7rem;"><b>SEND is not one thing.</b> A dyslexic child, an autistic child, a child with ADHD and a child with a working-memory difficulty need genuinely different things from this lesson, and sometimes opposite things. A generic instruction to "chunk it and use visuals" helps nobody in particular. Every entry in that layer names a <b>specific need and a specific action</b>.</p>
+    <p style="font-size:.9rem;color:#3E5568;margin:0 0 .7rem;"><b>EAL is not a learning difficulty.</b> An EAL child may be well ahead of the class in science and behind it in English. They do not need simpler science. They need the <b>language attached to the science they already have</b>. Conflating the two is a common error and it holds children back for years.</p>
+    <p style="font-size:.88rem;color:#5E4710;background:#F3E8CC;border:1px solid #E2C27C;border-radius:8px;padding:.75rem .95rem;margin:0;"><b>Honest limit.</b> This layer is written from published evidence and general good practice. It is <b>not a substitute for a child's EHCP, a SENDCo's advice, or a specialist assessment</b>. Where they differ, the child's own plan wins, every time. SEQUENS is a tool in the hands of a professional who knows the child. It is not the professional.</p>
   </div>
 
 
-<div style="background:#071322;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#7E97AB;"><a href="/privacy.html" style="color:#9FB6C6;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#9FB6C6;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#9FB6C6;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
+<div style="background:#161A1E;padding:.85rem 1.3rem;text-align:center;font-size:.76rem;font-family:'Lexend','Segoe UI',system-ui,sans-serif;color:#9DA1A4;"><a href="/privacy.html" style="color:#BDBFBE;text-decoration:none">Privacy</a>&ensp;&middot;&ensp;<a href="/terms.html" style="color:#BDBFBE;text-decoration:none">Terms</a>&ensp;&middot;&ensp;<a href="/cookies.html" style="color:#BDBFBE;text-decoration:none">Cookies</a><span style="display:block;margin-top:.35rem;opacity:.75">SEQUENS. AI-assisted, and you review before use.</span></div>
 </body>
 </html>

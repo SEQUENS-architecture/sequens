@@ -1,0 +1,77 @@
+/* SEQUENS new layout: paper ground, ink text, one door colour per page.
+   Loaded last on reading pages. Tools and product outputs do not load it. */
+:root{--door:#3E5568;--door-tint:#DDE5EB;--paper:#F6F1E7;--paper2:#FBF8F2;--ink:#22282E;--body:#2E353B;--muted:#4F5A63;}
+html[data-door="teach"]{--door:#8F4A35;--door-tint:#F1DDD5;}
+html[data-door="home"]{--door:#3F5A3B;--door-tint:#DFE8DC;}
+html[data-door="coach"]{--door:#3E5568;--door-tint:#DDE5EB;}
+
+/* ---------- dark template (door pages, hub) ---------- */
+html[data-tpl="dark"]{
+  --bg:#F6F1E7;--bg2:#FBF8F2;--white:#22282E;--grey:#2E353B;--dim:#4F5A63;
+  --hair:rgba(34,40,46,.12);--hair2:rgba(34,40,46,.22);--panel:#FFFFFF;
+  --accent:var(--door);--accent2:var(--door);--accent-ink:#FFFFFF;--accent-deep:var(--door);
+}
+html[data-tpl="dark"] body{background:var(--paper)!important;color:var(--body)}
+html[data-tpl="dark"] h1,html[data-tpl="dark"] h2,html[data-tpl="dark"] h3,html[data-tpl="dark"] h4{color:var(--ink)}
+html[data-tpl="dark"] .hero h1 .l2{background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:var(--door)!important}
+html[data-tpl="dark"] .kick,html[data-tpl="dark"] .eyebrow{color:var(--door)!important}
+html[data-tpl="dark"] section.sec{background:var(--paper)}
+html[data-tpl="dark"] section.light{background:var(--paper2)}
+html[data-tpl="dark"] a{color:var(--ink)}
+html[data-tpl="dark"] .wrap a:not([class]){color:var(--door);text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- light template (demo index, articles, legal) ---------- */
+html[data-tpl="light"]{--grad:var(--paper);--navy:#22282E}
+html[data-tpl="light"] .top{background:var(--paper)!important;color:var(--ink)!important;border-bottom:1px solid rgba(34,40,46,.1)}
+html[data-tpl="light"] .top h1,html[data-tpl="light"] .hero h1{color:var(--ink)!important}
+html[data-tpl="light"] .top .dek,html[data-tpl="light"] .hero .dek,html[data-tpl="light"] .top p{color:var(--body)!important}
+html[data-tpl="light"] .kick{color:var(--door)!important}
+html[data-tpl="light"] .back{color:var(--door)!important}
+html[data-tpl="light"] footer,html[data-tpl="light"] .foot{background:var(--paper)!important;color:var(--muted)!important;border-top:1px solid rgba(34,40,46,.1)}
+html[data-tpl="light"] footer a,html[data-tpl="light"] .foot a{color:var(--muted)!important}
+html[data-tpl="light"] .card.hero-card{background:var(--ink)!important}
+
+/* ---------- shared: header, brand, cards, buttons, footer ---------- */
+.top,.top-in,header{background:var(--paper)!important}
+.top{box-shadow:none!important;backdrop-filter:none!important;border-bottom:1px solid rgba(34,40,46,.1)}
+.brand,.mark{color:var(--ink)!important;letter-spacing:.14em!important;font-weight:800!important}
+.brand svg,.mark svg{height:26px!important;width:26px!important}
+.top a,.top button{color:var(--ink)}
+body{font-family:'Lexend','Segoe UI',system-ui,sans-serif;hyphens:none}
+em,i:not([class]){font-style:normal}
+.hero h1{letter-spacing:-.01em!important;font-weight:800!important}
+.card,.claim,.door,.frame,.mcard,.ptier,.tier,.keycard,.art,.box{border-radius:20px!important}
+html[data-tpl="dark"] .claim,html[data-tpl="dark"] .door,html[data-tpl="dark"] .frame,html[data-tpl="dark"] .mcard,html[data-tpl="dark"] .ptier,html[data-tpl="dark"] .tier,html[data-tpl="dark"] .keycard{background:#FFFFFF!important;border-color:transparent!important;box-shadow:none!important}
+.btn,.primary,.signin,.go,.join button,.form button,button[type="submit"]{border-radius:999px!important}
+.btn.primary,.primary,.signin,.join button,.form button,button[type="submit"]{background:var(--ink)!important;color:var(--paper)!important;border-color:var(--ink)!important}
+.rs-toggle{border-radius:999px!important;border:2px solid var(--ink)!important;color:var(--ink)!important;background:transparent!important}
+.rs-toggle[aria-pressed="true"]{background:var(--ink)!important;color:var(--paper)!important}
+html[data-tpl="dark"] footer{background:var(--paper)!important;border-top:1px solid rgba(34,40,46,.12)}
+html[data-tpl="dark"] footer,html[data-tpl="dark"] footer a,html[data-tpl="dark"] .fh,html[data-tpl="dark"] .ftag{color:var(--muted)!important}
+html[data-tpl="dark"] .fh{color:var(--ink)!important}
+:focus-visible{outline:3px solid var(--ink)!important;outline-offset:3px}
+
+/* coaching page: the strata graphic in domain colours */
+.strata .onebar{background:#C47D66!important;box-shadow:none!important}
+.strata .r2 .bar{background:#5A7389!important}
+.strata .r2 .bar:nth-child(8n+2){background:#C47D66!important}
+.strata .r2 .bar:nth-child(8n+3){background:#C6A055!important}
+.strata .r2 .bar:nth-child(8n+4){background:#7E9477!important}
+.strata .r2 .bar:nth-child(8n+5){background:#8A7088!important}
+.strata .r2 .bar:nth-child(8n+6){background:#457B74!important}
+.strata .r2 .bar:nth-child(8n+8){background:#C47D66!important}
+.strata .r3 .bar{background:#5A7389!important}
+.strata .r4 .tex{background:repeating-linear-gradient(90deg,#7E9477 0 7px,transparent 7px 9.5px)!important}
+.strata .r5 .tex{background:repeating-linear-gradient(90deg,#8A7088 0 2.6px,transparent 2.6px 4px)!important}
+.strata .slabel{color:var(--muted)!important}
+.strata .r1 .slabel{color:#8F4A35!important}
+.top .back,.top-in .back,a.back{color:var(--muted)!important}
+
+/* text that was pale-on-dark, now on paper */
+html[data-tpl="dark"] .ghost em,html[data-tpl="dark"] .lb,html[data-tpl="dark"] label,html[data-tpl="dark"] footer span{color:var(--muted)!important}
+.top-in > a[href="index.html"],.top-in > a[href="/"]:not(.brand){color:var(--muted)!important}
+.art .n{color:#6B6355!important}
+.art .soon{color:#5F6569!important}
+html[data-door="coach"] .dom .ghost{color:#5A7389!important}
+html[data-door="coach"] .dom .ghost em{color:#4F5A63!important}
+footer span[style*="opacity"],.foot-in span[style*="opacity"]{opacity:1!important;color:var(--muted)!important}
